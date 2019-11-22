@@ -412,6 +412,8 @@ void LogFilesImpl::write_log_data_to_disk()
     out_file.open(_data.file_path, std::ios::out | std::ios::binary);
     out_file.write(reinterpret_cast<char*>(_data.bytes.data()), _data.bytes.size());
     out_file.close();
+
+    LogDebug() << "Finished saving log data to disk";
 }
 
 } // namespace mavsdk

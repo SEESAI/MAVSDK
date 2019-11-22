@@ -16,6 +16,7 @@
 #include "mission/mission_service_impl.h"
 #include "telemetry/telemetry_service_impl.h"
 #include "info/info_service_impl.h"
+#include "log_files/log_files_service_impl.h"
 #include "plugins/geofence/geofence.h"
 #include "geofence/geofence_service_impl.h"
 #include "plugins/gimbal/gimbal.h"
@@ -56,6 +57,8 @@ public:
         _telemetry_service(_telemetry),
         _info(_dc.system()),
         _info_service(_info),
+        _log_files(_dc.system()),
+        _log_files_service(_log_files),
         _param(_dc.system()),
         _param_service(_param),
         _shell(_dc.system()),
@@ -92,6 +95,8 @@ private:
     TelemetryServiceImpl<> _telemetry_service;
     Info _info;
     InfoServiceImpl<> _info_service;
+    LogFiles _log_files;
+    LogFilesServiceImpl<> _log_files_service;
     Param _param;
     ParamServiceImpl<> _param_service;
     Shell _shell;

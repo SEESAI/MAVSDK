@@ -81,14 +81,18 @@ public:
     Telemetry::Quaternion get_camera_attitude_quaternion() const;
     Telemetry::GroundSpeedNED get_ground_speed_ned() const;
     Telemetry::IMUReadingNED get_imu_reading_ned() const;
+    Telemetry::DistanceSensor get_distance_sensor() const;
     Telemetry::GPSInfo get_gps_info() const;
     Telemetry::Battery get_battery() const;
+    Telemetry::BatteryStatus get_battery_status() const;
+    Telemetry::ModeInfo get_mode_info() const;
     Telemetry::FlightMode get_flight_mode() const;
     Telemetry::Health get_health() const;
     bool get_health_all_ok() const;
     Telemetry::RCStatus get_rc_status() const;
     Telemetry::ActuatorControlTarget get_actuator_control_target() const;
     Telemetry::ActuatorOutputStatus get_actuator_output_status() const;
+    Telemetry::ServoOutputRaw get_servo_output_raw() const;
     Telemetry::Odometry get_odometry() const;
     uint64_t get_unix_epoch_time_us() const;
 
@@ -108,8 +112,11 @@ public:
     void camera_attitude_euler_angle_async(Telemetry::attitude_euler_angle_callback_t& callback);
     void ground_speed_ned_async(Telemetry::ground_speed_ned_callback_t& callback);
     void imu_reading_ned_async(Telemetry::imu_reading_ned_callback_t& callback);
+    void distance_sensor_async(Telemetry::distance_sensor_callback_t& callback);
     void gps_info_async(Telemetry::gps_info_callback_t& callback);
     void battery_async(Telemetry::battery_callback_t& callback);
+    void battery_status_async(Telemetry::battery_status_callback_t& callback);
+    void mode_info_async(Telemetry::mode_info_callback_t& callback);
     void flight_mode_async(Telemetry::flight_mode_callback_t& callback);
     void health_async(Telemetry::health_callback_t& callback);
     void health_all_ok_async(Telemetry::health_all_ok_callback_t& callback);
@@ -118,6 +125,7 @@ public:
     void unix_epoch_time_async(Telemetry::unix_epoch_time_callback_t& callback);
     void actuator_control_target_async(Telemetry::actuator_control_target_callback_t& callback);
     void actuator_output_status_async(Telemetry::actuator_output_status_callback_t& callback);
+    void servo_output_raw_async(Telemetry::servo_output_raw_callback_t& callback);
     void odometry_async(Telemetry::odometry_callback_t& callback);
 
     TelemetryImpl(const TelemetryImpl&) = delete;
@@ -138,8 +146,10 @@ private:
     void set_camera_attitude_euler_angle(Telemetry::EulerAngle euler_angle);
     void set_ground_speed_ned(Telemetry::GroundSpeedNED ground_speed_ned);
     void set_imu_reading_ned(Telemetry::IMUReadingNED imu_reading_ned);
+    void set_distance_sensor(Telemetry::DistanceSensor distance_sensor);
     void set_gps_info(Telemetry::GPSInfo gps_info);
     void set_battery(Telemetry::Battery battery);
+    void set_battery_status(Telemetry::BatteryStatus battery_status);
     void set_health_local_position(bool ok);
     void set_health_global_position(bool ok);
     void set_health_home_position(bool ok);
@@ -151,8 +161,10 @@ private:
     void set_unix_epoch_time_us(uint64_t time_us);
     void set_actuator_control_target(uint8_t group, const std::array<float, 8>& controls);
     void set_actuator_output_status(uint32_t active, const std::array<float, 32>& actuators);
+    void set_servo_output_raw(const std::array<uint16_t, 16>& servos);
     void set_odometry(Telemetry::Odometry& odometry);
 
+    void process_estimator_status(const mavlink_message_t& message);
     void process_position_velocity_ned(const mavlink_message_t& message);
     void process_global_position_int(const mavlink_message_t& message);
     void process_home_position(const mavlink_message_t& message);
@@ -160,17 +172,20 @@ private:
     void process_attitude_quaternion(const mavlink_message_t& message);
     void process_mount_orientation(const mavlink_message_t& message);
     void process_imu_reading_ned(const mavlink_message_t& message);
+    void process_distance_sensor(const mavlink_message_t& message);
     void process_gps_raw_int(const mavlink_message_t& message);
     void process_ground_truth(const mavlink_message_t& message);
     void process_extended_sys_state(const mavlink_message_t& message);
     void process_fixedwing_metrics(const mavlink_message_t& message);
     void process_sys_status(const mavlink_message_t& message);
+    void process_battery_status(const mavlink_message_t& message);
     void process_heartbeat(const mavlink_message_t& message);
     void process_statustext(const mavlink_message_t& message);
     void process_rc_channels(const mavlink_message_t& message);
     void process_unix_epoch_time(const mavlink_message_t& message);
     void process_actuator_control_target(const mavlink_message_t& message);
     void process_actuator_output_status(const mavlink_message_t& message);
+    void process_servo_output_raw(const mavlink_message_t& message);
     void process_odometry(const mavlink_message_t& message);
     void receive_param_cal_gyro(MAVLinkParameters::Result result, int value);
     void receive_param_cal_accel(MAVLinkParameters::Result result, int value);
@@ -236,13 +251,19 @@ private:
 
     mutable std::mutex _imu_reading_ned_mutex{};
     Telemetry::IMUReadingNED _imu_reading_ned{
-        {NAN, NAN, NAN}, {NAN, NAN, NAN}, {NAN, NAN, NAN}, NAN};
+        {NAN, NAN, NAN}, {NAN, NAN, NAN}, {NAN, NAN, NAN}, NAN, NAN, NAN};
+
+    mutable std::mutex _distance_sensor_mutex{};
+    Telemetry::DistanceSensor _distance_sensor{NAN};
 
     mutable std::mutex _gps_info_mutex{};
-    Telemetry::GPSInfo _gps_info{0, 0};
+    Telemetry::GPSInfo _gps_info{0, 0, double(NAN), double(NAN), NAN, NAN, NAN};
 
     mutable std::mutex _battery_mutex{};
-    Telemetry::Battery _battery{NAN, NAN};
+    Telemetry::Battery _battery{NAN, NAN, NAN};
+
+    mutable std::mutex _battery_status_mutex{};
+    Telemetry::BatteryStatus _battery_status{NAN, NAN};
 
     mutable std::mutex _health_mutex{};
     Telemetry::Health _health{false, false, false, false, false, false, false};
@@ -261,6 +282,9 @@ private:
 
     mutable std::mutex _actuator_output_status_mutex{};
     Telemetry::ActuatorOutputStatus _actuator_output_status{0, {0.0f}};
+
+    mutable std::mutex _servo_output_raw_mutex{};
+    Telemetry::ServoOutputRaw _servo_output_raw{{0}};
 
     mutable std::mutex _odometry_mutex{};
     Telemetry::Odometry _odometry{};
@@ -283,8 +307,11 @@ private:
     Telemetry::attitude_euler_angle_callback_t _camera_attitude_euler_angle_subscription{nullptr};
     Telemetry::ground_speed_ned_callback_t _ground_speed_ned_subscription{nullptr};
     Telemetry::imu_reading_ned_callback_t _imu_reading_ned_subscription{nullptr};
+    Telemetry::distance_sensor_callback_t _distance_sensor_subscription{nullptr};
     Telemetry::gps_info_callback_t _gps_info_subscription{nullptr};
     Telemetry::battery_callback_t _battery_subscription{nullptr};
+    Telemetry::battery_status_callback_t _battery_status_subscription{nullptr};
+    Telemetry::mode_info_callback_t _mode_info_subscription{nullptr};
     Telemetry::flight_mode_callback_t _flight_mode_subscription{nullptr};
     Telemetry::health_callback_t _health_subscription{nullptr};
     Telemetry::health_all_ok_callback_t _health_all_ok_subscription{nullptr};
@@ -293,6 +320,7 @@ private:
     Telemetry::unix_epoch_time_callback_t _unix_epoch_time_subscription{nullptr};
     Telemetry::actuator_control_target_callback_t _actuator_control_target_subscription{nullptr};
     Telemetry::actuator_output_status_callback_t _actuator_output_status_subscription{nullptr};
+    Telemetry::servo_output_raw_callback_t _servo_output_raw_subscription{nullptr};
     Telemetry::odometry_callback_t _odometry_subscription{nullptr};
 
     // The ground speed and position are coupled to the same message, therefore, we just use
