@@ -20,6 +20,7 @@ public:
     void enable() override;
     void disable() override;
 
+    Offboard::Result request_offboard();
     Offboard::Result start();
     Offboard::Result stop();
 
@@ -29,10 +30,15 @@ public:
     bool is_active() const;
 
     void set_position_ned(Offboard::PositionNEDYaw position_ned_yaw);
+    void set_position_ned_once(Offboard::PositionNEDYaw position_ned_yaw);
     void set_velocity_ned(Offboard::VelocityNEDYaw velocity_ned_yaw);
+    void set_velocity_body_once(Offboard::VelocityBodyYawspeed velocity_body_yawspeed);
     void set_velocity_body(Offboard::VelocityBodyYawspeed velocity_body_yawspeed);
+    void set_attitude_once(Offboard::Attitude attitude);
     void set_attitude(Offboard::Attitude attitude);
+    void set_attitude_rate_once(Offboard::AttitudeRate attitude_rate);
     void set_attitude_rate(Offboard::AttitudeRate attitude_rate);
+    void set_actuator_control_once(Offboard::ActuatorControl actuator_control);
     void set_actuator_control(Offboard::ActuatorControl actuator_control);
 
     OffboardImpl(const OffboardImpl&) = delete;

@@ -28,6 +28,7 @@ int GRPCServer::run()
     builder.RegisterService(&_offboard_service);
     builder.RegisterService(&_telemetry_service);
     builder.RegisterService(&_info_service);
+    builder.RegisterService(&_log_files_service);
     builder.RegisterService(&_param_service);
     builder.RegisterService(&_shell_service);
     builder.RegisterService(&_mocap_service);

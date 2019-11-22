@@ -8,6 +8,11 @@ Offboard::Offboard(System& system) : PluginBase(), _impl{new OffboardImpl(system
 
 Offboard::~Offboard() {}
 
+Offboard::Result Offboard::request_offboard()
+{
+    return _impl->request_offboard();
+}
+
 Offboard::Result Offboard::start()
 {
     return _impl->start();
@@ -33,6 +38,11 @@ bool Offboard::is_active() const
     return _impl->is_active();
 }
 
+void Offboard::set_position_ned_once(Offboard::PositionNEDYaw position_ned_yaw)
+{
+    return _impl->set_position_ned_once(position_ned_yaw);
+}
+
 void Offboard::set_position_ned(Offboard::PositionNEDYaw position_ned_yaw)
 {
     return _impl->set_position_ned(position_ned_yaw);
@@ -43,9 +53,19 @@ void Offboard::set_velocity_ned(Offboard::VelocityNEDYaw velocity_ned_yaw)
     return _impl->set_velocity_ned(velocity_ned_yaw);
 }
 
+void Offboard::set_velocity_body_once(Offboard::VelocityBodyYawspeed velocity_body_yawspeed)
+{
+    return _impl->set_velocity_body_once(velocity_body_yawspeed);
+}
+
 void Offboard::set_velocity_body(Offboard::VelocityBodyYawspeed velocity_body_yawspeed)
 {
     return _impl->set_velocity_body(velocity_body_yawspeed);
+}
+
+void Offboard::set_attitude_once(Offboard::Attitude attitude)
+{
+    return _impl->set_attitude_once(attitude);
 }
 
 void Offboard::set_attitude(Offboard::Attitude attitude)
@@ -53,9 +73,19 @@ void Offboard::set_attitude(Offboard::Attitude attitude)
     return _impl->set_attitude(attitude);
 }
 
+void Offboard::set_attitude_rate_once(Offboard::AttitudeRate attitude_rate)
+{
+    return _impl->set_attitude_rate_once(attitude_rate);
+}
+
 void Offboard::set_attitude_rate(Offboard::AttitudeRate attitude_rate)
 {
     return _impl->set_attitude_rate(attitude_rate);
+}
+
+void Offboard::set_actuator_control_once(Offboard::ActuatorControl actuator_control)
+{
+    return _impl->set_actuator_control_once(actuator_control);
 }
 
 void Offboard::set_actuator_control(Offboard::ActuatorControl actuator_control)

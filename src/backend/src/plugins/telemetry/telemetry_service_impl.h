@@ -210,6 +210,28 @@ public:
         return grpc::Status::OK;
     }
 
+    grpc::Status SubscribeDistanceSensor(
+        grpc::ServerContext* /* context */,
+        const mavsdk::rpc::telemetry::SubscribeDistanceSensorRequest* /* request */,
+        grpc::ServerWriter<rpc::telemetry::DistanceSensorResponse>* writer) override
+    {
+        std::mutex distance_sensor_mutex{};
+
+        _telemetry.distance_sensor_async(
+            [this, &writer, &distance_sensor_mutex](mavsdk::Telemetry::DistanceSensor distance_sensor) {
+                auto rpc_distance_sensor = new mavsdk::rpc::telemetry::DistanceSensor();
+                rpc_distance_sensor->set_current_distance_m(distance_sensor.current_distance_m);
+                mavsdk::rpc::telemetry::DistanceSensorResponse rpc_distance_sensor_response;
+                rpc_distance_sensor_response.set_allocated_distance_sensor(rpc_distance_sensor);
+
+                std::lock_guard<std::mutex> lock(distance_sensor_mutex);
+                writer->Write(rpc_distance_sensor_response);
+            });
+
+        _stop_future.wait();
+        return grpc::Status::OK;
+    }
+
     grpc::Status SubscribeGpsInfo(
         grpc::ServerContext* /* context */,
         const mavsdk::rpc::telemetry::SubscribeGpsInfoRequest* /* request */,
@@ -222,6 +244,11 @@ public:
                 auto rpc_gps_info = new mavsdk::rpc::telemetry::GpsInfo();
                 rpc_gps_info->set_num_satellites(gps_info.num_satellites);
                 rpc_gps_info->set_fix_type(translateGpsFixType(gps_info.fix_type));
+                rpc_gps_info->set_latitude_deg(gps_info.latitude_deg);
+                rpc_gps_info->set_longitude_deg(gps_info.longitude_deg);
+                rpc_gps_info->set_absolute_altitude_m(gps_info.absolute_altitude_m);
+                rpc_gps_info->set_h_acc_m(gps_info.h_acc_m);
+                rpc_gps_info->set_v_acc_m(gps_info.v_acc_m);
 
                 mavsdk::rpc::telemetry::GpsInfoResponse rpc_gps_info_response;
                 rpc_gps_info_response.set_allocated_gps_info(rpc_gps_info);
@@ -255,6 +282,46 @@ public:
         }
     }
 
+    grpc::Status SubscribeImuReadingNed(
+        grpc::ServerContext* /* context */,
+        const mavsdk::rpc::telemetry::SubscribeImuReadingNedRequest* /* request */,
+        grpc::ServerWriter<rpc::telemetry::ImuReadingNedResponse>* writer) override
+    {
+        std::mutex imu_reading_mutex{};
+        _telemetry.imu_reading_ned_async([&writer, &imu_reading_mutex](mavsdk::Telemetry::IMUReadingNED imu_reading_ned) {
+            auto rpc_imu_reading_ned = new mavsdk::rpc::telemetry::ImuReadingNed();
+          rpc_imu_reading_ned->set_abs_pressure(imu_reading_ned.abs_pressure);
+          rpc_imu_reading_ned->set_pressure_alt(imu_reading_ned.pressure_alt);
+          rpc_imu_reading_ned->set_temperature_deg_c(imu_reading_ned.temperature_degC);
+
+            auto rpc_acceleration_ned = new mavsdk::rpc::telemetry::AccelerationNed();
+            rpc_acceleration_ned->set_north_m_s2(imu_reading_ned.acceleration.north_m_s2);
+            rpc_acceleration_ned->set_east_m_s2(imu_reading_ned.acceleration.east_m_s2);
+            rpc_acceleration_ned->set_down_m_s2(imu_reading_ned.acceleration.down_m_s2);
+            rpc_imu_reading_ned->set_allocated_acceleration(rpc_acceleration_ned);
+
+            auto rpc_angular_velocity_ned = new mavsdk::rpc::telemetry::AngularVelocityNed();
+            rpc_angular_velocity_ned->set_north_rad_s(imu_reading_ned.angular_velocity.north_rad_s);
+            rpc_angular_velocity_ned->set_east_rad_s(imu_reading_ned.angular_velocity.east_rad_s);
+            rpc_angular_velocity_ned->set_down_rad_s(imu_reading_ned.angular_velocity.down_rad_s);
+            rpc_imu_reading_ned->set_allocated_angular_velocity(rpc_angular_velocity_ned);
+
+            auto rpc_magnetic_field_ned = new mavsdk::rpc::telemetry::MagneticFieldNed();
+            rpc_magnetic_field_ned->set_north_gauss(imu_reading_ned.magnetic_field.north_gauss);
+            rpc_magnetic_field_ned->set_east_gauss(imu_reading_ned.magnetic_field.east_gauss);
+            rpc_magnetic_field_ned->set_down_gauss(imu_reading_ned.magnetic_field.down_gauss);
+            rpc_imu_reading_ned->set_allocated_magnetic_field(rpc_magnetic_field_ned);
+
+            mavsdk::rpc::telemetry::ImuReadingNedResponse rpc_imu_reading_ned_response;
+            rpc_imu_reading_ned_response.set_allocated_imu_reading_ned(rpc_imu_reading_ned);
+            std::lock_guard<std::mutex> lock(imu_reading_mutex);
+            writer->Write(rpc_imu_reading_ned_response);
+        });
+
+        _stop_future.wait();
+        return grpc::Status::OK;
+    }
+
     grpc::Status SubscribeBattery(
         grpc::ServerContext* /* context */,
         const mavsdk::rpc::telemetry::SubscribeBatteryRequest* /* request */,
@@ -265,6 +332,7 @@ public:
         _telemetry.battery_async([&writer, &battery_mutex](mavsdk::Telemetry::Battery battery) {
             auto rpc_battery = new mavsdk::rpc::telemetry::Battery();
             rpc_battery->set_voltage_v(battery.voltage_v);
+            rpc_battery->set_current_a(battery.current_a);
             rpc_battery->set_remaining_percent(battery.remaining_percent);
 
             mavsdk::rpc::telemetry::BatteryResponse rpc_battery_response;
@@ -273,6 +341,52 @@ public:
             std::lock_guard<std::mutex> lock(battery_mutex);
             writer->Write(rpc_battery_response);
         });
+
+        _stop_future.wait();
+        return grpc::Status::OK;
+    }
+
+    grpc::Status SubscribeBatteryStatus(
+        grpc::ServerContext* /* context */,
+        const mavsdk::rpc::telemetry::SubscribeBatteryStatusRequest* /* request */,
+        grpc::ServerWriter<rpc::telemetry::BatteryStatusResponse>* writer) override
+    {
+        std::mutex battery_status_mutex{};
+
+        _telemetry.battery_status_async([&writer, &battery_status_mutex](mavsdk::Telemetry::BatteryStatus battery_status) {
+          auto rpc_battery_status = new mavsdk::rpc::telemetry::BatteryStatus();
+          rpc_battery_status->set_mah_consumed(battery_status.mah_consumed);
+
+          mavsdk::rpc::telemetry::BatteryStatusResponse rpc_battery_status_response;
+          rpc_battery_status_response.set_allocated_battery_status(rpc_battery_status);
+
+          std::lock_guard<std::mutex> lock(battery_status_mutex);
+          writer->Write(rpc_battery_status_response);
+        });
+
+        _stop_future.wait();
+        return grpc::Status::OK;
+    }
+
+    grpc::Status SubscribeModeInfo(
+        grpc::ServerContext* /* context */,
+        const mavsdk::rpc::telemetry::SubscribeModeInfoRequest* /* request */,
+        grpc::ServerWriter<rpc::telemetry::ModeInfoResponse>* writer) override
+    {
+        std::mutex mode_info_mutex{};
+
+        _telemetry.mode_info_async(
+            [this, &writer, &mode_info_mutex](mavsdk::Telemetry::ModeInfo mode_info) {
+              auto custom_main_mode = uint8_t((mode_info.custom_mode >> 16U) & 0xffU);
+              auto custom_sub_mode = uint8_t((mode_info.custom_mode >> 24U) & 0xffU);
+              mavsdk::rpc::telemetry::ModeInfoResponse rpc_mode_info_response;
+              rpc_mode_info_response.mutable_mode_info()->set_base_mode(mode_info.base_mode);
+              rpc_mode_info_response.mutable_mode_info()->set_custom_main_mode(custom_main_mode);
+              rpc_mode_info_response.mutable_mode_info()->set_custom_sub_mode(custom_sub_mode);
+
+              std::lock_guard<std::mutex> lock(mode_info_mutex);
+              writer->Write(rpc_mode_info_response);
+            });
 
         _stop_future.wait();
         return grpc::Status::OK;
@@ -572,6 +686,35 @@ public:
 
                 std::lock_guard<std::mutex> lock(actuator_output_status_mutex);
                 writer->Write(rpc_actuator_output_status_response);
+            });
+
+        _stop_future.wait();
+        return grpc::Status::OK;
+    }
+
+    grpc::Status SubscribeServoOutputRaw(
+        grpc::ServerContext* /* context */,
+        const mavsdk::rpc::telemetry::SubscribeServoOutputRawRequest* /* request */,
+        grpc::ServerWriter<rpc::telemetry::ServoOutputRawResponse>* writer) override
+    {
+        std::mutex servo_output_raw_mutex{};
+
+        _telemetry.servo_output_raw_async(
+            [&writer, &servo_output_raw_mutex](
+                mavsdk::Telemetry::ServoOutputRaw servo_output_raw) {
+              auto rpc_servo_output_raw =
+                  new mavsdk::rpc::telemetry::ServoOutputRaw();
+              for (unsigned i = 0; i < 16; i++) {
+                  rpc_servo_output_raw->add_servo(servo_output_raw.servo[i]);
+              }
+
+              mavsdk::rpc::telemetry::ServoOutputRawResponse
+                  rpc_servo_output_raw_response;
+              rpc_servo_output_raw_response.set_allocated_servo_output_raw(
+                  rpc_servo_output_raw);
+
+              std::lock_guard<std::mutex> lock(servo_output_raw_mutex);
+              writer->Write(rpc_servo_output_raw_response);
             });
 
         _stop_future.wait();

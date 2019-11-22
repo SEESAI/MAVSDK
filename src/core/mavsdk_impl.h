@@ -65,7 +65,7 @@ private:
     Mavsdk::event_callback_t _on_discover_callback;
     Mavsdk::event_callback_t _on_timeout_callback;
 
-    std::atomic<Mavsdk::Configuration> _configuration{Mavsdk::Configuration::GroundStation};
+    std::atomic<Mavsdk::Configuration> _configuration{Mavsdk::Configuration::CompanionComputer};
     bool _is_single_system{false};
 
     std::atomic<bool> _should_exit = {false};

@@ -166,10 +166,19 @@ public:
      *
      * @return Result of request.
      */
+    Offboard::Result request_offboard();
+
+    /**
+     * @brief Start offboard control and start sending setpoints (synchronous).
+     *
+     * **Attention:** this is work in progress, use with caution!
+     *
+     * @return Result of request.
+     */
     Offboard::Result start();
 
     /**
-     * @brief Stop offboard control (synchronous).
+     * @brief Stop offboard control and stop sending setpoints (synchronous).
      *
      * The vehicle will be put into Hold mode: https://docs.px4.io/en/flight_modes/hold.html
      *
@@ -206,6 +215,13 @@ public:
     bool is_active() const;
 
     /**
+     * @brief Set the position in NED coordinates and yaw, just once.
+     *
+     * @param position_ned_yaw Position and yaw `struct`.
+     */
+    void set_position_ned_once(PositionNEDYaw position_ned_yaw);
+
+    /**
      * @brief Set the position in NED coordinates and yaw.
      *
      * @param position_ned_yaw Position and yaw `struct`.
@@ -220,6 +236,13 @@ public:
     void set_velocity_ned(VelocityNEDYaw velocity_ned_yaw);
 
     /**
+     * @brief Set the velocity body coordinates and yaw angular rate, just once.
+     *
+     * @param velocity_body_yawspeed Velocity and yaw angular rate `struct`.
+     */
+    void set_velocity_body_once(VelocityBodyYawspeed velocity_body_yawspeed);
+
+    /**
      * @brief Set the velocity body coordinates and yaw angular rate.
      *
      * @param velocity_body_yawspeed Velocity and yaw angular rate `struct`.
@@ -232,7 +255,23 @@ public:
      *
      * @param attitude roll, pitch and yaw in degrees along with thrust in percentage.
      */
+    void set_attitude_once(Attitude attitude);
+
+    /**
+     * @brief Set the attitude in terms of roll, pitch and yaw in degrees with thrust
+     * in percentage.
+     *
+     * @param attitude roll, pitch and yaw in degrees along with thrust in percentage.
+     */
     void set_attitude(Attitude attitude);
+
+    /**
+     * @brief Set the attitude rate in terms of pitch, roll and yaw angular rate along with thrust
+     * in percentage.
+     *
+     * @param attitude_rate roll, pitch and yaw angular rate along with thrust in percentage.
+     */
+    void set_attitude_rate_once(AttitudeRate attitude_rate);
 
     /**
      * @brief Set the attitude rate in terms of pitch, roll and yaw angular rate along with thrust
@@ -249,8 +288,17 @@ public:
      *
      * @param actuator_control actuators control values
      */
+    void set_actuator_control_once(ActuatorControl actuator_control);
 
-    void set_actuator_control(const ActuatorControl actuator_control);
+    /**
+     * @brief Set direct actuator control values to groups #0 and #1.
+     * First 8 controls will go to control group 0, the following 8 controls to control group 1 (if
+     * actuator_control.num_controls more than 8).
+     *
+     * @param actuator_control actuators control values
+     */
+
+    void set_actuator_control(ActuatorControl actuator_control);
 
     /**
      * @brief Copy constructor (object is not copyable).

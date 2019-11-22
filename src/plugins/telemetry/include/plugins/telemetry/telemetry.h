@@ -198,7 +198,16 @@ public:
         AccelerationNED acceleration; /**< @see AccelerationNED */
         AngularVelocityNED angular_velocity; /**< @see AngularVelocityNED */
         MagneticFieldNED magnetic_field; /**< @see MagneticFieldNED */
+        float abs_pressure; /**@brief Absolute pressure measured in mbar. */
+        float pressure_alt; /**@brief Altitude calculated from pressure. */
         float temperature_degC; /**< @brief Temperature measured in degrees Celsius. */
+    };
+
+    /**
+     * @brief Distance sensor type.
+     */
+    struct DistanceSensor {
+        float current_distance_m;
     };
 
     /**
@@ -208,6 +217,11 @@ public:
         int num_satellites; /**< @brief Number of visible satellites used for solution. */
         int fix_type; /**< @brief Fix type (0: no GPS, 1: no fix, 2: 2D fix, 3: 3D fix, 4: DGPS fix,
                                      5: RTK float, 6: RTK fixed). */
+        double latitude_deg; /**< @brief Latitude in degrees (range: -90 to +90) */
+        double longitude_deg; /**< @brief Longitude in degrees (range: -180 to 180) */
+        float absolute_altitude_m; /**< @brief Altitude AMSL (above mean sea level) in metres */
+        float h_acc_m; /**< @brief Position uncertainty in metres */
+        float v_acc_m; /**<@brief Altitude uncertainty in metres */
     };
 
     /**
@@ -234,8 +248,25 @@ public:
      */
     struct Battery {
         float voltage_v; /**< @brief Voltage in volts. */
+        float current_a; /**< @brief Current in amps. */
         float remaining_percent; /**< @brief Estimated battery percentage remaining (range: 0.0
-                                    to 1.0). */
+                                          to 1.0). */
+    };
+
+    /**
+     * @brief Battery current type.
+     */
+    struct BatteryStatus {
+        float current_a; /**< @brief Current in amps. */
+        float mah_consumed; /**< @brief mAh consumed since reboot. */
+    };
+
+    /**
+     * @brief Mode Info structure.
+     */
+    struct ModeInfo {
+        uint8_t base_mode; /**< @brief Base mode flags. */
+        uint32_t custom_mode; /**< @brief Custom mode (made up of main & submode). */
     };
 
     /**
@@ -329,6 +360,13 @@ public:
     struct ActuatorOutputStatus {
         uint32_t active; /**< @brief Active outputs */
         float actuator[32]; /**< @brief Servo / motor output array values. */
+    };
+
+    /**
+     * @brief The raw values of the servo output ppms for port 0 (Pixhawk MAIN)
+     */
+    struct ServoOutputRaw {
+        uint16_t servo[16]; /**< @brief Servo output values for port 0 */
     };
 
     /**
@@ -876,6 +914,13 @@ public:
     Battery battery() const;
 
     /**
+     * @brief Get the current mode info (synchronous).
+     *
+     * @return Mode Info structure.
+     */
+    ModeInfo mode_info() const;
+
+    /**
      * @brief Get the current flight mode (synchronous).
      *
      * @return Flight mode.
@@ -1106,6 +1151,20 @@ public:
     void imu_reading_ned_async(imu_reading_ned_callback_t callback);
 
     /**
+     * @brief Callback type for distance sensor updates.
+     *
+     * @param distance_sensor Distance sensor reading.
+     */
+    typedef std::function<void(DistanceSensor distance_sensor)> distance_sensor_callback_t;
+
+    /**
+     * @brief Subscribe to distance sensor updates (asynchronous).
+     *
+     * @param callback function to call with updates.
+     */
+    void distance_sensor_async(distance_sensor_callback_t callback);
+
+    /**
      * @brief Callback type for GPS information updates.
      *
      * @param gps_info GPS information.
@@ -1132,6 +1191,36 @@ public:
      * @param callback Function to call with updates.
      */
     void battery_async(battery_callback_t callback);
+
+    /**
+     * @brief Callback type for battery current consumption updates.
+     *
+     * @param battery Battery status.
+     */
+    typedef std::function<void(BatteryStatus battery_status)> battery_status_callback_t;
+
+    /**
+     * @brief Subscribe to battery current status updates (asynchronous).
+     *
+     * @param callback Function to call with updates.
+     */
+    void battery_status_async(battery_status_callback_t callback);
+
+    /**
+     * @brief Callback type for mode info updates.
+     *
+     * @param mode_info Mode Info structure.
+     */
+    typedef std::function<void(ModeInfo mode_info)> mode_info_callback_t;
+
+    /**
+     * @brief Subscribe to mode info updates (asynchronous).
+     *
+     * Note that mode info updates are limited to 1Hz.
+     *
+     * @param callback Function to call with updates.
+     */
+    void mode_info_async(mode_info_callback_t callback);
 
     /**
      * @brief Callback type for flight mode updates.
@@ -1233,6 +1322,13 @@ public:
         actuator_output_status_callback_t;
 
     /**
+     * @brief Callback type for servo output raw updates (asynchronous).
+     *
+     * @param callback Function to call with updates.
+     */
+    typedef std::function<void(ServoOutputRaw servo_output_raw)> servo_output_raw_callback_t;
+
+    /**
      * @brief Callback type for odometry updates (asynchronous).
      *
      * @param callback Function to call with updates.
@@ -1245,6 +1341,13 @@ public:
      * @param callback Function to call with updates.
      */
     void actuator_output_status_async(actuator_output_status_callback_t callback);
+
+    /**
+     * @brief Subscribe to actuator output status target updates (asynchronous).
+     *
+     * @param callback Function to call with updates.
+     */
+    void servo_output_raw_async(servo_output_raw_callback_t callback);
 
     /**
      * @brief Subscribe to odometry updates (asynchronous).

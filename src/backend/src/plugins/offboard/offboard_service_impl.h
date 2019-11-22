@@ -22,6 +22,20 @@ public:
         response->set_allocated_offboard_result(rpc_offboard_result);
     }
 
+    grpc::Status RequestOffboard(
+        grpc::ServerContext* /* context */,
+        const rpc::offboard::StartRequest* /* request */,
+        rpc::offboard::StartResponse* response) override
+    {
+        auto offboard_result = _offboard.request_offboard();
+
+        if (response != nullptr) {
+            fillResponseWithResult(response, offboard_result);
+        }
+
+        return grpc::Status::OK;
+    }
+
     grpc::Status Start(
         grpc::ServerContext* /* context */,
         const rpc::offboard::StartRequest* /* request */,
@@ -63,6 +77,20 @@ public:
         return grpc::Status::OK;
     }
 
+    grpc::Status SetActuatorControlOnce(
+        grpc::ServerContext* /* context */,
+        const rpc::offboard::SetActuatorControlRequest* request,
+        rpc::offboard::SetActuatorControlResponse* /* response */) override
+    {
+        if (request != nullptr) {
+            auto requested_actuator_control =
+                translateRPCActuatorControl(request->actuator_control());
+            _offboard.set_actuator_control_once(requested_actuator_control);
+        }
+
+        return grpc::Status::OK;
+    }
+
     grpc::Status SetActuatorControl(
         grpc::ServerContext* /* context */,
         const rpc::offboard::SetActuatorControlRequest* request,
@@ -95,6 +123,19 @@ public:
         return actuator_control;
     }
 
+    grpc::Status SetAttitudeOnce(
+        grpc::ServerContext* /* context */,
+        const rpc::offboard::SetAttitudeRequest* request,
+        rpc::offboard::SetAttitudeResponse* /* response */) override
+    {
+        if (request != nullptr) {
+            auto requested_attitude = translateRPCAttitude(request->attitude());
+            _offboard.set_attitude_once(requested_attitude);
+        }
+
+        return grpc::Status::OK;
+    }
+
     grpc::Status SetAttitude(
         grpc::ServerContext* /* context */,
         const rpc::offboard::SetAttitudeRequest* request,
@@ -119,6 +160,19 @@ public:
         attitude.thrust_value = rpc_attitude.thrust_value();
 
         return attitude;
+    }
+
+    grpc::Status SetAttitudeRateOnce(
+        grpc::ServerContext* /* context */,
+        const rpc::offboard::SetAttitudeRateRequest* request,
+        rpc::offboard::SetAttitudeRateResponse* /* response */) override
+    {
+        if (request != nullptr) {
+            auto requested_attitude_rate = translateRPCAttitudeRate(request->attitude_rate());
+            _offboard.set_attitude_rate_once(requested_attitude_rate);
+        }
+
+        return grpc::Status::OK;
     }
 
     grpc::Status SetAttitudeRate(
@@ -147,6 +201,20 @@ public:
         return attitude_rate;
     }
 
+    grpc::Status SetPositionNedOnce(
+        grpc::ServerContext* /* context */,
+        const rpc::offboard::SetPositionNedRequest* request,
+        rpc::offboard::SetPositionNedResponse* /* response */) override
+    {
+        if (request != nullptr) {
+            auto requested_position_ned_yaw =
+                translateRPCPositionNedYaw(request->position_ned_yaw());
+            _offboard.set_position_ned_once(requested_position_ned_yaw);
+        }
+
+        return grpc::Status::OK;
+    }
+
     grpc::Status SetPositionNed(
         grpc::ServerContext* /* context */,
         const rpc::offboard::SetPositionNedRequest* request,
@@ -172,6 +240,20 @@ public:
         position_ned_yaw.yaw_deg = rpc_position_ned_yaw.yaw_deg();
 
         return position_ned_yaw;
+    }
+
+    grpc::Status SetVelocityBodyOnce(
+        grpc::ServerContext* /* context */,
+        const rpc::offboard::SetVelocityBodyRequest* request,
+        rpc::offboard::SetVelocityBodyResponse* /* response */) override
+    {
+        if (request != nullptr) {
+            auto requested_velocity_body_yawspeed =
+                translateRPCVelocityBodyYawspeed(request->velocity_body_yawspeed());
+            _offboard.set_velocity_body_once(requested_velocity_body_yawspeed);
+        }
+
+        return grpc::Status::OK;
     }
 
     grpc::Status SetVelocityBody(
