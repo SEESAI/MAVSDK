@@ -14,3 +14,9 @@ CMakeLists.txt.user*
 
 # windows swap files
 *~
+
+# vs code & clion files
+.idea/
+cmake-build-debug/
+cmake-build-release/
+cmake-build-relwithdebinfo/
