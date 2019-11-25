@@ -240,6 +240,31 @@ public:
         return grpc::Status::OK;
     }
 
+    grpc::Status SubscribeModeInfo(
+        grpc::ServerContext* /* context */,
+        const mavsdk::rpc::telemetry::SubscribeModeInfoRequest* /* request */,
+        grpc::ServerWriter<rpc::telemetry::ModeInfoResponse>* writer) override
+    {
+        std::mutex mode_info_mutex{};
+
+        _telemetry.mode_info_async(
+            [this, &writer, &mode_info_mutex](mavsdk::Telemetry::ModeInfo mode_info) {
+
+              auto custom_main_mode = uint8_t((mode_info.custom_mode >> 8U) & 0xffU);
+              auto custom_sub_mode = uint8_t(mode_info.custom_mode & 0xffU);
+              mavsdk::rpc::telemetry::ModeInfoResponse rpc_mode_info_response;
+              rpc_mode_info_response.mutable_mode_info()->set_base_mode(mode_info.base_mode);
+              rpc_mode_info_response.mutable_mode_info()->set_custom_main_mode(custom_main_mode);
+              rpc_mode_info_response.mutable_mode_info()->set_custom_main_mode(custom_sub_mode);
+
+              std::lock_guard<std::mutex> lock(mode_info_mutex);
+              writer->Write(rpc_mode_info_response);
+            });
+
+        _stop_future.wait();
+        return grpc::Status::OK;
+    }
+
     grpc::Status SubscribeFlightMode(
         grpc::ServerContext* /* context */,
         const mavsdk::rpc::telemetry::SubscribeFlightModeRequest* /* request */,

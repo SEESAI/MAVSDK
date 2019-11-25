@@ -257,6 +257,11 @@ Telemetry::Battery Telemetry::battery() const
     return _impl->get_battery();
 }
 
+Telemetry::ModeInfo Telemetry::mode_info() const
+{
+    return _impl->get_mode_info();
+}
+
 Telemetry::FlightMode Telemetry::flight_mode() const
 {
     return _impl->get_flight_mode();
@@ -361,6 +366,11 @@ void Telemetry::gps_info_async(gps_info_callback_t callback)
 void Telemetry::battery_async(battery_callback_t callback)
 {
     return _impl->battery_async(callback);
+}
+
+void Telemetry::mode_info_async(mode_info_callback_t callback)
+{
+    return _impl->mode_info_async(callback);
 }
 
 void Telemetry::flight_mode_async(flight_mode_callback_t callback)

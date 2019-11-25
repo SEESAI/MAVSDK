@@ -217,6 +217,14 @@ public:
     };
 
     /**
+    * @brief Mode Info structure.
+    */
+    struct ModeInfo {
+        uint8_t base_mode; /**< @brief Base mode flags. */
+        uint32_t custom_mode; /**< @brief Custom mode (made up of main & submode). */
+    };
+
+    /**
      * @brief Flight modes.
      *
      * For more information about flight modes, check out
@@ -793,6 +801,13 @@ public:
     Battery battery() const;
 
     /**
+     * @brief Get the current mode info (synchronous).
+     *
+     * @return Mode Info structure.
+     */
+    ModeInfo mode_info() const;
+
+    /**
      * @brief Get the current flight mode (synchronous).
      *
      * @return Flight mode.
@@ -1021,6 +1036,22 @@ public:
      * @param callback Function to call with updates.
      */
     void battery_async(battery_callback_t callback);
+
+    /**
+     * @brief Callback type for mode info updates.
+     *
+     * @param mode_info Mode Info structure.
+     */
+    typedef std::function<void(ModeInfo mode_info)> mode_info_callback_t;
+
+    /**
+     * @brief Subscribe to mode info updates (asynchronous).
+     *
+     * Note that mode info updates are limited to 1Hz.
+     *
+     * @param callback Function to call with updates.
+     */
+    void mode_info_async(mode_info_callback_t callback);
 
     /**
      * @brief Callback type for flight mode updates.

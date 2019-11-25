@@ -656,6 +656,15 @@ void TelemetryImpl::process_heartbeat(const mavlink_message_t& message)
         _parent->call_user_callback([callback, arg]() { callback(arg); });
     }
 
+    if (_mode_info_subscription) {
+        auto callback = _mode_info_subscription;
+        // The modes are already parsed in SystemImpl, so we can take
+        // from there.  This assumes that SystemImpl gets called first because
+        // it's earlier in the callback list.
+        auto arg = get_mode_info();
+        _parent->call_user_callback([callback, arg]() { callback(arg); });
+    }
+
     if (_flight_mode_subscription) {
         auto callback = _flight_mode_subscription;
         // The flight mode is already parsed in SystemImpl, so we can take it
@@ -1121,6 +1130,15 @@ void TelemetryImpl::set_battery(Telemetry::Battery battery)
     _battery = battery;
 }
 
+
+Telemetry::ModeInfo TelemetryImpl::get_mode_info() const
+{
+    Telemetry::ModeInfo mode_info;
+    mode_info.base_mode = _parent->get_base_mode();
+    mode_info.custom_mode = _parent->get_custom_mode();
+    return mode_info;
+}
+
 Telemetry::FlightMode TelemetryImpl::get_flight_mode() const
 {
     return telemetry_flight_mode_from_flight_mode(_parent->get_flight_mode());
@@ -1346,6 +1364,10 @@ void TelemetryImpl::gps_info_async(Telemetry::gps_info_callback_t& callback)
 void TelemetryImpl::battery_async(Telemetry::battery_callback_t& callback)
 {
     _battery_subscription = callback;
+}
+
+void TelemetryImpl::mode_info_async(Telemetry::mode_info_callback_t& callback){
+    _mode_info_subscription = callback;
 }
 
 void TelemetryImpl::flight_mode_async(Telemetry::flight_mode_callback_t& callback)

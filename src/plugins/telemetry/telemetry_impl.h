@@ -77,6 +77,7 @@ public:
     Telemetry::IMUReadingNED get_imu_reading_ned() const;
     Telemetry::GPSInfo get_gps_info() const;
     Telemetry::Battery get_battery() const;
+    Telemetry::ModeInfo get_mode_info() const;
     Telemetry::FlightMode get_flight_mode() const;
     Telemetry::Health get_health() const;
     bool get_health_all_ok() const;
@@ -102,6 +103,7 @@ public:
     void imu_reading_ned_async(Telemetry::imu_reading_ned_callback_t& callback);
     void gps_info_async(Telemetry::gps_info_callback_t& callback);
     void battery_async(Telemetry::battery_callback_t& callback);
+    void mode_info_async(Telemetry::mode_info_callback_t& callback);
     void flight_mode_async(Telemetry::flight_mode_callback_t& callback);
     void health_async(Telemetry::health_callback_t& callback);
     void health_all_ok_async(Telemetry::health_all_ok_callback_t& callback);
@@ -264,6 +266,7 @@ private:
     Telemetry::imu_reading_ned_callback_t _imu_reading_ned_subscription{nullptr};
     Telemetry::gps_info_callback_t _gps_info_subscription{nullptr};
     Telemetry::battery_callback_t _battery_subscription{nullptr};
+    Telemetry::mode_info_callback_t _mode_info_subscription{nullptr};
     Telemetry::flight_mode_callback_t _flight_mode_subscription{nullptr};
     Telemetry::health_callback_t _health_subscription{nullptr};
     Telemetry::health_all_ok_callback_t _health_all_ok_subscription{nullptr};
