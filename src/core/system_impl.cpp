@@ -935,7 +935,7 @@ uint8_t SystemImpl::get_base_mode() const
     return _base_mode;
 }
 
-uint8_t SystemImpl::get_custom_mode() const
+uint32_t SystemImpl::get_custom_mode() const
 {
     return _custom_mode;
 }

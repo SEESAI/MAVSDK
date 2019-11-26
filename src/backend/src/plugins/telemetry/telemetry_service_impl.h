@@ -249,13 +249,12 @@ public:
 
         _telemetry.mode_info_async(
             [this, &writer, &mode_info_mutex](mavsdk::Telemetry::ModeInfo mode_info) {
-
-              auto custom_main_mode = uint8_t((mode_info.custom_mode >> 8U) & 0xffU);
-              auto custom_sub_mode = uint8_t(mode_info.custom_mode & 0xffU);
+              auto custom_main_mode = uint8_t((mode_info.custom_mode >> 16U) & 0xffU);
+              auto custom_sub_mode = uint8_t((mode_info.custom_mode >> 24U) & 0xffU);
               mavsdk::rpc::telemetry::ModeInfoResponse rpc_mode_info_response;
               rpc_mode_info_response.mutable_mode_info()->set_base_mode(mode_info.base_mode);
               rpc_mode_info_response.mutable_mode_info()->set_custom_main_mode(custom_main_mode);
-              rpc_mode_info_response.mutable_mode_info()->set_custom_main_mode(custom_sub_mode);
+              rpc_mode_info_response.mutable_mode_info()->set_custom_sub_mode(custom_sub_mode);
 
               std::lock_guard<std::mutex> lock(mode_info_mutex);
               writer->Write(rpc_mode_info_response);

@@ -129,7 +129,7 @@ public:
         const std::string& name, int32_t value, success_t callback, const void* cookie);
 
     uint8_t get_base_mode() const;
-    uint8_t get_custom_mode() const;
+    uint32_t get_custom_mode() const;
     FlightMode get_flight_mode() const;
 
     MAVLinkCommands::Result
@@ -317,7 +317,7 @@ private:
 
     std::atomic<FlightMode> _flight_mode{FlightMode::UNKNOWN};
     std::atomic<uint8_t> _base_mode{0};
-    std::atomic<uint8_t> _custom_mode{0};
+    std::atomic<uint32_t> _custom_mode{0};
 };
 
 } // namespace mavsdk
