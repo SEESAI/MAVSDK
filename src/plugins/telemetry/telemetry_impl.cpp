@@ -63,6 +63,9 @@ void TelemetryImpl::init()
         MAVLINK_MSG_ID_HEARTBEAT, std::bind(&TelemetryImpl::process_heartbeat, this, _1), this);
 
     _parent->register_mavlink_message_handler(
+        MAVLINK_MSG_ID_ESTIMATOR_STATUS, std::bind(&TelemetryImpl::process_estimator_status, this, _1), this);
+
+    _parent->register_mavlink_message_handler(
         MAVLINK_MSG_ID_STATUSTEXT, std::bind(&TelemetryImpl::process_statustext, this, _1), this);
 
     _parent->register_mavlink_message_handler(
@@ -425,6 +428,16 @@ void TelemetryImpl::command_result_callback(
     callback(action_result);
 }
 
+void TelemetryImpl::process_estimator_status(const mavlink_message_t& message){
+    // see https://mavlink.io/en/messages/common.html#ESTIMATOR_STATUS_FLAGS
+    mavlink_estimator_status_t est_status;
+    mavlink_msg_estimator_status_decode(&message, &est_status);
+
+    // Set local position health OK based on estimator flags
+    bool local_posn_ok = est_status.flags & ESTIMATOR_PRED_POS_HORIZ_ABS;
+    set_health_local_position(local_posn_ok);
+}
+
 void TelemetryImpl::process_position_velocity_ned(const mavlink_message_t& message)
 {
     mavlink_local_position_ned_t local_position;
@@ -581,8 +594,6 @@ void TelemetryImpl::process_gps_raw_int(const mavlink_message_t& message)
     const bool gps_ok = ((gps_raw_int.fix_type >= 3) && (gps_raw_int.satellites_visible >= 8));
 
     set_health_global_position(gps_ok);
-    // Local is not different from global for now until things like flow are in place.
-    set_health_local_position(gps_ok);
 
     if (_gps_info_subscription) {
         auto callback = _gps_info_subscription;

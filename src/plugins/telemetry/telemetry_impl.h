@@ -145,6 +145,7 @@ private:
     void set_actuator_output_status(uint32_t active, const std::array<float, 32>& actuators);
     void set_odometry(Telemetry::Odometry& odometry);
 
+    void process_estimator_status(const mavlink_message_t& message);
     void process_position_velocity_ned(const mavlink_message_t& message);
     void process_global_position_int(const mavlink_message_t& message);
     void process_home_position(const mavlink_message_t& message);
