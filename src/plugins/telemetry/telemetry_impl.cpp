@@ -434,7 +434,7 @@ void TelemetryImpl::process_estimator_status(const mavlink_message_t& message){
     mavlink_msg_estimator_status_decode(&message, &est_status);
 
     // Set local position health OK based on estimator flags
-    bool local_posn_ok = est_status.flags & ESTIMATOR_PRED_POS_HORIZ_ABS;
+    bool local_posn_ok = est_status.flags & ESTIMATOR_PRED_POS_HORIZ_REL;
     set_health_local_position(local_posn_ok);
 }
 
@@ -961,7 +961,7 @@ void TelemetryImpl::receive_rc_channels_timeout()
 void TelemetryImpl::receive_gps_raw_timeout()
 {
     const bool position_ok = false;
-    set_health_local_position(position_ok);
+    // set_health_local_position(position_ok);
     set_health_global_position(position_ok);
 }
 
