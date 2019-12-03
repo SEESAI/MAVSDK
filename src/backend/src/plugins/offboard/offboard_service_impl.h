@@ -22,6 +22,20 @@ public:
         response->set_allocated_offboard_result(rpc_offboard_result);
     }
 
+    grpc::Status RequestOffboard(
+        grpc::ServerContext* /* context */,
+        const rpc::offboard::StartRequest* /* request */,
+        rpc::offboard::StartResponse* response) override
+    {
+        auto offboard_result = _offboard.request_offboard();
+
+        if (response != nullptr) {
+            fillResponseWithResult(response, offboard_result);
+        }
+
+        return grpc::Status::OK;
+    }
+
     grpc::Status Start(
         grpc::ServerContext* /* context */,
         const rpc::offboard::StartRequest* /* request */,
@@ -147,6 +161,20 @@ public:
         return attitude_rate;
     }
 
+    grpc::Status SetPositionNedOnce(
+        grpc::ServerContext* /* context */,
+        const rpc::offboard::SetPositionNedRequest* request,
+        rpc::offboard::SetPositionNedResponse* /* response */) override
+    {
+        if (request != nullptr) {
+            auto requested_position_ned_yaw =
+                translateRPCPositionNedYaw(request->position_ned_yaw());
+            _offboard.set_position_ned_once(requested_position_ned_yaw);
+        }
+
+        return grpc::Status::OK;
+    }
+
     grpc::Status SetPositionNed(
         grpc::ServerContext* /* context */,
         const rpc::offboard::SetPositionNedRequest* request,
@@ -172,6 +200,20 @@ public:
         position_ned_yaw.yaw_deg = rpc_position_ned_yaw.yaw_deg();
 
         return position_ned_yaw;
+    }
+
+    grpc::Status SetVelocityBodyOnce(
+        grpc::ServerContext* /* context */,
+        const rpc::offboard::SetVelocityBodyRequest* request,
+        rpc::offboard::SetVelocityBodyResponse* /* response */) override
+    {
+        if (request != nullptr) {
+            auto requested_velocity_body_yawspeed =
+                translateRPCVelocityBodyYawspeed(request->velocity_body_yawspeed());
+            _offboard.set_velocity_body_once(requested_velocity_body_yawspeed);
+        }
+
+        return grpc::Status::OK;
     }
 
     grpc::Status SetVelocityBody(
