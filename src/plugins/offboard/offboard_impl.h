@@ -38,6 +38,7 @@ public:
     void set_attitude(Offboard::Attitude attitude);
     void set_attitude_rate_once(Offboard::AttitudeRate attitude_rate);
     void set_attitude_rate(Offboard::AttitudeRate attitude_rate);
+    void set_actuator_control_once(Offboard::ActuatorControl actuator_control);
     void set_actuator_control(Offboard::ActuatorControl actuator_control);
 
     OffboardImpl(const OffboardImpl&) = delete;

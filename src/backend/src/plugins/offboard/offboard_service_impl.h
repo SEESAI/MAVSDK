@@ -77,6 +77,20 @@ public:
         return grpc::Status::OK;
     }
 
+    grpc::Status SetActuatorControlOnce(
+        grpc::ServerContext* /* context */,
+        const rpc::offboard::SetActuatorControlRequest* request,
+        rpc::offboard::SetActuatorControlResponse* /* response */) override
+    {
+        if (request != nullptr) {
+            auto requested_actuator_control =
+                translateRPCActuatorControl(request->actuator_control());
+            _offboard.set_actuator_control_once(requested_actuator_control);
+        }
+
+        return grpc::Status::OK;
+    }
+
     grpc::Status SetActuatorControl(
         grpc::ServerContext* /* context */,
         const rpc::offboard::SetActuatorControlRequest* request,

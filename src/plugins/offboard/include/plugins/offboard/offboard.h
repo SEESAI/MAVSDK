@@ -288,8 +288,17 @@ public:
      *
      * @param actuator_control actuators control values
      */
+    void set_actuator_control_once(ActuatorControl actuator_control);
 
-    void set_actuator_control(const ActuatorControl actuator_control);
+    /**
+     * @brief Set direct actuator control values to groups #0 and #1.
+     * First 8 controls will go to control group 0, the following 8 controls to control group 1 (if
+     * actuator_control.num_controls more than 8).
+     *
+     * @param actuator_control actuators control values
+     */
+
+    void set_actuator_control(ActuatorControl actuator_control);
 
     /**
      * @brief Copy constructor (object is not copyable).

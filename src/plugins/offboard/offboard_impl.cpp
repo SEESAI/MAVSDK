@@ -314,6 +314,22 @@ void OffboardImpl::set_attitude_rate(Offboard::AttitudeRate attitude_rate)
     send_attitude_rate();
 }
 
+void OffboardImpl::set_actuator_control_once(Offboard::ActuatorControl actuator_control)
+{
+    _mutex.lock();
+    _actuator_control = actuator_control;
+
+    if (_call_every_cookie) {
+        // If we're already sending other setpoints, stop that now.
+        _parent->remove_call_every(_call_every_cookie);
+        _call_every_cookie = nullptr;
+    }
+    _mutex.unlock();
+
+    // send a single actuator control request
+    send_actuator_control();
+}
+
 void OffboardImpl::set_actuator_control(Offboard::ActuatorControl actuator_control)
 {
     _mutex.lock();
