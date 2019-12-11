@@ -34,7 +34,9 @@ public:
     void set_velocity_ned(Offboard::VelocityNEDYaw velocity_ned_yaw);
     void set_velocity_body_once(Offboard::VelocityBodyYawspeed velocity_body_yawspeed);
     void set_velocity_body(Offboard::VelocityBodyYawspeed velocity_body_yawspeed);
+    void set_attitude_once(Offboard::Attitude attitude);
     void set_attitude(Offboard::Attitude attitude);
+    void set_attitude_rate_once(Offboard::AttitudeRate attitude_rate);
     void set_attitude_rate(Offboard::AttitudeRate attitude_rate);
     void set_actuator_control(Offboard::ActuatorControl actuator_control);
 

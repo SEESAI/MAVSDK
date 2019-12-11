@@ -255,7 +255,23 @@ public:
      *
      * @param attitude roll, pitch and yaw in degrees along with thrust in percentage.
      */
+    void set_attitude_once(Attitude attitude);
+
+    /**
+     * @brief Set the attitude in terms of roll, pitch and yaw in degrees with thrust
+     * in percentage.
+     *
+     * @param attitude roll, pitch and yaw in degrees along with thrust in percentage.
+     */
     void set_attitude(Attitude attitude);
+
+    /**
+     * @brief Set the attitude rate in terms of pitch, roll and yaw angular rate along with thrust
+     * in percentage.
+     *
+     * @param attitude_rate roll, pitch and yaw angular rate along with thrust in percentage.
+     */
+    void set_attitude_rate_once(AttitudeRate attitude_rate);
 
     /**
      * @brief Set the attitude rate in terms of pitch, roll and yaw angular rate along with thrust

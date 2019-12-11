@@ -63,9 +63,19 @@ void Offboard::set_velocity_body(Offboard::VelocityBodyYawspeed velocity_body_ya
     return _impl->set_velocity_body(velocity_body_yawspeed);
 }
 
+void Offboard::set_attitude_once(Offboard::Attitude attitude)
+{
+    return _impl->set_attitude_once(attitude);
+}
+
 void Offboard::set_attitude(Offboard::Attitude attitude)
 {
     return _impl->set_attitude(attitude);
+}
+
+void Offboard::set_attitude_rate_once(Offboard::AttitudeRate attitude_rate)
+{
+    return _impl->set_attitude_rate_once(attitude_rate);
 }
 
 void Offboard::set_attitude_rate(Offboard::AttitudeRate attitude_rate)

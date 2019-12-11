@@ -109,6 +109,19 @@ public:
         return actuator_control;
     }
 
+    grpc::Status SetAttitudeOnce(
+        grpc::ServerContext* /* context */,
+        const rpc::offboard::SetAttitudeRequest* request,
+        rpc::offboard::SetAttitudeResponse* /* response */) override
+    {
+        if (request != nullptr) {
+            auto requested_attitude = translateRPCAttitude(request->attitude());
+            _offboard.set_attitude_once(requested_attitude);
+        }
+
+        return grpc::Status::OK;
+    }
+
     grpc::Status SetAttitude(
         grpc::ServerContext* /* context */,
         const rpc::offboard::SetAttitudeRequest* request,
@@ -133,6 +146,19 @@ public:
         attitude.thrust_value = rpc_attitude.thrust_value();
 
         return attitude;
+    }
+
+    grpc::Status SetAttitudeRateOnce(
+        grpc::ServerContext* /* context */,
+        const rpc::offboard::SetAttitudeRateRequest* request,
+        rpc::offboard::SetAttitudeRateResponse* /* response */) override
+    {
+        if (request != nullptr) {
+            auto requested_attitude_rate = translateRPCAttitudeRate(request->attitude_rate());
+            _offboard.set_attitude_rate_once(requested_attitude_rate);
+        }
+
+        return grpc::Status::OK;
     }
 
     grpc::Status SetAttitudeRate(

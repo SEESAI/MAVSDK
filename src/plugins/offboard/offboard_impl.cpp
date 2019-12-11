@@ -197,7 +197,7 @@ void OffboardImpl::set_velocity_body_once(Offboard::VelocityBodyYawspeed velocit
     }
     _mutex.unlock();
 
-    // also send it right now to reduce latency
+    // send single velocity setpoint
     send_velocity_body();
 }
 
@@ -228,6 +228,22 @@ void OffboardImpl::set_velocity_body(Offboard::VelocityBodyYawspeed velocity_bod
     send_velocity_body();
 }
 
+void OffboardImpl::set_attitude_once(Offboard::Attitude attitude)
+{
+    _mutex.lock();
+    _attitude = attitude;
+
+    if (_call_every_cookie) {
+        // If we're already sending other setpoints, stop that now.
+        _parent->remove_call_every(_call_every_cookie);
+        _call_every_cookie = nullptr;
+    }
+    _mutex.unlock();
+
+    // send single attitude setpoint
+    send_attitude();
+}
+
 void OffboardImpl::set_attitude(Offboard::Attitude attitude)
 {
     _mutex.lock();
@@ -253,6 +269,22 @@ void OffboardImpl::set_attitude(Offboard::Attitude attitude)
 
     // also send it right now to reduce latency
     send_attitude();
+}
+
+void OffboardImpl::set_attitude_rate_once(Offboard::AttitudeRate attitude_rate)
+{
+    _mutex.lock();
+    _attitude_rate = attitude_rate;
+
+    if (_call_every_cookie) {
+        // If we're already sending other setpoints, stop that now.
+        _parent->remove_call_every(_call_every_cookie);
+        _call_every_cookie = nullptr;
+    }
+    _mutex.unlock();
+
+    // send a single attitude rate request
+    send_attitude_rate();
 }
 
 void OffboardImpl::set_attitude_rate(Offboard::AttitudeRate attitude_rate)
