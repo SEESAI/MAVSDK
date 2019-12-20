@@ -88,15 +88,15 @@ extern AttitudeQuaternionResponseDefaultTypeInternal _AttitudeQuaternionResponse
 class Battery;
 class BatteryDefaultTypeInternal;
 extern BatteryDefaultTypeInternal _Battery_default_instance_;
-class BatteryCurrent;
-class BatteryCurrentDefaultTypeInternal;
-extern BatteryCurrentDefaultTypeInternal _BatteryCurrent_default_instance_;
-class BatteryCurrentResponse;
-class BatteryCurrentResponseDefaultTypeInternal;
-extern BatteryCurrentResponseDefaultTypeInternal _BatteryCurrentResponse_default_instance_;
 class BatteryResponse;
 class BatteryResponseDefaultTypeInternal;
 extern BatteryResponseDefaultTypeInternal _BatteryResponse_default_instance_;
+class BatteryStatus;
+class BatteryStatusDefaultTypeInternal;
+extern BatteryStatusDefaultTypeInternal _BatteryStatus_default_instance_;
+class BatteryStatusResponse;
+class BatteryStatusResponseDefaultTypeInternal;
+extern BatteryStatusResponseDefaultTypeInternal _BatteryStatusResponse_default_instance_;
 class CameraAttitudeEulerResponse;
 class CameraAttitudeEulerResponseDefaultTypeInternal;
 extern CameraAttitudeEulerResponseDefaultTypeInternal _CameraAttitudeEulerResponse_default_instance_;
@@ -196,12 +196,12 @@ extern SubscribeAttitudeEulerRequestDefaultTypeInternal _SubscribeAttitudeEulerR
 class SubscribeAttitudeQuaternionRequest;
 class SubscribeAttitudeQuaternionRequestDefaultTypeInternal;
 extern SubscribeAttitudeQuaternionRequestDefaultTypeInternal _SubscribeAttitudeQuaternionRequest_default_instance_;
-class SubscribeBatteryCurrentRequest;
-class SubscribeBatteryCurrentRequestDefaultTypeInternal;
-extern SubscribeBatteryCurrentRequestDefaultTypeInternal _SubscribeBatteryCurrentRequest_default_instance_;
 class SubscribeBatteryRequest;
 class SubscribeBatteryRequestDefaultTypeInternal;
 extern SubscribeBatteryRequestDefaultTypeInternal _SubscribeBatteryRequest_default_instance_;
+class SubscribeBatteryStatusRequest;
+class SubscribeBatteryStatusRequestDefaultTypeInternal;
+extern SubscribeBatteryStatusRequestDefaultTypeInternal _SubscribeBatteryStatusRequest_default_instance_;
 class SubscribeCameraAttitudeEulerRequest;
 class SubscribeCameraAttitudeEulerRequestDefaultTypeInternal;
 extern SubscribeCameraAttitudeEulerRequestDefaultTypeInternal _SubscribeCameraAttitudeEulerRequest_default_instance_;
@@ -258,9 +258,9 @@ template<> ::mavsdk::rpc::telemetry::AttitudeAngularVelocityBodyResponse* Arena:
 template<> ::mavsdk::rpc::telemetry::AttitudeEulerResponse* Arena::CreateMaybeMessage<::mavsdk::rpc::telemetry::AttitudeEulerResponse>(Arena*);
 template<> ::mavsdk::rpc::telemetry::AttitudeQuaternionResponse* Arena::CreateMaybeMessage<::mavsdk::rpc::telemetry::AttitudeQuaternionResponse>(Arena*);
 template<> ::mavsdk::rpc::telemetry::Battery* Arena::CreateMaybeMessage<::mavsdk::rpc::telemetry::Battery>(Arena*);
-template<> ::mavsdk::rpc::telemetry::BatteryCurrent* Arena::CreateMaybeMessage<::mavsdk::rpc::telemetry::BatteryCurrent>(Arena*);
-template<> ::mavsdk::rpc::telemetry::BatteryCurrentResponse* Arena::CreateMaybeMessage<::mavsdk::rpc::telemetry::BatteryCurrentResponse>(Arena*);
 template<> ::mavsdk::rpc::telemetry::BatteryResponse* Arena::CreateMaybeMessage<::mavsdk::rpc::telemetry::BatteryResponse>(Arena*);
+template<> ::mavsdk::rpc::telemetry::BatteryStatus* Arena::CreateMaybeMessage<::mavsdk::rpc::telemetry::BatteryStatus>(Arena*);
+template<> ::mavsdk::rpc::telemetry::BatteryStatusResponse* Arena::CreateMaybeMessage<::mavsdk::rpc::telemetry::BatteryStatusResponse>(Arena*);
 template<> ::mavsdk::rpc::telemetry::CameraAttitudeEulerResponse* Arena::CreateMaybeMessage<::mavsdk::rpc::telemetry::CameraAttitudeEulerResponse>(Arena*);
 template<> ::mavsdk::rpc::telemetry::CameraAttitudeQuaternionResponse* Arena::CreateMaybeMessage<::mavsdk::rpc::telemetry::CameraAttitudeQuaternionResponse>(Arena*);
 template<> ::mavsdk::rpc::telemetry::Covariance* Arena::CreateMaybeMessage<::mavsdk::rpc::telemetry::Covariance>(Arena*);
@@ -294,8 +294,8 @@ template<> ::mavsdk::rpc::telemetry::SubscribeArmedRequest* Arena::CreateMaybeMe
 template<> ::mavsdk::rpc::telemetry::SubscribeAttitudeAngularVelocityBodyRequest* Arena::CreateMaybeMessage<::mavsdk::rpc::telemetry::SubscribeAttitudeAngularVelocityBodyRequest>(Arena*);
 template<> ::mavsdk::rpc::telemetry::SubscribeAttitudeEulerRequest* Arena::CreateMaybeMessage<::mavsdk::rpc::telemetry::SubscribeAttitudeEulerRequest>(Arena*);
 template<> ::mavsdk::rpc::telemetry::SubscribeAttitudeQuaternionRequest* Arena::CreateMaybeMessage<::mavsdk::rpc::telemetry::SubscribeAttitudeQuaternionRequest>(Arena*);
-template<> ::mavsdk::rpc::telemetry::SubscribeBatteryCurrentRequest* Arena::CreateMaybeMessage<::mavsdk::rpc::telemetry::SubscribeBatteryCurrentRequest>(Arena*);
 template<> ::mavsdk::rpc::telemetry::SubscribeBatteryRequest* Arena::CreateMaybeMessage<::mavsdk::rpc::telemetry::SubscribeBatteryRequest>(Arena*);
+template<> ::mavsdk::rpc::telemetry::SubscribeBatteryStatusRequest* Arena::CreateMaybeMessage<::mavsdk::rpc::telemetry::SubscribeBatteryStatusRequest>(Arena*);
 template<> ::mavsdk::rpc::telemetry::SubscribeCameraAttitudeEulerRequest* Arena::CreateMaybeMessage<::mavsdk::rpc::telemetry::SubscribeCameraAttitudeEulerRequest>(Arena*);
 template<> ::mavsdk::rpc::telemetry::SubscribeCameraAttitudeQuaternionRequest* Arena::CreateMaybeMessage<::mavsdk::rpc::telemetry::SubscribeCameraAttitudeQuaternionRequest>(Arena*);
 template<> ::mavsdk::rpc::telemetry::SubscribeFlightModeRequest* Arena::CreateMaybeMessage<::mavsdk::rpc::telemetry::SubscribeFlightModeRequest>(Arena*);
@@ -3757,23 +3757,23 @@ class BatteryResponse :
 };
 // -------------------------------------------------------------------
 
-class SubscribeBatteryCurrentRequest :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:mavsdk.rpc.telemetry.SubscribeBatteryCurrentRequest) */ {
+class SubscribeBatteryStatusRequest :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:mavsdk.rpc.telemetry.SubscribeBatteryStatusRequest) */ {
  public:
-  SubscribeBatteryCurrentRequest();
-  virtual ~SubscribeBatteryCurrentRequest();
+  SubscribeBatteryStatusRequest();
+  virtual ~SubscribeBatteryStatusRequest();
 
-  SubscribeBatteryCurrentRequest(const SubscribeBatteryCurrentRequest& from);
-  SubscribeBatteryCurrentRequest(SubscribeBatteryCurrentRequest&& from) noexcept
-    : SubscribeBatteryCurrentRequest() {
+  SubscribeBatteryStatusRequest(const SubscribeBatteryStatusRequest& from);
+  SubscribeBatteryStatusRequest(SubscribeBatteryStatusRequest&& from) noexcept
+    : SubscribeBatteryStatusRequest() {
     *this = ::std::move(from);
   }
 
-  inline SubscribeBatteryCurrentRequest& operator=(const SubscribeBatteryCurrentRequest& from) {
+  inline SubscribeBatteryStatusRequest& operator=(const SubscribeBatteryStatusRequest& from) {
     CopyFrom(from);
     return *this;
   }
-  inline SubscribeBatteryCurrentRequest& operator=(SubscribeBatteryCurrentRequest&& from) noexcept {
+  inline SubscribeBatteryStatusRequest& operator=(SubscribeBatteryStatusRequest&& from) noexcept {
     if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -3791,37 +3791,37 @@ class SubscribeBatteryCurrentRequest :
   static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
     return GetMetadataStatic().reflection;
   }
-  static const SubscribeBatteryCurrentRequest& default_instance();
+  static const SubscribeBatteryStatusRequest& default_instance();
 
   static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const SubscribeBatteryCurrentRequest* internal_default_instance() {
-    return reinterpret_cast<const SubscribeBatteryCurrentRequest*>(
-               &_SubscribeBatteryCurrentRequest_default_instance_);
+  static inline const SubscribeBatteryStatusRequest* internal_default_instance() {
+    return reinterpret_cast<const SubscribeBatteryStatusRequest*>(
+               &_SubscribeBatteryStatusRequest_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     26;
 
-  friend void swap(SubscribeBatteryCurrentRequest& a, SubscribeBatteryCurrentRequest& b) {
+  friend void swap(SubscribeBatteryStatusRequest& a, SubscribeBatteryStatusRequest& b) {
     a.Swap(&b);
   }
-  inline void Swap(SubscribeBatteryCurrentRequest* other) {
+  inline void Swap(SubscribeBatteryStatusRequest* other) {
     if (other == this) return;
     InternalSwap(other);
   }
 
   // implements Message ----------------------------------------------
 
-  inline SubscribeBatteryCurrentRequest* New() const final {
-    return CreateMaybeMessage<SubscribeBatteryCurrentRequest>(nullptr);
+  inline SubscribeBatteryStatusRequest* New() const final {
+    return CreateMaybeMessage<SubscribeBatteryStatusRequest>(nullptr);
   }
 
-  SubscribeBatteryCurrentRequest* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
-    return CreateMaybeMessage<SubscribeBatteryCurrentRequest>(arena);
+  SubscribeBatteryStatusRequest* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<SubscribeBatteryStatusRequest>(arena);
   }
   void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
   void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
-  void CopyFrom(const SubscribeBatteryCurrentRequest& from);
-  void MergeFrom(const SubscribeBatteryCurrentRequest& from);
+  void CopyFrom(const SubscribeBatteryStatusRequest& from);
+  void MergeFrom(const SubscribeBatteryStatusRequest& from);
   PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
   bool IsInitialized() const final;
 
@@ -3840,10 +3840,10 @@ class SubscribeBatteryCurrentRequest :
   inline void SharedCtor();
   inline void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(SubscribeBatteryCurrentRequest* other);
+  void InternalSwap(SubscribeBatteryStatusRequest* other);
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "mavsdk.rpc.telemetry.SubscribeBatteryCurrentRequest";
+    return "mavsdk.rpc.telemetry.SubscribeBatteryStatusRequest";
   }
   private:
   inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
@@ -3867,7 +3867,7 @@ class SubscribeBatteryCurrentRequest :
 
   // accessors -------------------------------------------------------
 
-  // @@protoc_insertion_point(class_scope:mavsdk.rpc.telemetry.SubscribeBatteryCurrentRequest)
+  // @@protoc_insertion_point(class_scope:mavsdk.rpc.telemetry.SubscribeBatteryStatusRequest)
  private:
   class _Internal;
 
@@ -3877,23 +3877,23 @@ class SubscribeBatteryCurrentRequest :
 };
 // -------------------------------------------------------------------
 
-class BatteryCurrentResponse :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:mavsdk.rpc.telemetry.BatteryCurrentResponse) */ {
+class BatteryStatusResponse :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:mavsdk.rpc.telemetry.BatteryStatusResponse) */ {
  public:
-  BatteryCurrentResponse();
-  virtual ~BatteryCurrentResponse();
+  BatteryStatusResponse();
+  virtual ~BatteryStatusResponse();
 
-  BatteryCurrentResponse(const BatteryCurrentResponse& from);
-  BatteryCurrentResponse(BatteryCurrentResponse&& from) noexcept
-    : BatteryCurrentResponse() {
+  BatteryStatusResponse(const BatteryStatusResponse& from);
+  BatteryStatusResponse(BatteryStatusResponse&& from) noexcept
+    : BatteryStatusResponse() {
     *this = ::std::move(from);
   }
 
-  inline BatteryCurrentResponse& operator=(const BatteryCurrentResponse& from) {
+  inline BatteryStatusResponse& operator=(const BatteryStatusResponse& from) {
     CopyFrom(from);
     return *this;
   }
-  inline BatteryCurrentResponse& operator=(BatteryCurrentResponse&& from) noexcept {
+  inline BatteryStatusResponse& operator=(BatteryStatusResponse&& from) noexcept {
     if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -3911,37 +3911,37 @@ class BatteryCurrentResponse :
   static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
     return GetMetadataStatic().reflection;
   }
-  static const BatteryCurrentResponse& default_instance();
+  static const BatteryStatusResponse& default_instance();
 
   static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const BatteryCurrentResponse* internal_default_instance() {
-    return reinterpret_cast<const BatteryCurrentResponse*>(
-               &_BatteryCurrentResponse_default_instance_);
+  static inline const BatteryStatusResponse* internal_default_instance() {
+    return reinterpret_cast<const BatteryStatusResponse*>(
+               &_BatteryStatusResponse_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     27;
 
-  friend void swap(BatteryCurrentResponse& a, BatteryCurrentResponse& b) {
+  friend void swap(BatteryStatusResponse& a, BatteryStatusResponse& b) {
     a.Swap(&b);
   }
-  inline void Swap(BatteryCurrentResponse* other) {
+  inline void Swap(BatteryStatusResponse* other) {
     if (other == this) return;
     InternalSwap(other);
   }
 
   // implements Message ----------------------------------------------
 
-  inline BatteryCurrentResponse* New() const final {
-    return CreateMaybeMessage<BatteryCurrentResponse>(nullptr);
+  inline BatteryStatusResponse* New() const final {
+    return CreateMaybeMessage<BatteryStatusResponse>(nullptr);
   }
 
-  BatteryCurrentResponse* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
-    return CreateMaybeMessage<BatteryCurrentResponse>(arena);
+  BatteryStatusResponse* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<BatteryStatusResponse>(arena);
   }
   void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
   void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
-  void CopyFrom(const BatteryCurrentResponse& from);
-  void MergeFrom(const BatteryCurrentResponse& from);
+  void CopyFrom(const BatteryStatusResponse& from);
+  void MergeFrom(const BatteryStatusResponse& from);
   PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
   bool IsInitialized() const final;
 
@@ -3960,10 +3960,10 @@ class BatteryCurrentResponse :
   inline void SharedCtor();
   inline void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(BatteryCurrentResponse* other);
+  void InternalSwap(BatteryStatusResponse* other);
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "mavsdk.rpc.telemetry.BatteryCurrentResponse";
+    return "mavsdk.rpc.telemetry.BatteryStatusResponse";
   }
   private:
   inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
@@ -3988,25 +3988,25 @@ class BatteryCurrentResponse :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kBatteryCurrentFieldNumber = 1,
+    kBatteryStatusFieldNumber = 1,
   };
-  // .mavsdk.rpc.telemetry.BatteryCurrent battery_current = 1;
-  bool has_battery_current() const;
+  // .mavsdk.rpc.telemetry.BatteryStatus battery_status = 1;
+  bool has_battery_status() const;
   private:
-  bool _internal_has_battery_current() const;
+  bool _internal_has_battery_status() const;
   public:
-  void clear_battery_current();
-  const ::mavsdk::rpc::telemetry::BatteryCurrent& battery_current() const;
-  ::mavsdk::rpc::telemetry::BatteryCurrent* release_battery_current();
-  ::mavsdk::rpc::telemetry::BatteryCurrent* mutable_battery_current();
-  void set_allocated_battery_current(::mavsdk::rpc::telemetry::BatteryCurrent* battery_current);
+  void clear_battery_status();
+  const ::mavsdk::rpc::telemetry::BatteryStatus& battery_status() const;
+  ::mavsdk::rpc::telemetry::BatteryStatus* release_battery_status();
+  ::mavsdk::rpc::telemetry::BatteryStatus* mutable_battery_status();
+  void set_allocated_battery_status(::mavsdk::rpc::telemetry::BatteryStatus* battery_status);
 
-  // @@protoc_insertion_point(class_scope:mavsdk.rpc.telemetry.BatteryCurrentResponse)
+  // @@protoc_insertion_point(class_scope:mavsdk.rpc.telemetry.BatteryStatusResponse)
  private:
   class _Internal;
 
   ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
-  ::mavsdk::rpc::telemetry::BatteryCurrent* battery_current_;
+  ::mavsdk::rpc::telemetry::BatteryStatus* battery_status_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_telemetry_2ftelemetry_2eproto;
 };
@@ -7023,14 +7023,20 @@ class Battery :
 
   enum : int {
     kVoltageVFieldNumber = 1,
-    kRemainingPercentFieldNumber = 2,
+    kCurrentAFieldNumber = 2,
+    kRemainingPercentFieldNumber = 3,
   };
   // float voltage_v = 1;
   void clear_voltage_v();
   float voltage_v() const;
   void set_voltage_v(float value);
 
-  // float remaining_percent = 2;
+  // float current_a = 2;
+  void clear_current_a();
+  float current_a() const;
+  void set_current_a(float value);
+
+  // float remaining_percent = 3;
   void clear_remaining_percent();
   float remaining_percent() const;
   void set_remaining_percent(float value);
@@ -7041,29 +7047,30 @@ class Battery :
 
   ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
   float voltage_v_;
+  float current_a_;
   float remaining_percent_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_telemetry_2ftelemetry_2eproto;
 };
 // -------------------------------------------------------------------
 
-class BatteryCurrent :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:mavsdk.rpc.telemetry.BatteryCurrent) */ {
+class BatteryStatus :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:mavsdk.rpc.telemetry.BatteryStatus) */ {
  public:
-  BatteryCurrent();
-  virtual ~BatteryCurrent();
+  BatteryStatus();
+  virtual ~BatteryStatus();
 
-  BatteryCurrent(const BatteryCurrent& from);
-  BatteryCurrent(BatteryCurrent&& from) noexcept
-    : BatteryCurrent() {
+  BatteryStatus(const BatteryStatus& from);
+  BatteryStatus(BatteryStatus&& from) noexcept
+    : BatteryStatus() {
     *this = ::std::move(from);
   }
 
-  inline BatteryCurrent& operator=(const BatteryCurrent& from) {
+  inline BatteryStatus& operator=(const BatteryStatus& from) {
     CopyFrom(from);
     return *this;
   }
-  inline BatteryCurrent& operator=(BatteryCurrent&& from) noexcept {
+  inline BatteryStatus& operator=(BatteryStatus&& from) noexcept {
     if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -7081,37 +7088,37 @@ class BatteryCurrent :
   static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
     return GetMetadataStatic().reflection;
   }
-  static const BatteryCurrent& default_instance();
+  static const BatteryStatus& default_instance();
 
   static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const BatteryCurrent* internal_default_instance() {
-    return reinterpret_cast<const BatteryCurrent*>(
-               &_BatteryCurrent_default_instance_);
+  static inline const BatteryStatus* internal_default_instance() {
+    return reinterpret_cast<const BatteryStatus*>(
+               &_BatteryStatus_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     51;
 
-  friend void swap(BatteryCurrent& a, BatteryCurrent& b) {
+  friend void swap(BatteryStatus& a, BatteryStatus& b) {
     a.Swap(&b);
   }
-  inline void Swap(BatteryCurrent* other) {
+  inline void Swap(BatteryStatus* other) {
     if (other == this) return;
     InternalSwap(other);
   }
 
   // implements Message ----------------------------------------------
 
-  inline BatteryCurrent* New() const final {
-    return CreateMaybeMessage<BatteryCurrent>(nullptr);
+  inline BatteryStatus* New() const final {
+    return CreateMaybeMessage<BatteryStatus>(nullptr);
   }
 
-  BatteryCurrent* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
-    return CreateMaybeMessage<BatteryCurrent>(arena);
+  BatteryStatus* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<BatteryStatus>(arena);
   }
   void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
   void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
-  void CopyFrom(const BatteryCurrent& from);
-  void MergeFrom(const BatteryCurrent& from);
+  void CopyFrom(const BatteryStatus& from);
+  void MergeFrom(const BatteryStatus& from);
   PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
   bool IsInitialized() const final;
 
@@ -7130,10 +7137,10 @@ class BatteryCurrent :
   inline void SharedCtor();
   inline void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(BatteryCurrent* other);
+  void InternalSwap(BatteryStatus* other);
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "mavsdk.rpc.telemetry.BatteryCurrent";
+    return "mavsdk.rpc.telemetry.BatteryStatus";
   }
   private:
   inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
@@ -7158,25 +7165,18 @@ class BatteryCurrent :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kCurrentAFieldNumber = 1,
-    kMahConsumedFieldNumber = 2,
+    kMahConsumedFieldNumber = 1,
   };
-  // float current_a = 1;
-  void clear_current_a();
-  float current_a() const;
-  void set_current_a(float value);
-
-  // float mah_consumed = 2;
+  // float mah_consumed = 1;
   void clear_mah_consumed();
   float mah_consumed() const;
   void set_mah_consumed(float value);
 
-  // @@protoc_insertion_point(class_scope:mavsdk.rpc.telemetry.BatteryCurrent)
+  // @@protoc_insertion_point(class_scope:mavsdk.rpc.telemetry.BatteryStatus)
  private:
   class _Internal;
 
   ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
-  float current_a_;
   float mah_consumed_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_telemetry_2ftelemetry_2eproto;
@@ -9445,61 +9445,61 @@ inline void BatteryResponse::set_allocated_battery(::mavsdk::rpc::telemetry::Bat
 
 // -------------------------------------------------------------------
 
-// SubscribeBatteryCurrentRequest
+// SubscribeBatteryStatusRequest
 
 // -------------------------------------------------------------------
 
-// BatteryCurrentResponse
+// BatteryStatusResponse
 
-// .mavsdk.rpc.telemetry.BatteryCurrent battery_current = 1;
-inline bool BatteryCurrentResponse::has_battery_current() const {
-  return this != internal_default_instance() && battery_current_ != nullptr;
+// .mavsdk.rpc.telemetry.BatteryStatus battery_status = 1;
+inline bool BatteryStatusResponse::has_battery_status() const {
+  return this != internal_default_instance() && battery_status_ != nullptr;
 }
-inline void BatteryCurrentResponse::clear_battery_current() {
-  if (GetArenaNoVirtual() == nullptr && battery_current_ != nullptr) {
-    delete battery_current_;
+inline void BatteryStatusResponse::clear_battery_status() {
+  if (GetArenaNoVirtual() == nullptr && battery_status_ != nullptr) {
+    delete battery_status_;
   }
-  battery_current_ = nullptr;
+  battery_status_ = nullptr;
 }
-inline const ::mavsdk::rpc::telemetry::BatteryCurrent& BatteryCurrentResponse::battery_current() const {
-  const ::mavsdk::rpc::telemetry::BatteryCurrent* p = battery_current_;
-  // @@protoc_insertion_point(field_get:mavsdk.rpc.telemetry.BatteryCurrentResponse.battery_current)
-  return p != nullptr ? *p : *reinterpret_cast<const ::mavsdk::rpc::telemetry::BatteryCurrent*>(
-      &::mavsdk::rpc::telemetry::_BatteryCurrent_default_instance_);
+inline const ::mavsdk::rpc::telemetry::BatteryStatus& BatteryStatusResponse::battery_status() const {
+  const ::mavsdk::rpc::telemetry::BatteryStatus* p = battery_status_;
+  // @@protoc_insertion_point(field_get:mavsdk.rpc.telemetry.BatteryStatusResponse.battery_status)
+  return p != nullptr ? *p : *reinterpret_cast<const ::mavsdk::rpc::telemetry::BatteryStatus*>(
+      &::mavsdk::rpc::telemetry::_BatteryStatus_default_instance_);
 }
-inline ::mavsdk::rpc::telemetry::BatteryCurrent* BatteryCurrentResponse::release_battery_current() {
-  // @@protoc_insertion_point(field_release:mavsdk.rpc.telemetry.BatteryCurrentResponse.battery_current)
+inline ::mavsdk::rpc::telemetry::BatteryStatus* BatteryStatusResponse::release_battery_status() {
+  // @@protoc_insertion_point(field_release:mavsdk.rpc.telemetry.BatteryStatusResponse.battery_status)
   
-  ::mavsdk::rpc::telemetry::BatteryCurrent* temp = battery_current_;
-  battery_current_ = nullptr;
+  ::mavsdk::rpc::telemetry::BatteryStatus* temp = battery_status_;
+  battery_status_ = nullptr;
   return temp;
 }
-inline ::mavsdk::rpc::telemetry::BatteryCurrent* BatteryCurrentResponse::mutable_battery_current() {
+inline ::mavsdk::rpc::telemetry::BatteryStatus* BatteryStatusResponse::mutable_battery_status() {
   
-  if (battery_current_ == nullptr) {
-    auto* p = CreateMaybeMessage<::mavsdk::rpc::telemetry::BatteryCurrent>(GetArenaNoVirtual());
-    battery_current_ = p;
+  if (battery_status_ == nullptr) {
+    auto* p = CreateMaybeMessage<::mavsdk::rpc::telemetry::BatteryStatus>(GetArenaNoVirtual());
+    battery_status_ = p;
   }
-  // @@protoc_insertion_point(field_mutable:mavsdk.rpc.telemetry.BatteryCurrentResponse.battery_current)
-  return battery_current_;
+  // @@protoc_insertion_point(field_mutable:mavsdk.rpc.telemetry.BatteryStatusResponse.battery_status)
+  return battery_status_;
 }
-inline void BatteryCurrentResponse::set_allocated_battery_current(::mavsdk::rpc::telemetry::BatteryCurrent* battery_current) {
+inline void BatteryStatusResponse::set_allocated_battery_status(::mavsdk::rpc::telemetry::BatteryStatus* battery_status) {
   ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaNoVirtual();
   if (message_arena == nullptr) {
-    delete battery_current_;
+    delete battery_status_;
   }
-  if (battery_current) {
+  if (battery_status) {
     ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena = nullptr;
     if (message_arena != submessage_arena) {
-      battery_current = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
-          message_arena, battery_current, submessage_arena);
+      battery_status = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, battery_status, submessage_arena);
     }
     
   } else {
     
   }
-  battery_current_ = battery_current;
-  // @@protoc_insertion_point(field_set_allocated:mavsdk.rpc.telemetry.BatteryCurrentResponse.battery_current)
+  battery_status_ = battery_status;
+  // @@protoc_insertion_point(field_set_allocated:mavsdk.rpc.telemetry.BatteryStatusResponse.battery_status)
 }
 
 // -------------------------------------------------------------------
@@ -10245,7 +10245,21 @@ inline void Battery::set_voltage_v(float value) {
   // @@protoc_insertion_point(field_set:mavsdk.rpc.telemetry.Battery.voltage_v)
 }
 
-// float remaining_percent = 2;
+// float current_a = 2;
+inline void Battery::clear_current_a() {
+  current_a_ = 0;
+}
+inline float Battery::current_a() const {
+  // @@protoc_insertion_point(field_get:mavsdk.rpc.telemetry.Battery.current_a)
+  return current_a_;
+}
+inline void Battery::set_current_a(float value) {
+  
+  current_a_ = value;
+  // @@protoc_insertion_point(field_set:mavsdk.rpc.telemetry.Battery.current_a)
+}
+
+// float remaining_percent = 3;
 inline void Battery::clear_remaining_percent() {
   remaining_percent_ = 0;
 }
@@ -10261,34 +10275,20 @@ inline void Battery::set_remaining_percent(float value) {
 
 // -------------------------------------------------------------------
 
-// BatteryCurrent
+// BatteryStatus
 
-// float current_a = 1;
-inline void BatteryCurrent::clear_current_a() {
-  current_a_ = 0;
-}
-inline float BatteryCurrent::current_a() const {
-  // @@protoc_insertion_point(field_get:mavsdk.rpc.telemetry.BatteryCurrent.current_a)
-  return current_a_;
-}
-inline void BatteryCurrent::set_current_a(float value) {
-  
-  current_a_ = value;
-  // @@protoc_insertion_point(field_set:mavsdk.rpc.telemetry.BatteryCurrent.current_a)
-}
-
-// float mah_consumed = 2;
-inline void BatteryCurrent::clear_mah_consumed() {
+// float mah_consumed = 1;
+inline void BatteryStatus::clear_mah_consumed() {
   mah_consumed_ = 0;
 }
-inline float BatteryCurrent::mah_consumed() const {
-  // @@protoc_insertion_point(field_get:mavsdk.rpc.telemetry.BatteryCurrent.mah_consumed)
+inline float BatteryStatus::mah_consumed() const {
+  // @@protoc_insertion_point(field_get:mavsdk.rpc.telemetry.BatteryStatus.mah_consumed)
   return mah_consumed_;
 }
-inline void BatteryCurrent::set_mah_consumed(float value) {
+inline void BatteryStatus::set_mah_consumed(float value) {
   
   mah_consumed_ = value;
-  // @@protoc_insertion_point(field_set:mavsdk.rpc.telemetry.BatteryCurrent.mah_consumed)
+  // @@protoc_insertion_point(field_set:mavsdk.rpc.telemetry.BatteryStatus.mah_consumed)
 }
 
 // -------------------------------------------------------------------

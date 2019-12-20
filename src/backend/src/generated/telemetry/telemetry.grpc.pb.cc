@@ -34,7 +34,7 @@ static const char* TelemetryService_method_names[] = {
   "/mavsdk.rpc.telemetry.TelemetryService/SubscribeGroundSpeedNed",
   "/mavsdk.rpc.telemetry.TelemetryService/SubscribeGpsInfo",
   "/mavsdk.rpc.telemetry.TelemetryService/SubscribeBattery",
-  "/mavsdk.rpc.telemetry.TelemetryService/SubscribeBatteryCurrent",
+  "/mavsdk.rpc.telemetry.TelemetryService/SubscribeBatteryStatus",
   "/mavsdk.rpc.telemetry.TelemetryService/SubscribeFlightMode",
   "/mavsdk.rpc.telemetry.TelemetryService/SubscribeModeInfo",
   "/mavsdk.rpc.telemetry.TelemetryService/SubscribeHealth",
@@ -65,7 +65,7 @@ TelemetryService::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& c
   , rpcmethod_SubscribeGroundSpeedNed_(TelemetryService_method_names[10], ::grpc::internal::RpcMethod::SERVER_STREAMING, channel)
   , rpcmethod_SubscribeGpsInfo_(TelemetryService_method_names[11], ::grpc::internal::RpcMethod::SERVER_STREAMING, channel)
   , rpcmethod_SubscribeBattery_(TelemetryService_method_names[12], ::grpc::internal::RpcMethod::SERVER_STREAMING, channel)
-  , rpcmethod_SubscribeBatteryCurrent_(TelemetryService_method_names[13], ::grpc::internal::RpcMethod::SERVER_STREAMING, channel)
+  , rpcmethod_SubscribeBatteryStatus_(TelemetryService_method_names[13], ::grpc::internal::RpcMethod::SERVER_STREAMING, channel)
   , rpcmethod_SubscribeFlightMode_(TelemetryService_method_names[14], ::grpc::internal::RpcMethod::SERVER_STREAMING, channel)
   , rpcmethod_SubscribeModeInfo_(TelemetryService_method_names[15], ::grpc::internal::RpcMethod::SERVER_STREAMING, channel)
   , rpcmethod_SubscribeHealth_(TelemetryService_method_names[16], ::grpc::internal::RpcMethod::SERVER_STREAMING, channel)
@@ -284,20 +284,20 @@ void TelemetryService::Stub::experimental_async::SubscribeBattery(::grpc::Client
   return ::grpc_impl::internal::ClientAsyncReaderFactory< ::mavsdk::rpc::telemetry::BatteryResponse>::Create(channel_.get(), cq, rpcmethod_SubscribeBattery_, context, request, false, nullptr);
 }
 
-::grpc::ClientReader< ::mavsdk::rpc::telemetry::BatteryCurrentResponse>* TelemetryService::Stub::SubscribeBatteryCurrentRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeBatteryCurrentRequest& request) {
-  return ::grpc_impl::internal::ClientReaderFactory< ::mavsdk::rpc::telemetry::BatteryCurrentResponse>::Create(channel_.get(), rpcmethod_SubscribeBatteryCurrent_, context, request);
+::grpc::ClientReader< ::mavsdk::rpc::telemetry::BatteryStatusResponse>* TelemetryService::Stub::SubscribeBatteryStatusRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeBatteryStatusRequest& request) {
+  return ::grpc_impl::internal::ClientReaderFactory< ::mavsdk::rpc::telemetry::BatteryStatusResponse>::Create(channel_.get(), rpcmethod_SubscribeBatteryStatus_, context, request);
 }
 
-void TelemetryService::Stub::experimental_async::SubscribeBatteryCurrent(::grpc::ClientContext* context, ::mavsdk::rpc::telemetry::SubscribeBatteryCurrentRequest* request, ::grpc::experimental::ClientReadReactor< ::mavsdk::rpc::telemetry::BatteryCurrentResponse>* reactor) {
-  ::grpc_impl::internal::ClientCallbackReaderFactory< ::mavsdk::rpc::telemetry::BatteryCurrentResponse>::Create(stub_->channel_.get(), stub_->rpcmethod_SubscribeBatteryCurrent_, context, request, reactor);
+void TelemetryService::Stub::experimental_async::SubscribeBatteryStatus(::grpc::ClientContext* context, ::mavsdk::rpc::telemetry::SubscribeBatteryStatusRequest* request, ::grpc::experimental::ClientReadReactor< ::mavsdk::rpc::telemetry::BatteryStatusResponse>* reactor) {
+  ::grpc_impl::internal::ClientCallbackReaderFactory< ::mavsdk::rpc::telemetry::BatteryStatusResponse>::Create(stub_->channel_.get(), stub_->rpcmethod_SubscribeBatteryStatus_, context, request, reactor);
 }
 
-::grpc::ClientAsyncReader< ::mavsdk::rpc::telemetry::BatteryCurrentResponse>* TelemetryService::Stub::AsyncSubscribeBatteryCurrentRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeBatteryCurrentRequest& request, ::grpc::CompletionQueue* cq, void* tag) {
-  return ::grpc_impl::internal::ClientAsyncReaderFactory< ::mavsdk::rpc::telemetry::BatteryCurrentResponse>::Create(channel_.get(), cq, rpcmethod_SubscribeBatteryCurrent_, context, request, true, tag);
+::grpc::ClientAsyncReader< ::mavsdk::rpc::telemetry::BatteryStatusResponse>* TelemetryService::Stub::AsyncSubscribeBatteryStatusRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeBatteryStatusRequest& request, ::grpc::CompletionQueue* cq, void* tag) {
+  return ::grpc_impl::internal::ClientAsyncReaderFactory< ::mavsdk::rpc::telemetry::BatteryStatusResponse>::Create(channel_.get(), cq, rpcmethod_SubscribeBatteryStatus_, context, request, true, tag);
 }
 
-::grpc::ClientAsyncReader< ::mavsdk::rpc::telemetry::BatteryCurrentResponse>* TelemetryService::Stub::PrepareAsyncSubscribeBatteryCurrentRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeBatteryCurrentRequest& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc_impl::internal::ClientAsyncReaderFactory< ::mavsdk::rpc::telemetry::BatteryCurrentResponse>::Create(channel_.get(), cq, rpcmethod_SubscribeBatteryCurrent_, context, request, false, nullptr);
+::grpc::ClientAsyncReader< ::mavsdk::rpc::telemetry::BatteryStatusResponse>* TelemetryService::Stub::PrepareAsyncSubscribeBatteryStatusRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeBatteryStatusRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc_impl::internal::ClientAsyncReaderFactory< ::mavsdk::rpc::telemetry::BatteryStatusResponse>::Create(channel_.get(), cq, rpcmethod_SubscribeBatteryStatus_, context, request, false, nullptr);
 }
 
 ::grpc::ClientReader< ::mavsdk::rpc::telemetry::FlightModeResponse>* TelemetryService::Stub::SubscribeFlightModeRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeFlightModeRequest& request) {
@@ -497,8 +497,8 @@ TelemetryService::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       TelemetryService_method_names[13],
       ::grpc::internal::RpcMethod::SERVER_STREAMING,
-      new ::grpc::internal::ServerStreamingHandler< TelemetryService::Service, ::mavsdk::rpc::telemetry::SubscribeBatteryCurrentRequest, ::mavsdk::rpc::telemetry::BatteryCurrentResponse>(
-          std::mem_fn(&TelemetryService::Service::SubscribeBatteryCurrent), this)));
+      new ::grpc::internal::ServerStreamingHandler< TelemetryService::Service, ::mavsdk::rpc::telemetry::SubscribeBatteryStatusRequest, ::mavsdk::rpc::telemetry::BatteryStatusResponse>(
+          std::mem_fn(&TelemetryService::Service::SubscribeBatteryStatus), this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       TelemetryService_method_names[14],
       ::grpc::internal::RpcMethod::SERVER_STREAMING,
@@ -635,7 +635,7 @@ TelemetryService::Service::~Service() {
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status TelemetryService::Service::SubscribeBatteryCurrent(::grpc::ServerContext* context, const ::mavsdk::rpc::telemetry::SubscribeBatteryCurrentRequest* request, ::grpc::ServerWriter< ::mavsdk::rpc::telemetry::BatteryCurrentResponse>* writer) {
+::grpc::Status TelemetryService::Service::SubscribeBatteryStatus(::grpc::ServerContext* context, const ::mavsdk::rpc::telemetry::SubscribeBatteryStatusRequest* request, ::grpc::ServerWriter< ::mavsdk::rpc::telemetry::BatteryStatusResponse>* writer) {
   (void) context;
   (void) request;
   (void) writer;

@@ -227,6 +227,7 @@ public:
         _telemetry.battery_async([&writer, &battery_mutex](mavsdk::Telemetry::Battery battery) {
             auto rpc_battery = new mavsdk::rpc::telemetry::Battery();
             rpc_battery->set_voltage_v(battery.voltage_v);
+            rpc_battery->set_current_a(battery.current_a);
             rpc_battery->set_remaining_percent(battery.remaining_percent);
 
             mavsdk::rpc::telemetry::BatteryResponse rpc_battery_response;
@@ -240,23 +241,22 @@ public:
         return grpc::Status::OK;
     }
 
-    grpc::Status SubscribeBatteryCurrent(
+    grpc::Status SubscribeBatteryStatus(
         grpc::ServerContext* /* context */,
-        const mavsdk::rpc::telemetry::SubscribeBatteryCurrentRequest* /* request */,
-        grpc::ServerWriter<rpc::telemetry::BatteryCurrentResponse>* writer) override
+        const mavsdk::rpc::telemetry::SubscribeBatteryStatusRequest* /* request */,
+        grpc::ServerWriter<rpc::telemetry::BatteryStatusResponse>* writer) override
     {
-        std::mutex battery_current_mutex{};
+        std::mutex battery_status_mutex{};
 
-        _telemetry.battery_current_async([&writer, &battery_current_mutex](mavsdk::Telemetry::BatteryCurrent battery_current) {
-          auto rpc_battery_current = new mavsdk::rpc::telemetry::BatteryCurrent();
-          rpc_battery_current->set_current_a(battery_current.current_a);
-          rpc_battery_current->set_mah_consumed(battery_current.mah_consumed);
+        _telemetry.battery_status_async([&writer, &battery_status_mutex](mavsdk::Telemetry::BatteryStatus battery_status) {
+          auto rpc_battery_status = new mavsdk::rpc::telemetry::BatteryStatus();
+          rpc_battery_status->set_mah_consumed(battery_status.mah_consumed);
 
-          mavsdk::rpc::telemetry::BatteryCurrentResponse rpc_battery_current_response;
-          rpc_battery_current_response.set_allocated_battery_current(rpc_battery_current);
+          mavsdk::rpc::telemetry::BatteryStatusResponse rpc_battery_status_response;
+          rpc_battery_status_response.set_allocated_battery_status(rpc_battery_status);
 
-          std::lock_guard<std::mutex> lock(battery_current_mutex);
-          writer->Write(rpc_battery_current_response);
+          std::lock_guard<std::mutex> lock(battery_status_mutex);
+          writer->Write(rpc_battery_status_response);
         });
 
         _stop_future.wait();
