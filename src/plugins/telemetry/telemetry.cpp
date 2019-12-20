@@ -368,6 +368,11 @@ void Telemetry::battery_async(battery_callback_t callback)
     return _impl->battery_async(callback);
 }
 
+void Telemetry::battery_current_async(battery_current_callback_t callback)
+{
+    return _impl->battery_current_async(callback);
+}
+
 void Telemetry::mode_info_async(mode_info_callback_t callback)
 {
     return _impl->mode_info_async(callback);

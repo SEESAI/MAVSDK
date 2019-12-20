@@ -48,7 +48,7 @@ struct TableStruct_telemetry_2ftelemetry_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxillaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[59]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[62]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
@@ -88,6 +88,12 @@ extern AttitudeQuaternionResponseDefaultTypeInternal _AttitudeQuaternionResponse
 class Battery;
 class BatteryDefaultTypeInternal;
 extern BatteryDefaultTypeInternal _Battery_default_instance_;
+class BatteryCurrent;
+class BatteryCurrentDefaultTypeInternal;
+extern BatteryCurrentDefaultTypeInternal _BatteryCurrent_default_instance_;
+class BatteryCurrentResponse;
+class BatteryCurrentResponseDefaultTypeInternal;
+extern BatteryCurrentResponseDefaultTypeInternal _BatteryCurrentResponse_default_instance_;
 class BatteryResponse;
 class BatteryResponseDefaultTypeInternal;
 extern BatteryResponseDefaultTypeInternal _BatteryResponse_default_instance_;
@@ -190,6 +196,9 @@ extern SubscribeAttitudeEulerRequestDefaultTypeInternal _SubscribeAttitudeEulerR
 class SubscribeAttitudeQuaternionRequest;
 class SubscribeAttitudeQuaternionRequestDefaultTypeInternal;
 extern SubscribeAttitudeQuaternionRequestDefaultTypeInternal _SubscribeAttitudeQuaternionRequest_default_instance_;
+class SubscribeBatteryCurrentRequest;
+class SubscribeBatteryCurrentRequestDefaultTypeInternal;
+extern SubscribeBatteryCurrentRequestDefaultTypeInternal _SubscribeBatteryCurrentRequest_default_instance_;
 class SubscribeBatteryRequest;
 class SubscribeBatteryRequestDefaultTypeInternal;
 extern SubscribeBatteryRequestDefaultTypeInternal _SubscribeBatteryRequest_default_instance_;
@@ -249,6 +258,8 @@ template<> ::mavsdk::rpc::telemetry::AttitudeAngularVelocityBodyResponse* Arena:
 template<> ::mavsdk::rpc::telemetry::AttitudeEulerResponse* Arena::CreateMaybeMessage<::mavsdk::rpc::telemetry::AttitudeEulerResponse>(Arena*);
 template<> ::mavsdk::rpc::telemetry::AttitudeQuaternionResponse* Arena::CreateMaybeMessage<::mavsdk::rpc::telemetry::AttitudeQuaternionResponse>(Arena*);
 template<> ::mavsdk::rpc::telemetry::Battery* Arena::CreateMaybeMessage<::mavsdk::rpc::telemetry::Battery>(Arena*);
+template<> ::mavsdk::rpc::telemetry::BatteryCurrent* Arena::CreateMaybeMessage<::mavsdk::rpc::telemetry::BatteryCurrent>(Arena*);
+template<> ::mavsdk::rpc::telemetry::BatteryCurrentResponse* Arena::CreateMaybeMessage<::mavsdk::rpc::telemetry::BatteryCurrentResponse>(Arena*);
 template<> ::mavsdk::rpc::telemetry::BatteryResponse* Arena::CreateMaybeMessage<::mavsdk::rpc::telemetry::BatteryResponse>(Arena*);
 template<> ::mavsdk::rpc::telemetry::CameraAttitudeEulerResponse* Arena::CreateMaybeMessage<::mavsdk::rpc::telemetry::CameraAttitudeEulerResponse>(Arena*);
 template<> ::mavsdk::rpc::telemetry::CameraAttitudeQuaternionResponse* Arena::CreateMaybeMessage<::mavsdk::rpc::telemetry::CameraAttitudeQuaternionResponse>(Arena*);
@@ -283,6 +294,7 @@ template<> ::mavsdk::rpc::telemetry::SubscribeArmedRequest* Arena::CreateMaybeMe
 template<> ::mavsdk::rpc::telemetry::SubscribeAttitudeAngularVelocityBodyRequest* Arena::CreateMaybeMessage<::mavsdk::rpc::telemetry::SubscribeAttitudeAngularVelocityBodyRequest>(Arena*);
 template<> ::mavsdk::rpc::telemetry::SubscribeAttitudeEulerRequest* Arena::CreateMaybeMessage<::mavsdk::rpc::telemetry::SubscribeAttitudeEulerRequest>(Arena*);
 template<> ::mavsdk::rpc::telemetry::SubscribeAttitudeQuaternionRequest* Arena::CreateMaybeMessage<::mavsdk::rpc::telemetry::SubscribeAttitudeQuaternionRequest>(Arena*);
+template<> ::mavsdk::rpc::telemetry::SubscribeBatteryCurrentRequest* Arena::CreateMaybeMessage<::mavsdk::rpc::telemetry::SubscribeBatteryCurrentRequest>(Arena*);
 template<> ::mavsdk::rpc::telemetry::SubscribeBatteryRequest* Arena::CreateMaybeMessage<::mavsdk::rpc::telemetry::SubscribeBatteryRequest>(Arena*);
 template<> ::mavsdk::rpc::telemetry::SubscribeCameraAttitudeEulerRequest* Arena::CreateMaybeMessage<::mavsdk::rpc::telemetry::SubscribeCameraAttitudeEulerRequest>(Arena*);
 template<> ::mavsdk::rpc::telemetry::SubscribeCameraAttitudeQuaternionRequest* Arena::CreateMaybeMessage<::mavsdk::rpc::telemetry::SubscribeCameraAttitudeQuaternionRequest>(Arena*);
@@ -3745,6 +3757,261 @@ class BatteryResponse :
 };
 // -------------------------------------------------------------------
 
+class SubscribeBatteryCurrentRequest :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:mavsdk.rpc.telemetry.SubscribeBatteryCurrentRequest) */ {
+ public:
+  SubscribeBatteryCurrentRequest();
+  virtual ~SubscribeBatteryCurrentRequest();
+
+  SubscribeBatteryCurrentRequest(const SubscribeBatteryCurrentRequest& from);
+  SubscribeBatteryCurrentRequest(SubscribeBatteryCurrentRequest&& from) noexcept
+    : SubscribeBatteryCurrentRequest() {
+    *this = ::std::move(from);
+  }
+
+  inline SubscribeBatteryCurrentRequest& operator=(const SubscribeBatteryCurrentRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline SubscribeBatteryCurrentRequest& operator=(SubscribeBatteryCurrentRequest&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const SubscribeBatteryCurrentRequest& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const SubscribeBatteryCurrentRequest* internal_default_instance() {
+    return reinterpret_cast<const SubscribeBatteryCurrentRequest*>(
+               &_SubscribeBatteryCurrentRequest_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    26;
+
+  friend void swap(SubscribeBatteryCurrentRequest& a, SubscribeBatteryCurrentRequest& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(SubscribeBatteryCurrentRequest* other) {
+    if (other == this) return;
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline SubscribeBatteryCurrentRequest* New() const final {
+    return CreateMaybeMessage<SubscribeBatteryCurrentRequest>(nullptr);
+  }
+
+  SubscribeBatteryCurrentRequest* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<SubscribeBatteryCurrentRequest>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const SubscribeBatteryCurrentRequest& from);
+  void MergeFrom(const SubscribeBatteryCurrentRequest& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  #if GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  #else
+  bool MergePartialFromCodedStream(
+      ::PROTOBUF_NAMESPACE_ID::io::CodedInputStream* input) final;
+  #endif  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+  ::PROTOBUF_NAMESPACE_ID::uint8* InternalSerializeWithCachedSizesToArray(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(SubscribeBatteryCurrentRequest* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "mavsdk.rpc.telemetry.SubscribeBatteryCurrentRequest";
+  }
+  private:
+  inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
+    return nullptr;
+  }
+  inline void* MaybeArenaPtr() const {
+    return nullptr;
+  }
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_telemetry_2ftelemetry_2eproto);
+    return ::descriptor_table_telemetry_2ftelemetry_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:mavsdk.rpc.telemetry.SubscribeBatteryCurrentRequest)
+ private:
+  class _Internal;
+
+  ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_telemetry_2ftelemetry_2eproto;
+};
+// -------------------------------------------------------------------
+
+class BatteryCurrentResponse :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:mavsdk.rpc.telemetry.BatteryCurrentResponse) */ {
+ public:
+  BatteryCurrentResponse();
+  virtual ~BatteryCurrentResponse();
+
+  BatteryCurrentResponse(const BatteryCurrentResponse& from);
+  BatteryCurrentResponse(BatteryCurrentResponse&& from) noexcept
+    : BatteryCurrentResponse() {
+    *this = ::std::move(from);
+  }
+
+  inline BatteryCurrentResponse& operator=(const BatteryCurrentResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline BatteryCurrentResponse& operator=(BatteryCurrentResponse&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const BatteryCurrentResponse& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const BatteryCurrentResponse* internal_default_instance() {
+    return reinterpret_cast<const BatteryCurrentResponse*>(
+               &_BatteryCurrentResponse_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    27;
+
+  friend void swap(BatteryCurrentResponse& a, BatteryCurrentResponse& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(BatteryCurrentResponse* other) {
+    if (other == this) return;
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline BatteryCurrentResponse* New() const final {
+    return CreateMaybeMessage<BatteryCurrentResponse>(nullptr);
+  }
+
+  BatteryCurrentResponse* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<BatteryCurrentResponse>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const BatteryCurrentResponse& from);
+  void MergeFrom(const BatteryCurrentResponse& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  #if GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  #else
+  bool MergePartialFromCodedStream(
+      ::PROTOBUF_NAMESPACE_ID::io::CodedInputStream* input) final;
+  #endif  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+  ::PROTOBUF_NAMESPACE_ID::uint8* InternalSerializeWithCachedSizesToArray(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(BatteryCurrentResponse* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "mavsdk.rpc.telemetry.BatteryCurrentResponse";
+  }
+  private:
+  inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
+    return nullptr;
+  }
+  inline void* MaybeArenaPtr() const {
+    return nullptr;
+  }
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_telemetry_2ftelemetry_2eproto);
+    return ::descriptor_table_telemetry_2ftelemetry_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kBatteryCurrentFieldNumber = 1,
+  };
+  // .mavsdk.rpc.telemetry.BatteryCurrent battery_current = 1;
+  bool has_battery_current() const;
+  private:
+  bool _internal_has_battery_current() const;
+  public:
+  void clear_battery_current();
+  const ::mavsdk::rpc::telemetry::BatteryCurrent& battery_current() const;
+  ::mavsdk::rpc::telemetry::BatteryCurrent* release_battery_current();
+  ::mavsdk::rpc::telemetry::BatteryCurrent* mutable_battery_current();
+  void set_allocated_battery_current(::mavsdk::rpc::telemetry::BatteryCurrent* battery_current);
+
+  // @@protoc_insertion_point(class_scope:mavsdk.rpc.telemetry.BatteryCurrentResponse)
+ private:
+  class _Internal;
+
+  ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
+  ::mavsdk::rpc::telemetry::BatteryCurrent* battery_current_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_telemetry_2ftelemetry_2eproto;
+};
+// -------------------------------------------------------------------
+
 class SubscribeFlightModeRequest :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:mavsdk.rpc.telemetry.SubscribeFlightModeRequest) */ {
  public:
@@ -3787,7 +4054,7 @@ class SubscribeFlightModeRequest :
                &_SubscribeFlightModeRequest_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    26;
+    28;
 
   friend void swap(SubscribeFlightModeRequest& a, SubscribeFlightModeRequest& b) {
     a.Swap(&b);
@@ -3907,7 +4174,7 @@ class FlightModeResponse :
                &_FlightModeResponse_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    27;
+    29;
 
   friend void swap(FlightModeResponse& a, FlightModeResponse& b) {
     a.Swap(&b);
@@ -4036,7 +4303,7 @@ class SubscribeModeInfoRequest :
                &_SubscribeModeInfoRequest_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    28;
+    30;
 
   friend void swap(SubscribeModeInfoRequest& a, SubscribeModeInfoRequest& b) {
     a.Swap(&b);
@@ -4156,7 +4423,7 @@ class ModeInfoResponse :
                &_ModeInfoResponse_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    29;
+    31;
 
   friend void swap(ModeInfoResponse& a, ModeInfoResponse& b) {
     a.Swap(&b);
@@ -4291,7 +4558,7 @@ class SubscribeHealthRequest :
                &_SubscribeHealthRequest_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    30;
+    32;
 
   friend void swap(SubscribeHealthRequest& a, SubscribeHealthRequest& b) {
     a.Swap(&b);
@@ -4411,7 +4678,7 @@ class HealthResponse :
                &_HealthResponse_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    31;
+    33;
 
   friend void swap(HealthResponse& a, HealthResponse& b) {
     a.Swap(&b);
@@ -4546,7 +4813,7 @@ class SubscribeRcStatusRequest :
                &_SubscribeRcStatusRequest_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    32;
+    34;
 
   friend void swap(SubscribeRcStatusRequest& a, SubscribeRcStatusRequest& b) {
     a.Swap(&b);
@@ -4666,7 +4933,7 @@ class RcStatusResponse :
                &_RcStatusResponse_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    33;
+    35;
 
   friend void swap(RcStatusResponse& a, RcStatusResponse& b) {
     a.Swap(&b);
@@ -4801,7 +5068,7 @@ class SubscribeStatusTextRequest :
                &_SubscribeStatusTextRequest_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    34;
+    36;
 
   friend void swap(SubscribeStatusTextRequest& a, SubscribeStatusTextRequest& b) {
     a.Swap(&b);
@@ -4921,7 +5188,7 @@ class StatusTextResponse :
                &_StatusTextResponse_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    35;
+    37;
 
   friend void swap(StatusTextResponse& a, StatusTextResponse& b) {
     a.Swap(&b);
@@ -5056,7 +5323,7 @@ class SubscribeActuatorControlTargetRequest :
                &_SubscribeActuatorControlTargetRequest_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    36;
+    38;
 
   friend void swap(SubscribeActuatorControlTargetRequest& a, SubscribeActuatorControlTargetRequest& b) {
     a.Swap(&b);
@@ -5176,7 +5443,7 @@ class ActuatorControlTargetResponse :
                &_ActuatorControlTargetResponse_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    37;
+    39;
 
   friend void swap(ActuatorControlTargetResponse& a, ActuatorControlTargetResponse& b) {
     a.Swap(&b);
@@ -5311,7 +5578,7 @@ class SubscribeActuatorOutputStatusRequest :
                &_SubscribeActuatorOutputStatusRequest_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    38;
+    40;
 
   friend void swap(SubscribeActuatorOutputStatusRequest& a, SubscribeActuatorOutputStatusRequest& b) {
     a.Swap(&b);
@@ -5431,7 +5698,7 @@ class ActuatorOutputStatusResponse :
                &_ActuatorOutputStatusResponse_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    39;
+    41;
 
   friend void swap(ActuatorOutputStatusResponse& a, ActuatorOutputStatusResponse& b) {
     a.Swap(&b);
@@ -5566,7 +5833,7 @@ class SubscribeOdometryRequest :
                &_SubscribeOdometryRequest_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    40;
+    42;
 
   friend void swap(SubscribeOdometryRequest& a, SubscribeOdometryRequest& b) {
     a.Swap(&b);
@@ -5686,7 +5953,7 @@ class OdometryResponse :
                &_OdometryResponse_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    41;
+    43;
 
   friend void swap(OdometryResponse& a, OdometryResponse& b) {
     a.Swap(&b);
@@ -5821,7 +6088,7 @@ class Position :
                &_Position_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    42;
+    44;
 
   friend void swap(Position& a, Position& b) {
     a.Swap(&b);
@@ -5971,7 +6238,7 @@ class Quaternion :
                &_Quaternion_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    43;
+    45;
 
   friend void swap(Quaternion& a, Quaternion& b) {
     a.Swap(&b);
@@ -6121,7 +6388,7 @@ class EulerAngle :
                &_EulerAngle_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    44;
+    46;
 
   friend void swap(EulerAngle& a, EulerAngle& b) {
     a.Swap(&b);
@@ -6264,7 +6531,7 @@ class AngularVelocityBody :
                &_AngularVelocityBody_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    45;
+    47;
 
   friend void swap(AngularVelocityBody& a, AngularVelocityBody& b) {
     a.Swap(&b);
@@ -6407,7 +6674,7 @@ class SpeedNed :
                &_SpeedNed_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    46;
+    48;
 
   friend void swap(SpeedNed& a, SpeedNed& b) {
     a.Swap(&b);
@@ -6550,7 +6817,7 @@ class GpsInfo :
                &_GpsInfo_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    47;
+    49;
 
   friend void swap(GpsInfo& a, GpsInfo& b) {
     a.Swap(&b);
@@ -6686,7 +6953,7 @@ class Battery :
                &_Battery_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    48;
+    50;
 
   friend void swap(Battery& a, Battery& b) {
     a.Swap(&b);
@@ -6780,6 +7047,142 @@ class Battery :
 };
 // -------------------------------------------------------------------
 
+class BatteryCurrent :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:mavsdk.rpc.telemetry.BatteryCurrent) */ {
+ public:
+  BatteryCurrent();
+  virtual ~BatteryCurrent();
+
+  BatteryCurrent(const BatteryCurrent& from);
+  BatteryCurrent(BatteryCurrent&& from) noexcept
+    : BatteryCurrent() {
+    *this = ::std::move(from);
+  }
+
+  inline BatteryCurrent& operator=(const BatteryCurrent& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline BatteryCurrent& operator=(BatteryCurrent&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const BatteryCurrent& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const BatteryCurrent* internal_default_instance() {
+    return reinterpret_cast<const BatteryCurrent*>(
+               &_BatteryCurrent_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    51;
+
+  friend void swap(BatteryCurrent& a, BatteryCurrent& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(BatteryCurrent* other) {
+    if (other == this) return;
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline BatteryCurrent* New() const final {
+    return CreateMaybeMessage<BatteryCurrent>(nullptr);
+  }
+
+  BatteryCurrent* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<BatteryCurrent>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const BatteryCurrent& from);
+  void MergeFrom(const BatteryCurrent& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  #if GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  #else
+  bool MergePartialFromCodedStream(
+      ::PROTOBUF_NAMESPACE_ID::io::CodedInputStream* input) final;
+  #endif  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+  ::PROTOBUF_NAMESPACE_ID::uint8* InternalSerializeWithCachedSizesToArray(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(BatteryCurrent* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "mavsdk.rpc.telemetry.BatteryCurrent";
+  }
+  private:
+  inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
+    return nullptr;
+  }
+  inline void* MaybeArenaPtr() const {
+    return nullptr;
+  }
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_telemetry_2ftelemetry_2eproto);
+    return ::descriptor_table_telemetry_2ftelemetry_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kCurrentAFieldNumber = 1,
+    kMahConsumedFieldNumber = 2,
+  };
+  // float current_a = 1;
+  void clear_current_a();
+  float current_a() const;
+  void set_current_a(float value);
+
+  // float mah_consumed = 2;
+  void clear_mah_consumed();
+  float mah_consumed() const;
+  void set_mah_consumed(float value);
+
+  // @@protoc_insertion_point(class_scope:mavsdk.rpc.telemetry.BatteryCurrent)
+ private:
+  class _Internal;
+
+  ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
+  float current_a_;
+  float mah_consumed_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_telemetry_2ftelemetry_2eproto;
+};
+// -------------------------------------------------------------------
+
 class ModeInfo :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:mavsdk.rpc.telemetry.ModeInfo) */ {
  public:
@@ -6822,7 +7225,7 @@ class ModeInfo :
                &_ModeInfo_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    49;
+    52;
 
   friend void swap(ModeInfo& a, ModeInfo& b) {
     a.Swap(&b);
@@ -6965,7 +7368,7 @@ class Health :
                &_Health_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    50;
+    53;
 
   friend void swap(Health& a, Health& b) {
     a.Swap(&b);
@@ -7136,7 +7539,7 @@ class RcStatus :
                &_RcStatus_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    51;
+    54;
 
   friend void swap(RcStatus& a, RcStatus& b) {
     a.Swap(&b);
@@ -7279,7 +7682,7 @@ class StatusText :
                &_StatusText_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    52;
+    55;
 
   friend void swap(StatusText& a, StatusText& b) {
     a.Swap(&b);
@@ -7458,7 +7861,7 @@ class ActuatorControlTarget :
                &_ActuatorControlTarget_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    53;
+    56;
 
   friend void swap(ActuatorControlTarget& a, ActuatorControlTarget& b) {
     a.Swap(&b);
@@ -7601,7 +8004,7 @@ class ActuatorOutputStatus :
                &_ActuatorOutputStatus_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    54;
+    57;
 
   friend void swap(ActuatorOutputStatus& a, ActuatorOutputStatus& b) {
     a.Swap(&b);
@@ -7744,7 +8147,7 @@ class Odometry :
                &_Odometry_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    55;
+    58;
 
   friend void swap(Odometry& a, Odometry& b) {
     a.Swap(&b);
@@ -7999,7 +8402,7 @@ class Covariance :
                &_Covariance_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    56;
+    59;
 
   friend void swap(Covariance& a, Covariance& b) {
     a.Swap(&b);
@@ -8135,7 +8538,7 @@ class SpeedBody :
                &_SpeedBody_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    57;
+    60;
 
   friend void swap(SpeedBody& a, SpeedBody& b) {
     a.Swap(&b);
@@ -8278,7 +8681,7 @@ class PositionBody :
                &_PositionBody_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    58;
+    61;
 
   friend void swap(PositionBody& a, PositionBody& b) {
     a.Swap(&b);
@@ -9042,6 +9445,65 @@ inline void BatteryResponse::set_allocated_battery(::mavsdk::rpc::telemetry::Bat
 
 // -------------------------------------------------------------------
 
+// SubscribeBatteryCurrentRequest
+
+// -------------------------------------------------------------------
+
+// BatteryCurrentResponse
+
+// .mavsdk.rpc.telemetry.BatteryCurrent battery_current = 1;
+inline bool BatteryCurrentResponse::has_battery_current() const {
+  return this != internal_default_instance() && battery_current_ != nullptr;
+}
+inline void BatteryCurrentResponse::clear_battery_current() {
+  if (GetArenaNoVirtual() == nullptr && battery_current_ != nullptr) {
+    delete battery_current_;
+  }
+  battery_current_ = nullptr;
+}
+inline const ::mavsdk::rpc::telemetry::BatteryCurrent& BatteryCurrentResponse::battery_current() const {
+  const ::mavsdk::rpc::telemetry::BatteryCurrent* p = battery_current_;
+  // @@protoc_insertion_point(field_get:mavsdk.rpc.telemetry.BatteryCurrentResponse.battery_current)
+  return p != nullptr ? *p : *reinterpret_cast<const ::mavsdk::rpc::telemetry::BatteryCurrent*>(
+      &::mavsdk::rpc::telemetry::_BatteryCurrent_default_instance_);
+}
+inline ::mavsdk::rpc::telemetry::BatteryCurrent* BatteryCurrentResponse::release_battery_current() {
+  // @@protoc_insertion_point(field_release:mavsdk.rpc.telemetry.BatteryCurrentResponse.battery_current)
+  
+  ::mavsdk::rpc::telemetry::BatteryCurrent* temp = battery_current_;
+  battery_current_ = nullptr;
+  return temp;
+}
+inline ::mavsdk::rpc::telemetry::BatteryCurrent* BatteryCurrentResponse::mutable_battery_current() {
+  
+  if (battery_current_ == nullptr) {
+    auto* p = CreateMaybeMessage<::mavsdk::rpc::telemetry::BatteryCurrent>(GetArenaNoVirtual());
+    battery_current_ = p;
+  }
+  // @@protoc_insertion_point(field_mutable:mavsdk.rpc.telemetry.BatteryCurrentResponse.battery_current)
+  return battery_current_;
+}
+inline void BatteryCurrentResponse::set_allocated_battery_current(::mavsdk::rpc::telemetry::BatteryCurrent* battery_current) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaNoVirtual();
+  if (message_arena == nullptr) {
+    delete battery_current_;
+  }
+  if (battery_current) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena = nullptr;
+    if (message_arena != submessage_arena) {
+      battery_current = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, battery_current, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  battery_current_ = battery_current;
+  // @@protoc_insertion_point(field_set_allocated:mavsdk.rpc.telemetry.BatteryCurrentResponse.battery_current)
+}
+
+// -------------------------------------------------------------------
+
 // SubscribeFlightModeRequest
 
 // -------------------------------------------------------------------
@@ -9795,6 +10257,38 @@ inline void Battery::set_remaining_percent(float value) {
   
   remaining_percent_ = value;
   // @@protoc_insertion_point(field_set:mavsdk.rpc.telemetry.Battery.remaining_percent)
+}
+
+// -------------------------------------------------------------------
+
+// BatteryCurrent
+
+// float current_a = 1;
+inline void BatteryCurrent::clear_current_a() {
+  current_a_ = 0;
+}
+inline float BatteryCurrent::current_a() const {
+  // @@protoc_insertion_point(field_get:mavsdk.rpc.telemetry.BatteryCurrent.current_a)
+  return current_a_;
+}
+inline void BatteryCurrent::set_current_a(float value) {
+  
+  current_a_ = value;
+  // @@protoc_insertion_point(field_set:mavsdk.rpc.telemetry.BatteryCurrent.current_a)
+}
+
+// float mah_consumed = 2;
+inline void BatteryCurrent::clear_mah_consumed() {
+  mah_consumed_ = 0;
+}
+inline float BatteryCurrent::mah_consumed() const {
+  // @@protoc_insertion_point(field_get:mavsdk.rpc.telemetry.BatteryCurrent.mah_consumed)
+  return mah_consumed_;
+}
+inline void BatteryCurrent::set_mah_consumed(float value) {
+  
+  mah_consumed_ = value;
+  // @@protoc_insertion_point(field_set:mavsdk.rpc.telemetry.BatteryCurrent.mah_consumed)
 }
 
 // -------------------------------------------------------------------
@@ -10646,6 +11140,12 @@ inline void PositionBody::set_z_m(float value) {
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

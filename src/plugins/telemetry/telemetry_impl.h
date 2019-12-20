@@ -77,6 +77,7 @@ public:
     Telemetry::IMUReadingNED get_imu_reading_ned() const;
     Telemetry::GPSInfo get_gps_info() const;
     Telemetry::Battery get_battery() const;
+    Telemetry::BatteryCurrent get_battery_current() const;
     Telemetry::ModeInfo get_mode_info() const;
     Telemetry::FlightMode get_flight_mode() const;
     Telemetry::Health get_health() const;
@@ -103,6 +104,7 @@ public:
     void imu_reading_ned_async(Telemetry::imu_reading_ned_callback_t& callback);
     void gps_info_async(Telemetry::gps_info_callback_t& callback);
     void battery_async(Telemetry::battery_callback_t& callback);
+    void battery_current_async(Telemetry::battery_current_callback_t& callback);
     void mode_info_async(Telemetry::mode_info_callback_t& callback);
     void flight_mode_async(Telemetry::flight_mode_callback_t& callback);
     void health_async(Telemetry::health_callback_t& callback);
@@ -132,6 +134,7 @@ private:
     void set_imu_reading_ned(Telemetry::IMUReadingNED imu_reading_ned);
     void set_gps_info(Telemetry::GPSInfo gps_info);
     void set_battery(Telemetry::Battery battery);
+    void set_battery_current(Telemetry::BatteryCurrent battery_current);
     void set_health_local_position(bool ok);
     void set_health_global_position(bool ok);
     void set_health_home_position(bool ok);
@@ -155,6 +158,7 @@ private:
     void process_gps_raw_int(const mavlink_message_t& message);
     void process_extended_sys_state(const mavlink_message_t& message);
     void process_sys_status(const mavlink_message_t& message);
+    void process_battery_status(const mavlink_message_t& message);
     void process_heartbeat(const mavlink_message_t& message);
     void process_statustext(const mavlink_message_t& message);
     void process_rc_channels(const mavlink_message_t& message);
@@ -228,6 +232,9 @@ private:
     mutable std::mutex _battery_mutex{};
     Telemetry::Battery _battery{NAN, NAN};
 
+    mutable std::mutex _battery_current_mutex{};
+    Telemetry::BatteryCurrent _battery_current{NAN, NAN};
+
     mutable std::mutex _health_mutex{};
     Telemetry::Health _health{false, false, false, false, false, false, false};
 
@@ -267,6 +274,7 @@ private:
     Telemetry::imu_reading_ned_callback_t _imu_reading_ned_subscription{nullptr};
     Telemetry::gps_info_callback_t _gps_info_subscription{nullptr};
     Telemetry::battery_callback_t _battery_subscription{nullptr};
+    Telemetry::battery_current_callback_t _battery_current_subscription{nullptr};
     Telemetry::mode_info_callback_t _mode_info_subscription{nullptr};
     Telemetry::flight_mode_callback_t _flight_mode_subscription{nullptr};
     Telemetry::health_callback_t _health_subscription{nullptr};

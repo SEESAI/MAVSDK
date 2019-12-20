@@ -240,6 +240,29 @@ public:
         return grpc::Status::OK;
     }
 
+    grpc::Status SubscribeBatteryCurrent(
+        grpc::ServerContext* /* context */,
+        const mavsdk::rpc::telemetry::SubscribeBatteryCurrentRequest* /* request */,
+        grpc::ServerWriter<rpc::telemetry::BatteryCurrentResponse>* writer) override
+    {
+        std::mutex battery_current_mutex{};
+
+        _telemetry.battery_current_async([&writer, &battery_current_mutex](mavsdk::Telemetry::BatteryCurrent battery_current) {
+          auto rpc_battery_current = new mavsdk::rpc::telemetry::BatteryCurrent();
+          rpc_battery_current->set_current_a(battery_current.current_a);
+          rpc_battery_current->set_mah_consumed(battery_current.mah_consumed);
+
+          mavsdk::rpc::telemetry::BatteryCurrentResponse rpc_battery_current_response;
+          rpc_battery_current_response.set_allocated_battery_current(rpc_battery_current);
+
+          std::lock_guard<std::mutex> lock(battery_current_mutex);
+          writer->Write(rpc_battery_current_response);
+        });
+
+        _stop_future.wait();
+        return grpc::Status::OK;
+    }
+
     grpc::Status SubscribeModeInfo(
         grpc::ServerContext* /* context */,
         const mavsdk::rpc::telemetry::SubscribeModeInfoRequest* /* request */,

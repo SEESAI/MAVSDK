@@ -63,6 +63,9 @@ void TelemetryImpl::init()
         MAVLINK_MSG_ID_HEARTBEAT, std::bind(&TelemetryImpl::process_heartbeat, this, _1), this);
 
     _parent->register_mavlink_message_handler(
+        MAVLINK_MSG_ID_BATTERY_STATUS, std::bind(&TelemetryImpl::process_battery_status, this, _1), this);
+
+    _parent->register_mavlink_message_handler(
         MAVLINK_MSG_ID_ESTIMATOR_STATUS, std::bind(&TelemetryImpl::process_estimator_status, this, _1), this);
 
     _parent->register_mavlink_message_handler(
@@ -650,6 +653,22 @@ void TelemetryImpl::process_sys_status(const mavlink_message_t& message)
     }
 }
 
+
+void TelemetryImpl::process_battery_status(const mavlink_message_t& message)
+{
+    mavlink_battery_status_t batt_status;
+    mavlink_msg_battery_status_decode(&message, &batt_status);
+    set_battery_current(Telemetry::BatteryCurrent(
+        {float(batt_status.current_consumed),
+         float(batt_status.current_battery) / 1000}));
+
+    if (_battery_current_subscription) {
+        auto callback = _battery_current_subscription;
+        auto arg = get_battery_current();
+        _parent->call_user_callback([callback, arg]() { callback(arg); });
+    }
+}
+
 void TelemetryImpl::process_heartbeat(const mavlink_message_t& message)
 {
     if (message.compid != MAV_COMP_ID_AUTOPILOT1) {
@@ -1141,6 +1160,18 @@ void TelemetryImpl::set_battery(Telemetry::Battery battery)
     _battery = battery;
 }
 
+Telemetry::BatteryCurrent TelemetryImpl::get_battery_current() const
+{
+    std::lock_guard<std::mutex> lock(_battery_current_mutex);
+    return _battery_current;
+}
+
+void TelemetryImpl::set_battery_current(Telemetry::BatteryCurrent battery)
+{
+    std::lock_guard<std::mutex> lock(_battery_current_mutex);
+    _battery_current = battery;
+}
+
 
 Telemetry::ModeInfo TelemetryImpl::get_mode_info() const
 {
@@ -1375,6 +1406,11 @@ void TelemetryImpl::gps_info_async(Telemetry::gps_info_callback_t& callback)
 void TelemetryImpl::battery_async(Telemetry::battery_callback_t& callback)
 {
     _battery_subscription = callback;
+}
+
+void TelemetryImpl::battery_current_async(Telemetry::battery_current_callback_t& callback)
+{
+    _battery_current_subscription = callback;
 }
 
 void TelemetryImpl::mode_info_async(Telemetry::mode_info_callback_t& callback){

@@ -213,7 +213,15 @@ public:
     struct Battery {
         float voltage_v; /**< @brief Voltage in volts. */
         float remaining_percent; /**< @brief Estimated battery percentage remaining (range: 0.0
-                                    to 1.0). */
+                                          to 1.0). */
+    };
+
+    /**
+     * @brief Battery current type.
+     */
+    struct BatteryCurrent {
+        float current_a; /**< @brief Current in amps. */
+        float mah_consumed; /**< @brief mAh consumed since reboot. */
     };
 
     /**
@@ -1036,6 +1044,20 @@ public:
      * @param callback Function to call with updates.
      */
     void battery_async(battery_callback_t callback);
+
+    /**
+     * @brief Callback type for battery current consumption updates.
+     *
+     * @param battery Battery status.
+     */
+    typedef std::function<void(BatteryCurrent battery_current)> battery_current_callback_t;
+
+    /**
+     * @brief Subscribe to battery current status updates (asynchronous).
+     *
+     * @param callback Function to call with updates.
+     */
+    void battery_current_async(battery_current_callback_t callback);
 
     /**
      * @brief Callback type for mode info updates.
