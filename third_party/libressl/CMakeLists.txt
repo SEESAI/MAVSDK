@@ -26,7 +26,10 @@ endforeach()
 
 ExternalProject_add(
     libressl
-    URL https://ftp.openbsd.org/pub/OpenBSD/LibreSSL/libressl-${LIBRESSL_VERSION}.tar.gz
+    URL https://ftp.usa.openbsd.org/pub/OpenBSD/LibreSSL/libressl-${LIBRESSL_VERSION}.tar.gz
     PREFIX libressl
     CMAKE_ARGS "${CMAKE_ARGS}"
     )
+
+# URL https://ftp.openbsd.org/pub/OpenBSD/LibreSSL/libressl-${LIBRESSL_VERSION}.tar.gz
+# URL https://ftp.usa.openbsd.org/pub/OpenBSD/LibreSSL/libressl-${LIBRESSL_VERSION}.tar.gz
