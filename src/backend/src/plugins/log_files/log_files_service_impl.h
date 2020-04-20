@@ -17,6 +17,7 @@ public:
         std::promise<void> result_promise;
         const auto result_future = result_promise.get_future();
 
+
         _log_files.get_entries_async([this, response, &result_promise](
             const mavsdk::LogFiles::Result result,
             const std::vector<mavsdk::LogFiles::Entry> entries) {
