@@ -38,6 +38,26 @@ public:
         return grpc::Status::OK;
     }
 
+    grpc::Status DownloadLogFile(grpc::ServerContext* /* context */,
+                                 const rpc::log_files::DownloadLogFileRequest* request,
+                                 rpc::log_files::DownloadLogFileResponse* response) override
+    {
+        if (request != nullptr) {
+            const auto requested_id = request->id();
+            const auto requested_file_path = request->file_path();
+
+            if (response != nullptr) {
+                auto log_file_result = _log_files.download_log_file(requested_id, requested_file_path);
+                auto* rpc_log_file_result = new rpc::log_files::LogFilesResult();
+                rpc_log_file_result->set_result(static_cast<rpc::log_files::LogFilesResult::Result>(log_file_result));
+
+                response->set_allocated_log_files_result(rpc_log_file_result);
+            }
+        }
+
+        return grpc::Status::OK;
+    }
+
     static void translateEntry(const mavsdk::LogFiles::Entry entry_item, rpc::log_files::Entry* rpc_entry_item)
     {
         rpc_entry_item->set_id(entry_item.id);

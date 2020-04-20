@@ -56,6 +56,13 @@ class LogFilesService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::mavsdk::rpc::log_files::GetEntriesResponse>> PrepareAsyncGetEntries(::grpc::ClientContext* context, const ::mavsdk::rpc::log_files::GetEntriesRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::mavsdk::rpc::log_files::GetEntriesResponse>>(PrepareAsyncGetEntriesRaw(context, request, cq));
     }
+    virtual ::grpc::Status DownloadLogFile(::grpc::ClientContext* context, const ::mavsdk::rpc::log_files::DownloadLogFileRequest& request, ::mavsdk::rpc::log_files::DownloadLogFileResponse* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::mavsdk::rpc::log_files::DownloadLogFileResponse>> AsyncDownloadLogFile(::grpc::ClientContext* context, const ::mavsdk::rpc::log_files::DownloadLogFileRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::mavsdk::rpc::log_files::DownloadLogFileResponse>>(AsyncDownloadLogFileRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::mavsdk::rpc::log_files::DownloadLogFileResponse>> PrepareAsyncDownloadLogFile(::grpc::ClientContext* context, const ::mavsdk::rpc::log_files::DownloadLogFileRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::mavsdk::rpc::log_files::DownloadLogFileResponse>>(PrepareAsyncDownloadLogFileRaw(context, request, cq));
+    }
     class experimental_async_interface {
      public:
       virtual ~experimental_async_interface() {}
@@ -63,11 +70,17 @@ class LogFilesService final {
       virtual void GetEntries(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::mavsdk::rpc::log_files::GetEntriesResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void GetEntries(::grpc::ClientContext* context, const ::mavsdk::rpc::log_files::GetEntriesRequest* request, ::mavsdk::rpc::log_files::GetEntriesResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) = 0;
       virtual void GetEntries(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::mavsdk::rpc::log_files::GetEntriesResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) = 0;
+      virtual void DownloadLogFile(::grpc::ClientContext* context, const ::mavsdk::rpc::log_files::DownloadLogFileRequest* request, ::mavsdk::rpc::log_files::DownloadLogFileResponse* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void DownloadLogFile(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::mavsdk::rpc::log_files::DownloadLogFileResponse* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void DownloadLogFile(::grpc::ClientContext* context, const ::mavsdk::rpc::log_files::DownloadLogFileRequest* request, ::mavsdk::rpc::log_files::DownloadLogFileResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) = 0;
+      virtual void DownloadLogFile(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::mavsdk::rpc::log_files::DownloadLogFileResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) = 0;
     };
     virtual class experimental_async_interface* experimental_async() { return nullptr; }
   private:
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::mavsdk::rpc::log_files::GetEntriesResponse>* AsyncGetEntriesRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::log_files::GetEntriesRequest& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::mavsdk::rpc::log_files::GetEntriesResponse>* PrepareAsyncGetEntriesRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::log_files::GetEntriesRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::mavsdk::rpc::log_files::DownloadLogFileResponse>* AsyncDownloadLogFileRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::log_files::DownloadLogFileRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::mavsdk::rpc::log_files::DownloadLogFileResponse>* PrepareAsyncDownloadLogFileRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::log_files::DownloadLogFileRequest& request, ::grpc::CompletionQueue* cq) = 0;
   };
   class Stub final : public StubInterface {
    public:
@@ -79,6 +92,13 @@ class LogFilesService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::log_files::GetEntriesResponse>> PrepareAsyncGetEntries(::grpc::ClientContext* context, const ::mavsdk::rpc::log_files::GetEntriesRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::log_files::GetEntriesResponse>>(PrepareAsyncGetEntriesRaw(context, request, cq));
     }
+    ::grpc::Status DownloadLogFile(::grpc::ClientContext* context, const ::mavsdk::rpc::log_files::DownloadLogFileRequest& request, ::mavsdk::rpc::log_files::DownloadLogFileResponse* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::log_files::DownloadLogFileResponse>> AsyncDownloadLogFile(::grpc::ClientContext* context, const ::mavsdk::rpc::log_files::DownloadLogFileRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::log_files::DownloadLogFileResponse>>(AsyncDownloadLogFileRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::log_files::DownloadLogFileResponse>> PrepareAsyncDownloadLogFile(::grpc::ClientContext* context, const ::mavsdk::rpc::log_files::DownloadLogFileRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::log_files::DownloadLogFileResponse>>(PrepareAsyncDownloadLogFileRaw(context, request, cq));
+    }
     class experimental_async final :
       public StubInterface::experimental_async_interface {
      public:
@@ -86,6 +106,10 @@ class LogFilesService final {
       void GetEntries(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::mavsdk::rpc::log_files::GetEntriesResponse* response, std::function<void(::grpc::Status)>) override;
       void GetEntries(::grpc::ClientContext* context, const ::mavsdk::rpc::log_files::GetEntriesRequest* request, ::mavsdk::rpc::log_files::GetEntriesResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) override;
       void GetEntries(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::mavsdk::rpc::log_files::GetEntriesResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) override;
+      void DownloadLogFile(::grpc::ClientContext* context, const ::mavsdk::rpc::log_files::DownloadLogFileRequest* request, ::mavsdk::rpc::log_files::DownloadLogFileResponse* response, std::function<void(::grpc::Status)>) override;
+      void DownloadLogFile(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::mavsdk::rpc::log_files::DownloadLogFileResponse* response, std::function<void(::grpc::Status)>) override;
+      void DownloadLogFile(::grpc::ClientContext* context, const ::mavsdk::rpc::log_files::DownloadLogFileRequest* request, ::mavsdk::rpc::log_files::DownloadLogFileResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) override;
+      void DownloadLogFile(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::mavsdk::rpc::log_files::DownloadLogFileResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) override;
      private:
       friend class Stub;
       explicit experimental_async(Stub* stub): stub_(stub) { }
@@ -99,7 +123,10 @@ class LogFilesService final {
     class experimental_async async_stub_{this};
     ::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::log_files::GetEntriesResponse>* AsyncGetEntriesRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::log_files::GetEntriesRequest& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::log_files::GetEntriesResponse>* PrepareAsyncGetEntriesRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::log_files::GetEntriesRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::log_files::DownloadLogFileResponse>* AsyncDownloadLogFileRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::log_files::DownloadLogFileRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::log_files::DownloadLogFileResponse>* PrepareAsyncDownloadLogFileRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::log_files::DownloadLogFileRequest& request, ::grpc::CompletionQueue* cq) override;
     const ::grpc::internal::RpcMethod rpcmethod_GetEntries_;
+    const ::grpc::internal::RpcMethod rpcmethod_DownloadLogFile_;
   };
   static std::unique_ptr<Stub> NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options = ::grpc::StubOptions());
 
@@ -108,6 +135,7 @@ class LogFilesService final {
     Service();
     virtual ~Service();
     virtual ::grpc::Status GetEntries(::grpc::ServerContext* context, const ::mavsdk::rpc::log_files::GetEntriesRequest* request, ::mavsdk::rpc::log_files::GetEntriesResponse* response);
+    virtual ::grpc::Status DownloadLogFile(::grpc::ServerContext* context, const ::mavsdk::rpc::log_files::DownloadLogFileRequest* request, ::mavsdk::rpc::log_files::DownloadLogFileResponse* response);
   };
   template <class BaseClass>
   class WithAsyncMethod_GetEntries : public BaseClass {
@@ -129,7 +157,27 @@ class LogFilesService final {
       ::grpc::Service::RequestAsyncUnary(0, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
-  typedef WithAsyncMethod_GetEntries<Service > AsyncService;
+  template <class BaseClass>
+  class WithAsyncMethod_DownloadLogFile : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_DownloadLogFile() {
+      ::grpc::Service::MarkMethodAsync(1);
+    }
+    ~WithAsyncMethod_DownloadLogFile() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status DownloadLogFile(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::log_files::DownloadLogFileRequest* /*request*/, ::mavsdk::rpc::log_files::DownloadLogFileResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestDownloadLogFile(::grpc::ServerContext* context, ::mavsdk::rpc::log_files::DownloadLogFileRequest* request, ::grpc::ServerAsyncResponseWriter< ::mavsdk::rpc::log_files::DownloadLogFileResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(1, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  typedef WithAsyncMethod_GetEntries<WithAsyncMethod_DownloadLogFile<Service > > AsyncService;
   template <class BaseClass>
   class ExperimentalWithCallbackMethod_GetEntries : public BaseClass {
    private:
@@ -161,7 +209,38 @@ class LogFilesService final {
     }
     virtual void GetEntries(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::log_files::GetEntriesRequest* /*request*/, ::mavsdk::rpc::log_files::GetEntriesResponse* /*response*/, ::grpc::experimental::ServerCallbackRpcController* controller) { controller->Finish(::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "")); }
   };
-  typedef ExperimentalWithCallbackMethod_GetEntries<Service > ExperimentalCallbackService;
+  template <class BaseClass>
+  class ExperimentalWithCallbackMethod_DownloadLogFile : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    ExperimentalWithCallbackMethod_DownloadLogFile() {
+      ::grpc::Service::experimental().MarkMethodCallback(1,
+        new ::grpc_impl::internal::CallbackUnaryHandler< ::mavsdk::rpc::log_files::DownloadLogFileRequest, ::mavsdk::rpc::log_files::DownloadLogFileResponse>(
+          [this](::grpc::ServerContext* context,
+                 const ::mavsdk::rpc::log_files::DownloadLogFileRequest* request,
+                 ::mavsdk::rpc::log_files::DownloadLogFileResponse* response,
+                 ::grpc::experimental::ServerCallbackRpcController* controller) {
+                   return this->DownloadLogFile(context, request, response, controller);
+                 }));
+    }
+    void SetMessageAllocatorFor_DownloadLogFile(
+        ::grpc::experimental::MessageAllocator< ::mavsdk::rpc::log_files::DownloadLogFileRequest, ::mavsdk::rpc::log_files::DownloadLogFileResponse>* allocator) {
+      static_cast<::grpc_impl::internal::CallbackUnaryHandler< ::mavsdk::rpc::log_files::DownloadLogFileRequest, ::mavsdk::rpc::log_files::DownloadLogFileResponse>*>(
+          ::grpc::Service::experimental().GetHandler(1))
+              ->SetMessageAllocator(allocator);
+    }
+    ~ExperimentalWithCallbackMethod_DownloadLogFile() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status DownloadLogFile(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::log_files::DownloadLogFileRequest* /*request*/, ::mavsdk::rpc::log_files::DownloadLogFileResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual void DownloadLogFile(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::log_files::DownloadLogFileRequest* /*request*/, ::mavsdk::rpc::log_files::DownloadLogFileResponse* /*response*/, ::grpc::experimental::ServerCallbackRpcController* controller) { controller->Finish(::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "")); }
+  };
+  typedef ExperimentalWithCallbackMethod_GetEntries<ExperimentalWithCallbackMethod_DownloadLogFile<Service > > ExperimentalCallbackService;
   template <class BaseClass>
   class WithGenericMethod_GetEntries : public BaseClass {
    private:
@@ -175,6 +254,23 @@ class LogFilesService final {
     }
     // disable synchronous version of this method
     ::grpc::Status GetEntries(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::log_files::GetEntriesRequest* /*request*/, ::mavsdk::rpc::log_files::GetEntriesResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithGenericMethod_DownloadLogFile : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_DownloadLogFile() {
+      ::grpc::Service::MarkMethodGeneric(1);
+    }
+    ~WithGenericMethod_DownloadLogFile() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status DownloadLogFile(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::log_files::DownloadLogFileRequest* /*request*/, ::mavsdk::rpc::log_files::DownloadLogFileResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -197,6 +293,26 @@ class LogFilesService final {
     }
     void RequestGetEntries(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(0, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithRawMethod_DownloadLogFile : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_DownloadLogFile() {
+      ::grpc::Service::MarkMethodRaw(1);
+    }
+    ~WithRawMethod_DownloadLogFile() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status DownloadLogFile(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::log_files::DownloadLogFileRequest* /*request*/, ::mavsdk::rpc::log_files::DownloadLogFileResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestDownloadLogFile(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(1, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -225,6 +341,31 @@ class LogFilesService final {
     virtual void GetEntries(::grpc::ServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/, ::grpc::experimental::ServerCallbackRpcController* controller) { controller->Finish(::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "")); }
   };
   template <class BaseClass>
+  class ExperimentalWithRawCallbackMethod_DownloadLogFile : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    ExperimentalWithRawCallbackMethod_DownloadLogFile() {
+      ::grpc::Service::experimental().MarkMethodRawCallback(1,
+        new ::grpc_impl::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+          [this](::grpc::ServerContext* context,
+                 const ::grpc::ByteBuffer* request,
+                 ::grpc::ByteBuffer* response,
+                 ::grpc::experimental::ServerCallbackRpcController* controller) {
+                   this->DownloadLogFile(context, request, response, controller);
+                 }));
+    }
+    ~ExperimentalWithRawCallbackMethod_DownloadLogFile() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status DownloadLogFile(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::log_files::DownloadLogFileRequest* /*request*/, ::mavsdk::rpc::log_files::DownloadLogFileResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual void DownloadLogFile(::grpc::ServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/, ::grpc::experimental::ServerCallbackRpcController* controller) { controller->Finish(::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "")); }
+  };
+  template <class BaseClass>
   class WithStreamedUnaryMethod_GetEntries : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
@@ -244,9 +385,29 @@ class LogFilesService final {
     // replace default version of method with streamed unary
     virtual ::grpc::Status StreamedGetEntries(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::mavsdk::rpc::log_files::GetEntriesRequest,::mavsdk::rpc::log_files::GetEntriesResponse>* server_unary_streamer) = 0;
   };
-  typedef WithStreamedUnaryMethod_GetEntries<Service > StreamedUnaryService;
+  template <class BaseClass>
+  class WithStreamedUnaryMethod_DownloadLogFile : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_DownloadLogFile() {
+      ::grpc::Service::MarkMethodStreamed(1,
+        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::log_files::DownloadLogFileRequest, ::mavsdk::rpc::log_files::DownloadLogFileResponse>(std::bind(&WithStreamedUnaryMethod_DownloadLogFile<BaseClass>::StreamedDownloadLogFile, this, std::placeholders::_1, std::placeholders::_2)));
+    }
+    ~WithStreamedUnaryMethod_DownloadLogFile() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status DownloadLogFile(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::log_files::DownloadLogFileRequest* /*request*/, ::mavsdk::rpc::log_files::DownloadLogFileResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedDownloadLogFile(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::mavsdk::rpc::log_files::DownloadLogFileRequest,::mavsdk::rpc::log_files::DownloadLogFileResponse>* server_unary_streamer) = 0;
+  };
+  typedef WithStreamedUnaryMethod_GetEntries<WithStreamedUnaryMethod_DownloadLogFile<Service > > StreamedUnaryService;
   typedef Service SplitStreamedService;
-  typedef WithStreamedUnaryMethod_GetEntries<Service > StreamedService;
+  typedef WithStreamedUnaryMethod_GetEntries<WithStreamedUnaryMethod_DownloadLogFile<Service > > StreamedService;
 };
 
 }  // namespace log_files

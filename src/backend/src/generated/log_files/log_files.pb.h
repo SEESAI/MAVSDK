@@ -48,7 +48,7 @@ struct TableStruct_log_5ffiles_2flog_5ffiles_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxillaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[4]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[6]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
@@ -58,6 +58,12 @@ extern const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table
 namespace mavsdk {
 namespace rpc {
 namespace log_files {
+class DownloadLogFileRequest;
+class DownloadLogFileRequestDefaultTypeInternal;
+extern DownloadLogFileRequestDefaultTypeInternal _DownloadLogFileRequest_default_instance_;
+class DownloadLogFileResponse;
+class DownloadLogFileResponseDefaultTypeInternal;
+extern DownloadLogFileResponseDefaultTypeInternal _DownloadLogFileResponse_default_instance_;
 class Entry;
 class EntryDefaultTypeInternal;
 extern EntryDefaultTypeInternal _Entry_default_instance_;
@@ -74,6 +80,8 @@ extern LogFilesResultDefaultTypeInternal _LogFilesResult_default_instance_;
 }  // namespace rpc
 }  // namespace mavsdk
 PROTOBUF_NAMESPACE_OPEN
+template<> ::mavsdk::rpc::log_files::DownloadLogFileRequest* Arena::CreateMaybeMessage<::mavsdk::rpc::log_files::DownloadLogFileRequest>(Arena*);
+template<> ::mavsdk::rpc::log_files::DownloadLogFileResponse* Arena::CreateMaybeMessage<::mavsdk::rpc::log_files::DownloadLogFileResponse>(Arena*);
 template<> ::mavsdk::rpc::log_files::Entry* Arena::CreateMaybeMessage<::mavsdk::rpc::log_files::Entry>(Arena*);
 template<> ::mavsdk::rpc::log_files::GetEntriesRequest* Arena::CreateMaybeMessage<::mavsdk::rpc::log_files::GetEntriesRequest>(Arena*);
 template<> ::mavsdk::rpc::log_files::GetEntriesResponse* Arena::CreateMaybeMessage<::mavsdk::rpc::log_files::GetEntriesResponse>(Arena*);
@@ -381,6 +389,288 @@ class GetEntriesResponse :
 };
 // -------------------------------------------------------------------
 
+class DownloadLogFileRequest :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:mavsdk.rpc.log_files.DownloadLogFileRequest) */ {
+ public:
+  DownloadLogFileRequest();
+  virtual ~DownloadLogFileRequest();
+
+  DownloadLogFileRequest(const DownloadLogFileRequest& from);
+  DownloadLogFileRequest(DownloadLogFileRequest&& from) noexcept
+    : DownloadLogFileRequest() {
+    *this = ::std::move(from);
+  }
+
+  inline DownloadLogFileRequest& operator=(const DownloadLogFileRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline DownloadLogFileRequest& operator=(DownloadLogFileRequest&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const DownloadLogFileRequest& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const DownloadLogFileRequest* internal_default_instance() {
+    return reinterpret_cast<const DownloadLogFileRequest*>(
+               &_DownloadLogFileRequest_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    2;
+
+  friend void swap(DownloadLogFileRequest& a, DownloadLogFileRequest& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(DownloadLogFileRequest* other) {
+    if (other == this) return;
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline DownloadLogFileRequest* New() const final {
+    return CreateMaybeMessage<DownloadLogFileRequest>(nullptr);
+  }
+
+  DownloadLogFileRequest* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<DownloadLogFileRequest>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const DownloadLogFileRequest& from);
+  void MergeFrom(const DownloadLogFileRequest& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  #if GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  #else
+  bool MergePartialFromCodedStream(
+      ::PROTOBUF_NAMESPACE_ID::io::CodedInputStream* input) final;
+  #endif  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+  ::PROTOBUF_NAMESPACE_ID::uint8* InternalSerializeWithCachedSizesToArray(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(DownloadLogFileRequest* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "mavsdk.rpc.log_files.DownloadLogFileRequest";
+  }
+  private:
+  inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
+    return nullptr;
+  }
+  inline void* MaybeArenaPtr() const {
+    return nullptr;
+  }
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_log_5ffiles_2flog_5ffiles_2eproto);
+    return ::descriptor_table_log_5ffiles_2flog_5ffiles_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kFilePathFieldNumber = 2,
+    kIdFieldNumber = 1,
+  };
+  // string file_path = 2;
+  void clear_file_path();
+  const std::string& file_path() const;
+  void set_file_path(const std::string& value);
+  void set_file_path(std::string&& value);
+  void set_file_path(const char* value);
+  void set_file_path(const char* value, size_t size);
+  std::string* mutable_file_path();
+  std::string* release_file_path();
+  void set_allocated_file_path(std::string* file_path);
+  private:
+  const std::string& _internal_file_path() const;
+  void _internal_set_file_path(const std::string& value);
+  std::string* _internal_mutable_file_path();
+  public:
+
+  // uint32 id = 1;
+  void clear_id();
+  ::PROTOBUF_NAMESPACE_ID::uint32 id() const;
+  void set_id(::PROTOBUF_NAMESPACE_ID::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:mavsdk.rpc.log_files.DownloadLogFileRequest)
+ private:
+  class _Internal;
+
+  ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr file_path_;
+  ::PROTOBUF_NAMESPACE_ID::uint32 id_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_log_5ffiles_2flog_5ffiles_2eproto;
+};
+// -------------------------------------------------------------------
+
+class DownloadLogFileResponse :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:mavsdk.rpc.log_files.DownloadLogFileResponse) */ {
+ public:
+  DownloadLogFileResponse();
+  virtual ~DownloadLogFileResponse();
+
+  DownloadLogFileResponse(const DownloadLogFileResponse& from);
+  DownloadLogFileResponse(DownloadLogFileResponse&& from) noexcept
+    : DownloadLogFileResponse() {
+    *this = ::std::move(from);
+  }
+
+  inline DownloadLogFileResponse& operator=(const DownloadLogFileResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline DownloadLogFileResponse& operator=(DownloadLogFileResponse&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const DownloadLogFileResponse& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const DownloadLogFileResponse* internal_default_instance() {
+    return reinterpret_cast<const DownloadLogFileResponse*>(
+               &_DownloadLogFileResponse_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    3;
+
+  friend void swap(DownloadLogFileResponse& a, DownloadLogFileResponse& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(DownloadLogFileResponse* other) {
+    if (other == this) return;
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline DownloadLogFileResponse* New() const final {
+    return CreateMaybeMessage<DownloadLogFileResponse>(nullptr);
+  }
+
+  DownloadLogFileResponse* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<DownloadLogFileResponse>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const DownloadLogFileResponse& from);
+  void MergeFrom(const DownloadLogFileResponse& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  #if GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  #else
+  bool MergePartialFromCodedStream(
+      ::PROTOBUF_NAMESPACE_ID::io::CodedInputStream* input) final;
+  #endif  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+  ::PROTOBUF_NAMESPACE_ID::uint8* InternalSerializeWithCachedSizesToArray(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(DownloadLogFileResponse* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "mavsdk.rpc.log_files.DownloadLogFileResponse";
+  }
+  private:
+  inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
+    return nullptr;
+  }
+  inline void* MaybeArenaPtr() const {
+    return nullptr;
+  }
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_log_5ffiles_2flog_5ffiles_2eproto);
+    return ::descriptor_table_log_5ffiles_2flog_5ffiles_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kLogFilesResultFieldNumber = 1,
+  };
+  // .mavsdk.rpc.log_files.LogFilesResult log_files_result = 1;
+  bool has_log_files_result() const;
+  private:
+  bool _internal_has_log_files_result() const;
+  public:
+  void clear_log_files_result();
+  const ::mavsdk::rpc::log_files::LogFilesResult& log_files_result() const;
+  ::mavsdk::rpc::log_files::LogFilesResult* release_log_files_result();
+  ::mavsdk::rpc::log_files::LogFilesResult* mutable_log_files_result();
+  void set_allocated_log_files_result(::mavsdk::rpc::log_files::LogFilesResult* log_files_result);
+
+  // @@protoc_insertion_point(class_scope:mavsdk.rpc.log_files.DownloadLogFileResponse)
+ private:
+  class _Internal;
+
+  ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
+  ::mavsdk::rpc::log_files::LogFilesResult* log_files_result_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_log_5ffiles_2flog_5ffiles_2eproto;
+};
+// -------------------------------------------------------------------
+
 class Entry :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:mavsdk.rpc.log_files.Entry) */ {
  public:
@@ -423,7 +713,7 @@ class Entry :
                &_Entry_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    2;
+    4;
 
   friend void swap(Entry& a, Entry& b) {
     a.Swap(&b);
@@ -577,7 +867,7 @@ class LogFilesResult :
                &_LogFilesResult_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    3;
+    5;
 
   friend void swap(LogFilesResult& a, LogFilesResult& b) {
     a.Swap(&b);
@@ -814,6 +1104,139 @@ GetEntriesResponse::entry() const {
 
 // -------------------------------------------------------------------
 
+// DownloadLogFileRequest
+
+// uint32 id = 1;
+inline void DownloadLogFileRequest::clear_id() {
+  id_ = 0u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint32 DownloadLogFileRequest::id() const {
+  // @@protoc_insertion_point(field_get:mavsdk.rpc.log_files.DownloadLogFileRequest.id)
+  return id_;
+}
+inline void DownloadLogFileRequest::set_id(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  
+  id_ = value;
+  // @@protoc_insertion_point(field_set:mavsdk.rpc.log_files.DownloadLogFileRequest.id)
+}
+
+// string file_path = 2;
+inline void DownloadLogFileRequest::clear_file_path() {
+  file_path_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline const std::string& DownloadLogFileRequest::file_path() const {
+  // @@protoc_insertion_point(field_get:mavsdk.rpc.log_files.DownloadLogFileRequest.file_path)
+  return _internal_file_path();
+}
+inline void DownloadLogFileRequest::set_file_path(const std::string& value) {
+  _internal_set_file_path(value);
+  // @@protoc_insertion_point(field_set:mavsdk.rpc.log_files.DownloadLogFileRequest.file_path)
+}
+inline std::string* DownloadLogFileRequest::mutable_file_path() {
+  // @@protoc_insertion_point(field_mutable:mavsdk.rpc.log_files.DownloadLogFileRequest.file_path)
+  return _internal_mutable_file_path();
+}
+inline const std::string& DownloadLogFileRequest::_internal_file_path() const {
+  return file_path_.GetNoArena();
+}
+inline void DownloadLogFileRequest::_internal_set_file_path(const std::string& value) {
+  
+  file_path_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+}
+inline void DownloadLogFileRequest::set_file_path(std::string&& value) {
+  
+  file_path_.SetNoArena(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:mavsdk.rpc.log_files.DownloadLogFileRequest.file_path)
+}
+inline void DownloadLogFileRequest::set_file_path(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  
+  file_path_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:mavsdk.rpc.log_files.DownloadLogFileRequest.file_path)
+}
+inline void DownloadLogFileRequest::set_file_path(const char* value, size_t size) {
+  
+  file_path_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:mavsdk.rpc.log_files.DownloadLogFileRequest.file_path)
+}
+inline std::string* DownloadLogFileRequest::_internal_mutable_file_path() {
+  
+  return file_path_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline std::string* DownloadLogFileRequest::release_file_path() {
+  // @@protoc_insertion_point(field_release:mavsdk.rpc.log_files.DownloadLogFileRequest.file_path)
+  
+  return file_path_.ReleaseNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline void DownloadLogFileRequest::set_allocated_file_path(std::string* file_path) {
+  if (file_path != nullptr) {
+    
+  } else {
+    
+  }
+  file_path_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), file_path);
+  // @@protoc_insertion_point(field_set_allocated:mavsdk.rpc.log_files.DownloadLogFileRequest.file_path)
+}
+
+// -------------------------------------------------------------------
+
+// DownloadLogFileResponse
+
+// .mavsdk.rpc.log_files.LogFilesResult log_files_result = 1;
+inline bool DownloadLogFileResponse::has_log_files_result() const {
+  return this != internal_default_instance() && log_files_result_ != nullptr;
+}
+inline void DownloadLogFileResponse::clear_log_files_result() {
+  if (GetArenaNoVirtual() == nullptr && log_files_result_ != nullptr) {
+    delete log_files_result_;
+  }
+  log_files_result_ = nullptr;
+}
+inline const ::mavsdk::rpc::log_files::LogFilesResult& DownloadLogFileResponse::log_files_result() const {
+  const ::mavsdk::rpc::log_files::LogFilesResult* p = log_files_result_;
+  // @@protoc_insertion_point(field_get:mavsdk.rpc.log_files.DownloadLogFileResponse.log_files_result)
+  return p != nullptr ? *p : *reinterpret_cast<const ::mavsdk::rpc::log_files::LogFilesResult*>(
+      &::mavsdk::rpc::log_files::_LogFilesResult_default_instance_);
+}
+inline ::mavsdk::rpc::log_files::LogFilesResult* DownloadLogFileResponse::release_log_files_result() {
+  // @@protoc_insertion_point(field_release:mavsdk.rpc.log_files.DownloadLogFileResponse.log_files_result)
+  
+  ::mavsdk::rpc::log_files::LogFilesResult* temp = log_files_result_;
+  log_files_result_ = nullptr;
+  return temp;
+}
+inline ::mavsdk::rpc::log_files::LogFilesResult* DownloadLogFileResponse::mutable_log_files_result() {
+  
+  if (log_files_result_ == nullptr) {
+    auto* p = CreateMaybeMessage<::mavsdk::rpc::log_files::LogFilesResult>(GetArenaNoVirtual());
+    log_files_result_ = p;
+  }
+  // @@protoc_insertion_point(field_mutable:mavsdk.rpc.log_files.DownloadLogFileResponse.log_files_result)
+  return log_files_result_;
+}
+inline void DownloadLogFileResponse::set_allocated_log_files_result(::mavsdk::rpc::log_files::LogFilesResult* log_files_result) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaNoVirtual();
+  if (message_arena == nullptr) {
+    delete log_files_result_;
+  }
+  if (log_files_result) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena = nullptr;
+    if (message_arena != submessage_arena) {
+      log_files_result = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, log_files_result, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  log_files_result_ = log_files_result;
+  // @@protoc_insertion_point(field_set_allocated:mavsdk.rpc.log_files.DownloadLogFileResponse.log_files_result)
+}
+
+// -------------------------------------------------------------------
+
 // Entry
 
 // uint32 id = 1;
@@ -985,6 +1408,10 @@ inline void LogFilesResult::set_allocated_result_str(std::string* result_str) {
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------
