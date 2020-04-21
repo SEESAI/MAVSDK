@@ -22,7 +22,7 @@ public:
             const mavsdk::LogFiles::Result result,
             const std::vector<mavsdk::LogFiles::Entry> entries) {
             if (response != nullptr) {
-                auto rpc_entries_result = generateRPCEntriesResult(result);
+                auto rpc_entries_result = generateRPCLogFilesResult(result);
                 response->set_allocated_log_files_result(rpc_entries_result);
 
                 for (const auto entry : entries) {
@@ -66,13 +66,13 @@ public:
     }
 
 private:
-    rpc::log_files::LogFilesResult * generateRPCEntriesResult(const mavsdk::LogFiles::Result result) const
+    rpc::log_files::LogFilesResult * generateRPCLogFilesResult(const mavsdk::LogFiles::Result result) const
     {
         auto rpc_result = static_cast<rpc::log_files::LogFilesResult::Result>(result);
 
-        auto rpc_entries_result = new rpc::log_files::LogFilesResult();
-        rpc_entries_result->set_result(rpc_result);
-        rpc_entries_result->set_result_str(mavsdk::LogFiles::result_str(result));
+        auto rpc_log_files_result = new rpc::log_files::LogFilesResult();
+        rpc_log_files_result->set_result(rpc_result);
+        rpc_log_files_result->set_result_str(mavsdk::LogFiles::result_str(result));
     }
 
     LogFiles& _log_files;
