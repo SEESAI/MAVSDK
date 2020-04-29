@@ -123,6 +123,28 @@ public:
     };
 
     /**
+     * @brief Ground truth type.
+     *
+     * Ground truth position information available in simulation.
+     */
+    struct GroundTruth {
+        double latitude_deg; /**< @brief Latitude in degrees (range: -90 to +90) */
+        double longitude_deg; /**< @brief Longitude in degrees (range: -180 to 180) */
+        float absolute_altitude_m; /**< @brief Altitude AMSL (above mean sea level) in metres */
+    };
+
+    /**
+     * @brief Fixed wing metrics type.
+     *
+     * Metrics typically displayed on a HUD for fixed wing aircraft.
+     */
+    struct FixedwingMetrics {
+        float airspeed_m_s; /**< @brief Current indicated airspeed (IAS) in metres/second. */
+        float throttle_percentage; /**< @brief Current throttle setting (0 to 100). */
+        float climb_rate_m_s; /**< @brief Current climb rate in metres/second. */
+    };
+
+    /**
      * @brief Ground speed type.
      *
      * The ground speed is represented in the NED (North East Down) frame and in metres/second.
@@ -223,6 +245,7 @@ public:
      * https://docs.px4.io/en/config/flight_mode.html.
      */
     enum class FlightMode {
+        UNKNOWN, /**< @brief Mode not known. */
         READY, /**< @brief Armed and ready to take off. */
         TAKEOFF, /**< @brief Taking off. */
         HOLD, /**< @brief Hold mode (hovering in place (or circling for fixed-wing vehicles). */
@@ -231,7 +254,12 @@ public:
         LAND, /**< @brief Landing. */
         OFFBOARD, /**< @brief Offboard mode. */
         FOLLOW_ME, /**< @brief FollowMe mode. */
-        UNKNOWN /**< @brief Mode not known. */
+        MANUAL, /**< @brief Manual mode. */
+        ALTCTL, /**< @brief Altitude mode. */
+        POSCTL, /**< @brief Position mode. */
+        ACRO, /**< @brief Acro mode. */
+        STABILIZED, /**< @brief Stabilize mode. */
+        RATTITUDE /**< @brief Rattitude mode. */
     };
 
     /**
@@ -471,6 +499,26 @@ public:
     Result set_rate_imu_reading_ned(double rate_hz);
 
     /**
+     * @brief Set rate of VFR HUD updates (synchronous).
+     *
+     * @note To stop sending it completely, use a rate_hz of -1, for default rate use 0.
+     *
+     * @param rate_hz Rate in Hz.
+     * @return Result of request.
+     */
+    Result set_rate_fixedwing_metrics(double rate_hz);
+
+    /**
+     * @brief Set rate of ground truth updates (synchronous).
+     *
+     * @note To stop sending it completely, use a rate_hz of -1, for default rate use 0.
+     *
+     * @param rate_hz Rate in Hz.
+     * @return Result of request.
+     */
+    Result set_rate_ground_truth(double rate_hz);
+
+    /**
      * @brief Set rate of GPS information updates (synchronous).
      *
      * @note To stop sending it completely, use a rate_hz of -1, for default rate use 0.
@@ -607,9 +655,30 @@ public:
      * @note To stop sending it completely, use a rate_hz of -1, for default rate use 0.
      *
      * @param rate_hz Rate in Hz.
-     * @param callback Cabllback to receive request result.
+     * @param callback Callback to receive request result.
      */
     void set_rate_imu_reading_ned_async(double rate_hz, result_callback_t callback);
+
+    /**
+     * @brief Set rate of VFR HUD updates (asynchronous).
+     *
+     * @note To stop sending it completely, use a rate_hz of -1, for default rate use 0.
+     *
+     * @param rate_hz Rate in Hz.
+     * @param callback Callback to receive request result.
+     */
+    void set_rate_fixedwing_metrics_async(double rate_hz, result_callback_t callback);
+
+    /**
+     * @brief Set rate of ground truth updates (asynchronous).
+     *
+     * @note To stop sending it completely, use a rate_hz of -1, for default rate use 0.
+     *
+     * @param rate_hz Rate in Hz.
+     * @param callback Callback to receive request result.
+     */
+    void set_rate_ground_truth_async(double rate_hz, result_callback_t callback);
+
     /**
      * @brief Set rate of GPS information updates (asynchronous).
      *
@@ -747,6 +816,20 @@ public:
      * @return Angular speed.
      */
     AngularVelocityBody attitude_angular_velocity_body() const;
+
+    /**
+     * @brief Get the current fixedwing_metrics (synchronous).
+     *
+     * @return Fixed wing metrics.
+     */
+    FixedwingMetrics fixedwing_metrics() const;
+
+    /**
+     * @brief Get the current ground truth (synchronous).
+     *
+     * @return Ground truth.
+     */
+    GroundTruth ground_truth() const;
 
     /**
      * @brief Get the camera's attitude in quaternions (synchronous).
@@ -951,6 +1034,34 @@ public:
      * @param callback Function to call with updates.
      */
     void attitude_angular_velocity_body_async(attitude_angular_velocity_body_callback_t callback);
+
+    /**
+     * @brief Callback type for fixedwing_metrics updates.
+     *
+     * @param FixedwingMetrics .
+     */
+    typedef std::function<void(FixedwingMetrics fixedwing_metrics)> fixedwing_metrics_callback_t;
+
+    /**
+     * @brief Subscribe to vfr hud updates in (asynchronous).
+     *
+     * @param callback Function to call with updates.
+     */
+    void fixedwing_metrics_async(fixedwing_metrics_callback_t callback);
+
+    /**
+     * @brief Callback type for ground truth updates.
+     *
+     * @param GroundTruth .
+     */
+    typedef std::function<void(GroundTruth ground_truth)> ground_truth_callback_t;
+
+    /**
+     * @brief Subscribe to ground_truth updates in (asynchronous).
+     *
+     * @param callback Function to call with updates.
+     */
+    void ground_truth_async(ground_truth_callback_t callback);
 
     /**
      * @brief Subscribe to camera attitude updates in quaternion (asynchronous).
@@ -1250,6 +1361,20 @@ std::ostream& operator<<(std::ostream& str, Telemetry::AccelerationNED const& ac
  */
 std::ostream&
 operator<<(std::ostream& str, Telemetry::AngularVelocityNED const& angular_velocity_ned);
+
+/**
+ * @brief Stream operator to print information about a `Telemetry::FixedwingMetrics`.
+ *
+ * @return A reference to the stream.
+ */
+std::ostream& operator<<(std::ostream& str, Telemetry::FixedwingMetrics const& fixedwing_metrics);
+
+/**
+ * @brief Stream operator to print information about a `Telemetry::GroundTruth`.
+ *
+ * @return A reference to the stream.
+ */
+std::ostream& operator<<(std::ostream& str, Telemetry::GroundTruth const& ground_truth);
 
 /**
  * @brief Stream operator to print information about a `Telemetry::MagneticFieldNED`.

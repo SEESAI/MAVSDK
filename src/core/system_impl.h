@@ -7,6 +7,7 @@
 #include "timeout_handler.h"
 #include "call_every_handler.h"
 #include "thread_pool.h"
+#include "timesync.h"
 #include "system.h"
 #include <cstdint>
 #include <functional>
@@ -37,6 +38,12 @@ public:
         LAND,
         OFFBOARD,
         FOLLOW_ME,
+        MANUAL,
+        ALTCTL,
+        POSCTL,
+        ACRO,
+        RATTITUDE,
+        STABILIZED,
     };
 
     explicit SystemImpl(
@@ -192,6 +199,7 @@ public:
     bool is_connected() const;
 
     Time& get_time() { return _time; };
+    AutopilotTime& get_autopilot_time() { return _autopilot_time; };
 
     void register_plugin(PluginImplBase* plugin_impl);
     void unregister_plugin(PluginImplBase* plugin_impl);
@@ -199,6 +207,7 @@ public:
     void call_user_callback(const std::function<void()>& func);
 
     void send_autopilot_version_request();
+    void send_flight_information_request();
 
     void intercept_incoming_messages(std::function<bool(mavlink_message_t&)> callback);
     void intercept_outgoing_messages(std::function<bool(mavlink_message_t&)> callback);
@@ -292,10 +301,13 @@ private:
 
     MAVLinkCommands _commands;
 
+    Timesync _timesync;
+
     TimeoutHandler _timeout_handler;
     CallEveryHandler _call_every_handler;
 
     Time _time{};
+    AutopilotTime _autopilot_time{};
 
     std::mutex _plugin_impls_mutex{};
     std::vector<PluginImplBase*> _plugin_impls{};
@@ -304,8 +316,6 @@ private:
     std::unordered_set<uint8_t> _components{};
 
     ThreadPool _thread_pool{3};
-
-    bool _iterator_invalidated{false};
 
     std::mutex _param_changed_callbacks_mutex{};
     std::map<const void*, param_changed_callback_t> _param_changed_callbacks{};

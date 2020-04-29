@@ -113,6 +113,44 @@ public:
         return grpc::Status::OK;
     }
 
+    grpc::Status SubscribeLandedState(
+        grpc::ServerContext* /* context */,
+        const mavsdk::rpc::telemetry::SubscribeLandedStateRequest* /* request */,
+        grpc::ServerWriter<rpc::telemetry::LandedStateResponse>* writer) override
+    {
+        std::mutex landed_state_mutex{};
+
+        _telemetry.landed_state_async(
+            [this, &writer, &landed_state_mutex](mavsdk::Telemetry::LandedState landed_state) {
+                mavsdk::rpc::telemetry::LandedStateResponse rpc_landed_state_response;
+                rpc_landed_state_response.set_landed_state(translateLandedState(landed_state));
+
+                std::lock_guard<std::mutex> lock(landed_state_mutex);
+                writer->Write(rpc_landed_state_response);
+            });
+
+        _stop_future.wait();
+        return grpc::Status::OK;
+    }
+
+    rpc::telemetry::LandedState
+    translateLandedState(const mavsdk::Telemetry::LandedState landed_state) const
+    {
+        switch (landed_state) {
+            default:
+            case mavsdk::Telemetry::LandedState::UNKNOWN:
+                return rpc::telemetry::LandedState::LANDED_STATE_UNKNOWN;
+            case mavsdk::Telemetry::LandedState::ON_GROUND:
+                return rpc::telemetry::LandedState::LANDED_STATE_ON_GROUND;
+            case mavsdk::Telemetry::LandedState::IN_AIR:
+                return rpc::telemetry::LandedState::LANDED_STATE_IN_AIR;
+            case mavsdk::Telemetry::LandedState::TAKING_OFF:
+                return rpc::telemetry::LandedState::LANDED_STATE_TAKING_OFF;
+            case mavsdk::Telemetry::LandedState::LANDING:
+                return rpc::telemetry::LandedState::LANDED_STATE_LANDING;
+        }
+    }
+
     grpc::Status SubscribeStatusText(
         grpc::ServerContext* /* context */,
         const mavsdk::rpc::telemetry::SubscribeStatusTextRequest* /* request */,
@@ -285,6 +323,18 @@ public:
                 return rpc::telemetry::FlightMode::OFFBOARD;
             case mavsdk::Telemetry::FlightMode::FOLLOW_ME:
                 return rpc::telemetry::FlightMode::FOLLOW_ME;
+            case mavsdk::Telemetry::FlightMode::MANUAL:
+                return rpc::telemetry::FlightMode::MANUAL;
+            case mavsdk::Telemetry::FlightMode::ALTCTL:
+                return rpc::telemetry::FlightMode::ALTCTL;
+            case mavsdk::Telemetry::FlightMode::POSCTL:
+                return rpc::telemetry::FlightMode::POSCTL;
+            case mavsdk::Telemetry::FlightMode::ACRO:
+                return rpc::telemetry::FlightMode::ACRO;
+            case mavsdk::Telemetry::FlightMode::STABILIZED:
+                return rpc::telemetry::FlightMode::STABILIZED;
+            case mavsdk::Telemetry::FlightMode::RATTITUDE:
+                return rpc::telemetry::FlightMode::RATTITUDE;
         }
     }
 

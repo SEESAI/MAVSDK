@@ -21,6 +21,7 @@ SystemImpl::SystemImpl(MavsdkImpl& parent, uint8_t system_id, uint8_t comp_id, b
     _parent(parent),
     _params(*this),
     _commands(*this),
+    _timesync(*this),
     _timeout_handler(_time),
     _call_every_handler(_time)
 {
@@ -84,8 +85,6 @@ void SystemImpl::register_mavlink_message_handler(
 
     MAVLinkHandlerTableEntry entry = {msg_id, callback, cookie};
     _mavlink_handler_table.push_back(entry);
-    // Push back can move the std::vector and therefore invalidate the iterator.
-    _iterator_invalidated = true;
 }
 
 void SystemImpl::unregister_mavlink_message_handler(uint16_t msg_id, const void* cookie)
@@ -96,7 +95,6 @@ void SystemImpl::unregister_mavlink_message_handler(uint16_t msg_id, const void*
          /* no ++it */) {
         if (it->msg_id == msg_id && it->cookie == cookie) {
             it = _mavlink_handler_table.erase(it);
-            _iterator_invalidated = true;
         } else {
             ++it;
         }
@@ -111,7 +109,6 @@ void SystemImpl::unregister_all_mavlink_message_handlers(const void* cookie)
          /* no ++it */) {
         if (it->cookie == cookie) {
             it = _mavlink_handler_table.erase(it);
-            _iterator_invalidated = true;
         } else {
             ++it;
         }
@@ -146,33 +143,20 @@ void SystemImpl::process_mavlink_message(mavlink_message_t& message)
         }
     }
 
-    _mavlink_handler_table_mutex.lock();
+    std::lock_guard<std::mutex> lock(_mavlink_handler_table_mutex);
 
 #if MESSAGE_DEBUGGING == 1
     bool forwarded = false;
 #endif
-    for (auto it = _mavlink_handler_table.begin(); it != _mavlink_handler_table.end(); /* ++it */) {
+    for (auto it = _mavlink_handler_table.begin(); it != _mavlink_handler_table.end(); ++it) {
         if (it->msg_id == message.msgid) {
 #if MESSAGE_DEBUGGING == 1
             LogDebug() << "Forwarding msg " << int(message.msgid) << " to " << size_t(it->cookie);
             forwarded = true;
 #endif
-            _mavlink_handler_table_mutex.unlock();
             it->callback(message);
-            _mavlink_handler_table_mutex.lock();
-        }
-
-        if (_iterator_invalidated) {
-            // Someone messed with the map while we were doing the callback.
-            // We need to start over. This means that we might call something twice but that's
-            // probably better than to drop the message.
-            it = _mavlink_handler_table.begin();
-            _iterator_invalidated = false;
-        } else {
-            ++it;
         }
     }
-    _mavlink_handler_table_mutex.unlock();
 
 #if MESSAGE_DEBUGGING == 1
     if (!forwarded) {
@@ -330,6 +314,7 @@ void SystemImpl::system_thread()
         _timeout_handler.run_once();
         _params.do_work();
         _commands.do_work();
+        _timesync.do_work();
 
         if (_connected) {
             // Work fairly fast if we're connected.
@@ -449,10 +434,8 @@ bool SystemImpl::has_camera(int camera_id) const
     int camera_comp_id = (camera_id == -1) ? camera_id : (MAV_COMP_ID_CAMERA + camera_id);
 
     if (camera_comp_id == -1) { // Check whether the system has any camera.
-        for (auto compid : _components) {
-            if (is_camera(compid)) {
-                return true;
-            }
+        if (std::any_of(_components.begin(), _components.end(), is_camera)) {
+            return true;
         }
     } else { // Look for the camera whose id is `camera_id`.
         for (auto compid : _components) {
@@ -545,6 +528,18 @@ void SystemImpl::send_autopilot_version_request()
     MAVLinkCommands::CommandLong command{};
 
     command.command = MAV_CMD_REQUEST_AUTOPILOT_CAPABILITIES;
+    command.params.param1 = 1.0f;
+    command.target_component_id = get_autopilot_id();
+
+    send_command_async(command, nullptr);
+}
+
+void SystemImpl::send_flight_information_request()
+{
+    // We don't care about an answer, we mostly care about receiving FLIGHT_INFORMATION.
+    MAVLinkCommands::CommandLong command{};
+
+    command.command = MAV_CMD_REQUEST_FLIGHT_INFORMATION;
     command.params.param1 = 1.0f;
     command.target_component_id = get_autopilot_id();
 
@@ -910,6 +905,24 @@ SystemImpl::make_command_flight_mode(FlightMode flight_mode, uint8_t component_i
         case FlightMode::OFFBOARD:
             custom_mode = px4::PX4_CUSTOM_MAIN_MODE_OFFBOARD;
             break;
+        case FlightMode::MANUAL:
+            custom_mode = px4::PX4_CUSTOM_MAIN_MODE_MANUAL;
+            break;
+        case FlightMode::POSCTL:
+            custom_mode = px4::PX4_CUSTOM_MAIN_MODE_POSCTL;
+            break;
+        case FlightMode::ALTCTL:
+            custom_mode = px4::PX4_CUSTOM_MAIN_MODE_ALTCTL;
+            break;
+        case FlightMode::RATTITUDE:
+            custom_mode = px4::PX4_CUSTOM_MAIN_MODE_RATTITUDE;
+            break;
+        case FlightMode::ACRO:
+            custom_mode = px4::PX4_CUSTOM_MAIN_MODE_ACRO;
+            break;
+        case FlightMode::STABILIZED:
+            custom_mode = px4::PX4_CUSTOM_MAIN_MODE_STABILIZED;
+            break;
         default:
             LogErr() << "Unknown Flight mode.";
             MAVLinkCommands::CommandLong empty_command{};
@@ -940,6 +953,18 @@ SystemImpl::FlightMode SystemImpl::to_flight_mode_from_custom_mode(uint32_t cust
     switch (px4_custom_mode.main_mode) {
         case px4::PX4_CUSTOM_MAIN_MODE_OFFBOARD:
             return FlightMode::OFFBOARD;
+        case px4::PX4_CUSTOM_MAIN_MODE_MANUAL:
+            return FlightMode::MANUAL;
+        case px4::PX4_CUSTOM_MAIN_MODE_POSCTL:
+            return FlightMode::POSCTL;
+        case px4::PX4_CUSTOM_MAIN_MODE_ALTCTL:
+            return FlightMode::ALTCTL;
+        case px4::PX4_CUSTOM_MAIN_MODE_RATTITUDE:
+            return FlightMode::RATTITUDE;
+        case px4::PX4_CUSTOM_MAIN_MODE_ACRO:
+            return FlightMode::ACRO;
+        case px4::PX4_CUSTOM_MAIN_MODE_STABILIZED:
+            return FlightMode::STABILIZED;
         case px4::PX4_CUSTOM_MAIN_MODE_AUTO:
             switch (px4_custom_mode.sub_mode) {
                 case px4::PX4_CUSTOM_SUB_MODE_AUTO_READY:
