@@ -246,7 +246,7 @@ private:
         {NAN, NAN, NAN}, {NAN, NAN, NAN}, {NAN, NAN, NAN}, NAN};
 
     mutable std::mutex _gps_info_mutex{};
-    Telemetry::GPSInfo _gps_info{0, 0};
+    Telemetry::GPSInfo _gps_info{0, 0, double(NAN), double(NAN), NAN};
 
     mutable std::mutex _battery_mutex{};
     Telemetry::Battery _battery{NAN, NAN, NAN};

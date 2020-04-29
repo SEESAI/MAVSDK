@@ -665,7 +665,8 @@ void TelemetryImpl::process_gps_raw_int(const mavlink_message_t& message)
 {
     mavlink_gps_raw_int_t gps_raw_int;
     mavlink_msg_gps_raw_int_decode(&message, &gps_raw_int);
-    set_gps_info({gps_raw_int.satellites_visible, gps_raw_int.fix_type});
+    set_gps_info({gps_raw_int.satellites_visible, gps_raw_int.fix_type, gps_raw_int.lat * 1e-7,
+                  gps_raw_int.lon * 1e-7, gps_raw_int.alt * 1e-3f});
 
     // TODO: This is just an interim hack, we will have to look at
     //       estimator flags in order to decide if the position

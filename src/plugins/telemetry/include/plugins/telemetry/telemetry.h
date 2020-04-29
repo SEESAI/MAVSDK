@@ -208,6 +208,9 @@ public:
         int num_satellites; /**< @brief Number of visible satellites used for solution. */
         int fix_type; /**< @brief Fix type (0: no GPS, 1: no fix, 2: 2D fix, 3: 3D fix, 4: DGPS fix,
                                      5: RTK float, 6: RTK fixed). */
+        double latitude_deg; /**< @brief Latitude in degrees (range: -90 to +90) */
+        double longitude_deg; /**< @brief Longitude in degrees (range: -180 to 180) */
+        float absolute_altitude_m; /**< @brief Altitude AMSL (above mean sea level) in metres */
     };
 
     /**

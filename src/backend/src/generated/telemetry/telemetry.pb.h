@@ -6800,6 +6800,9 @@ class GpsInfo :
   enum : int {
     kNumSatellitesFieldNumber = 1,
     kFixTypeFieldNumber = 2,
+    kLatitudeDegFieldNumber = 3,
+    kLongitudeDegFieldNumber = 4,
+    kAbsoluteAltitudeMFieldNumber = 5,
   };
   // int32 num_satellites = 1;
   void clear_num_satellites();
@@ -6819,6 +6822,33 @@ class GpsInfo :
   void _internal_set_fix_type(::mavsdk::rpc::telemetry::FixType value);
   public:
 
+  // double latitude_deg = 3;
+  void clear_latitude_deg();
+  double latitude_deg() const;
+  void set_latitude_deg(double value);
+  private:
+  double _internal_latitude_deg() const;
+  void _internal_set_latitude_deg(double value);
+  public:
+
+  // double longitude_deg = 4;
+  void clear_longitude_deg();
+  double longitude_deg() const;
+  void set_longitude_deg(double value);
+  private:
+  double _internal_longitude_deg() const;
+  void _internal_set_longitude_deg(double value);
+  public:
+
+  // float absolute_altitude_m = 5;
+  void clear_absolute_altitude_m();
+  float absolute_altitude_m() const;
+  void set_absolute_altitude_m(float value);
+  private:
+  float _internal_absolute_altitude_m() const;
+  void _internal_set_absolute_altitude_m(float value);
+  public:
+
   // @@protoc_insertion_point(class_scope:mavsdk.rpc.telemetry.GpsInfo)
  private:
   class _Internal;
@@ -6826,6 +6856,9 @@ class GpsInfo :
   ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
   ::PROTOBUF_NAMESPACE_ID::int32 num_satellites_;
   int fix_type_;
+  double latitude_deg_;
+  double longitude_deg_;
+  float absolute_altitude_m_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_telemetry_2ftelemetry_2eproto;
 };
@@ -10558,6 +10591,66 @@ inline void GpsInfo::_internal_set_fix_type(::mavsdk::rpc::telemetry::FixType va
 inline void GpsInfo::set_fix_type(::mavsdk::rpc::telemetry::FixType value) {
   _internal_set_fix_type(value);
   // @@protoc_insertion_point(field_set:mavsdk.rpc.telemetry.GpsInfo.fix_type)
+}
+
+// double latitude_deg = 3;
+inline void GpsInfo::clear_latitude_deg() {
+  latitude_deg_ = 0;
+}
+inline double GpsInfo::_internal_latitude_deg() const {
+  return latitude_deg_;
+}
+inline double GpsInfo::latitude_deg() const {
+  // @@protoc_insertion_point(field_get:mavsdk.rpc.telemetry.GpsInfo.latitude_deg)
+  return _internal_latitude_deg();
+}
+inline void GpsInfo::_internal_set_latitude_deg(double value) {
+  
+  latitude_deg_ = value;
+}
+inline void GpsInfo::set_latitude_deg(double value) {
+  _internal_set_latitude_deg(value);
+  // @@protoc_insertion_point(field_set:mavsdk.rpc.telemetry.GpsInfo.latitude_deg)
+}
+
+// double longitude_deg = 4;
+inline void GpsInfo::clear_longitude_deg() {
+  longitude_deg_ = 0;
+}
+inline double GpsInfo::_internal_longitude_deg() const {
+  return longitude_deg_;
+}
+inline double GpsInfo::longitude_deg() const {
+  // @@protoc_insertion_point(field_get:mavsdk.rpc.telemetry.GpsInfo.longitude_deg)
+  return _internal_longitude_deg();
+}
+inline void GpsInfo::_internal_set_longitude_deg(double value) {
+  
+  longitude_deg_ = value;
+}
+inline void GpsInfo::set_longitude_deg(double value) {
+  _internal_set_longitude_deg(value);
+  // @@protoc_insertion_point(field_set:mavsdk.rpc.telemetry.GpsInfo.longitude_deg)
+}
+
+// float absolute_altitude_m = 5;
+inline void GpsInfo::clear_absolute_altitude_m() {
+  absolute_altitude_m_ = 0;
+}
+inline float GpsInfo::_internal_absolute_altitude_m() const {
+  return absolute_altitude_m_;
+}
+inline float GpsInfo::absolute_altitude_m() const {
+  // @@protoc_insertion_point(field_get:mavsdk.rpc.telemetry.GpsInfo.absolute_altitude_m)
+  return _internal_absolute_altitude_m();
+}
+inline void GpsInfo::_internal_set_absolute_altitude_m(float value) {
+  
+  absolute_altitude_m_ = value;
+}
+inline void GpsInfo::set_absolute_altitude_m(float value) {
+  _internal_set_absolute_altitude_m(value);
+  // @@protoc_insertion_point(field_set:mavsdk.rpc.telemetry.GpsInfo.absolute_altitude_m)
 }
 
 // -------------------------------------------------------------------

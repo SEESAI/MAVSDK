@@ -222,6 +222,9 @@ public:
                 auto rpc_gps_info = new mavsdk::rpc::telemetry::GpsInfo();
                 rpc_gps_info->set_num_satellites(gps_info.num_satellites);
                 rpc_gps_info->set_fix_type(translateGpsFixType(gps_info.fix_type));
+                rpc_gps_info->set_latitude_deg(gps_info.latitude_deg);
+                rpc_gps_info->set_longitude_deg(gps_info.longitude_deg);
+                rpc_gps_info->set_absolute_altitude_m(gps_info.absolute_altitude_m);
 
                 mavsdk::rpc::telemetry::GpsInfoResponse rpc_gps_info_response;
                 rpc_gps_info_response.set_allocated_gps_info(rpc_gps_info);
