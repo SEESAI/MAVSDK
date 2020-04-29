@@ -1740,151 +1740,166 @@ const char descriptor_table_protodef_telemetry_2ftelemetry_2eproto[] PROTOBUF_SE
   "gps_info\030\001 \001(\0132\035.mavsdk.rpc.telemetry.Gp"
   "sInfo\"\031\n\027SubscribeBatteryRequest\"A\n\017Batt"
   "eryResponse\022.\n\007battery\030\001 \001(\0132\035.mavsdk.rp"
-  "c.telemetry.Battery\"\034\n\032SubscribeFlightMo"
-  "deRequest\"K\n\022FlightModeResponse\0225\n\013fligh"
-  "t_mode\030\001 \001(\0162 .mavsdk.rpc.telemetry.Flig"
-  "htMode\"\030\n\026SubscribeHealthRequest\">\n\016Heal"
-  "thResponse\022,\n\006health\030\001 \001(\0132\034.mavsdk.rpc."
-  "telemetry.Health\"\032\n\030SubscribeRcStatusReq"
-  "uest\"E\n\020RcStatusResponse\0221\n\trc_status\030\001 "
-  "\001(\0132\036.mavsdk.rpc.telemetry.RcStatus\"\034\n\032S"
-  "ubscribeStatusTextRequest\"K\n\022StatusTextR"
-  "esponse\0225\n\013status_text\030\001 \001(\0132 .mavsdk.rp"
-  "c.telemetry.StatusText\"\'\n%SubscribeActua"
-  "torControlTargetRequest\"m\n\035ActuatorContr"
-  "olTargetResponse\022L\n\027actuator_control_tar"
-  "get\030\001 \001(\0132+.mavsdk.rpc.telemetry.Actuato"
-  "rControlTarget\"&\n$SubscribeActuatorOutpu"
-  "tStatusRequest\"j\n\034ActuatorOutputStatusRe"
-  "sponse\022J\n\026actuator_output_status\030\001 \001(\0132*"
-  ".mavsdk.rpc.telemetry.ActuatorOutputStat"
-  "us\"\032\n\030SubscribeOdometryRequest\"D\n\020Odomet"
-  "ryResponse\0220\n\010odometry\030\001 \001(\0132\036.mavsdk.rp"
-  "c.telemetry.Odometry\"q\n\010Position\022\024\n\014lati"
-  "tude_deg\030\001 \001(\001\022\025\n\rlongitude_deg\030\002 \001(\001\022\033\n"
-  "\023absolute_altitude_m\030\003 \001(\002\022\033\n\023relative_a"
-  "ltitude_m\030\004 \001(\002\"8\n\nQuaternion\022\t\n\001w\030\001 \001(\002"
-  "\022\t\n\001x\030\002 \001(\002\022\t\n\001y\030\003 \001(\002\022\t\n\001z\030\004 \001(\002\"B\n\nEul"
-  "erAngle\022\020\n\010roll_deg\030\001 \001(\002\022\021\n\tpitch_deg\030\002"
-  " \001(\002\022\017\n\007yaw_deg\030\003 \001(\002\"Q\n\023AngularVelocity"
-  "Body\022\022\n\nroll_rad_s\030\001 \001(\002\022\023\n\013pitch_rad_s\030"
-  "\002 \001(\002\022\021\n\tyaw_rad_s\030\003 \001(\002\"\\\n\010SpeedNed\022\032\n\022"
-  "velocity_north_m_s\030\001 \001(\002\022\031\n\021velocity_eas"
-  "t_m_s\030\002 \001(\002\022\031\n\021velocity_down_m_s\030\003 \001(\002\"R"
-  "\n\007GpsInfo\022\026\n\016num_satellites\030\001 \001(\005\022/\n\010fix"
-  "_type\030\002 \001(\0162\035.mavsdk.rpc.telemetry.FixTy"
-  "pe\"7\n\007Battery\022\021\n\tvoltage_v\030\001 \001(\002\022\031\n\021rema"
-  "ining_percent\030\002 \001(\002\"\371\001\n\006Health\022#\n\033is_gyr"
-  "ometer_calibration_ok\030\001 \001(\010\022\'\n\037is_accele"
-  "rometer_calibration_ok\030\002 \001(\010\022&\n\036is_magne"
-  "tometer_calibration_ok\030\003 \001(\010\022\037\n\027is_level"
-  "_calibration_ok\030\004 \001(\010\022\034\n\024is_local_positi"
-  "on_ok\030\005 \001(\010\022\035\n\025is_global_position_ok\030\006 \001"
-  "(\010\022\033\n\023is_home_position_ok\030\007 \001(\010\"]\n\010RcSta"
-  "tus\022\032\n\022was_available_once\030\001 \001(\010\022\024\n\014is_av"
-  "ailable\030\002 \001(\010\022\037\n\027signal_strength_percent"
-  "\030\003 \001(\002\"\210\001\n\nStatusText\0229\n\004type\030\001 \001(\0162+.ma"
-  "vsdk.rpc.telemetry.StatusText.StatusType"
-  "\022\014\n\004text\030\002 \001(\t\"1\n\nStatusType\022\010\n\004INFO\020\000\022\013"
-  "\n\007WARNING\020\001\022\014\n\010CRITICAL\020\002\"8\n\025ActuatorCon"
-  "trolTarget\022\r\n\005group\030\001 \001(\005\022\020\n\010controls\030\002 "
-  "\003(\002\"8\n\024ActuatorOutputStatus\022\016\n\006active\030\001 "
-  "\001(\r\022\020\n\010actuator\030\002 \003(\002\"\276\004\n\010Odometry\022\021\n\tti"
-  "me_usec\030\001 \001(\004\0229\n\010frame_id\030\002 \001(\0162\'.mavsdk"
-  ".rpc.telemetry.Odometry.MavFrame\022\?\n\016chil"
-  "d_frame_id\030\003 \001(\0162\'.mavsdk.rpc.telemetry."
-  "Odometry.MavFrame\0229\n\rposition_body\030\004 \001(\013"
-  "2\".mavsdk.rpc.telemetry.PositionBody\022+\n\001"
-  "q\030\005 \001(\0132 .mavsdk.rpc.telemetry.Quaternio"
-  "n\0223\n\nspeed_body\030\006 \001(\0132\037.mavsdk.rpc.telem"
-  "etry.SpeedBody\022H\n\025angular_velocity_body\030"
-  "\007 \001(\0132).mavsdk.rpc.telemetry.AngularVelo"
-  "cityBody\0229\n\017pose_covariance\030\010 \001(\0132 .mavs"
-  "dk.rpc.telemetry.Covariance\022=\n\023velocity_"
-  "covariance\030\t \001(\0132 .mavsdk.rpc.telemetry."
-  "Covariance\"B\n\010MavFrame\022\t\n\005UNDEF\020\000\022\014\n\010BOD"
-  "Y_NED\020\010\022\016\n\nVISION_NED\020\020\022\r\n\tESTIM_NED\020\022\"\'"
-  "\n\nCovariance\022\031\n\021covariance_matrix\030\001 \003(\002\""
-  "S\n\tSpeedBody\022\026\n\016velocity_x_m_s\030\001 \001(\002\022\026\n\016"
-  "velocity_y_m_s\030\002 \001(\002\022\026\n\016velocity_z_m_s\030\003"
-  " \001(\002\"5\n\014PositionBody\022\013\n\003x_m\030\001 \001(\002\022\013\n\003y_m"
-  "\030\002 \001(\002\022\013\n\003z_m\030\003 \001(\002*e\n\007FixType\022\n\n\006NO_GPS"
-  "\020\000\022\n\n\006NO_FIX\020\001\022\n\n\006FIX_2D\020\002\022\n\n\006FIX_3D\020\003\022\014"
-  "\n\010FIX_DGPS\020\004\022\r\n\tRTK_FLOAT\020\005\022\r\n\tRTK_FIXED"
-  "\020\006*\322\001\n\nFlightMode\022\013\n\007UNKNOWN\020\000\022\t\n\005READY\020"
-  "\001\022\013\n\007TAKEOFF\020\002\022\010\n\004HOLD\020\003\022\013\n\007MISSION\020\004\022\024\n"
-  "\020RETURN_TO_LAUNCH\020\005\022\010\n\004LAND\020\006\022\014\n\010OFFBOAR"
-  "D\020\007\022\r\n\tFOLLOW_ME\020\010\022\n\n\006MANUAL\020\t\022\n\n\006ALTCTL"
-  "\020\n\022\n\n\006POSCTL\020\013\022\010\n\004ACRO\020\014\022\016\n\nSTABILIZED\020\r"
-  "\022\r\n\tRATTITUDE\020\016*\223\001\n\013LandedState\022\030\n\024LANDE"
-  "D_STATE_UNKNOWN\020\000\022\032\n\026LANDED_STATE_ON_GRO"
-  "UND\020\001\022\027\n\023LANDED_STATE_IN_AIR\020\002\022\033\n\027LANDED"
-  "_STATE_TAKING_OFF\020\003\022\030\n\024LANDED_STATE_LAND"
-  "ING\020\0042\354\023\n\020TelemetryService\022o\n\021SubscribeP"
-  "osition\022..mavsdk.rpc.telemetry.Subscribe"
-  "PositionRequest\032&.mavsdk.rpc.telemetry.P"
-  "ositionResponse\"\0000\001\022c\n\rSubscribeHome\022*.m"
-  "avsdk.rpc.telemetry.SubscribeHomeRequest"
-  "\032\".mavsdk.rpc.telemetry.HomeResponse\"\0000\001"
-  "\022f\n\016SubscribeInAir\022+.mavsdk.rpc.telemetr"
-  "y.SubscribeInAirRequest\032#.mavsdk.rpc.tel"
-  "emetry.InAirResponse\"\0000\001\022x\n\024SubscribeLan"
-  "dedState\0221.mavsdk.rpc.telemetry.Subscrib"
-  "eLandedStateRequest\032).mavsdk.rpc.telemet"
-  "ry.LandedStateResponse\"\0000\001\022f\n\016SubscribeA"
-  "rmed\022+.mavsdk.rpc.telemetry.SubscribeArm"
-  "edRequest\032#.mavsdk.rpc.telemetry.ArmedRe"
-  "sponse\"\0000\001\022\215\001\n\033SubscribeAttitudeQuaterni"
-  "on\0228.mavsdk.rpc.telemetry.SubscribeAttit"
-  "udeQuaternionRequest\0320.mavsdk.rpc.teleme"
-  "try.AttitudeQuaternionResponse\"\0000\001\022~\n\026Su"
-  "bscribeAttitudeEuler\0223.mavsdk.rpc.teleme"
-  "try.SubscribeAttitudeEulerRequest\032+.mavs"
-  "dk.rpc.telemetry.AttitudeEulerResponse\"\000"
-  "0\001\022\250\001\n$SubscribeAttitudeAngularVelocityB"
-  "ody\022A.mavsdk.rpc.telemetry.SubscribeAtti"
-  "tudeAngularVelocityBodyRequest\0329.mavsdk."
-  "rpc.telemetry.AttitudeAngularVelocityBod"
-  "yResponse\"\0000\001\022\237\001\n!SubscribeCameraAttitud"
-  "eQuaternion\022>.mavsdk.rpc.telemetry.Subsc"
-  "ribeCameraAttitudeQuaternionRequest\0326.ma"
-  "vsdk.rpc.telemetry.CameraAttitudeQuatern"
-  "ionResponse\"\0000\001\022\220\001\n\034SubscribeCameraAttit"
-  "udeEuler\0229.mavsdk.rpc.telemetry.Subscrib"
-  "eCameraAttitudeEulerRequest\0321.mavsdk.rpc"
-  ".telemetry.CameraAttitudeEulerResponse\"\000"
-  "0\001\022\201\001\n\027SubscribeGroundSpeedNed\0224.mavsdk."
-  "rpc.telemetry.SubscribeGroundSpeedNedReq"
-  "uest\032,.mavsdk.rpc.telemetry.GroundSpeedN"
-  "edResponse\"\0000\001\022l\n\020SubscribeGpsInfo\022-.mav"
-  "sdk.rpc.telemetry.SubscribeGpsInfoReques"
-  "t\032%.mavsdk.rpc.telemetry.GpsInfoResponse"
-  "\"\0000\001\022l\n\020SubscribeBattery\022-.mavsdk.rpc.te"
-  "lemetry.SubscribeBatteryRequest\032%.mavsdk"
-  ".rpc.telemetry.BatteryResponse\"\0000\001\022u\n\023Su"
-  "bscribeFlightMode\0220.mavsdk.rpc.telemetry"
-  ".SubscribeFlightModeRequest\032(.mavsdk.rpc"
-  ".telemetry.FlightModeResponse\"\0000\001\022i\n\017Sub"
-  "scribeHealth\022,.mavsdk.rpc.telemetry.Subs"
-  "cribeHealthRequest\032$.mavsdk.rpc.telemetr"
-  "y.HealthResponse\"\0000\001\022o\n\021SubscribeRcStatu"
-  "s\022..mavsdk.rpc.telemetry.SubscribeRcStat"
-  "usRequest\032&.mavsdk.rpc.telemetry.RcStatu"
-  "sResponse\"\0000\001\022u\n\023SubscribeStatusText\0220.m"
-  "avsdk.rpc.telemetry.SubscribeStatusTextR"
-  "equest\032(.mavsdk.rpc.telemetry.StatusText"
-  "Response\"\0000\001\022\226\001\n\036SubscribeActuatorContro"
-  "lTarget\022;.mavsdk.rpc.telemetry.Subscribe"
-  "ActuatorControlTargetRequest\0323.mavsdk.rp"
-  "c.telemetry.ActuatorControlTargetRespons"
-  "e\"\0000\001\022\223\001\n\035SubscribeActuatorOutputStatus\022"
-  ":.mavsdk.rpc.telemetry.SubscribeActuator"
-  "OutputStatusRequest\0322.mavsdk.rpc.telemet"
-  "ry.ActuatorOutputStatusResponse\"\0000\001\022o\n\021S"
-  "ubscribeOdometry\022..mavsdk.rpc.telemetry."
-  "SubscribeOdometryRequest\032&.mavsdk.rpc.te"
-  "lemetry.OdometryResponse\"\0000\001B%\n\023io.mavsd"
-  "k.telemetryB\016TelemetryProtob\006proto3"
+  "c.telemetry.Battery\"\037\n\035SubscribeBatteryS"
+  "tatusRequest\"T\n\025BatteryStatusResponse\022;\n"
+  "\016battery_status\030\001 \001(\0132#.mavsdk.rpc.telem"
+  "etry.BatteryStatus\"\034\n\032SubscribeFlightMod"
+  "eRequest\"K\n\022FlightModeResponse\0225\n\013flight"
+  "_mode\030\001 \001(\0162 .mavsdk.rpc.telemetry.Fligh"
+  "tMode\"\032\n\030SubscribeModeInfoRequest\"E\n\020Mod"
+  "eInfoResponse\0221\n\tmode_info\030\001 \001(\0132\036.mavsd"
+  "k.rpc.telemetry.ModeInfo\"\030\n\026SubscribeHea"
+  "lthRequest\">\n\016HealthResponse\022,\n\006health\030\001"
+  " \001(\0132\034.mavsdk.rpc.telemetry.Health\"\032\n\030Su"
+  "bscribeRcStatusRequest\"E\n\020RcStatusRespon"
+  "se\0221\n\trc_status\030\001 \001(\0132\036.mavsdk.rpc.telem"
+  "etry.RcStatus\"\034\n\032SubscribeStatusTextRequ"
+  "est\"K\n\022StatusTextResponse\0225\n\013status_text"
+  "\030\001 \001(\0132 .mavsdk.rpc.telemetry.StatusText"
+  "\"\'\n%SubscribeActuatorControlTargetReques"
+  "t\"m\n\035ActuatorControlTargetResponse\022L\n\027ac"
+  "tuator_control_target\030\001 \001(\0132+.mavsdk.rpc"
+  ".telemetry.ActuatorControlTarget\"&\n$Subs"
+  "cribeActuatorOutputStatusRequest\"j\n\034Actu"
+  "atorOutputStatusResponse\022J\n\026actuator_out"
+  "put_status\030\001 \001(\0132*.mavsdk.rpc.telemetry."
+  "ActuatorOutputStatus\"\032\n\030SubscribeOdometr"
+  "yRequest\"D\n\020OdometryResponse\0220\n\010odometry"
+  "\030\001 \001(\0132\036.mavsdk.rpc.telemetry.Odometry\"q"
+  "\n\010Position\022\024\n\014latitude_deg\030\001 \001(\001\022\025\n\rlong"
+  "itude_deg\030\002 \001(\001\022\033\n\023absolute_altitude_m\030\003"
+  " \001(\002\022\033\n\023relative_altitude_m\030\004 \001(\002\"8\n\nQua"
+  "ternion\022\t\n\001w\030\001 \001(\002\022\t\n\001x\030\002 \001(\002\022\t\n\001y\030\003 \001(\002"
+  "\022\t\n\001z\030\004 \001(\002\"B\n\nEulerAngle\022\020\n\010roll_deg\030\001 "
+  "\001(\002\022\021\n\tpitch_deg\030\002 \001(\002\022\017\n\007yaw_deg\030\003 \001(\002\""
+  "Q\n\023AngularVelocityBody\022\022\n\nroll_rad_s\030\001 \001"
+  "(\002\022\023\n\013pitch_rad_s\030\002 \001(\002\022\021\n\tyaw_rad_s\030\003 \001"
+  "(\002\"\\\n\010SpeedNed\022\032\n\022velocity_north_m_s\030\001 \001"
+  "(\002\022\031\n\021velocity_east_m_s\030\002 \001(\002\022\031\n\021velocit"
+  "y_down_m_s\030\003 \001(\002\"R\n\007GpsInfo\022\026\n\016num_satel"
+  "lites\030\001 \001(\005\022/\n\010fix_type\030\002 \001(\0162\035.mavsdk.r"
+  "pc.telemetry.FixType\"J\n\007Battery\022\021\n\tvolta"
+  "ge_v\030\001 \001(\002\022\021\n\tcurrent_a\030\002 \001(\002\022\031\n\021remaini"
+  "ng_percent\030\003 \001(\002\"%\n\rBatteryStatus\022\024\n\014mah"
+  "_consumed\030\001 \001(\002\"P\n\010ModeInfo\022\021\n\tbase_mode"
+  "\030\001 \001(\r\022\030\n\020custom_main_mode\030\002 \001(\r\022\027\n\017cust"
+  "om_sub_mode\030\003 \001(\r\"\371\001\n\006Health\022#\n\033is_gyrom"
+  "eter_calibration_ok\030\001 \001(\010\022\'\n\037is_accelero"
+  "meter_calibration_ok\030\002 \001(\010\022&\n\036is_magneto"
+  "meter_calibration_ok\030\003 \001(\010\022\037\n\027is_level_c"
+  "alibration_ok\030\004 \001(\010\022\034\n\024is_local_position"
+  "_ok\030\005 \001(\010\022\035\n\025is_global_position_ok\030\006 \001(\010"
+  "\022\033\n\023is_home_position_ok\030\007 \001(\010\"]\n\010RcStatu"
+  "s\022\032\n\022was_available_once\030\001 \001(\010\022\024\n\014is_avai"
+  "lable\030\002 \001(\010\022\037\n\027signal_strength_percent\030\003"
+  " \001(\002\"\210\001\n\nStatusText\0229\n\004type\030\001 \001(\0162+.mavs"
+  "dk.rpc.telemetry.StatusText.StatusType\022\014"
+  "\n\004text\030\002 \001(\t\"1\n\nStatusType\022\010\n\004INFO\020\000\022\013\n\007"
+  "WARNING\020\001\022\014\n\010CRITICAL\020\002\"8\n\025ActuatorContr"
+  "olTarget\022\r\n\005group\030\001 \001(\005\022\020\n\010controls\030\002 \003("
+  "\002\"8\n\024ActuatorOutputStatus\022\016\n\006active\030\001 \001("
+  "\r\022\020\n\010actuator\030\002 \003(\002\"\276\004\n\010Odometry\022\021\n\ttime"
+  "_usec\030\001 \001(\004\0229\n\010frame_id\030\002 \001(\0162\'.mavsdk.r"
+  "pc.telemetry.Odometry.MavFrame\022\?\n\016child_"
+  "frame_id\030\003 \001(\0162\'.mavsdk.rpc.telemetry.Od"
+  "ometry.MavFrame\0229\n\rposition_body\030\004 \001(\0132\""
+  ".mavsdk.rpc.telemetry.PositionBody\022+\n\001q\030"
+  "\005 \001(\0132 .mavsdk.rpc.telemetry.Quaternion\022"
+  "3\n\nspeed_body\030\006 \001(\0132\037.mavsdk.rpc.telemet"
+  "ry.SpeedBody\022H\n\025angular_velocity_body\030\007 "
+  "\001(\0132).mavsdk.rpc.telemetry.AngularVeloci"
+  "tyBody\0229\n\017pose_covariance\030\010 \001(\0132 .mavsdk"
+  ".rpc.telemetry.Covariance\022=\n\023velocity_co"
+  "variance\030\t \001(\0132 .mavsdk.rpc.telemetry.Co"
+  "variance\"B\n\010MavFrame\022\t\n\005UNDEF\020\000\022\014\n\010BODY_"
+  "NED\020\010\022\016\n\nVISION_NED\020\020\022\r\n\tESTIM_NED\020\022\"\'\n\n"
+  "Covariance\022\031\n\021covariance_matrix\030\001 \003(\002\"S\n"
+  "\tSpeedBody\022\026\n\016velocity_x_m_s\030\001 \001(\002\022\026\n\016ve"
+  "locity_y_m_s\030\002 \001(\002\022\026\n\016velocity_z_m_s\030\003 \001"
+  "(\002\"5\n\014PositionBody\022\013\n\003x_m\030\001 \001(\002\022\013\n\003y_m\030\002"
+  " \001(\002\022\013\n\003z_m\030\003 \001(\002*e\n\007FixType\022\n\n\006NO_GPS\020\000"
+  "\022\n\n\006NO_FIX\020\001\022\n\n\006FIX_2D\020\002\022\n\n\006FIX_3D\020\003\022\014\n\010"
+  "FIX_DGPS\020\004\022\r\n\tRTK_FLOAT\020\005\022\r\n\tRTK_FIXED\020\006"
+  "*\322\001\n\nFlightMode\022\013\n\007UNKNOWN\020\000\022\t\n\005READY\020\001\022"
+  "\013\n\007TAKEOFF\020\002\022\010\n\004HOLD\020\003\022\013\n\007MISSION\020\004\022\024\n\020R"
+  "ETURN_TO_LAUNCH\020\005\022\010\n\004LAND\020\006\022\014\n\010OFFBOARD\020"
+  "\007\022\r\n\tFOLLOW_ME\020\010\022\n\n\006MANUAL\020\t\022\n\n\006ALTCTL\020\n"
+  "\022\n\n\006POSCTL\020\013\022\010\n\004ACRO\020\014\022\016\n\nSTABILIZED\020\r\022\r"
+  "\n\tRATTITUDE\020\016*\223\001\n\013LandedState\022\030\n\024LANDED_"
+  "STATE_UNKNOWN\020\000\022\032\n\026LANDED_STATE_ON_GROUN"
+  "D\020\001\022\027\n\023LANDED_STATE_IN_AIR\020\002\022\033\n\027LANDED_S"
+  "TATE_TAKING_OFF\020\003\022\030\n\024LANDED_STATE_LANDIN"
+  "G\020\0042\335\025\n\020TelemetryService\022o\n\021SubscribePos"
+  "ition\022..mavsdk.rpc.telemetry.SubscribePo"
+  "sitionRequest\032&.mavsdk.rpc.telemetry.Pos"
+  "itionResponse\"\0000\001\022c\n\rSubscribeHome\022*.mav"
+  "sdk.rpc.telemetry.SubscribeHomeRequest\032\""
+  ".mavsdk.rpc.telemetry.HomeResponse\"\0000\001\022f"
+  "\n\016SubscribeInAir\022+.mavsdk.rpc.telemetry."
+  "SubscribeInAirRequest\032#.mavsdk.rpc.telem"
+  "etry.InAirResponse\"\0000\001\022x\n\024SubscribeLande"
+  "dState\0221.mavsdk.rpc.telemetry.SubscribeL"
+  "andedStateRequest\032).mavsdk.rpc.telemetry"
+  ".LandedStateResponse\"\0000\001\022f\n\016SubscribeArm"
+  "ed\022+.mavsdk.rpc.telemetry.SubscribeArmed"
+  "Request\032#.mavsdk.rpc.telemetry.ArmedResp"
+  "onse\"\0000\001\022\215\001\n\033SubscribeAttitudeQuaternion"
+  "\0228.mavsdk.rpc.telemetry.SubscribeAttitud"
+  "eQuaternionRequest\0320.mavsdk.rpc.telemetr"
+  "y.AttitudeQuaternionResponse\"\0000\001\022~\n\026Subs"
+  "cribeAttitudeEuler\0223.mavsdk.rpc.telemetr"
+  "y.SubscribeAttitudeEulerRequest\032+.mavsdk"
+  ".rpc.telemetry.AttitudeEulerResponse\"\0000\001"
+  "\022\250\001\n$SubscribeAttitudeAngularVelocityBod"
+  "y\022A.mavsdk.rpc.telemetry.SubscribeAttitu"
+  "deAngularVelocityBodyRequest\0329.mavsdk.rp"
+  "c.telemetry.AttitudeAngularVelocityBodyR"
+  "esponse\"\0000\001\022\237\001\n!SubscribeCameraAttitudeQ"
+  "uaternion\022>.mavsdk.rpc.telemetry.Subscri"
+  "beCameraAttitudeQuaternionRequest\0326.mavs"
+  "dk.rpc.telemetry.CameraAttitudeQuaternio"
+  "nResponse\"\0000\001\022\220\001\n\034SubscribeCameraAttitud"
+  "eEuler\0229.mavsdk.rpc.telemetry.SubscribeC"
+  "ameraAttitudeEulerRequest\0321.mavsdk.rpc.t"
+  "elemetry.CameraAttitudeEulerResponse\"\0000\001"
+  "\022\201\001\n\027SubscribeGroundSpeedNed\0224.mavsdk.rp"
+  "c.telemetry.SubscribeGroundSpeedNedReque"
+  "st\032,.mavsdk.rpc.telemetry.GroundSpeedNed"
+  "Response\"\0000\001\022l\n\020SubscribeGpsInfo\022-.mavsd"
+  "k.rpc.telemetry.SubscribeGpsInfoRequest\032"
+  "%.mavsdk.rpc.telemetry.GpsInfoResponse\"\000"
+  "0\001\022l\n\020SubscribeBattery\022-.mavsdk.rpc.tele"
+  "metry.SubscribeBatteryRequest\032%.mavsdk.r"
+  "pc.telemetry.BatteryResponse\"\0000\001\022~\n\026Subs"
+  "cribeBatteryStatus\0223.mavsdk.rpc.telemetr"
+  "y.SubscribeBatteryStatusRequest\032+.mavsdk"
+  ".rpc.telemetry.BatteryStatusResponse\"\0000\001"
+  "\022u\n\023SubscribeFlightMode\0220.mavsdk.rpc.tel"
+  "emetry.SubscribeFlightModeRequest\032(.mavs"
+  "dk.rpc.telemetry.FlightModeResponse\"\0000\001\022"
+  "o\n\021SubscribeModeInfo\022..mavsdk.rpc.teleme"
+  "try.SubscribeModeInfoRequest\032&.mavsdk.rp"
+  "c.telemetry.ModeInfoResponse\"\0000\001\022i\n\017Subs"
+  "cribeHealth\022,.mavsdk.rpc.telemetry.Subsc"
+  "ribeHealthRequest\032$.mavsdk.rpc.telemetry"
+  ".HealthResponse\"\0000\001\022o\n\021SubscribeRcStatus"
+  "\022..mavsdk.rpc.telemetry.SubscribeRcStatu"
+  "sRequest\032&.mavsdk.rpc.telemetry.RcStatus"
+  "Response\"\0000\001\022u\n\023SubscribeStatusText\0220.ma"
+  "vsdk.rpc.telemetry.SubscribeStatusTextRe"
+  "quest\032(.mavsdk.rpc.telemetry.StatusTextR"
+  "esponse\"\0000\001\022\226\001\n\036SubscribeActuatorControl"
+  "Target\022;.mavsdk.rpc.telemetry.SubscribeA"
+  "ctuatorControlTargetRequest\0323.mavsdk.rpc"
+  ".telemetry.ActuatorControlTargetResponse"
+  "\"\0000\001\022\223\001\n\035SubscribeActuatorOutputStatus\022:"
+  ".mavsdk.rpc.telemetry.SubscribeActuatorO"
+  "utputStatusRequest\0322.mavsdk.rpc.telemetr"
+  "y.ActuatorOutputStatusResponse\"\0000\001\022o\n\021Su"
+  "bscribeOdometry\022..mavsdk.rpc.telemetry.S"
+  "ubscribeOdometryRequest\032&.mavsdk.rpc.tel"
+  "emetry.OdometryResponse\"\0000\001B%\n\023io.mavsdk"
+  ".telemetryB\016TelemetryProtob\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_telemetry_2ftelemetry_2eproto_deps[1] = {
 };
@@ -1955,8 +1970,8 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_tel
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_telemetry_2ftelemetry_2eproto_once;
 static bool descriptor_table_telemetry_2ftelemetry_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_telemetry_2ftelemetry_2eproto = {
-  &descriptor_table_telemetry_2ftelemetry_2eproto_initialized, descriptor_table_protodef_telemetry_2ftelemetry_2eproto, "telemetry/telemetry.proto", 7235,
-  &descriptor_table_telemetry_2ftelemetry_2eproto_once, descriptor_table_telemetry_2ftelemetry_2eproto_sccs, descriptor_table_telemetry_2ftelemetry_2eproto_deps, 56, 0,
+  &descriptor_table_telemetry_2ftelemetry_2eproto_initialized, descriptor_table_protodef_telemetry_2ftelemetry_2eproto, "telemetry/telemetry.proto", 7834,
+  &descriptor_table_telemetry_2ftelemetry_2eproto_once, descriptor_table_telemetry_2ftelemetry_2eproto_sccs, descriptor_table_telemetry_2ftelemetry_2eproto_deps, 62, 0,
   schemas, file_default_instances, TableStruct_telemetry_2ftelemetry_2eproto::offsets,
   file_level_metadata_telemetry_2ftelemetry_2eproto, 62, file_level_enum_descriptors_telemetry_2ftelemetry_2eproto, file_level_service_descriptors_telemetry_2ftelemetry_2eproto,
 };
@@ -6724,15 +6739,12 @@ void SubscribeBatteryStatusRequest::Clear() {
   _internal_metadata_.Clear();
 }
 
-#if GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
 const char* SubscribeBatteryStatusRequest::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   while (!ctx->Done(&ptr)) {
     ::PROTOBUF_NAMESPACE_ID::uint32 tag;
     ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
     CHK_(ptr);
-    switch (tag >> 3) {
-      default: {
         if ((tag & 7) == 4 || tag == 0) {
           ctx->SetLastTag(tag);
           goto success;
@@ -6740,8 +6752,6 @@ const char* SubscribeBatteryStatusRequest::_InternalParse(const char* ptr, ::PRO
         ptr = UnknownFieldParse(tag, &_internal_metadata_, ptr, ctx);
         CHK_(ptr != nullptr);
         continue;
-      }
-    }  // switch
   }  // while
 success:
   return ptr;
@@ -6750,34 +6760,8 @@ failure:
   goto success;
 #undef CHK_
 }
-#else  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
-bool SubscribeBatteryStatusRequest::MergePartialFromCodedStream(
-    ::PROTOBUF_NAMESPACE_ID::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!PROTOBUF_PREDICT_TRUE(EXPRESSION)) goto failure
-  ::PROTOBUF_NAMESPACE_ID::uint32 tag;
-  // @@protoc_insertion_point(parse_start:mavsdk.rpc.telemetry.SubscribeBatteryStatusRequest)
-  for (;;) {
-    ::std::pair<::PROTOBUF_NAMESPACE_ID::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
-  handle_unusual:
-    if (tag == 0) {
-      goto success;
-    }
-    DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SkipField(
-          input, tag, _internal_metadata_.mutable_unknown_fields()));
-  }
-success:
-  // @@protoc_insertion_point(parse_success:mavsdk.rpc.telemetry.SubscribeBatteryStatusRequest)
-  return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:mavsdk.rpc.telemetry.SubscribeBatteryStatusRequest)
-  return false;
-#undef DO_
-}
-#endif  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
 
-::PROTOBUF_NAMESPACE_ID::uint8* SubscribeBatteryStatusRequest::InternalSerializeWithCachedSizesToArray(
+::PROTOBUF_NAMESPACE_ID::uint8* SubscribeBatteryStatusRequest::_InternalSerialize(
     ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:mavsdk.rpc.telemetry.SubscribeBatteryStatusRequest)
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
@@ -6884,7 +6868,7 @@ BatteryStatusResponse::BatteryStatusResponse(const BatteryStatusResponse& from)
   : ::PROTOBUF_NAMESPACE_ID::Message(),
       _internal_metadata_(nullptr) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
-  if (from.has_battery_status()) {
+  if (from._internal_has_battery_status()) {
     battery_status_ = new ::mavsdk::rpc::telemetry::BatteryStatus(*from.battery_status_);
   } else {
     battery_status_ = nullptr;
@@ -6928,7 +6912,6 @@ void BatteryStatusResponse::Clear() {
   _internal_metadata_.Clear();
 }
 
-#if GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
 const char* BatteryStatusResponse::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   while (!ctx->Done(&ptr)) {
@@ -6939,7 +6922,7 @@ const char* BatteryStatusResponse::_InternalParse(const char* ptr, ::PROTOBUF_NA
       // .mavsdk.rpc.telemetry.BatteryStatus battery_status = 1;
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 10)) {
-          ptr = ctx->ParseMessage(mutable_battery_status(), ptr);
+          ptr = ctx->ParseMessage(_internal_mutable_battery_status(), ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -6962,50 +6945,8 @@ failure:
   goto success;
 #undef CHK_
 }
-#else  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
-bool BatteryStatusResponse::MergePartialFromCodedStream(
-    ::PROTOBUF_NAMESPACE_ID::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!PROTOBUF_PREDICT_TRUE(EXPRESSION)) goto failure
-  ::PROTOBUF_NAMESPACE_ID::uint32 tag;
-  // @@protoc_insertion_point(parse_start:mavsdk.rpc.telemetry.BatteryStatusResponse)
-  for (;;) {
-    ::std::pair<::PROTOBUF_NAMESPACE_ID::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
-    switch (::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // .mavsdk.rpc.telemetry.BatteryStatus battery_status = 1;
-      case 1: {
-        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (10 & 0xFF)) {
-          DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadMessage(
-               input, mutable_battery_status()));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
 
-      default: {
-      handle_unusual:
-        if (tag == 0) {
-          goto success;
-        }
-        DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SkipField(
-              input, tag, _internal_metadata_.mutable_unknown_fields()));
-        break;
-      }
-    }
-  }
-success:
-  // @@protoc_insertion_point(parse_success:mavsdk.rpc.telemetry.BatteryStatusResponse)
-  return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:mavsdk.rpc.telemetry.BatteryStatusResponse)
-  return false;
-#undef DO_
-}
-#endif  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
-
-::PROTOBUF_NAMESPACE_ID::uint8* BatteryStatusResponse::InternalSerializeWithCachedSizesToArray(
+::PROTOBUF_NAMESPACE_ID::uint8* BatteryStatusResponse::_InternalSerialize(
     ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:mavsdk.rpc.telemetry.BatteryStatusResponse)
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
@@ -7013,9 +6954,9 @@ failure:
 
   // .mavsdk.rpc.telemetry.BatteryStatus battery_status = 1;
   if (this->has_battery_status()) {
-    stream->EnsureSpace(&target);
+    target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessageToArray(
+      InternalWriteMessage(
         1, _Internal::battery_status(this), target, stream);
   }
 
@@ -7074,7 +7015,7 @@ void BatteryStatusResponse::MergeFrom(const BatteryStatusResponse& from) {
   (void) cached_has_bits;
 
   if (from.has_battery_status()) {
-    mutable_battery_status()->::mavsdk::rpc::telemetry::BatteryStatus::MergeFrom(from.battery_status());
+    _internal_mutable_battery_status()->::mavsdk::rpc::telemetry::BatteryStatus::MergeFrom(from._internal_battery_status());
   }
 }
 
@@ -7497,15 +7438,12 @@ void SubscribeModeInfoRequest::Clear() {
   _internal_metadata_.Clear();
 }
 
-#if GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
 const char* SubscribeModeInfoRequest::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   while (!ctx->Done(&ptr)) {
     ::PROTOBUF_NAMESPACE_ID::uint32 tag;
     ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
     CHK_(ptr);
-    switch (tag >> 3) {
-      default: {
         if ((tag & 7) == 4 || tag == 0) {
           ctx->SetLastTag(tag);
           goto success;
@@ -7513,8 +7451,6 @@ const char* SubscribeModeInfoRequest::_InternalParse(const char* ptr, ::PROTOBUF
         ptr = UnknownFieldParse(tag, &_internal_metadata_, ptr, ctx);
         CHK_(ptr != nullptr);
         continue;
-      }
-    }  // switch
   }  // while
 success:
   return ptr;
@@ -7523,34 +7459,8 @@ failure:
   goto success;
 #undef CHK_
 }
-#else  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
-bool SubscribeModeInfoRequest::MergePartialFromCodedStream(
-    ::PROTOBUF_NAMESPACE_ID::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!PROTOBUF_PREDICT_TRUE(EXPRESSION)) goto failure
-  ::PROTOBUF_NAMESPACE_ID::uint32 tag;
-  // @@protoc_insertion_point(parse_start:mavsdk.rpc.telemetry.SubscribeModeInfoRequest)
-  for (;;) {
-    ::std::pair<::PROTOBUF_NAMESPACE_ID::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
-  handle_unusual:
-    if (tag == 0) {
-      goto success;
-    }
-    DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SkipField(
-          input, tag, _internal_metadata_.mutable_unknown_fields()));
-  }
-success:
-  // @@protoc_insertion_point(parse_success:mavsdk.rpc.telemetry.SubscribeModeInfoRequest)
-  return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:mavsdk.rpc.telemetry.SubscribeModeInfoRequest)
-  return false;
-#undef DO_
-}
-#endif  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
 
-::PROTOBUF_NAMESPACE_ID::uint8* SubscribeModeInfoRequest::InternalSerializeWithCachedSizesToArray(
+::PROTOBUF_NAMESPACE_ID::uint8* SubscribeModeInfoRequest::_InternalSerialize(
     ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:mavsdk.rpc.telemetry.SubscribeModeInfoRequest)
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
@@ -7657,7 +7567,7 @@ ModeInfoResponse::ModeInfoResponse(const ModeInfoResponse& from)
   : ::PROTOBUF_NAMESPACE_ID::Message(),
       _internal_metadata_(nullptr) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
-  if (from.has_mode_info()) {
+  if (from._internal_has_mode_info()) {
     mode_info_ = new ::mavsdk::rpc::telemetry::ModeInfo(*from.mode_info_);
   } else {
     mode_info_ = nullptr;
@@ -7701,7 +7611,6 @@ void ModeInfoResponse::Clear() {
   _internal_metadata_.Clear();
 }
 
-#if GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
 const char* ModeInfoResponse::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   while (!ctx->Done(&ptr)) {
@@ -7712,7 +7621,7 @@ const char* ModeInfoResponse::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPA
       // .mavsdk.rpc.telemetry.ModeInfo mode_info = 1;
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 10)) {
-          ptr = ctx->ParseMessage(mutable_mode_info(), ptr);
+          ptr = ctx->ParseMessage(_internal_mutable_mode_info(), ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -7735,50 +7644,8 @@ failure:
   goto success;
 #undef CHK_
 }
-#else  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
-bool ModeInfoResponse::MergePartialFromCodedStream(
-    ::PROTOBUF_NAMESPACE_ID::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!PROTOBUF_PREDICT_TRUE(EXPRESSION)) goto failure
-  ::PROTOBUF_NAMESPACE_ID::uint32 tag;
-  // @@protoc_insertion_point(parse_start:mavsdk.rpc.telemetry.ModeInfoResponse)
-  for (;;) {
-    ::std::pair<::PROTOBUF_NAMESPACE_ID::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
-    switch (::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // .mavsdk.rpc.telemetry.ModeInfo mode_info = 1;
-      case 1: {
-        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (10 & 0xFF)) {
-          DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadMessage(
-               input, mutable_mode_info()));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
 
-      default: {
-      handle_unusual:
-        if (tag == 0) {
-          goto success;
-        }
-        DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SkipField(
-              input, tag, _internal_metadata_.mutable_unknown_fields()));
-        break;
-      }
-    }
-  }
-success:
-  // @@protoc_insertion_point(parse_success:mavsdk.rpc.telemetry.ModeInfoResponse)
-  return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:mavsdk.rpc.telemetry.ModeInfoResponse)
-  return false;
-#undef DO_
-}
-#endif  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
-
-::PROTOBUF_NAMESPACE_ID::uint8* ModeInfoResponse::InternalSerializeWithCachedSizesToArray(
+::PROTOBUF_NAMESPACE_ID::uint8* ModeInfoResponse::_InternalSerialize(
     ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:mavsdk.rpc.telemetry.ModeInfoResponse)
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
@@ -7786,9 +7653,9 @@ failure:
 
   // .mavsdk.rpc.telemetry.ModeInfo mode_info = 1;
   if (this->has_mode_info()) {
-    stream->EnsureSpace(&target);
+    target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessageToArray(
+      InternalWriteMessage(
         1, _Internal::mode_info(this), target, stream);
   }
 
@@ -7847,7 +7714,7 @@ void ModeInfoResponse::MergeFrom(const ModeInfoResponse& from) {
   (void) cached_has_bits;
 
   if (from.has_mode_info()) {
-    mutable_mode_info()->::mavsdk::rpc::telemetry::ModeInfo::MergeFrom(from.mode_info());
+    _internal_mutable_mode_info()->::mavsdk::rpc::telemetry::ModeInfo::MergeFrom(from._internal_mode_info());
   }
 }
 
@@ -11579,14 +11446,14 @@ failure:
 
   // float current_a = 2;
   if (!(this->current_a() <= 0 && this->current_a() >= 0)) {
-    stream->EnsureSpace(&target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteFloatToArray(2, this->current_a(), target);
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteFloatToArray(2, this->_internal_current_a(), target);
   }
 
   // float remaining_percent = 3;
   if (!(this->remaining_percent() <= 0 && this->remaining_percent() >= 0)) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteFloatToArray(2, this->_internal_remaining_percent(), target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteFloatToArray(3, this->_internal_remaining_percent(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -11655,7 +11522,7 @@ void Battery::MergeFrom(const Battery& from) {
     _internal_set_voltage_v(from._internal_voltage_v());
   }
   if (!(from.current_a() <= 0 && from.current_a() >= 0)) {
-    set_current_a(from.current_a());
+    _internal_set_current_a(from._internal_current_a());
   }
   if (!(from.remaining_percent() <= 0 && from.remaining_percent() >= 0)) {
     _internal_set_remaining_percent(from._internal_remaining_percent());
@@ -11745,7 +11612,6 @@ void BatteryStatus::Clear() {
   _internal_metadata_.Clear();
 }
 
-#if GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
 const char* BatteryStatus::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   while (!ctx->Done(&ptr)) {
@@ -11779,52 +11645,8 @@ failure:
   goto success;
 #undef CHK_
 }
-#else  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
-bool BatteryStatus::MergePartialFromCodedStream(
-    ::PROTOBUF_NAMESPACE_ID::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!PROTOBUF_PREDICT_TRUE(EXPRESSION)) goto failure
-  ::PROTOBUF_NAMESPACE_ID::uint32 tag;
-  // @@protoc_insertion_point(parse_start:mavsdk.rpc.telemetry.BatteryStatus)
-  for (;;) {
-    ::std::pair<::PROTOBUF_NAMESPACE_ID::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
-    switch (::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // float mah_consumed = 1;
-      case 1: {
-        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (13 & 0xFF)) {
 
-          DO_((::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadPrimitive<
-                   float, ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_FLOAT>(
-                 input, &mah_consumed_)));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      default: {
-      handle_unusual:
-        if (tag == 0) {
-          goto success;
-        }
-        DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SkipField(
-              input, tag, _internal_metadata_.mutable_unknown_fields()));
-        break;
-      }
-    }
-  }
-success:
-  // @@protoc_insertion_point(parse_success:mavsdk.rpc.telemetry.BatteryStatus)
-  return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:mavsdk.rpc.telemetry.BatteryStatus)
-  return false;
-#undef DO_
-}
-#endif  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
-
-::PROTOBUF_NAMESPACE_ID::uint8* BatteryStatus::InternalSerializeWithCachedSizesToArray(
+::PROTOBUF_NAMESPACE_ID::uint8* BatteryStatus::_InternalSerialize(
     ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:mavsdk.rpc.telemetry.BatteryStatus)
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
@@ -11832,8 +11654,8 @@ failure:
 
   // float mah_consumed = 1;
   if (!(this->mah_consumed() <= 0 && this->mah_consumed() >= 0)) {
-    stream->EnsureSpace(&target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteFloatToArray(1, this->mah_consumed(), target);
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteFloatToArray(1, this->_internal_mah_consumed(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -11889,7 +11711,7 @@ void BatteryStatus::MergeFrom(const BatteryStatus& from) {
   (void) cached_has_bits;
 
   if (!(from.mah_consumed() <= 0 && from.mah_consumed() >= 0)) {
-    set_mah_consumed(from.mah_consumed());
+    _internal_set_mah_consumed(from._internal_mah_consumed());
   }
 }
 
@@ -11980,7 +11802,6 @@ void ModeInfo::Clear() {
   _internal_metadata_.Clear();
 }
 
-#if GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
 const char* ModeInfo::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   while (!ctx->Done(&ptr)) {
@@ -12028,78 +11849,8 @@ failure:
   goto success;
 #undef CHK_
 }
-#else  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
-bool ModeInfo::MergePartialFromCodedStream(
-    ::PROTOBUF_NAMESPACE_ID::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!PROTOBUF_PREDICT_TRUE(EXPRESSION)) goto failure
-  ::PROTOBUF_NAMESPACE_ID::uint32 tag;
-  // @@protoc_insertion_point(parse_start:mavsdk.rpc.telemetry.ModeInfo)
-  for (;;) {
-    ::std::pair<::PROTOBUF_NAMESPACE_ID::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
-    switch (::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // uint32 base_mode = 1;
-      case 1: {
-        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (8 & 0xFF)) {
 
-          DO_((::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadPrimitive<
-                   ::PROTOBUF_NAMESPACE_ID::uint32, ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &base_mode_)));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // uint32 custom_main_mode = 2;
-      case 2: {
-        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (16 & 0xFF)) {
-
-          DO_((::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadPrimitive<
-                   ::PROTOBUF_NAMESPACE_ID::uint32, ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &custom_main_mode_)));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // uint32 custom_sub_mode = 3;
-      case 3: {
-        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (24 & 0xFF)) {
-
-          DO_((::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadPrimitive<
-                   ::PROTOBUF_NAMESPACE_ID::uint32, ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &custom_sub_mode_)));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      default: {
-      handle_unusual:
-        if (tag == 0) {
-          goto success;
-        }
-        DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SkipField(
-              input, tag, _internal_metadata_.mutable_unknown_fields()));
-        break;
-      }
-    }
-  }
-success:
-  // @@protoc_insertion_point(parse_success:mavsdk.rpc.telemetry.ModeInfo)
-  return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:mavsdk.rpc.telemetry.ModeInfo)
-  return false;
-#undef DO_
-}
-#endif  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
-
-::PROTOBUF_NAMESPACE_ID::uint8* ModeInfo::InternalSerializeWithCachedSizesToArray(
+::PROTOBUF_NAMESPACE_ID::uint8* ModeInfo::_InternalSerialize(
     ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:mavsdk.rpc.telemetry.ModeInfo)
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
@@ -12107,20 +11858,20 @@ failure:
 
   // uint32 base_mode = 1;
   if (this->base_mode() != 0) {
-    stream->EnsureSpace(&target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(1, this->base_mode(), target);
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(1, this->_internal_base_mode(), target);
   }
 
   // uint32 custom_main_mode = 2;
   if (this->custom_main_mode() != 0) {
-    stream->EnsureSpace(&target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(2, this->custom_main_mode(), target);
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(2, this->_internal_custom_main_mode(), target);
   }
 
   // uint32 custom_sub_mode = 3;
   if (this->custom_sub_mode() != 0) {
-    stream->EnsureSpace(&target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(3, this->custom_sub_mode(), target);
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(3, this->_internal_custom_sub_mode(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -12143,21 +11894,21 @@ size_t ModeInfo::ByteSizeLong() const {
   if (this->base_mode() != 0) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
-        this->base_mode());
+        this->_internal_base_mode());
   }
 
   // uint32 custom_main_mode = 2;
   if (this->custom_main_mode() != 0) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
-        this->custom_main_mode());
+        this->_internal_custom_main_mode());
   }
 
   // uint32 custom_sub_mode = 3;
   if (this->custom_sub_mode() != 0) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
-        this->custom_sub_mode());
+        this->_internal_custom_sub_mode());
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -12192,13 +11943,13 @@ void ModeInfo::MergeFrom(const ModeInfo& from) {
   (void) cached_has_bits;
 
   if (from.base_mode() != 0) {
-    set_base_mode(from.base_mode());
+    _internal_set_base_mode(from._internal_base_mode());
   }
   if (from.custom_main_mode() != 0) {
-    set_custom_main_mode(from.custom_main_mode());
+    _internal_set_custom_main_mode(from._internal_custom_main_mode());
   }
   if (from.custom_sub_mode() != 0) {
-    set_custom_sub_mode(from.custom_sub_mode());
+    _internal_set_custom_sub_mode(from._internal_custom_sub_mode());
   }
 }
 

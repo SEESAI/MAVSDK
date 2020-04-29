@@ -13,10 +13,11 @@
 #include <grpcpp/impl/codegen/client_callback.h>
 #include <grpcpp/impl/codegen/client_context.h>
 #include <grpcpp/impl/codegen/completion_queue.h>
-#include <grpcpp/impl/codegen/method_handler_impl.h>
+#include <grpcpp/impl/codegen/method_handler.h>
 #include <grpcpp/impl/codegen/proto_utils.h>
 #include <grpcpp/impl/codegen/rpc_method.h>
 #include <grpcpp/impl/codegen/server_callback.h>
+#include <grpcpp/impl/codegen/server_callback_handlers.h>
 #include <grpcpp/impl/codegen/server_context.h>
 #include <grpcpp/impl/codegen/service_type.h>
 #include <grpcpp/impl/codegen/status.h>
@@ -186,13 +187,7 @@ class LogFilesService final {
     ExperimentalWithCallbackMethod_GetEntries() {
       ::grpc::Service::experimental().MarkMethodCallback(0,
         new ::grpc_impl::internal::CallbackUnaryHandler< ::mavsdk::rpc::log_files::GetEntriesRequest, ::mavsdk::rpc::log_files::GetEntriesResponse>(
-          [this](::grpc::ServerContext* context,
-                 const ::mavsdk::rpc::log_files::GetEntriesRequest* request,
-                 ::mavsdk::rpc::log_files::GetEntriesResponse* response,
-                 ::grpc::experimental::ServerCallbackRpcController* controller) {
-                   return this->GetEntries(context, request, response, controller);
-                 }));
-    }
+          [this](::grpc::experimental::CallbackServerContext* context, const ::mavsdk::rpc::log_files::GetEntriesRequest* request, ::mavsdk::rpc::log_files::GetEntriesResponse* response) { return this->GetEntries(context, request, response); }));}
     void SetMessageAllocatorFor_GetEntries(
         ::grpc::experimental::MessageAllocator< ::mavsdk::rpc::log_files::GetEntriesRequest, ::mavsdk::rpc::log_files::GetEntriesResponse>* allocator) {
       static_cast<::grpc_impl::internal::CallbackUnaryHandler< ::mavsdk::rpc::log_files::GetEntriesRequest, ::mavsdk::rpc::log_files::GetEntriesResponse>*>(
@@ -207,7 +202,7 @@ class LogFilesService final {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual void GetEntries(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::log_files::GetEntriesRequest* /*request*/, ::mavsdk::rpc::log_files::GetEntriesResponse* /*response*/, ::grpc::experimental::ServerCallbackRpcController* controller) { controller->Finish(::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "")); }
+    virtual ::grpc::experimental::ServerUnaryReactor* GetEntries(::grpc::experimental::CallbackServerContext* /*context*/, const ::mavsdk::rpc::log_files::GetEntriesRequest* /*request*/, ::mavsdk::rpc::log_files::GetEntriesResponse* /*response*/) { return nullptr; }
   };
   template <class BaseClass>
   class ExperimentalWithCallbackMethod_DownloadLogFile : public BaseClass {
@@ -217,13 +212,7 @@ class LogFilesService final {
     ExperimentalWithCallbackMethod_DownloadLogFile() {
       ::grpc::Service::experimental().MarkMethodCallback(1,
         new ::grpc_impl::internal::CallbackUnaryHandler< ::mavsdk::rpc::log_files::DownloadLogFileRequest, ::mavsdk::rpc::log_files::DownloadLogFileResponse>(
-          [this](::grpc::ServerContext* context,
-                 const ::mavsdk::rpc::log_files::DownloadLogFileRequest* request,
-                 ::mavsdk::rpc::log_files::DownloadLogFileResponse* response,
-                 ::grpc::experimental::ServerCallbackRpcController* controller) {
-                   return this->DownloadLogFile(context, request, response, controller);
-                 }));
-    }
+          [this](::grpc::experimental::CallbackServerContext* context, const ::mavsdk::rpc::log_files::DownloadLogFileRequest* request, ::mavsdk::rpc::log_files::DownloadLogFileResponse* response) { return this->DownloadLogFile(context, request, response); }));}
     void SetMessageAllocatorFor_DownloadLogFile(
         ::grpc::experimental::MessageAllocator< ::mavsdk::rpc::log_files::DownloadLogFileRequest, ::mavsdk::rpc::log_files::DownloadLogFileResponse>* allocator) {
       static_cast<::grpc_impl::internal::CallbackUnaryHandler< ::mavsdk::rpc::log_files::DownloadLogFileRequest, ::mavsdk::rpc::log_files::DownloadLogFileResponse>*>(
@@ -238,7 +227,7 @@ class LogFilesService final {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual void DownloadLogFile(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::log_files::DownloadLogFileRequest* /*request*/, ::mavsdk::rpc::log_files::DownloadLogFileResponse* /*response*/, ::grpc::experimental::ServerCallbackRpcController* controller) { controller->Finish(::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "")); }
+    virtual ::grpc::experimental::ServerUnaryReactor* DownloadLogFile(::grpc::experimental::CallbackServerContext* /*context*/, const ::mavsdk::rpc::log_files::DownloadLogFileRequest* /*request*/, ::mavsdk::rpc::log_files::DownloadLogFileResponse* /*response*/) { return nullptr; }
   };
   typedef ExperimentalWithCallbackMethod_GetEntries<ExperimentalWithCallbackMethod_DownloadLogFile<Service > > ExperimentalCallbackService;
   template <class BaseClass>
@@ -323,12 +312,7 @@ class LogFilesService final {
     ExperimentalWithRawCallbackMethod_GetEntries() {
       ::grpc::Service::experimental().MarkMethodRawCallback(0,
         new ::grpc_impl::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
-          [this](::grpc::ServerContext* context,
-                 const ::grpc::ByteBuffer* request,
-                 ::grpc::ByteBuffer* response,
-                 ::grpc::experimental::ServerCallbackRpcController* controller) {
-                   this->GetEntries(context, request, response, controller);
-                 }));
+          [this](::grpc::experimental::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->GetEntries(context, request, response); }));
     }
     ~ExperimentalWithRawCallbackMethod_GetEntries() override {
       BaseClassMustBeDerivedFromService(this);
@@ -338,7 +322,7 @@ class LogFilesService final {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual void GetEntries(::grpc::ServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/, ::grpc::experimental::ServerCallbackRpcController* controller) { controller->Finish(::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "")); }
+    virtual ::grpc::experimental::ServerUnaryReactor* GetEntries(::grpc::experimental::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/) { return nullptr; }
   };
   template <class BaseClass>
   class ExperimentalWithRawCallbackMethod_DownloadLogFile : public BaseClass {
@@ -348,12 +332,7 @@ class LogFilesService final {
     ExperimentalWithRawCallbackMethod_DownloadLogFile() {
       ::grpc::Service::experimental().MarkMethodRawCallback(1,
         new ::grpc_impl::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
-          [this](::grpc::ServerContext* context,
-                 const ::grpc::ByteBuffer* request,
-                 ::grpc::ByteBuffer* response,
-                 ::grpc::experimental::ServerCallbackRpcController* controller) {
-                   this->DownloadLogFile(context, request, response, controller);
-                 }));
+          [this](::grpc::experimental::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->DownloadLogFile(context, request, response); }));
     }
     ~ExperimentalWithRawCallbackMethod_DownloadLogFile() override {
       BaseClassMustBeDerivedFromService(this);
@@ -363,7 +342,7 @@ class LogFilesService final {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual void DownloadLogFile(::grpc::ServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/, ::grpc::experimental::ServerCallbackRpcController* controller) { controller->Finish(::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "")); }
+    virtual ::grpc::experimental::ServerUnaryReactor* DownloadLogFile(::grpc::experimental::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/) { return nullptr; }
   };
   template <class BaseClass>
   class WithStreamedUnaryMethod_GetEntries : public BaseClass {

@@ -3754,13 +3754,8 @@ class SubscribeBatteryStatusRequest :
   bool IsInitialized() const final;
 
   size_t ByteSizeLong() const final;
-  #if GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
   const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
-  #else
-  bool MergePartialFromCodedStream(
-      ::PROTOBUF_NAMESPACE_ID::io::CodedInputStream* input) final;
-  #endif  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
-  ::PROTOBUF_NAMESPACE_ID::uint8* InternalSerializeWithCachedSizesToArray(
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
       ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
   int GetCachedSize() const final { return _cached_size_.Get(); }
 
@@ -3874,13 +3869,8 @@ class BatteryStatusResponse :
   bool IsInitialized() const final;
 
   size_t ByteSizeLong() const final;
-  #if GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
   const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
-  #else
-  bool MergePartialFromCodedStream(
-      ::PROTOBUF_NAMESPACE_ID::io::CodedInputStream* input) final;
-  #endif  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
-  ::PROTOBUF_NAMESPACE_ID::uint8* InternalSerializeWithCachedSizesToArray(
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
       ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
   int GetCachedSize() const final { return _cached_size_.Get(); }
 
@@ -3928,6 +3918,10 @@ class BatteryStatusResponse :
   ::mavsdk::rpc::telemetry::BatteryStatus* release_battery_status();
   ::mavsdk::rpc::telemetry::BatteryStatus* mutable_battery_status();
   void set_allocated_battery_status(::mavsdk::rpc::telemetry::BatteryStatus* battery_status);
+  private:
+  const ::mavsdk::rpc::telemetry::BatteryStatus& _internal_battery_status() const;
+  ::mavsdk::rpc::telemetry::BatteryStatus* _internal_mutable_battery_status();
+  public:
 
   // @@protoc_insertion_point(class_scope:mavsdk.rpc.telemetry.BatteryStatusResponse)
  private:
@@ -4252,13 +4246,8 @@ class SubscribeModeInfoRequest :
   bool IsInitialized() const final;
 
   size_t ByteSizeLong() const final;
-  #if GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
   const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
-  #else
-  bool MergePartialFromCodedStream(
-      ::PROTOBUF_NAMESPACE_ID::io::CodedInputStream* input) final;
-  #endif  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
-  ::PROTOBUF_NAMESPACE_ID::uint8* InternalSerializeWithCachedSizesToArray(
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
       ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
   int GetCachedSize() const final { return _cached_size_.Get(); }
 
@@ -4372,13 +4361,8 @@ class ModeInfoResponse :
   bool IsInitialized() const final;
 
   size_t ByteSizeLong() const final;
-  #if GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
   const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
-  #else
-  bool MergePartialFromCodedStream(
-      ::PROTOBUF_NAMESPACE_ID::io::CodedInputStream* input) final;
-  #endif  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
-  ::PROTOBUF_NAMESPACE_ID::uint8* InternalSerializeWithCachedSizesToArray(
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
       ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
   int GetCachedSize() const final { return _cached_size_.Get(); }
 
@@ -4426,6 +4410,10 @@ class ModeInfoResponse :
   ::mavsdk::rpc::telemetry::ModeInfo* release_mode_info();
   ::mavsdk::rpc::telemetry::ModeInfo* mutable_mode_info();
   void set_allocated_mode_info(::mavsdk::rpc::telemetry::ModeInfo* mode_info);
+  private:
+  const ::mavsdk::rpc::telemetry::ModeInfo& _internal_mode_info() const;
+  ::mavsdk::rpc::telemetry::ModeInfo* _internal_mutable_mode_info();
+  public:
 
   // @@protoc_insertion_point(class_scope:mavsdk.rpc.telemetry.ModeInfoResponse)
  private:
@@ -6966,6 +6954,10 @@ class Battery :
   void clear_current_a();
   float current_a() const;
   void set_current_a(float value);
+  private:
+  float _internal_current_a() const;
+  void _internal_set_current_a(float value);
+  public:
 
   // float remaining_percent = 3;
   void clear_remaining_percent();
@@ -7058,13 +7050,8 @@ class BatteryStatus :
   bool IsInitialized() const final;
 
   size_t ByteSizeLong() const final;
-  #if GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
   const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
-  #else
-  bool MergePartialFromCodedStream(
-      ::PROTOBUF_NAMESPACE_ID::io::CodedInputStream* input) final;
-  #endif  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
-  ::PROTOBUF_NAMESPACE_ID::uint8* InternalSerializeWithCachedSizesToArray(
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
       ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
   int GetCachedSize() const final { return _cached_size_.Get(); }
 
@@ -7106,6 +7093,10 @@ class BatteryStatus :
   void clear_mah_consumed();
   float mah_consumed() const;
   void set_mah_consumed(float value);
+  private:
+  float _internal_mah_consumed() const;
+  void _internal_set_mah_consumed(float value);
+  public:
 
   // @@protoc_insertion_point(class_scope:mavsdk.rpc.telemetry.BatteryStatus)
  private:
@@ -7187,13 +7178,8 @@ class ModeInfo :
   bool IsInitialized() const final;
 
   size_t ByteSizeLong() const final;
-  #if GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
   const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
-  #else
-  bool MergePartialFromCodedStream(
-      ::PROTOBUF_NAMESPACE_ID::io::CodedInputStream* input) final;
-  #endif  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
-  ::PROTOBUF_NAMESPACE_ID::uint8* InternalSerializeWithCachedSizesToArray(
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
       ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
   int GetCachedSize() const final { return _cached_size_.Get(); }
 
@@ -7237,16 +7223,28 @@ class ModeInfo :
   void clear_base_mode();
   ::PROTOBUF_NAMESPACE_ID::uint32 base_mode() const;
   void set_base_mode(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::uint32 _internal_base_mode() const;
+  void _internal_set_base_mode(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  public:
 
   // uint32 custom_main_mode = 2;
   void clear_custom_main_mode();
   ::PROTOBUF_NAMESPACE_ID::uint32 custom_main_mode() const;
   void set_custom_main_mode(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::uint32 _internal_custom_main_mode() const;
+  void _internal_set_custom_main_mode(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  public:
 
   // uint32 custom_sub_mode = 3;
   void clear_custom_sub_mode();
   ::PROTOBUF_NAMESPACE_ID::uint32 custom_sub_mode() const;
   void set_custom_sub_mode(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::uint32 _internal_custom_sub_mode() const;
+  void _internal_set_custom_sub_mode(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  public:
 
   // @@protoc_insertion_point(class_scope:mavsdk.rpc.telemetry.ModeInfo)
  private:
@@ -9595,8 +9593,11 @@ inline void BatteryResponse::set_allocated_battery(::mavsdk::rpc::telemetry::Bat
 // BatteryStatusResponse
 
 // .mavsdk.rpc.telemetry.BatteryStatus battery_status = 1;
-inline bool BatteryStatusResponse::has_battery_status() const {
+inline bool BatteryStatusResponse::_internal_has_battery_status() const {
   return this != internal_default_instance() && battery_status_ != nullptr;
+}
+inline bool BatteryStatusResponse::has_battery_status() const {
+  return _internal_has_battery_status();
 }
 inline void BatteryStatusResponse::clear_battery_status() {
   if (GetArenaNoVirtual() == nullptr && battery_status_ != nullptr) {
@@ -9604,11 +9605,14 @@ inline void BatteryStatusResponse::clear_battery_status() {
   }
   battery_status_ = nullptr;
 }
-inline const ::mavsdk::rpc::telemetry::BatteryStatus& BatteryStatusResponse::battery_status() const {
+inline const ::mavsdk::rpc::telemetry::BatteryStatus& BatteryStatusResponse::_internal_battery_status() const {
   const ::mavsdk::rpc::telemetry::BatteryStatus* p = battery_status_;
-  // @@protoc_insertion_point(field_get:mavsdk.rpc.telemetry.BatteryStatusResponse.battery_status)
   return p != nullptr ? *p : *reinterpret_cast<const ::mavsdk::rpc::telemetry::BatteryStatus*>(
       &::mavsdk::rpc::telemetry::_BatteryStatus_default_instance_);
+}
+inline const ::mavsdk::rpc::telemetry::BatteryStatus& BatteryStatusResponse::battery_status() const {
+  // @@protoc_insertion_point(field_get:mavsdk.rpc.telemetry.BatteryStatusResponse.battery_status)
+  return _internal_battery_status();
 }
 inline ::mavsdk::rpc::telemetry::BatteryStatus* BatteryStatusResponse::release_battery_status() {
   // @@protoc_insertion_point(field_release:mavsdk.rpc.telemetry.BatteryStatusResponse.battery_status)
@@ -9617,14 +9621,17 @@ inline ::mavsdk::rpc::telemetry::BatteryStatus* BatteryStatusResponse::release_b
   battery_status_ = nullptr;
   return temp;
 }
-inline ::mavsdk::rpc::telemetry::BatteryStatus* BatteryStatusResponse::mutable_battery_status() {
+inline ::mavsdk::rpc::telemetry::BatteryStatus* BatteryStatusResponse::_internal_mutable_battery_status() {
   
   if (battery_status_ == nullptr) {
     auto* p = CreateMaybeMessage<::mavsdk::rpc::telemetry::BatteryStatus>(GetArenaNoVirtual());
     battery_status_ = p;
   }
-  // @@protoc_insertion_point(field_mutable:mavsdk.rpc.telemetry.BatteryStatusResponse.battery_status)
   return battery_status_;
+}
+inline ::mavsdk::rpc::telemetry::BatteryStatus* BatteryStatusResponse::mutable_battery_status() {
+  // @@protoc_insertion_point(field_mutable:mavsdk.rpc.telemetry.BatteryStatusResponse.battery_status)
+  return _internal_mutable_battery_status();
 }
 inline void BatteryStatusResponse::set_allocated_battery_status(::mavsdk::rpc::telemetry::BatteryStatus* battery_status) {
   ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaNoVirtual();
@@ -9682,8 +9689,11 @@ inline void FlightModeResponse::set_flight_mode(::mavsdk::rpc::telemetry::Flight
 // ModeInfoResponse
 
 // .mavsdk.rpc.telemetry.ModeInfo mode_info = 1;
-inline bool ModeInfoResponse::has_mode_info() const {
+inline bool ModeInfoResponse::_internal_has_mode_info() const {
   return this != internal_default_instance() && mode_info_ != nullptr;
+}
+inline bool ModeInfoResponse::has_mode_info() const {
+  return _internal_has_mode_info();
 }
 inline void ModeInfoResponse::clear_mode_info() {
   if (GetArenaNoVirtual() == nullptr && mode_info_ != nullptr) {
@@ -9691,11 +9701,14 @@ inline void ModeInfoResponse::clear_mode_info() {
   }
   mode_info_ = nullptr;
 }
-inline const ::mavsdk::rpc::telemetry::ModeInfo& ModeInfoResponse::mode_info() const {
+inline const ::mavsdk::rpc::telemetry::ModeInfo& ModeInfoResponse::_internal_mode_info() const {
   const ::mavsdk::rpc::telemetry::ModeInfo* p = mode_info_;
-  // @@protoc_insertion_point(field_get:mavsdk.rpc.telemetry.ModeInfoResponse.mode_info)
   return p != nullptr ? *p : *reinterpret_cast<const ::mavsdk::rpc::telemetry::ModeInfo*>(
       &::mavsdk::rpc::telemetry::_ModeInfo_default_instance_);
+}
+inline const ::mavsdk::rpc::telemetry::ModeInfo& ModeInfoResponse::mode_info() const {
+  // @@protoc_insertion_point(field_get:mavsdk.rpc.telemetry.ModeInfoResponse.mode_info)
+  return _internal_mode_info();
 }
 inline ::mavsdk::rpc::telemetry::ModeInfo* ModeInfoResponse::release_mode_info() {
   // @@protoc_insertion_point(field_release:mavsdk.rpc.telemetry.ModeInfoResponse.mode_info)
@@ -9704,14 +9717,17 @@ inline ::mavsdk::rpc::telemetry::ModeInfo* ModeInfoResponse::release_mode_info()
   mode_info_ = nullptr;
   return temp;
 }
-inline ::mavsdk::rpc::telemetry::ModeInfo* ModeInfoResponse::mutable_mode_info() {
+inline ::mavsdk::rpc::telemetry::ModeInfo* ModeInfoResponse::_internal_mutable_mode_info() {
   
   if (mode_info_ == nullptr) {
     auto* p = CreateMaybeMessage<::mavsdk::rpc::telemetry::ModeInfo>(GetArenaNoVirtual());
     mode_info_ = p;
   }
-  // @@protoc_insertion_point(field_mutable:mavsdk.rpc.telemetry.ModeInfoResponse.mode_info)
   return mode_info_;
+}
+inline ::mavsdk::rpc::telemetry::ModeInfo* ModeInfoResponse::mutable_mode_info() {
+  // @@protoc_insertion_point(field_mutable:mavsdk.rpc.telemetry.ModeInfoResponse.mode_info)
+  return _internal_mutable_mode_info();
 }
 inline void ModeInfoResponse::set_allocated_mode_info(::mavsdk::rpc::telemetry::ModeInfo* mode_info) {
   ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaNoVirtual();
@@ -10572,13 +10588,19 @@ inline void Battery::set_voltage_v(float value) {
 inline void Battery::clear_current_a() {
   current_a_ = 0;
 }
-inline float Battery::current_a() const {
-  // @@protoc_insertion_point(field_get:mavsdk.rpc.telemetry.Battery.current_a)
+inline float Battery::_internal_current_a() const {
   return current_a_;
 }
-inline void Battery::set_current_a(float value) {
+inline float Battery::current_a() const {
+  // @@protoc_insertion_point(field_get:mavsdk.rpc.telemetry.Battery.current_a)
+  return _internal_current_a();
+}
+inline void Battery::_internal_set_current_a(float value) {
   
   current_a_ = value;
+}
+inline void Battery::set_current_a(float value) {
+  _internal_set_current_a(value);
   // @@protoc_insertion_point(field_set:mavsdk.rpc.telemetry.Battery.current_a)
 }
 
@@ -10610,13 +10632,19 @@ inline void Battery::set_remaining_percent(float value) {
 inline void BatteryStatus::clear_mah_consumed() {
   mah_consumed_ = 0;
 }
-inline float BatteryStatus::mah_consumed() const {
-  // @@protoc_insertion_point(field_get:mavsdk.rpc.telemetry.BatteryStatus.mah_consumed)
+inline float BatteryStatus::_internal_mah_consumed() const {
   return mah_consumed_;
 }
-inline void BatteryStatus::set_mah_consumed(float value) {
+inline float BatteryStatus::mah_consumed() const {
+  // @@protoc_insertion_point(field_get:mavsdk.rpc.telemetry.BatteryStatus.mah_consumed)
+  return _internal_mah_consumed();
+}
+inline void BatteryStatus::_internal_set_mah_consumed(float value) {
   
   mah_consumed_ = value;
+}
+inline void BatteryStatus::set_mah_consumed(float value) {
+  _internal_set_mah_consumed(value);
   // @@protoc_insertion_point(field_set:mavsdk.rpc.telemetry.BatteryStatus.mah_consumed)
 }
 
@@ -10628,13 +10656,19 @@ inline void BatteryStatus::set_mah_consumed(float value) {
 inline void ModeInfo::clear_base_mode() {
   base_mode_ = 0u;
 }
-inline ::PROTOBUF_NAMESPACE_ID::uint32 ModeInfo::base_mode() const {
-  // @@protoc_insertion_point(field_get:mavsdk.rpc.telemetry.ModeInfo.base_mode)
+inline ::PROTOBUF_NAMESPACE_ID::uint32 ModeInfo::_internal_base_mode() const {
   return base_mode_;
 }
-inline void ModeInfo::set_base_mode(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+inline ::PROTOBUF_NAMESPACE_ID::uint32 ModeInfo::base_mode() const {
+  // @@protoc_insertion_point(field_get:mavsdk.rpc.telemetry.ModeInfo.base_mode)
+  return _internal_base_mode();
+}
+inline void ModeInfo::_internal_set_base_mode(::PROTOBUF_NAMESPACE_ID::uint32 value) {
   
   base_mode_ = value;
+}
+inline void ModeInfo::set_base_mode(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  _internal_set_base_mode(value);
   // @@protoc_insertion_point(field_set:mavsdk.rpc.telemetry.ModeInfo.base_mode)
 }
 
@@ -10642,13 +10676,19 @@ inline void ModeInfo::set_base_mode(::PROTOBUF_NAMESPACE_ID::uint32 value) {
 inline void ModeInfo::clear_custom_main_mode() {
   custom_main_mode_ = 0u;
 }
-inline ::PROTOBUF_NAMESPACE_ID::uint32 ModeInfo::custom_main_mode() const {
-  // @@protoc_insertion_point(field_get:mavsdk.rpc.telemetry.ModeInfo.custom_main_mode)
+inline ::PROTOBUF_NAMESPACE_ID::uint32 ModeInfo::_internal_custom_main_mode() const {
   return custom_main_mode_;
 }
-inline void ModeInfo::set_custom_main_mode(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+inline ::PROTOBUF_NAMESPACE_ID::uint32 ModeInfo::custom_main_mode() const {
+  // @@protoc_insertion_point(field_get:mavsdk.rpc.telemetry.ModeInfo.custom_main_mode)
+  return _internal_custom_main_mode();
+}
+inline void ModeInfo::_internal_set_custom_main_mode(::PROTOBUF_NAMESPACE_ID::uint32 value) {
   
   custom_main_mode_ = value;
+}
+inline void ModeInfo::set_custom_main_mode(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  _internal_set_custom_main_mode(value);
   // @@protoc_insertion_point(field_set:mavsdk.rpc.telemetry.ModeInfo.custom_main_mode)
 }
 
@@ -10656,13 +10696,19 @@ inline void ModeInfo::set_custom_main_mode(::PROTOBUF_NAMESPACE_ID::uint32 value
 inline void ModeInfo::clear_custom_sub_mode() {
   custom_sub_mode_ = 0u;
 }
-inline ::PROTOBUF_NAMESPACE_ID::uint32 ModeInfo::custom_sub_mode() const {
-  // @@protoc_insertion_point(field_get:mavsdk.rpc.telemetry.ModeInfo.custom_sub_mode)
+inline ::PROTOBUF_NAMESPACE_ID::uint32 ModeInfo::_internal_custom_sub_mode() const {
   return custom_sub_mode_;
 }
-inline void ModeInfo::set_custom_sub_mode(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+inline ::PROTOBUF_NAMESPACE_ID::uint32 ModeInfo::custom_sub_mode() const {
+  // @@protoc_insertion_point(field_get:mavsdk.rpc.telemetry.ModeInfo.custom_sub_mode)
+  return _internal_custom_sub_mode();
+}
+inline void ModeInfo::_internal_set_custom_sub_mode(::PROTOBUF_NAMESPACE_ID::uint32 value) {
   
   custom_sub_mode_ = value;
+}
+inline void ModeInfo::set_custom_sub_mode(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  _internal_set_custom_sub_mode(value);
   // @@protoc_insertion_point(field_set:mavsdk.rpc.telemetry.ModeInfo.custom_sub_mode)
 }
 

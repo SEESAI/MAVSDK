@@ -960,13 +960,7 @@ class OffboardService final {
     ExperimentalWithCallbackMethod_RequestOffboard() {
       ::grpc::Service::experimental().MarkMethodCallback(0,
         new ::grpc_impl::internal::CallbackUnaryHandler< ::mavsdk::rpc::offboard::StartRequest, ::mavsdk::rpc::offboard::StartResponse>(
-          [this](::grpc::ServerContext* context,
-                 const ::mavsdk::rpc::offboard::StartRequest* request,
-                 ::mavsdk::rpc::offboard::StartResponse* response,
-                 ::grpc::experimental::ServerCallbackRpcController* controller) {
-                   return this->RequestOffboard(context, request, response, controller);
-                 }));
-    }
+          [this](::grpc::experimental::CallbackServerContext* context, const ::mavsdk::rpc::offboard::StartRequest* request, ::mavsdk::rpc::offboard::StartResponse* response) { return this->RequestOffboard(context, request, response); }));}
     void SetMessageAllocatorFor_RequestOffboard(
         ::grpc::experimental::MessageAllocator< ::mavsdk::rpc::offboard::StartRequest, ::mavsdk::rpc::offboard::StartResponse>* allocator) {
       static_cast<::grpc_impl::internal::CallbackUnaryHandler< ::mavsdk::rpc::offboard::StartRequest, ::mavsdk::rpc::offboard::StartResponse>*>(
@@ -981,7 +975,7 @@ class OffboardService final {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual void RequestOffboard(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::offboard::StartRequest* /*request*/, ::mavsdk::rpc::offboard::StartResponse* /*response*/, ::grpc::experimental::ServerCallbackRpcController* controller) { controller->Finish(::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "")); }
+    virtual ::grpc::experimental::ServerUnaryReactor* RequestOffboard(::grpc::experimental::CallbackServerContext* /*context*/, const ::mavsdk::rpc::offboard::StartRequest* /*request*/, ::mavsdk::rpc::offboard::StartResponse* /*response*/) { return nullptr; }
   };
   template <class BaseClass>
   class ExperimentalWithCallbackMethod_Start : public BaseClass {
@@ -1066,13 +1060,7 @@ class OffboardService final {
     ExperimentalWithCallbackMethod_SetAttitudeOnce() {
       ::grpc::Service::experimental().MarkMethodCallback(4,
         new ::grpc_impl::internal::CallbackUnaryHandler< ::mavsdk::rpc::offboard::SetAttitudeRequest, ::mavsdk::rpc::offboard::SetAttitudeResponse>(
-          [this](::grpc::ServerContext* context,
-                 const ::mavsdk::rpc::offboard::SetAttitudeRequest* request,
-                 ::mavsdk::rpc::offboard::SetAttitudeResponse* response,
-                 ::grpc::experimental::ServerCallbackRpcController* controller) {
-                   return this->SetAttitudeOnce(context, request, response, controller);
-                 }));
-    }
+          [this](::grpc::experimental::CallbackServerContext* context, const ::mavsdk::rpc::offboard::SetAttitudeRequest* request, ::mavsdk::rpc::offboard::SetAttitudeResponse* response) { return this->SetAttitudeOnce(context, request, response); }));}
     void SetMessageAllocatorFor_SetAttitudeOnce(
         ::grpc::experimental::MessageAllocator< ::mavsdk::rpc::offboard::SetAttitudeRequest, ::mavsdk::rpc::offboard::SetAttitudeResponse>* allocator) {
       static_cast<::grpc_impl::internal::CallbackUnaryHandler< ::mavsdk::rpc::offboard::SetAttitudeRequest, ::mavsdk::rpc::offboard::SetAttitudeResponse>*>(
@@ -1087,7 +1075,7 @@ class OffboardService final {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual void SetAttitudeOnce(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::offboard::SetAttitudeRequest* /*request*/, ::mavsdk::rpc::offboard::SetAttitudeResponse* /*response*/, ::grpc::experimental::ServerCallbackRpcController* controller) { controller->Finish(::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "")); }
+    virtual ::grpc::experimental::ServerUnaryReactor* SetAttitudeOnce(::grpc::experimental::CallbackServerContext* /*context*/, const ::mavsdk::rpc::offboard::SetAttitudeRequest* /*request*/, ::mavsdk::rpc::offboard::SetAttitudeResponse* /*response*/) { return nullptr; }
   };
   template <class BaseClass>
   class ExperimentalWithCallbackMethod_SetAttitude : public BaseClass {
@@ -1122,13 +1110,7 @@ class OffboardService final {
     ExperimentalWithCallbackMethod_SetActuatorControlOnce() {
       ::grpc::Service::experimental().MarkMethodCallback(6,
         new ::grpc_impl::internal::CallbackUnaryHandler< ::mavsdk::rpc::offboard::SetActuatorControlRequest, ::mavsdk::rpc::offboard::SetActuatorControlResponse>(
-          [this](::grpc::ServerContext* context,
-                 const ::mavsdk::rpc::offboard::SetActuatorControlRequest* request,
-                 ::mavsdk::rpc::offboard::SetActuatorControlResponse* response,
-                 ::grpc::experimental::ServerCallbackRpcController* controller) {
-                   return this->SetActuatorControlOnce(context, request, response, controller);
-                 }));
-    }
+          [this](::grpc::experimental::CallbackServerContext* context, const ::mavsdk::rpc::offboard::SetActuatorControlRequest* request, ::mavsdk::rpc::offboard::SetActuatorControlResponse* response) { return this->SetActuatorControlOnce(context, request, response); }));}
     void SetMessageAllocatorFor_SetActuatorControlOnce(
         ::grpc::experimental::MessageAllocator< ::mavsdk::rpc::offboard::SetActuatorControlRequest, ::mavsdk::rpc::offboard::SetActuatorControlResponse>* allocator) {
       static_cast<::grpc_impl::internal::CallbackUnaryHandler< ::mavsdk::rpc::offboard::SetActuatorControlRequest, ::mavsdk::rpc::offboard::SetActuatorControlResponse>*>(
@@ -1143,7 +1125,7 @@ class OffboardService final {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual void SetActuatorControlOnce(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::offboard::SetActuatorControlRequest* /*request*/, ::mavsdk::rpc::offboard::SetActuatorControlResponse* /*response*/, ::grpc::experimental::ServerCallbackRpcController* controller) { controller->Finish(::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "")); }
+    virtual ::grpc::experimental::ServerUnaryReactor* SetActuatorControlOnce(::grpc::experimental::CallbackServerContext* /*context*/, const ::mavsdk::rpc::offboard::SetActuatorControlRequest* /*request*/, ::mavsdk::rpc::offboard::SetActuatorControlResponse* /*response*/) { return nullptr; }
   };
   template <class BaseClass>
   class ExperimentalWithCallbackMethod_SetActuatorControl : public BaseClass {
@@ -1178,13 +1160,7 @@ class OffboardService final {
     ExperimentalWithCallbackMethod_SetAttitudeRateOnce() {
       ::grpc::Service::experimental().MarkMethodCallback(8,
         new ::grpc_impl::internal::CallbackUnaryHandler< ::mavsdk::rpc::offboard::SetAttitudeRateRequest, ::mavsdk::rpc::offboard::SetAttitudeRateResponse>(
-          [this](::grpc::ServerContext* context,
-                 const ::mavsdk::rpc::offboard::SetAttitudeRateRequest* request,
-                 ::mavsdk::rpc::offboard::SetAttitudeRateResponse* response,
-                 ::grpc::experimental::ServerCallbackRpcController* controller) {
-                   return this->SetAttitudeRateOnce(context, request, response, controller);
-                 }));
-    }
+          [this](::grpc::experimental::CallbackServerContext* context, const ::mavsdk::rpc::offboard::SetAttitudeRateRequest* request, ::mavsdk::rpc::offboard::SetAttitudeRateResponse* response) { return this->SetAttitudeRateOnce(context, request, response); }));}
     void SetMessageAllocatorFor_SetAttitudeRateOnce(
         ::grpc::experimental::MessageAllocator< ::mavsdk::rpc::offboard::SetAttitudeRateRequest, ::mavsdk::rpc::offboard::SetAttitudeRateResponse>* allocator) {
       static_cast<::grpc_impl::internal::CallbackUnaryHandler< ::mavsdk::rpc::offboard::SetAttitudeRateRequest, ::mavsdk::rpc::offboard::SetAttitudeRateResponse>*>(
@@ -1199,7 +1175,7 @@ class OffboardService final {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual void SetAttitudeRateOnce(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::offboard::SetAttitudeRateRequest* /*request*/, ::mavsdk::rpc::offboard::SetAttitudeRateResponse* /*response*/, ::grpc::experimental::ServerCallbackRpcController* controller) { controller->Finish(::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "")); }
+    virtual ::grpc::experimental::ServerUnaryReactor* SetAttitudeRateOnce(::grpc::experimental::CallbackServerContext* /*context*/, const ::mavsdk::rpc::offboard::SetAttitudeRateRequest* /*request*/, ::mavsdk::rpc::offboard::SetAttitudeRateResponse* /*response*/) { return nullptr; }
   };
   template <class BaseClass>
   class ExperimentalWithCallbackMethod_SetAttitudeRate : public BaseClass {
@@ -1234,13 +1210,7 @@ class OffboardService final {
     ExperimentalWithCallbackMethod_SetPositionNedOnce() {
       ::grpc::Service::experimental().MarkMethodCallback(10,
         new ::grpc_impl::internal::CallbackUnaryHandler< ::mavsdk::rpc::offboard::SetPositionNedRequest, ::mavsdk::rpc::offboard::SetPositionNedResponse>(
-          [this](::grpc::ServerContext* context,
-                 const ::mavsdk::rpc::offboard::SetPositionNedRequest* request,
-                 ::mavsdk::rpc::offboard::SetPositionNedResponse* response,
-                 ::grpc::experimental::ServerCallbackRpcController* controller) {
-                   return this->SetPositionNedOnce(context, request, response, controller);
-                 }));
-    }
+          [this](::grpc::experimental::CallbackServerContext* context, const ::mavsdk::rpc::offboard::SetPositionNedRequest* request, ::mavsdk::rpc::offboard::SetPositionNedResponse* response) { return this->SetPositionNedOnce(context, request, response); }));}
     void SetMessageAllocatorFor_SetPositionNedOnce(
         ::grpc::experimental::MessageAllocator< ::mavsdk::rpc::offboard::SetPositionNedRequest, ::mavsdk::rpc::offboard::SetPositionNedResponse>* allocator) {
       static_cast<::grpc_impl::internal::CallbackUnaryHandler< ::mavsdk::rpc::offboard::SetPositionNedRequest, ::mavsdk::rpc::offboard::SetPositionNedResponse>*>(
@@ -1255,7 +1225,7 @@ class OffboardService final {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual void SetPositionNedOnce(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::offboard::SetPositionNedRequest* /*request*/, ::mavsdk::rpc::offboard::SetPositionNedResponse* /*response*/, ::grpc::experimental::ServerCallbackRpcController* controller) { controller->Finish(::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "")); }
+    virtual ::grpc::experimental::ServerUnaryReactor* SetPositionNedOnce(::grpc::experimental::CallbackServerContext* /*context*/, const ::mavsdk::rpc::offboard::SetPositionNedRequest* /*request*/, ::mavsdk::rpc::offboard::SetPositionNedResponse* /*response*/) { return nullptr; }
   };
   template <class BaseClass>
   class ExperimentalWithCallbackMethod_SetPositionNed : public BaseClass {
@@ -1290,13 +1260,7 @@ class OffboardService final {
     ExperimentalWithCallbackMethod_SetVelocityBodyOnce() {
       ::grpc::Service::experimental().MarkMethodCallback(12,
         new ::grpc_impl::internal::CallbackUnaryHandler< ::mavsdk::rpc::offboard::SetVelocityBodyRequest, ::mavsdk::rpc::offboard::SetVelocityBodyResponse>(
-          [this](::grpc::ServerContext* context,
-                 const ::mavsdk::rpc::offboard::SetVelocityBodyRequest* request,
-                 ::mavsdk::rpc::offboard::SetVelocityBodyResponse* response,
-                 ::grpc::experimental::ServerCallbackRpcController* controller) {
-                   return this->SetVelocityBodyOnce(context, request, response, controller);
-                 }));
-    }
+          [this](::grpc::experimental::CallbackServerContext* context, const ::mavsdk::rpc::offboard::SetVelocityBodyRequest* request, ::mavsdk::rpc::offboard::SetVelocityBodyResponse* response) { return this->SetVelocityBodyOnce(context, request, response); }));}
     void SetMessageAllocatorFor_SetVelocityBodyOnce(
         ::grpc::experimental::MessageAllocator< ::mavsdk::rpc::offboard::SetVelocityBodyRequest, ::mavsdk::rpc::offboard::SetVelocityBodyResponse>* allocator) {
       static_cast<::grpc_impl::internal::CallbackUnaryHandler< ::mavsdk::rpc::offboard::SetVelocityBodyRequest, ::mavsdk::rpc::offboard::SetVelocityBodyResponse>*>(
@@ -1311,7 +1275,7 @@ class OffboardService final {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual void SetVelocityBodyOnce(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::offboard::SetVelocityBodyRequest* /*request*/, ::mavsdk::rpc::offboard::SetVelocityBodyResponse* /*response*/, ::grpc::experimental::ServerCallbackRpcController* controller) { controller->Finish(::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "")); }
+    virtual ::grpc::experimental::ServerUnaryReactor* SetVelocityBodyOnce(::grpc::experimental::CallbackServerContext* /*context*/, const ::mavsdk::rpc::offboard::SetVelocityBodyRequest* /*request*/, ::mavsdk::rpc::offboard::SetVelocityBodyResponse* /*response*/) { return nullptr; }
   };
   template <class BaseClass>
   class ExperimentalWithCallbackMethod_SetVelocityBody : public BaseClass {
@@ -1927,12 +1891,7 @@ class OffboardService final {
     ExperimentalWithRawCallbackMethod_RequestOffboard() {
       ::grpc::Service::experimental().MarkMethodRawCallback(0,
         new ::grpc_impl::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
-          [this](::grpc::ServerContext* context,
-                 const ::grpc::ByteBuffer* request,
-                 ::grpc::ByteBuffer* response,
-                 ::grpc::experimental::ServerCallbackRpcController* controller) {
-                   this->RequestOffboard(context, request, response, controller);
-                 }));
+          [this](::grpc::experimental::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->RequestOffboard(context, request, response); }));
     }
     ~ExperimentalWithRawCallbackMethod_RequestOffboard() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1942,7 +1901,7 @@ class OffboardService final {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual void RequestOffboard(::grpc::ServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/, ::grpc::experimental::ServerCallbackRpcController* controller) { controller->Finish(::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "")); }
+    virtual ::grpc::experimental::ServerUnaryReactor* RequestOffboard(::grpc::experimental::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/) { return nullptr; }
   };
   template <class BaseClass>
   class ExperimentalWithRawCallbackMethod_Start : public BaseClass {
@@ -2012,12 +1971,7 @@ class OffboardService final {
     ExperimentalWithRawCallbackMethod_SetAttitudeOnce() {
       ::grpc::Service::experimental().MarkMethodRawCallback(4,
         new ::grpc_impl::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
-          [this](::grpc::ServerContext* context,
-                 const ::grpc::ByteBuffer* request,
-                 ::grpc::ByteBuffer* response,
-                 ::grpc::experimental::ServerCallbackRpcController* controller) {
-                   this->SetAttitudeOnce(context, request, response, controller);
-                 }));
+          [this](::grpc::experimental::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->SetAttitudeOnce(context, request, response); }));
     }
     ~ExperimentalWithRawCallbackMethod_SetAttitudeOnce() override {
       BaseClassMustBeDerivedFromService(this);
@@ -2027,7 +1981,7 @@ class OffboardService final {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual void SetAttitudeOnce(::grpc::ServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/, ::grpc::experimental::ServerCallbackRpcController* controller) { controller->Finish(::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "")); }
+    virtual ::grpc::experimental::ServerUnaryReactor* SetAttitudeOnce(::grpc::experimental::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/) { return nullptr; }
   };
   template <class BaseClass>
   class ExperimentalWithRawCallbackMethod_SetAttitude : public BaseClass {
@@ -2057,12 +2011,7 @@ class OffboardService final {
     ExperimentalWithRawCallbackMethod_SetActuatorControlOnce() {
       ::grpc::Service::experimental().MarkMethodRawCallback(6,
         new ::grpc_impl::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
-          [this](::grpc::ServerContext* context,
-                 const ::grpc::ByteBuffer* request,
-                 ::grpc::ByteBuffer* response,
-                 ::grpc::experimental::ServerCallbackRpcController* controller) {
-                   this->SetActuatorControlOnce(context, request, response, controller);
-                 }));
+          [this](::grpc::experimental::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->SetActuatorControlOnce(context, request, response); }));
     }
     ~ExperimentalWithRawCallbackMethod_SetActuatorControlOnce() override {
       BaseClassMustBeDerivedFromService(this);
@@ -2072,7 +2021,7 @@ class OffboardService final {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual void SetActuatorControlOnce(::grpc::ServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/, ::grpc::experimental::ServerCallbackRpcController* controller) { controller->Finish(::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "")); }
+    virtual ::grpc::experimental::ServerUnaryReactor* SetActuatorControlOnce(::grpc::experimental::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/) { return nullptr; }
   };
   template <class BaseClass>
   class ExperimentalWithRawCallbackMethod_SetActuatorControl : public BaseClass {
@@ -2102,12 +2051,7 @@ class OffboardService final {
     ExperimentalWithRawCallbackMethod_SetAttitudeRateOnce() {
       ::grpc::Service::experimental().MarkMethodRawCallback(8,
         new ::grpc_impl::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
-          [this](::grpc::ServerContext* context,
-                 const ::grpc::ByteBuffer* request,
-                 ::grpc::ByteBuffer* response,
-                 ::grpc::experimental::ServerCallbackRpcController* controller) {
-                   this->SetAttitudeRateOnce(context, request, response, controller);
-                 }));
+          [this](::grpc::experimental::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->SetAttitudeRateOnce(context, request, response); }));
     }
     ~ExperimentalWithRawCallbackMethod_SetAttitudeRateOnce() override {
       BaseClassMustBeDerivedFromService(this);
@@ -2117,7 +2061,7 @@ class OffboardService final {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual void SetAttitudeRateOnce(::grpc::ServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/, ::grpc::experimental::ServerCallbackRpcController* controller) { controller->Finish(::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "")); }
+    virtual ::grpc::experimental::ServerUnaryReactor* SetAttitudeRateOnce(::grpc::experimental::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/) { return nullptr; }
   };
   template <class BaseClass>
   class ExperimentalWithRawCallbackMethod_SetAttitudeRate : public BaseClass {
@@ -2147,12 +2091,7 @@ class OffboardService final {
     ExperimentalWithRawCallbackMethod_SetPositionNedOnce() {
       ::grpc::Service::experimental().MarkMethodRawCallback(10,
         new ::grpc_impl::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
-          [this](::grpc::ServerContext* context,
-                 const ::grpc::ByteBuffer* request,
-                 ::grpc::ByteBuffer* response,
-                 ::grpc::experimental::ServerCallbackRpcController* controller) {
-                   this->SetPositionNedOnce(context, request, response, controller);
-                 }));
+          [this](::grpc::experimental::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->SetPositionNedOnce(context, request, response); }));
     }
     ~ExperimentalWithRawCallbackMethod_SetPositionNedOnce() override {
       BaseClassMustBeDerivedFromService(this);
@@ -2162,7 +2101,7 @@ class OffboardService final {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual void SetPositionNedOnce(::grpc::ServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/, ::grpc::experimental::ServerCallbackRpcController* controller) { controller->Finish(::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "")); }
+    virtual ::grpc::experimental::ServerUnaryReactor* SetPositionNedOnce(::grpc::experimental::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/) { return nullptr; }
   };
   template <class BaseClass>
   class ExperimentalWithRawCallbackMethod_SetPositionNed : public BaseClass {
@@ -2192,12 +2131,7 @@ class OffboardService final {
     ExperimentalWithRawCallbackMethod_SetVelocityBodyOnce() {
       ::grpc::Service::experimental().MarkMethodRawCallback(12,
         new ::grpc_impl::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
-          [this](::grpc::ServerContext* context,
-                 const ::grpc::ByteBuffer* request,
-                 ::grpc::ByteBuffer* response,
-                 ::grpc::experimental::ServerCallbackRpcController* controller) {
-                   this->SetVelocityBodyOnce(context, request, response, controller);
-                 }));
+          [this](::grpc::experimental::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->SetVelocityBodyOnce(context, request, response); }));
     }
     ~ExperimentalWithRawCallbackMethod_SetVelocityBodyOnce() override {
       BaseClassMustBeDerivedFromService(this);
@@ -2207,7 +2141,7 @@ class OffboardService final {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual void SetVelocityBodyOnce(::grpc::ServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/, ::grpc::experimental::ServerCallbackRpcController* controller) { controller->Finish(::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "")); }
+    virtual ::grpc::experimental::ServerUnaryReactor* SetVelocityBodyOnce(::grpc::experimental::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/) { return nullptr; }
   };
   template <class BaseClass>
   class ExperimentalWithRawCallbackMethod_SetVelocityBody : public BaseClass {
