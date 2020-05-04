@@ -322,15 +322,12 @@ void GetEntriesRequest::Clear() {
   _internal_metadata_.Clear();
 }
 
-#if GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
 const char* GetEntriesRequest::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   while (!ctx->Done(&ptr)) {
     ::PROTOBUF_NAMESPACE_ID::uint32 tag;
     ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
     CHK_(ptr);
-    switch (tag >> 3) {
-      default: {
         if ((tag & 7) == 4 || tag == 0) {
           ctx->SetLastTag(tag);
           goto success;
@@ -338,8 +335,6 @@ const char* GetEntriesRequest::_InternalParse(const char* ptr, ::PROTOBUF_NAMESP
         ptr = UnknownFieldParse(tag, &_internal_metadata_, ptr, ctx);
         CHK_(ptr != nullptr);
         continue;
-      }
-    }  // switch
   }  // while
 success:
   return ptr;
@@ -348,34 +343,8 @@ failure:
   goto success;
 #undef CHK_
 }
-#else  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
-bool GetEntriesRequest::MergePartialFromCodedStream(
-    ::PROTOBUF_NAMESPACE_ID::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!PROTOBUF_PREDICT_TRUE(EXPRESSION)) goto failure
-  ::PROTOBUF_NAMESPACE_ID::uint32 tag;
-  // @@protoc_insertion_point(parse_start:mavsdk.rpc.log_files.GetEntriesRequest)
-  for (;;) {
-    ::std::pair<::PROTOBUF_NAMESPACE_ID::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
-  handle_unusual:
-    if (tag == 0) {
-      goto success;
-    }
-    DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SkipField(
-          input, tag, _internal_metadata_.mutable_unknown_fields()));
-  }
-success:
-  // @@protoc_insertion_point(parse_success:mavsdk.rpc.log_files.GetEntriesRequest)
-  return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:mavsdk.rpc.log_files.GetEntriesRequest)
-  return false;
-#undef DO_
-}
-#endif  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
 
-::PROTOBUF_NAMESPACE_ID::uint8* GetEntriesRequest::InternalSerializeWithCachedSizesToArray(
+::PROTOBUF_NAMESPACE_ID::uint8* GetEntriesRequest::_InternalSerialize(
     ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:mavsdk.rpc.log_files.GetEntriesRequest)
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
@@ -483,7 +452,7 @@ GetEntriesResponse::GetEntriesResponse(const GetEntriesResponse& from)
       _internal_metadata_(nullptr),
       entry_(from.entry_) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
-  if (from.has_log_files_result()) {
+  if (from._internal_has_log_files_result()) {
     log_files_result_ = new ::mavsdk::rpc::log_files::LogFilesResult(*from.log_files_result_);
   } else {
     log_files_result_ = nullptr;
@@ -528,7 +497,6 @@ void GetEntriesResponse::Clear() {
   _internal_metadata_.Clear();
 }
 
-#if GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
 const char* GetEntriesResponse::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   while (!ctx->Done(&ptr)) {
@@ -539,7 +507,7 @@ const char* GetEntriesResponse::_InternalParse(const char* ptr, ::PROTOBUF_NAMES
       // .mavsdk.rpc.log_files.LogFilesResult log_files_result = 1;
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 10)) {
-          ptr = ctx->ParseMessage(mutable_log_files_result(), ptr);
+          ptr = ctx->ParseMessage(_internal_mutable_log_files_result(), ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -549,7 +517,7 @@ const char* GetEntriesResponse::_InternalParse(const char* ptr, ::PROTOBUF_NAMES
           ptr -= 1;
           do {
             ptr += 1;
-            ptr = ctx->ParseMessage(add_entry(), ptr);
+            ptr = ctx->ParseMessage(_internal_add_entry(), ptr);
             CHK_(ptr);
             if (!ctx->DataAvailable(ptr)) break;
           } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<18>(ptr));
@@ -574,61 +542,8 @@ failure:
   goto success;
 #undef CHK_
 }
-#else  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
-bool GetEntriesResponse::MergePartialFromCodedStream(
-    ::PROTOBUF_NAMESPACE_ID::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!PROTOBUF_PREDICT_TRUE(EXPRESSION)) goto failure
-  ::PROTOBUF_NAMESPACE_ID::uint32 tag;
-  // @@protoc_insertion_point(parse_start:mavsdk.rpc.log_files.GetEntriesResponse)
-  for (;;) {
-    ::std::pair<::PROTOBUF_NAMESPACE_ID::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
-    switch (::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // .mavsdk.rpc.log_files.LogFilesResult log_files_result = 1;
-      case 1: {
-        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (10 & 0xFF)) {
-          DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadMessage(
-               input, mutable_log_files_result()));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
 
-      // repeated .mavsdk.rpc.log_files.Entry entry = 2;
-      case 2: {
-        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (18 & 0xFF)) {
-          DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadMessage(
-                input, add_entry()));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      default: {
-      handle_unusual:
-        if (tag == 0) {
-          goto success;
-        }
-        DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SkipField(
-              input, tag, _internal_metadata_.mutable_unknown_fields()));
-        break;
-      }
-    }
-  }
-success:
-  // @@protoc_insertion_point(parse_success:mavsdk.rpc.log_files.GetEntriesResponse)
-  return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:mavsdk.rpc.log_files.GetEntriesResponse)
-  return false;
-#undef DO_
-}
-#endif  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
-
-::PROTOBUF_NAMESPACE_ID::uint8* GetEntriesResponse::InternalSerializeWithCachedSizesToArray(
+::PROTOBUF_NAMESPACE_ID::uint8* GetEntriesResponse::_InternalSerialize(
     ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:mavsdk.rpc.log_files.GetEntriesResponse)
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
@@ -636,18 +551,18 @@ failure:
 
   // .mavsdk.rpc.log_files.LogFilesResult log_files_result = 1;
   if (this->has_log_files_result()) {
-    stream->EnsureSpace(&target);
+    target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessageToArray(
+      InternalWriteMessage(
         1, _Internal::log_files_result(this), target, stream);
   }
 
   // repeated .mavsdk.rpc.log_files.Entry entry = 2;
-  for (auto it = this->entry_.pointer_begin(),
-            end = this->entry_.pointer_end(); it < end; ++it) {
-    stream->EnsureSpace(&target);
+  for (unsigned int i = 0,
+      n = static_cast<unsigned int>(this->_internal_entry_size()); i < n; i++) {
+    target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessageToArray(2, **it, target, stream);
+      InternalWriteMessage(2, this->_internal_entry(i), target, stream);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -667,7 +582,7 @@ size_t GetEntriesResponse::ByteSizeLong() const {
   (void) cached_has_bits;
 
   // repeated .mavsdk.rpc.log_files.Entry entry = 2;
-  total_size += 1UL * this->entry_size();
+  total_size += 1UL * this->_internal_entry_size();
   for (const auto& msg : this->entry_) {
     total_size +=
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
@@ -713,7 +628,7 @@ void GetEntriesResponse::MergeFrom(const GetEntriesResponse& from) {
 
   entry_.MergeFrom(from.entry_);
   if (from.has_log_files_result()) {
-    mutable_log_files_result()->::mavsdk::rpc::log_files::LogFilesResult::MergeFrom(from.log_files_result());
+    _internal_mutable_log_files_result()->::mavsdk::rpc::log_files::LogFilesResult::MergeFrom(from._internal_log_files_result());
   }
 }
 
@@ -807,7 +722,6 @@ void DownloadLogFileRequest::Clear() {
   _internal_metadata_.Clear();
 }
 
-#if GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
 const char* DownloadLogFileRequest::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   while (!ctx->Done(&ptr)) {
@@ -825,7 +739,9 @@ const char* DownloadLogFileRequest::_InternalParse(const char* ptr, ::PROTOBUF_N
       // string file_path = 2;
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParserUTF8(_internal_mutable_file_path(), ptr, ctx, "mavsdk.rpc.log_files.DownloadLogFileRequest.file_path");
+          auto str = _internal_mutable_file_path();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "mavsdk.rpc.log_files.DownloadLogFileRequest.file_path"));
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -848,67 +764,8 @@ failure:
   goto success;
 #undef CHK_
 }
-#else  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
-bool DownloadLogFileRequest::MergePartialFromCodedStream(
-    ::PROTOBUF_NAMESPACE_ID::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!PROTOBUF_PREDICT_TRUE(EXPRESSION)) goto failure
-  ::PROTOBUF_NAMESPACE_ID::uint32 tag;
-  // @@protoc_insertion_point(parse_start:mavsdk.rpc.log_files.DownloadLogFileRequest)
-  for (;;) {
-    ::std::pair<::PROTOBUF_NAMESPACE_ID::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
-    switch (::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // uint32 id = 1;
-      case 1: {
-        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (8 & 0xFF)) {
 
-          DO_((::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadPrimitive<
-                   ::PROTOBUF_NAMESPACE_ID::uint32, ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &id_)));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // string file_path = 2;
-      case 2: {
-        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (18 & 0xFF)) {
-          DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadString(
-                input, this->_internal_mutable_file_path()));
-          DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-            this->_internal_file_path().data(), static_cast<int>(this->_internal_file_path().length()),
-            ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::PARSE,
-            "mavsdk.rpc.log_files.DownloadLogFileRequest.file_path"));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      default: {
-      handle_unusual:
-        if (tag == 0) {
-          goto success;
-        }
-        DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SkipField(
-              input, tag, _internal_metadata_.mutable_unknown_fields()));
-        break;
-      }
-    }
-  }
-success:
-  // @@protoc_insertion_point(parse_success:mavsdk.rpc.log_files.DownloadLogFileRequest)
-  return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:mavsdk.rpc.log_files.DownloadLogFileRequest)
-  return false;
-#undef DO_
-}
-#endif  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
-
-::PROTOBUF_NAMESPACE_ID::uint8* DownloadLogFileRequest::InternalSerializeWithCachedSizesToArray(
+::PROTOBUF_NAMESPACE_ID::uint8* DownloadLogFileRequest::_InternalSerialize(
     ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:mavsdk.rpc.log_files.DownloadLogFileRequest)
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
@@ -916,8 +773,8 @@ failure:
 
   // uint32 id = 1;
   if (this->id() != 0) {
-    stream->EnsureSpace(&target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(1, this->id(), target);
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(1, this->_internal_id(), target);
   }
 
   // string file_path = 2;
@@ -957,7 +814,7 @@ size_t DownloadLogFileRequest::ByteSizeLong() const {
   if (this->id() != 0) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
-        this->id());
+        this->_internal_id());
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -996,7 +853,7 @@ void DownloadLogFileRequest::MergeFrom(const DownloadLogFileRequest& from) {
     file_path_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.file_path_);
   }
   if (from.id() != 0) {
-    set_id(from.id());
+    _internal_set_id(from._internal_id());
   }
 }
 
@@ -1055,7 +912,7 @@ DownloadLogFileResponse::DownloadLogFileResponse(const DownloadLogFileResponse& 
   : ::PROTOBUF_NAMESPACE_ID::Message(),
       _internal_metadata_(nullptr) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
-  if (from.has_log_files_result()) {
+  if (from._internal_has_log_files_result()) {
     log_files_result_ = new ::mavsdk::rpc::log_files::LogFilesResult(*from.log_files_result_);
   } else {
     log_files_result_ = nullptr;
@@ -1099,7 +956,6 @@ void DownloadLogFileResponse::Clear() {
   _internal_metadata_.Clear();
 }
 
-#if GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
 const char* DownloadLogFileResponse::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   while (!ctx->Done(&ptr)) {
@@ -1110,7 +966,7 @@ const char* DownloadLogFileResponse::_InternalParse(const char* ptr, ::PROTOBUF_
       // .mavsdk.rpc.log_files.LogFilesResult log_files_result = 1;
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 10)) {
-          ptr = ctx->ParseMessage(mutable_log_files_result(), ptr);
+          ptr = ctx->ParseMessage(_internal_mutable_log_files_result(), ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -1133,50 +989,8 @@ failure:
   goto success;
 #undef CHK_
 }
-#else  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
-bool DownloadLogFileResponse::MergePartialFromCodedStream(
-    ::PROTOBUF_NAMESPACE_ID::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!PROTOBUF_PREDICT_TRUE(EXPRESSION)) goto failure
-  ::PROTOBUF_NAMESPACE_ID::uint32 tag;
-  // @@protoc_insertion_point(parse_start:mavsdk.rpc.log_files.DownloadLogFileResponse)
-  for (;;) {
-    ::std::pair<::PROTOBUF_NAMESPACE_ID::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
-    switch (::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // .mavsdk.rpc.log_files.LogFilesResult log_files_result = 1;
-      case 1: {
-        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (10 & 0xFF)) {
-          DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadMessage(
-               input, mutable_log_files_result()));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
 
-      default: {
-      handle_unusual:
-        if (tag == 0) {
-          goto success;
-        }
-        DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SkipField(
-              input, tag, _internal_metadata_.mutable_unknown_fields()));
-        break;
-      }
-    }
-  }
-success:
-  // @@protoc_insertion_point(parse_success:mavsdk.rpc.log_files.DownloadLogFileResponse)
-  return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:mavsdk.rpc.log_files.DownloadLogFileResponse)
-  return false;
-#undef DO_
-}
-#endif  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
-
-::PROTOBUF_NAMESPACE_ID::uint8* DownloadLogFileResponse::InternalSerializeWithCachedSizesToArray(
+::PROTOBUF_NAMESPACE_ID::uint8* DownloadLogFileResponse::_InternalSerialize(
     ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:mavsdk.rpc.log_files.DownloadLogFileResponse)
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
@@ -1184,9 +998,9 @@ failure:
 
   // .mavsdk.rpc.log_files.LogFilesResult log_files_result = 1;
   if (this->has_log_files_result()) {
-    stream->EnsureSpace(&target);
+    target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessageToArray(
+      InternalWriteMessage(
         1, _Internal::log_files_result(this), target, stream);
   }
 
@@ -1245,7 +1059,7 @@ void DownloadLogFileResponse::MergeFrom(const DownloadLogFileResponse& from) {
   (void) cached_has_bits;
 
   if (from.has_log_files_result()) {
-    mutable_log_files_result()->::mavsdk::rpc::log_files::LogFilesResult::MergeFrom(from.log_files_result());
+    _internal_mutable_log_files_result()->::mavsdk::rpc::log_files::LogFilesResult::MergeFrom(from._internal_log_files_result());
   }
 }
 
@@ -1344,7 +1158,6 @@ void Entry::Clear() {
   _internal_metadata_.Clear();
 }
 
-#if GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
 const char* Entry::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   while (!ctx->Done(&ptr)) {
@@ -1362,7 +1175,9 @@ const char* Entry::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::inte
       // string date = 2;
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParserUTF8(_internal_mutable_date(), ptr, ctx, "mavsdk.rpc.log_files.Entry.date");
+          auto str = _internal_mutable_date();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "mavsdk.rpc.log_files.Entry.date"));
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -1392,80 +1207,8 @@ failure:
   goto success;
 #undef CHK_
 }
-#else  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
-bool Entry::MergePartialFromCodedStream(
-    ::PROTOBUF_NAMESPACE_ID::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!PROTOBUF_PREDICT_TRUE(EXPRESSION)) goto failure
-  ::PROTOBUF_NAMESPACE_ID::uint32 tag;
-  // @@protoc_insertion_point(parse_start:mavsdk.rpc.log_files.Entry)
-  for (;;) {
-    ::std::pair<::PROTOBUF_NAMESPACE_ID::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
-    switch (::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // uint32 id = 1;
-      case 1: {
-        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (8 & 0xFF)) {
 
-          DO_((::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadPrimitive<
-                   ::PROTOBUF_NAMESPACE_ID::uint32, ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &id_)));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // string date = 2;
-      case 2: {
-        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (18 & 0xFF)) {
-          DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadString(
-                input, this->_internal_mutable_date()));
-          DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-            this->_internal_date().data(), static_cast<int>(this->_internal_date().length()),
-            ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::PARSE,
-            "mavsdk.rpc.log_files.Entry.date"));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // uint32 size_bytes = 3;
-      case 3: {
-        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (24 & 0xFF)) {
-
-          DO_((::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadPrimitive<
-                   ::PROTOBUF_NAMESPACE_ID::uint32, ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &size_bytes_)));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      default: {
-      handle_unusual:
-        if (tag == 0) {
-          goto success;
-        }
-        DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SkipField(
-              input, tag, _internal_metadata_.mutable_unknown_fields()));
-        break;
-      }
-    }
-  }
-success:
-  // @@protoc_insertion_point(parse_success:mavsdk.rpc.log_files.Entry)
-  return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:mavsdk.rpc.log_files.Entry)
-  return false;
-#undef DO_
-}
-#endif  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
-
-::PROTOBUF_NAMESPACE_ID::uint8* Entry::InternalSerializeWithCachedSizesToArray(
+::PROTOBUF_NAMESPACE_ID::uint8* Entry::_InternalSerialize(
     ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:mavsdk.rpc.log_files.Entry)
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
@@ -1473,8 +1216,8 @@ failure:
 
   // uint32 id = 1;
   if (this->id() != 0) {
-    stream->EnsureSpace(&target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(1, this->id(), target);
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(1, this->_internal_id(), target);
   }
 
   // string date = 2;
@@ -1489,8 +1232,8 @@ failure:
 
   // uint32 size_bytes = 3;
   if (this->size_bytes() != 0) {
-    stream->EnsureSpace(&target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(3, this->size_bytes(), target);
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(3, this->_internal_size_bytes(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -1520,14 +1263,14 @@ size_t Entry::ByteSizeLong() const {
   if (this->id() != 0) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
-        this->id());
+        this->_internal_id());
   }
 
   // uint32 size_bytes = 3;
   if (this->size_bytes() != 0) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
-        this->size_bytes());
+        this->_internal_size_bytes());
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -1566,10 +1309,10 @@ void Entry::MergeFrom(const Entry& from) {
     date_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.date_);
   }
   if (from.id() != 0) {
-    set_id(from.id());
+    _internal_set_id(from._internal_id());
   }
   if (from.size_bytes() != 0) {
-    set_size_bytes(from.size_bytes());
+    _internal_set_size_bytes(from._internal_size_bytes());
   }
 }
 
@@ -1665,7 +1408,6 @@ void LogFilesResult::Clear() {
   _internal_metadata_.Clear();
 }
 
-#if GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
 const char* LogFilesResult::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   while (!ctx->Done(&ptr)) {
@@ -1678,13 +1420,15 @@ const char* LogFilesResult::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 8)) {
           ::PROTOBUF_NAMESPACE_ID::uint64 val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
           CHK_(ptr);
-          set_result(static_cast<::mavsdk::rpc::log_files::LogFilesResult_Result>(val));
+          _internal_set_result(static_cast<::mavsdk::rpc::log_files::LogFilesResult_Result>(val));
         } else goto handle_unusual;
         continue;
       // string result_str = 2;
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParserUTF8(_internal_mutable_result_str(), ptr, ctx, "mavsdk.rpc.log_files.LogFilesResult.result_str");
+          auto str = _internal_mutable_result_str();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "mavsdk.rpc.log_files.LogFilesResult.result_str"));
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -1707,68 +1451,8 @@ failure:
   goto success;
 #undef CHK_
 }
-#else  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
-bool LogFilesResult::MergePartialFromCodedStream(
-    ::PROTOBUF_NAMESPACE_ID::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!PROTOBUF_PREDICT_TRUE(EXPRESSION)) goto failure
-  ::PROTOBUF_NAMESPACE_ID::uint32 tag;
-  // @@protoc_insertion_point(parse_start:mavsdk.rpc.log_files.LogFilesResult)
-  for (;;) {
-    ::std::pair<::PROTOBUF_NAMESPACE_ID::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
-    switch (::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // .mavsdk.rpc.log_files.LogFilesResult.Result result = 1;
-      case 1: {
-        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (8 & 0xFF)) {
-          int value = 0;
-          DO_((::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadPrimitive<
-                   int, ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_ENUM>(
-                 input, &value)));
-          set_result(static_cast< ::mavsdk::rpc::log_files::LogFilesResult_Result >(value));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
 
-      // string result_str = 2;
-      case 2: {
-        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (18 & 0xFF)) {
-          DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadString(
-                input, this->_internal_mutable_result_str()));
-          DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-            this->_internal_result_str().data(), static_cast<int>(this->_internal_result_str().length()),
-            ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::PARSE,
-            "mavsdk.rpc.log_files.LogFilesResult.result_str"));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      default: {
-      handle_unusual:
-        if (tag == 0) {
-          goto success;
-        }
-        DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SkipField(
-              input, tag, _internal_metadata_.mutable_unknown_fields()));
-        break;
-      }
-    }
-  }
-success:
-  // @@protoc_insertion_point(parse_success:mavsdk.rpc.log_files.LogFilesResult)
-  return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:mavsdk.rpc.log_files.LogFilesResult)
-  return false;
-#undef DO_
-}
-#endif  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
-
-::PROTOBUF_NAMESPACE_ID::uint8* LogFilesResult::InternalSerializeWithCachedSizesToArray(
+::PROTOBUF_NAMESPACE_ID::uint8* LogFilesResult::_InternalSerialize(
     ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:mavsdk.rpc.log_files.LogFilesResult)
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
@@ -1776,9 +1460,9 @@ failure:
 
   // .mavsdk.rpc.log_files.LogFilesResult.Result result = 1;
   if (this->result() != 0) {
-    stream->EnsureSpace(&target);
+    target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
-      1, this->result(), target);
+      1, this->_internal_result(), target);
   }
 
   // string result_str = 2;
@@ -1817,7 +1501,7 @@ size_t LogFilesResult::ByteSizeLong() const {
   // .mavsdk.rpc.log_files.LogFilesResult.Result result = 1;
   if (this->result() != 0) {
     total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->result());
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_result());
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -1856,7 +1540,7 @@ void LogFilesResult::MergeFrom(const LogFilesResult& from) {
     result_str_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.result_str_);
   }
   if (from.result() != 0) {
-    set_result(from.result());
+    _internal_set_result(from._internal_result());
   }
 }
 
