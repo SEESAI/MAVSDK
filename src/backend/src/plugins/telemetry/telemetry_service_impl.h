@@ -210,6 +210,28 @@ public:
         return grpc::Status::OK;
     }
 
+    grpc::Status SubscribeDistanceSensor(
+        grpc::ServerContext* /* context */,
+        const mavsdk::rpc::telemetry::SubscribeDistanceSensorRequest* /* request */,
+        grpc::ServerWriter<rpc::telemetry::DistanceSensorResponse>* writer) override
+    {
+        std::mutex distance_sensor_mutex{};
+
+        _telemetry.distance_sensor_async(
+            [this, &writer, &distance_sensor_mutex](mavsdk::Telemetry::DistanceSensor distance_sensor) {
+                auto rpc_distance_sensor = new mavsdk::rpc::telemetry::DistanceSensor();
+                rpc_distance_sensor->set_current_distance_m(distance_sensor.current_distance_m);
+                mavsdk::rpc::telemetry::DistanceSensorResponse rpc_distance_sensor_response;
+                rpc_distance_sensor_response.set_allocated_distance_sensor(rpc_distance_sensor);
+
+                std::lock_guard<std::mutex> lock(distance_sensor_mutex);
+                writer->Write(rpc_distance_sensor_response);
+            });
+
+        _stop_future.wait();
+        return grpc::Status::OK;
+    }
+
     grpc::Status SubscribeGpsInfo(
         grpc::ServerContext* /* context */,
         const mavsdk::rpc::telemetry::SubscribeGpsInfoRequest* /* request */,

@@ -81,6 +81,7 @@ public:
     Telemetry::Quaternion get_camera_attitude_quaternion() const;
     Telemetry::GroundSpeedNED get_ground_speed_ned() const;
     Telemetry::IMUReadingNED get_imu_reading_ned() const;
+    Telemetry::DistanceSensor get_distance_sensor() const;
     Telemetry::GPSInfo get_gps_info() const;
     Telemetry::Battery get_battery() const;
     Telemetry::BatteryStatus get_battery_status() const;
@@ -110,6 +111,7 @@ public:
     void camera_attitude_euler_angle_async(Telemetry::attitude_euler_angle_callback_t& callback);
     void ground_speed_ned_async(Telemetry::ground_speed_ned_callback_t& callback);
     void imu_reading_ned_async(Telemetry::imu_reading_ned_callback_t& callback);
+    void distance_sensor_async(Telemetry::distance_sensor_callback_t& callback);
     void gps_info_async(Telemetry::gps_info_callback_t& callback);
     void battery_async(Telemetry::battery_callback_t& callback);
     void battery_status_async(Telemetry::battery_status_callback_t& callback);
@@ -142,6 +144,7 @@ private:
     void set_camera_attitude_euler_angle(Telemetry::EulerAngle euler_angle);
     void set_ground_speed_ned(Telemetry::GroundSpeedNED ground_speed_ned);
     void set_imu_reading_ned(Telemetry::IMUReadingNED imu_reading_ned);
+    void set_distance_sensor(Telemetry::DistanceSensor distance_sensor);
     void set_gps_info(Telemetry::GPSInfo gps_info);
     void set_battery(Telemetry::Battery battery);
     void set_battery_status(Telemetry::BatteryStatus battery_status);
@@ -166,6 +169,7 @@ private:
     void process_attitude_quaternion(const mavlink_message_t& message);
     void process_mount_orientation(const mavlink_message_t& message);
     void process_imu_reading_ned(const mavlink_message_t& message);
+    void process_distance_sensor(const mavlink_message_t& message);
     void process_gps_raw_int(const mavlink_message_t& message);
     void process_ground_truth(const mavlink_message_t& message);
     void process_extended_sys_state(const mavlink_message_t& message);
@@ -245,6 +249,9 @@ private:
     Telemetry::IMUReadingNED _imu_reading_ned{
         {NAN, NAN, NAN}, {NAN, NAN, NAN}, {NAN, NAN, NAN}, NAN};
 
+    mutable std::mutex _distance_sensor_mutex{};
+    Telemetry::DistanceSensor _distance_sensor{NAN};
+
     mutable std::mutex _gps_info_mutex{};
     Telemetry::GPSInfo _gps_info{0, 0, double(NAN), double(NAN), NAN};
 
@@ -293,6 +300,7 @@ private:
     Telemetry::attitude_euler_angle_callback_t _camera_attitude_euler_angle_subscription{nullptr};
     Telemetry::ground_speed_ned_callback_t _ground_speed_ned_subscription{nullptr};
     Telemetry::imu_reading_ned_callback_t _imu_reading_ned_subscription{nullptr};
+    Telemetry::distance_sensor_callback_t _distance_sensor_subscription{nullptr};
     Telemetry::gps_info_callback_t _gps_info_subscription{nullptr};
     Telemetry::battery_callback_t _battery_subscription{nullptr};
     Telemetry::battery_status_callback_t _battery_status_subscription{nullptr};

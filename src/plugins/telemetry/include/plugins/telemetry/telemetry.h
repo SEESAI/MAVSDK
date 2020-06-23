@@ -202,6 +202,13 @@ public:
     };
 
     /**
+     * @brief Distance sensor type.
+     */
+    struct DistanceSensor {
+        float current_distance_m;
+    };
+
+    /**
      * @brief GPS information type.
      */
     struct GPSInfo {
@@ -1131,6 +1138,20 @@ public:
      * @param callback function to call with updates.
      */
     void imu_reading_ned_async(imu_reading_ned_callback_t callback);
+
+    /**
+     * @brief Callback type for distance sensor updates.
+     *
+     * @param distance_sensor Distance sensor reading.
+     */
+    typedef std::function<void(DistanceSensor distance_sensor)> distance_sensor_callback_t;
+
+    /**
+     * @brief Subscribe to distance sensor updates (asynchronous).
+     *
+     * @param callback function to call with updates.
+     */
+     void distance_sensor_async(distance_sensor_callback_t callback);
 
     /**
      * @brief Callback type for GPS information updates.

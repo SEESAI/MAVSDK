@@ -398,6 +398,11 @@ void Telemetry::imu_reading_ned_async(imu_reading_ned_callback_t callback)
     return _impl->imu_reading_ned_async(callback);
 }
 
+void Telemetry::distance_sensor_async(distance_sensor_callback_t callback)
+{
+    return _impl->distance_sensor_async(callback);
+}
+
 void Telemetry::gps_info_async(gps_info_callback_t callback)
 {
     return _impl->gps_info_async(callback);

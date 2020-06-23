@@ -101,6 +101,11 @@ void TelemetryImpl::init()
         this);
 
     _parent->register_mavlink_message_handler(
+        MAVLINK_MSG_ID_DISTANCE_SENSOR,
+        std::bind(&TelemetryImpl::process_distance_sensor, this, _1),
+        this);
+
+    _parent->register_mavlink_message_handler(
         MAVLINK_MSG_ID_VFR_HUD,
         std::bind(&TelemetryImpl::process_fixedwing_metrics, this, _1),
         this);
@@ -657,6 +662,19 @@ void TelemetryImpl::process_imu_reading_ned(const mavlink_message_t& message)
     if (_imu_reading_ned_subscription) {
         auto callback = _imu_reading_ned_subscription;
         auto arg = get_imu_reading_ned();
+        _parent->call_user_callback([callback, arg]() { callback(arg); });
+    }
+}
+
+void TelemetryImpl::process_distance_sensor(const mavlink_message_t &message)
+{
+    mavlink_distance_sensor_t distance_sensor;
+    mavlink_msg_distance_sensor_decode(&message, &distance_sensor);
+    set_distance_sensor({distance_sensor.current_distance * 1e-2f});
+
+    if (_distance_sensor_subscription) {
+        auto callback = _distance_sensor_subscription;
+        auto arg = get_distance_sensor();
         _parent->call_user_callback([callback, arg]() { callback(arg); });
     }
 }
@@ -1273,10 +1291,22 @@ Telemetry::IMUReadingNED TelemetryImpl::get_imu_reading_ned() const
     return _imu_reading_ned;
 }
 
+Telemetry::DistanceSensor TelemetryImpl::get_distance_sensor() const
+{
+    std::lock_guard<std::mutex> lock(_distance_sensor_mutex);
+    return _distance_sensor;
+}
+
 void TelemetryImpl::set_imu_reading_ned(Telemetry::IMUReadingNED imu_reading_ned)
 {
     std::lock_guard<std::mutex> lock(_imu_reading_ned_mutex);
     _imu_reading_ned = imu_reading_ned;
+}
+
+void TelemetryImpl::set_distance_sensor(Telemetry::DistanceSensor distance_sensor)
+{
+    std::lock_guard<std::mutex> lock(_distance_sensor_mutex);
+    _distance_sensor = distance_sensor;
 }
 
 Telemetry::GPSInfo TelemetryImpl::get_gps_info() const
@@ -1549,6 +1579,11 @@ void TelemetryImpl::ground_speed_ned_async(Telemetry::ground_speed_ned_callback_
 void TelemetryImpl::imu_reading_ned_async(Telemetry::imu_reading_ned_callback_t& callback)
 {
     _imu_reading_ned_subscription = callback;
+}
+
+void TelemetryImpl::distance_sensor_async(Telemetry::distance_sensor_callback_t &callback)
+{
+    _distance_sensor_subscription = callback;
 }
 
 void TelemetryImpl::gps_info_async(Telemetry::gps_info_callback_t& callback)
