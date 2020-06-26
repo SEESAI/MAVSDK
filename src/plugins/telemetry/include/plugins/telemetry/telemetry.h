@@ -218,6 +218,8 @@ public:
         double latitude_deg; /**< @brief Latitude in degrees (range: -90 to +90) */
         double longitude_deg; /**< @brief Longitude in degrees (range: -180 to 180) */
         float absolute_altitude_m; /**< @brief Altitude AMSL (above mean sea level) in metres */
+        float h_acc_m; /**< @brief Position uncertainty in metres */
+        float v_acc_m; /**<@brief Altitude uncertainty in metres */
     };
 
     /**
