@@ -7337,6 +7337,8 @@ class GpsInfo :
     kLatitudeDegFieldNumber = 3,
     kLongitudeDegFieldNumber = 4,
     kAbsoluteAltitudeMFieldNumber = 5,
+    kHAccMFieldNumber = 6,
+    kVAccMFieldNumber = 7,
   };
   // int32 num_satellites = 1;
   void clear_num_satellites();
@@ -7383,6 +7385,24 @@ class GpsInfo :
   void _internal_set_absolute_altitude_m(float value);
   public:
 
+  // float h_acc_m = 6;
+  void clear_h_acc_m();
+  float h_acc_m() const;
+  void set_h_acc_m(float value);
+  private:
+  float _internal_h_acc_m() const;
+  void _internal_set_h_acc_m(float value);
+  public:
+
+  // float v_acc_m = 7;
+  void clear_v_acc_m();
+  float v_acc_m() const;
+  void set_v_acc_m(float value);
+  private:
+  float _internal_v_acc_m() const;
+  void _internal_set_v_acc_m(float value);
+  public:
+
   // @@protoc_insertion_point(class_scope:mavsdk.rpc.telemetry.GpsInfo)
  private:
   class _Internal;
@@ -7393,6 +7413,8 @@ class GpsInfo :
   double latitude_deg_;
   double longitude_deg_;
   float absolute_altitude_m_;
+  float h_acc_m_;
+  float v_acc_m_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_telemetry_2ftelemetry_2eproto;
 };
@@ -12078,6 +12100,46 @@ inline void GpsInfo::_internal_set_absolute_altitude_m(float value) {
 inline void GpsInfo::set_absolute_altitude_m(float value) {
   _internal_set_absolute_altitude_m(value);
   // @@protoc_insertion_point(field_set:mavsdk.rpc.telemetry.GpsInfo.absolute_altitude_m)
+}
+
+// float h_acc_m = 6;
+inline void GpsInfo::clear_h_acc_m() {
+  h_acc_m_ = 0;
+}
+inline float GpsInfo::_internal_h_acc_m() const {
+  return h_acc_m_;
+}
+inline float GpsInfo::h_acc_m() const {
+  // @@protoc_insertion_point(field_get:mavsdk.rpc.telemetry.GpsInfo.h_acc_m)
+  return _internal_h_acc_m();
+}
+inline void GpsInfo::_internal_set_h_acc_m(float value) {
+  
+  h_acc_m_ = value;
+}
+inline void GpsInfo::set_h_acc_m(float value) {
+  _internal_set_h_acc_m(value);
+  // @@protoc_insertion_point(field_set:mavsdk.rpc.telemetry.GpsInfo.h_acc_m)
+}
+
+// float v_acc_m = 7;
+inline void GpsInfo::clear_v_acc_m() {
+  v_acc_m_ = 0;
+}
+inline float GpsInfo::_internal_v_acc_m() const {
+  return v_acc_m_;
+}
+inline float GpsInfo::v_acc_m() const {
+  // @@protoc_insertion_point(field_get:mavsdk.rpc.telemetry.GpsInfo.v_acc_m)
+  return _internal_v_acc_m();
+}
+inline void GpsInfo::_internal_set_v_acc_m(float value) {
+  
+  v_acc_m_ = value;
+}
+inline void GpsInfo::set_v_acc_m(float value) {
+  _internal_set_v_acc_m(value);
+  // @@protoc_insertion_point(field_set:mavsdk.rpc.telemetry.GpsInfo.v_acc_m)
 }
 
 // -------------------------------------------------------------------
