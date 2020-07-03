@@ -648,15 +648,12 @@ void TelemetryImpl::process_imu_reading_ned(const mavlink_message_t& message)
 {
     mavlink_highres_imu_t highres_imu;
     mavlink_msg_highres_imu_decode(&message, &highres_imu);
-    set_imu_reading_ned(Telemetry::IMUReadingNED({highres_imu.xacc,
-                                                  highres_imu.yacc,
-                                                  highres_imu.zacc,
-                                                  highres_imu.xgyro,
-                                                  highres_imu.ygyro,
-                                                  highres_imu.zgyro,
-                                                  highres_imu.xmag,
+    set_imu_reading_ned(Telemetry::IMUReadingNED({{highres_imu.xacc, highres_imu.yacc, highres_imu.zacc}, {highres_imu.xgyro, highres_imu.ygyro,
+                                                  highres_imu.zgyro},
+                                                  {highres_imu.xmag,
                                                   highres_imu.ymag,
-                                                  highres_imu.zmag,
+                                                  highres_imu.zmag},
+                                                  highres_imu.pressure_alt,
                                                   highres_imu.temperature}));
 
     if (_imu_reading_ned_subscription) {

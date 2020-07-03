@@ -198,6 +198,7 @@ public:
         AccelerationNED acceleration; /**< @see AccelerationNED */
         AngularVelocityNED angular_velocity; /**< @see AngularVelocityNED */
         MagneticFieldNED magnetic_field; /**< @see MagneticFieldNED */
+        float pressure_alt; /**@brief Altitude calculated from pressure. */
         float temperature_degC; /**< @brief Temperature measured in degrees Celsius. */
     };
 
