@@ -7979,7 +7979,8 @@ class ImuReadingNed :
     kAccelerationFieldNumber = 1,
     kAngularVelocityFieldNumber = 2,
     kMagneticFieldFieldNumber = 3,
-    kTemperatureDegCFieldNumber = 4,
+    kPressureAltFieldNumber = 4,
+    kTemperatureDegCFieldNumber = 5,
   };
   // .mavsdk.rpc.telemetry.AccelerationNed acceleration = 1;
   bool has_acceleration() const;
@@ -8026,7 +8027,16 @@ class ImuReadingNed :
   ::mavsdk::rpc::telemetry::MagneticFieldNed* _internal_mutable_magnetic_field();
   public:
 
-  // float temperature_deg_c = 4;
+  // float pressure_alt = 4;
+  void clear_pressure_alt();
+  float pressure_alt() const;
+  void set_pressure_alt(float value);
+  private:
+  float _internal_pressure_alt() const;
+  void _internal_set_pressure_alt(float value);
+  public:
+
+  // float temperature_deg_c = 5;
   void clear_temperature_deg_c();
   float temperature_deg_c() const;
   void set_temperature_deg_c(float value);
@@ -8043,6 +8053,7 @@ class ImuReadingNed :
   ::mavsdk::rpc::telemetry::AccelerationNed* acceleration_;
   ::mavsdk::rpc::telemetry::AngularVelocityNed* angular_velocity_;
   ::mavsdk::rpc::telemetry::MagneticFieldNed* magnetic_field_;
+  float pressure_alt_;
   float temperature_deg_c_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_telemetry_2ftelemetry_2eproto;
@@ -8155,9 +8166,9 @@ class DistanceSensor :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kCurrentDistanceMFieldNumber = 3,
+    kCurrentDistanceMFieldNumber = 1,
   };
-  // float current_distance_m = 3;
+  // float current_distance_m = 1;
   void clear_current_distance_m();
   float current_distance_m() const;
   void set_current_distance_m(float value);
@@ -12518,7 +12529,27 @@ inline void ImuReadingNed::set_allocated_magnetic_field(::mavsdk::rpc::telemetry
   // @@protoc_insertion_point(field_set_allocated:mavsdk.rpc.telemetry.ImuReadingNed.magnetic_field)
 }
 
-// float temperature_deg_c = 4;
+// float pressure_alt = 4;
+inline void ImuReadingNed::clear_pressure_alt() {
+  pressure_alt_ = 0;
+}
+inline float ImuReadingNed::_internal_pressure_alt() const {
+  return pressure_alt_;
+}
+inline float ImuReadingNed::pressure_alt() const {
+  // @@protoc_insertion_point(field_get:mavsdk.rpc.telemetry.ImuReadingNed.pressure_alt)
+  return _internal_pressure_alt();
+}
+inline void ImuReadingNed::_internal_set_pressure_alt(float value) {
+  
+  pressure_alt_ = value;
+}
+inline void ImuReadingNed::set_pressure_alt(float value) {
+  _internal_set_pressure_alt(value);
+  // @@protoc_insertion_point(field_set:mavsdk.rpc.telemetry.ImuReadingNed.pressure_alt)
+}
+
+// float temperature_deg_c = 5;
 inline void ImuReadingNed::clear_temperature_deg_c() {
   temperature_deg_c_ = 0;
 }
@@ -12542,7 +12573,7 @@ inline void ImuReadingNed::set_temperature_deg_c(float value) {
 
 // DistanceSensor
 
-// float current_distance_m = 3;
+// float current_distance_m = 1;
 inline void DistanceSensor::clear_current_distance_m() {
   current_distance_m_ = 0;
 }
