@@ -653,6 +653,7 @@ void TelemetryImpl::process_imu_reading_ned(const mavlink_message_t& message)
                                                   {highres_imu.xmag,
                                                   highres_imu.ymag,
                                                   highres_imu.zmag},
+                                                  highres_imu.abs_pressure,
                                                   highres_imu.pressure_alt,
                                                   highres_imu.temperature}));
 

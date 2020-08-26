@@ -290,6 +290,7 @@ public:
         std::mutex imu_reading_mutex{};
         _telemetry.imu_reading_ned_async([&writer, &imu_reading_mutex](mavsdk::Telemetry::IMUReadingNED imu_reading_ned) {
             auto rpc_imu_reading_ned = new mavsdk::rpc::telemetry::ImuReadingNed();
+          rpc_imu_reading_ned->set_abs_pressure_mbar(imu_reading_ned.abs_pressure_mbar);
           rpc_imu_reading_ned->set_pressure_alt(imu_reading_ned.pressure_alt);
           rpc_imu_reading_ned->set_temperature_deg_c(imu_reading_ned.temperature_degC);
 

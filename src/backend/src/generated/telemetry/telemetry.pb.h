@@ -7979,8 +7979,9 @@ class ImuReadingNed :
     kAccelerationFieldNumber = 1,
     kAngularVelocityFieldNumber = 2,
     kMagneticFieldFieldNumber = 3,
-    kPressureAltFieldNumber = 4,
-    kTemperatureDegCFieldNumber = 5,
+    kAbsPressureMbarFieldNumber = 4,
+    kPressureAltFieldNumber = 5,
+    kTemperatureDegCFieldNumber = 6,
   };
   // .mavsdk.rpc.telemetry.AccelerationNed acceleration = 1;
   bool has_acceleration() const;
@@ -8027,7 +8028,16 @@ class ImuReadingNed :
   ::mavsdk::rpc::telemetry::MagneticFieldNed* _internal_mutable_magnetic_field();
   public:
 
-  // float pressure_alt = 4;
+  // float abs_pressure_mbar = 4;
+  void clear_abs_pressure_mbar();
+  float abs_pressure_mbar() const;
+  void set_abs_pressure_mbar(float value);
+  private:
+  float _internal_abs_pressure_mbar() const;
+  void _internal_set_abs_pressure_mbar(float value);
+  public:
+
+  // float pressure_alt = 5;
   void clear_pressure_alt();
   float pressure_alt() const;
   void set_pressure_alt(float value);
@@ -8036,7 +8046,7 @@ class ImuReadingNed :
   void _internal_set_pressure_alt(float value);
   public:
 
-  // float temperature_deg_c = 5;
+  // float temperature_deg_c = 6;
   void clear_temperature_deg_c();
   float temperature_deg_c() const;
   void set_temperature_deg_c(float value);
@@ -8053,6 +8063,7 @@ class ImuReadingNed :
   ::mavsdk::rpc::telemetry::AccelerationNed* acceleration_;
   ::mavsdk::rpc::telemetry::AngularVelocityNed* angular_velocity_;
   ::mavsdk::rpc::telemetry::MagneticFieldNed* magnetic_field_;
+  float abs_pressure_mbar_;
   float pressure_alt_;
   float temperature_deg_c_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
@@ -12529,7 +12540,27 @@ inline void ImuReadingNed::set_allocated_magnetic_field(::mavsdk::rpc::telemetry
   // @@protoc_insertion_point(field_set_allocated:mavsdk.rpc.telemetry.ImuReadingNed.magnetic_field)
 }
 
-// float pressure_alt = 4;
+// float abs_pressure_mbar = 4;
+inline void ImuReadingNed::clear_abs_pressure_mbar() {
+  abs_pressure_mbar_ = 0;
+}
+inline float ImuReadingNed::_internal_abs_pressure_mbar() const {
+  return abs_pressure_mbar_;
+}
+inline float ImuReadingNed::abs_pressure_mbar() const {
+  // @@protoc_insertion_point(field_get:mavsdk.rpc.telemetry.ImuReadingNed.abs_pressure_mbar)
+  return _internal_abs_pressure_mbar();
+}
+inline void ImuReadingNed::_internal_set_abs_pressure_mbar(float value) {
+  
+  abs_pressure_mbar_ = value;
+}
+inline void ImuReadingNed::set_abs_pressure_mbar(float value) {
+  _internal_set_abs_pressure_mbar(value);
+  // @@protoc_insertion_point(field_set:mavsdk.rpc.telemetry.ImuReadingNed.abs_pressure_mbar)
+}
+
+// float pressure_alt = 5;
 inline void ImuReadingNed::clear_pressure_alt() {
   pressure_alt_ = 0;
 }
@@ -12549,7 +12580,7 @@ inline void ImuReadingNed::set_pressure_alt(float value) {
   // @@protoc_insertion_point(field_set:mavsdk.rpc.telemetry.ImuReadingNed.pressure_alt)
 }
 
-// float temperature_deg_c = 5;
+// float temperature_deg_c = 6;
 inline void ImuReadingNed::clear_temperature_deg_c() {
   temperature_deg_c_ = 0;
 }

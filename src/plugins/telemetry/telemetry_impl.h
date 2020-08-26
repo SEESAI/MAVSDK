@@ -247,7 +247,7 @@ private:
 
     mutable std::mutex _imu_reading_ned_mutex{};
     Telemetry::IMUReadingNED _imu_reading_ned{
-        {NAN, NAN, NAN}, {NAN, NAN, NAN}, {NAN, NAN, NAN}, NAN, NAN};
+        {NAN, NAN, NAN}, {NAN, NAN, NAN}, {NAN, NAN, NAN}, NAN, NAN, NAN};
 
     mutable std::mutex _distance_sensor_mutex{};
     Telemetry::DistanceSensor _distance_sensor{NAN};
