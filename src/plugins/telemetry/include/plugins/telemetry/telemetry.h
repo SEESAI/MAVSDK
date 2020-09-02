@@ -198,7 +198,7 @@ public:
         AccelerationNED acceleration; /**< @see AccelerationNED */
         AngularVelocityNED angular_velocity; /**< @see AngularVelocityNED */
         MagneticFieldNED magnetic_field; /**< @see MagneticFieldNED */
-        float abs_pressure_mbar; /**@brief Absolute pressure measured in mbar. */
+        float abs_pressure; /**@brief Absolute pressure measured in mbar. */
         float pressure_alt; /**@brief Altitude calculated from pressure. */
         float temperature_degC; /**< @brief Temperature measured in degrees Celsius. */
     };

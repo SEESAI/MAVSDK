@@ -7979,7 +7979,7 @@ class ImuReadingNed :
     kAccelerationFieldNumber = 1,
     kAngularVelocityFieldNumber = 2,
     kMagneticFieldFieldNumber = 3,
-    kAbsPressureMbarFieldNumber = 4,
+    kAbsPressureFieldNumber = 4,
     kPressureAltFieldNumber = 5,
     kTemperatureDegCFieldNumber = 6,
   };
@@ -8028,13 +8028,13 @@ class ImuReadingNed :
   ::mavsdk::rpc::telemetry::MagneticFieldNed* _internal_mutable_magnetic_field();
   public:
 
-  // float abs_pressure_mbar = 4;
-  void clear_abs_pressure_mbar();
-  float abs_pressure_mbar() const;
-  void set_abs_pressure_mbar(float value);
+  // float abs_pressure = 4;
+  void clear_abs_pressure();
+  float abs_pressure() const;
+  void set_abs_pressure(float value);
   private:
-  float _internal_abs_pressure_mbar() const;
-  void _internal_set_abs_pressure_mbar(float value);
+  float _internal_abs_pressure() const;
+  void _internal_set_abs_pressure(float value);
   public:
 
   // float pressure_alt = 5;
@@ -8063,7 +8063,7 @@ class ImuReadingNed :
   ::mavsdk::rpc::telemetry::AccelerationNed* acceleration_;
   ::mavsdk::rpc::telemetry::AngularVelocityNed* angular_velocity_;
   ::mavsdk::rpc::telemetry::MagneticFieldNed* magnetic_field_;
-  float abs_pressure_mbar_;
+  float abs_pressure_;
   float pressure_alt_;
   float temperature_deg_c_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
@@ -12540,24 +12540,24 @@ inline void ImuReadingNed::set_allocated_magnetic_field(::mavsdk::rpc::telemetry
   // @@protoc_insertion_point(field_set_allocated:mavsdk.rpc.telemetry.ImuReadingNed.magnetic_field)
 }
 
-// float abs_pressure_mbar = 4;
-inline void ImuReadingNed::clear_abs_pressure_mbar() {
-  abs_pressure_mbar_ = 0;
+// float abs_pressure = 4;
+inline void ImuReadingNed::clear_abs_pressure() {
+  abs_pressure_ = 0;
 }
-inline float ImuReadingNed::_internal_abs_pressure_mbar() const {
-  return abs_pressure_mbar_;
+inline float ImuReadingNed::_internal_abs_pressure() const {
+  return abs_pressure_;
 }
-inline float ImuReadingNed::abs_pressure_mbar() const {
-  // @@protoc_insertion_point(field_get:mavsdk.rpc.telemetry.ImuReadingNed.abs_pressure_mbar)
-  return _internal_abs_pressure_mbar();
+inline float ImuReadingNed::abs_pressure() const {
+  // @@protoc_insertion_point(field_get:mavsdk.rpc.telemetry.ImuReadingNed.abs_pressure)
+  return _internal_abs_pressure();
 }
-inline void ImuReadingNed::_internal_set_abs_pressure_mbar(float value) {
+inline void ImuReadingNed::_internal_set_abs_pressure(float value) {
   
-  abs_pressure_mbar_ = value;
+  abs_pressure_ = value;
 }
-inline void ImuReadingNed::set_abs_pressure_mbar(float value) {
-  _internal_set_abs_pressure_mbar(value);
-  // @@protoc_insertion_point(field_set:mavsdk.rpc.telemetry.ImuReadingNed.abs_pressure_mbar)
+inline void ImuReadingNed::set_abs_pressure(float value) {
+  _internal_set_abs_pressure(value);
+  // @@protoc_insertion_point(field_set:mavsdk.rpc.telemetry.ImuReadingNed.abs_pressure)
 }
 
 // float pressure_alt = 5;
