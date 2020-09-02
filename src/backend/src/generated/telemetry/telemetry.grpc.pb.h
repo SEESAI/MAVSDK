@@ -282,6 +282,16 @@ class TelemetryService final {
     std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::mavsdk::rpc::telemetry::ActuatorOutputStatusResponse>> PrepareAsyncSubscribeActuatorOutputStatus(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeActuatorOutputStatusRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::mavsdk::rpc::telemetry::ActuatorOutputStatusResponse>>(PrepareAsyncSubscribeActuatorOutputStatusRaw(context, request, cq));
     }
+    // Subscribe to 'servo output raw' updates.
+    std::unique_ptr< ::grpc::ClientReaderInterface< ::mavsdk::rpc::telemetry::ServoOutputRawResponse>> SubscribeServoOutputRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeServoOutputRawRequest& request) {
+      return std::unique_ptr< ::grpc::ClientReaderInterface< ::mavsdk::rpc::telemetry::ServoOutputRawResponse>>(SubscribeServoOutputRawRaw(context, request));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::mavsdk::rpc::telemetry::ServoOutputRawResponse>> AsyncSubscribeServoOutputRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeServoOutputRawRequest& request, ::grpc::CompletionQueue* cq, void* tag) {
+      return std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::mavsdk::rpc::telemetry::ServoOutputRawResponse>>(AsyncSubscribeServoOutputRawRaw(context, request, cq, tag));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::mavsdk::rpc::telemetry::ServoOutputRawResponse>> PrepareAsyncSubscribeServoOutputRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeServoOutputRawRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::mavsdk::rpc::telemetry::ServoOutputRawResponse>>(PrepareAsyncSubscribeServoOutputRawRaw(context, request, cq));
+    }
     // Subscribe to 'odometry' updates.
     std::unique_ptr< ::grpc::ClientReaderInterface< ::mavsdk::rpc::telemetry::OdometryResponse>> SubscribeOdometry(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeOdometryRequest& request) {
       return std::unique_ptr< ::grpc::ClientReaderInterface< ::mavsdk::rpc::telemetry::OdometryResponse>>(SubscribeOdometryRaw(context, request));
@@ -341,6 +351,8 @@ class TelemetryService final {
       virtual void SubscribeActuatorControlTarget(::grpc::ClientContext* context, ::mavsdk::rpc::telemetry::SubscribeActuatorControlTargetRequest* request, ::grpc::experimental::ClientReadReactor< ::mavsdk::rpc::telemetry::ActuatorControlTargetResponse>* reactor) = 0;
       // Subscribe to 'actuator output status' updates.
       virtual void SubscribeActuatorOutputStatus(::grpc::ClientContext* context, ::mavsdk::rpc::telemetry::SubscribeActuatorOutputStatusRequest* request, ::grpc::experimental::ClientReadReactor< ::mavsdk::rpc::telemetry::ActuatorOutputStatusResponse>* reactor) = 0;
+      // Subscribe to 'servo output raw' updates.
+      virtual void SubscribeServoOutputRaw(::grpc::ClientContext* context, ::mavsdk::rpc::telemetry::SubscribeServoOutputRawRequest* request, ::grpc::experimental::ClientReadReactor< ::mavsdk::rpc::telemetry::ServoOutputRawResponse>* reactor) = 0;
       // Subscribe to 'odometry' updates.
       virtual void SubscribeOdometry(::grpc::ClientContext* context, ::mavsdk::rpc::telemetry::SubscribeOdometryRequest* request, ::grpc::experimental::ClientReadReactor< ::mavsdk::rpc::telemetry::OdometryResponse>* reactor) = 0;
     };
@@ -415,6 +427,9 @@ class TelemetryService final {
     virtual ::grpc::ClientReaderInterface< ::mavsdk::rpc::telemetry::ActuatorOutputStatusResponse>* SubscribeActuatorOutputStatusRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeActuatorOutputStatusRequest& request) = 0;
     virtual ::grpc::ClientAsyncReaderInterface< ::mavsdk::rpc::telemetry::ActuatorOutputStatusResponse>* AsyncSubscribeActuatorOutputStatusRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeActuatorOutputStatusRequest& request, ::grpc::CompletionQueue* cq, void* tag) = 0;
     virtual ::grpc::ClientAsyncReaderInterface< ::mavsdk::rpc::telemetry::ActuatorOutputStatusResponse>* PrepareAsyncSubscribeActuatorOutputStatusRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeActuatorOutputStatusRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientReaderInterface< ::mavsdk::rpc::telemetry::ServoOutputRawResponse>* SubscribeServoOutputRawRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeServoOutputRawRequest& request) = 0;
+    virtual ::grpc::ClientAsyncReaderInterface< ::mavsdk::rpc::telemetry::ServoOutputRawResponse>* AsyncSubscribeServoOutputRawRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeServoOutputRawRequest& request, ::grpc::CompletionQueue* cq, void* tag) = 0;
+    virtual ::grpc::ClientAsyncReaderInterface< ::mavsdk::rpc::telemetry::ServoOutputRawResponse>* PrepareAsyncSubscribeServoOutputRawRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeServoOutputRawRequest& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientReaderInterface< ::mavsdk::rpc::telemetry::OdometryResponse>* SubscribeOdometryRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeOdometryRequest& request) = 0;
     virtual ::grpc::ClientAsyncReaderInterface< ::mavsdk::rpc::telemetry::OdometryResponse>* AsyncSubscribeOdometryRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeOdometryRequest& request, ::grpc::CompletionQueue* cq, void* tag) = 0;
     virtual ::grpc::ClientAsyncReaderInterface< ::mavsdk::rpc::telemetry::OdometryResponse>* PrepareAsyncSubscribeOdometryRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeOdometryRequest& request, ::grpc::CompletionQueue* cq) = 0;
@@ -629,6 +644,15 @@ class TelemetryService final {
     std::unique_ptr< ::grpc::ClientAsyncReader< ::mavsdk::rpc::telemetry::ActuatorOutputStatusResponse>> PrepareAsyncSubscribeActuatorOutputStatus(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeActuatorOutputStatusRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncReader< ::mavsdk::rpc::telemetry::ActuatorOutputStatusResponse>>(PrepareAsyncSubscribeActuatorOutputStatusRaw(context, request, cq));
     }
+    std::unique_ptr< ::grpc::ClientReader< ::mavsdk::rpc::telemetry::ServoOutputRawResponse>> SubscribeServoOutputRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeServoOutputRawRequest& request) {
+      return std::unique_ptr< ::grpc::ClientReader< ::mavsdk::rpc::telemetry::ServoOutputRawResponse>>(SubscribeServoOutputRawRaw(context, request));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncReader< ::mavsdk::rpc::telemetry::ServoOutputRawResponse>> AsyncSubscribeServoOutputRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeServoOutputRawRequest& request, ::grpc::CompletionQueue* cq, void* tag) {
+      return std::unique_ptr< ::grpc::ClientAsyncReader< ::mavsdk::rpc::telemetry::ServoOutputRawResponse>>(AsyncSubscribeServoOutputRawRaw(context, request, cq, tag));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncReader< ::mavsdk::rpc::telemetry::ServoOutputRawResponse>> PrepareAsyncSubscribeServoOutputRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeServoOutputRawRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncReader< ::mavsdk::rpc::telemetry::ServoOutputRawResponse>>(PrepareAsyncSubscribeServoOutputRawRaw(context, request, cq));
+    }
     std::unique_ptr< ::grpc::ClientReader< ::mavsdk::rpc::telemetry::OdometryResponse>> SubscribeOdometry(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeOdometryRequest& request) {
       return std::unique_ptr< ::grpc::ClientReader< ::mavsdk::rpc::telemetry::OdometryResponse>>(SubscribeOdometryRaw(context, request));
     }
@@ -664,6 +688,7 @@ class TelemetryService final {
       void SubscribeStatusText(::grpc::ClientContext* context, ::mavsdk::rpc::telemetry::SubscribeStatusTextRequest* request, ::grpc::experimental::ClientReadReactor< ::mavsdk::rpc::telemetry::StatusTextResponse>* reactor) override;
       void SubscribeActuatorControlTarget(::grpc::ClientContext* context, ::mavsdk::rpc::telemetry::SubscribeActuatorControlTargetRequest* request, ::grpc::experimental::ClientReadReactor< ::mavsdk::rpc::telemetry::ActuatorControlTargetResponse>* reactor) override;
       void SubscribeActuatorOutputStatus(::grpc::ClientContext* context, ::mavsdk::rpc::telemetry::SubscribeActuatorOutputStatusRequest* request, ::grpc::experimental::ClientReadReactor< ::mavsdk::rpc::telemetry::ActuatorOutputStatusResponse>* reactor) override;
+      void SubscribeServoOutputRaw(::grpc::ClientContext* context, ::mavsdk::rpc::telemetry::SubscribeServoOutputRawRequest* request, ::grpc::experimental::ClientReadReactor< ::mavsdk::rpc::telemetry::ServoOutputRawResponse>* reactor) override;
       void SubscribeOdometry(::grpc::ClientContext* context, ::mavsdk::rpc::telemetry::SubscribeOdometryRequest* request, ::grpc::experimental::ClientReadReactor< ::mavsdk::rpc::telemetry::OdometryResponse>* reactor) override;
      private:
       friend class Stub;
@@ -745,6 +770,9 @@ class TelemetryService final {
     ::grpc::ClientReader< ::mavsdk::rpc::telemetry::ActuatorOutputStatusResponse>* SubscribeActuatorOutputStatusRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeActuatorOutputStatusRequest& request) override;
     ::grpc::ClientAsyncReader< ::mavsdk::rpc::telemetry::ActuatorOutputStatusResponse>* AsyncSubscribeActuatorOutputStatusRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeActuatorOutputStatusRequest& request, ::grpc::CompletionQueue* cq, void* tag) override;
     ::grpc::ClientAsyncReader< ::mavsdk::rpc::telemetry::ActuatorOutputStatusResponse>* PrepareAsyncSubscribeActuatorOutputStatusRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeActuatorOutputStatusRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientReader< ::mavsdk::rpc::telemetry::ServoOutputRawResponse>* SubscribeServoOutputRawRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeServoOutputRawRequest& request) override;
+    ::grpc::ClientAsyncReader< ::mavsdk::rpc::telemetry::ServoOutputRawResponse>* AsyncSubscribeServoOutputRawRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeServoOutputRawRequest& request, ::grpc::CompletionQueue* cq, void* tag) override;
+    ::grpc::ClientAsyncReader< ::mavsdk::rpc::telemetry::ServoOutputRawResponse>* PrepareAsyncSubscribeServoOutputRawRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeServoOutputRawRequest& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientReader< ::mavsdk::rpc::telemetry::OdometryResponse>* SubscribeOdometryRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeOdometryRequest& request) override;
     ::grpc::ClientAsyncReader< ::mavsdk::rpc::telemetry::OdometryResponse>* AsyncSubscribeOdometryRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeOdometryRequest& request, ::grpc::CompletionQueue* cq, void* tag) override;
     ::grpc::ClientAsyncReader< ::mavsdk::rpc::telemetry::OdometryResponse>* PrepareAsyncSubscribeOdometryRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeOdometryRequest& request, ::grpc::CompletionQueue* cq) override;
@@ -771,6 +799,7 @@ class TelemetryService final {
     const ::grpc::internal::RpcMethod rpcmethod_SubscribeStatusText_;
     const ::grpc::internal::RpcMethod rpcmethod_SubscribeActuatorControlTarget_;
     const ::grpc::internal::RpcMethod rpcmethod_SubscribeActuatorOutputStatus_;
+    const ::grpc::internal::RpcMethod rpcmethod_SubscribeServoOutputRaw_;
     const ::grpc::internal::RpcMethod rpcmethod_SubscribeOdometry_;
   };
   static std::unique_ptr<Stub> NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options = ::grpc::StubOptions());
@@ -825,6 +854,8 @@ class TelemetryService final {
     virtual ::grpc::Status SubscribeActuatorControlTarget(::grpc::ServerContext* context, const ::mavsdk::rpc::telemetry::SubscribeActuatorControlTargetRequest* request, ::grpc::ServerWriter< ::mavsdk::rpc::telemetry::ActuatorControlTargetResponse>* writer);
     // Subscribe to 'actuator output status' updates.
     virtual ::grpc::Status SubscribeActuatorOutputStatus(::grpc::ServerContext* context, const ::mavsdk::rpc::telemetry::SubscribeActuatorOutputStatusRequest* request, ::grpc::ServerWriter< ::mavsdk::rpc::telemetry::ActuatorOutputStatusResponse>* writer);
+    // Subscribe to 'servo output raw' updates.
+    virtual ::grpc::Status SubscribeServoOutputRaw(::grpc::ServerContext* context, const ::mavsdk::rpc::telemetry::SubscribeServoOutputRawRequest* request, ::grpc::ServerWriter< ::mavsdk::rpc::telemetry::ServoOutputRawResponse>* writer);
     // Subscribe to 'odometry' updates.
     virtual ::grpc::Status SubscribeOdometry(::grpc::ServerContext* context, const ::mavsdk::rpc::telemetry::SubscribeOdometryRequest* request, ::grpc::ServerWriter< ::mavsdk::rpc::telemetry::OdometryResponse>* writer);
   };
@@ -1289,12 +1320,32 @@ class TelemetryService final {
     }
   };
   template <class BaseClass>
+  class WithAsyncMethod_SubscribeServoOutputRaw : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_SubscribeServoOutputRaw() {
+      ::grpc::Service::MarkMethodAsync(23);
+    }
+    ~WithAsyncMethod_SubscribeServoOutputRaw() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SubscribeServoOutputRaw(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::telemetry::SubscribeServoOutputRawRequest* /*request*/, ::grpc::ServerWriter< ::mavsdk::rpc::telemetry::ServoOutputRawResponse>* /*writer*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestSubscribeServoOutputRaw(::grpc::ServerContext* context, ::mavsdk::rpc::telemetry::SubscribeServoOutputRawRequest* request, ::grpc::ServerAsyncWriter< ::mavsdk::rpc::telemetry::ServoOutputRawResponse>* writer, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncServerStreaming(23, context, request, writer, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
   class WithAsyncMethod_SubscribeOdometry : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithAsyncMethod_SubscribeOdometry() {
-      ::grpc::Service::MarkMethodAsync(23);
+      ::grpc::Service::MarkMethodAsync(24);
     }
     ~WithAsyncMethod_SubscribeOdometry() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1305,10 +1356,10 @@ class TelemetryService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestSubscribeOdometry(::grpc::ServerContext* context, ::mavsdk::rpc::telemetry::SubscribeOdometryRequest* request, ::grpc::ServerAsyncWriter< ::mavsdk::rpc::telemetry::OdometryResponse>* writer, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncServerStreaming(23, context, request, writer, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncServerStreaming(24, context, request, writer, new_call_cq, notification_cq, tag);
     }
   };
-  typedef WithAsyncMethod_SubscribePosition<WithAsyncMethod_SubscribeHome<WithAsyncMethod_SubscribeInAir<WithAsyncMethod_SubscribeLandedState<WithAsyncMethod_SubscribeArmed<WithAsyncMethod_SubscribeAttitudeQuaternion<WithAsyncMethod_SubscribeAttitudeEuler<WithAsyncMethod_SubscribeAttitudeAngularVelocityBody<WithAsyncMethod_SubscribeCameraAttitudeQuaternion<WithAsyncMethod_SubscribeCameraAttitudeEuler<WithAsyncMethod_SubscribeGroundSpeedNed<WithAsyncMethod_SubscribeGpsInfo<WithAsyncMethod_SubscribeDistanceSensor<WithAsyncMethod_SubscribeImuReadingNed<WithAsyncMethod_SubscribeBattery<WithAsyncMethod_SubscribeBatteryStatus<WithAsyncMethod_SubscribeFlightMode<WithAsyncMethod_SubscribeModeInfo<WithAsyncMethod_SubscribeHealth<WithAsyncMethod_SubscribeRcStatus<WithAsyncMethod_SubscribeStatusText<WithAsyncMethod_SubscribeActuatorControlTarget<WithAsyncMethod_SubscribeActuatorOutputStatus<WithAsyncMethod_SubscribeOdometry<Service > > > > > > > > > > > > > > > > > > > > > > > > AsyncService;
+  typedef WithAsyncMethod_SubscribePosition<WithAsyncMethod_SubscribeHome<WithAsyncMethod_SubscribeInAir<WithAsyncMethod_SubscribeLandedState<WithAsyncMethod_SubscribeArmed<WithAsyncMethod_SubscribeAttitudeQuaternion<WithAsyncMethod_SubscribeAttitudeEuler<WithAsyncMethod_SubscribeAttitudeAngularVelocityBody<WithAsyncMethod_SubscribeCameraAttitudeQuaternion<WithAsyncMethod_SubscribeCameraAttitudeEuler<WithAsyncMethod_SubscribeGroundSpeedNed<WithAsyncMethod_SubscribeGpsInfo<WithAsyncMethod_SubscribeDistanceSensor<WithAsyncMethod_SubscribeImuReadingNed<WithAsyncMethod_SubscribeBattery<WithAsyncMethod_SubscribeBatteryStatus<WithAsyncMethod_SubscribeFlightMode<WithAsyncMethod_SubscribeModeInfo<WithAsyncMethod_SubscribeHealth<WithAsyncMethod_SubscribeRcStatus<WithAsyncMethod_SubscribeStatusText<WithAsyncMethod_SubscribeActuatorControlTarget<WithAsyncMethod_SubscribeActuatorOutputStatus<WithAsyncMethod_SubscribeServoOutputRaw<WithAsyncMethod_SubscribeOdometry<Service > > > > > > > > > > > > > > > > > > > > > > > > > AsyncService;
   template <class BaseClass>
   class ExperimentalWithCallbackMethod_SubscribePosition : public BaseClass {
    private:
@@ -1770,12 +1821,32 @@ class TelemetryService final {
     virtual ::grpc::experimental::ServerWriteReactor< ::mavsdk::rpc::telemetry::ActuatorOutputStatusResponse>* SubscribeActuatorOutputStatus(::grpc::experimental::CallbackServerContext* /*context*/, const ::mavsdk::rpc::telemetry::SubscribeActuatorOutputStatusRequest* /*request*/) { return nullptr; }
   };
   template <class BaseClass>
+  class ExperimentalWithCallbackMethod_SubscribeServoOutputRaw : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    ExperimentalWithCallbackMethod_SubscribeServoOutputRaw() {
+      ::grpc::Service::experimental().MarkMethodCallback(23,
+        new ::grpc_impl::internal::CallbackServerStreamingHandler< ::mavsdk::rpc::telemetry::SubscribeServoOutputRawRequest, ::mavsdk::rpc::telemetry::ServoOutputRawResponse>(
+          [this](::grpc::experimental::CallbackServerContext* context, const ::mavsdk::rpc::telemetry::SubscribeServoOutputRawRequest* request) { return this->SubscribeServoOutputRaw(context, request); }));
+    }
+    ~ExperimentalWithCallbackMethod_SubscribeServoOutputRaw() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SubscribeServoOutputRaw(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::telemetry::SubscribeServoOutputRawRequest* /*request*/, ::grpc::ServerWriter< ::mavsdk::rpc::telemetry::ServoOutputRawResponse>* /*writer*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::experimental::ServerWriteReactor< ::mavsdk::rpc::telemetry::ServoOutputRawResponse>* SubscribeServoOutputRaw(::grpc::experimental::CallbackServerContext* /*context*/, const ::mavsdk::rpc::telemetry::SubscribeServoOutputRawRequest* /*request*/) { return nullptr; }
+  };
+  template <class BaseClass>
   class ExperimentalWithCallbackMethod_SubscribeOdometry : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     ExperimentalWithCallbackMethod_SubscribeOdometry() {
-      ::grpc::Service::experimental().MarkMethodCallback(23,
+      ::grpc::Service::experimental().MarkMethodCallback(24,
         new ::grpc_impl::internal::CallbackServerStreamingHandler< ::mavsdk::rpc::telemetry::SubscribeOdometryRequest, ::mavsdk::rpc::telemetry::OdometryResponse>(
           [this](::grpc::experimental::CallbackServerContext* context, const ::mavsdk::rpc::telemetry::SubscribeOdometryRequest* request) { return this->SubscribeOdometry(context, request); }));
     }
@@ -1789,7 +1860,7 @@ class TelemetryService final {
     }
     virtual ::grpc::experimental::ServerWriteReactor< ::mavsdk::rpc::telemetry::OdometryResponse>* SubscribeOdometry(::grpc::experimental::CallbackServerContext* /*context*/, const ::mavsdk::rpc::telemetry::SubscribeOdometryRequest* /*request*/) { return nullptr; }
   };
-  typedef ExperimentalWithCallbackMethod_SubscribePosition<ExperimentalWithCallbackMethod_SubscribeHome<ExperimentalWithCallbackMethod_SubscribeInAir<ExperimentalWithCallbackMethod_SubscribeLandedState<ExperimentalWithCallbackMethod_SubscribeArmed<ExperimentalWithCallbackMethod_SubscribeAttitudeQuaternion<ExperimentalWithCallbackMethod_SubscribeAttitudeEuler<ExperimentalWithCallbackMethod_SubscribeAttitudeAngularVelocityBody<ExperimentalWithCallbackMethod_SubscribeCameraAttitudeQuaternion<ExperimentalWithCallbackMethod_SubscribeCameraAttitudeEuler<ExperimentalWithCallbackMethod_SubscribeGroundSpeedNed<ExperimentalWithCallbackMethod_SubscribeGpsInfo<ExperimentalWithCallbackMethod_SubscribeDistanceSensor<ExperimentalWithCallbackMethod_SubscribeImuReadingNed<ExperimentalWithCallbackMethod_SubscribeBattery<ExperimentalWithCallbackMethod_SubscribeBatteryStatus<ExperimentalWithCallbackMethod_SubscribeFlightMode<ExperimentalWithCallbackMethod_SubscribeModeInfo<ExperimentalWithCallbackMethod_SubscribeHealth<ExperimentalWithCallbackMethod_SubscribeRcStatus<ExperimentalWithCallbackMethod_SubscribeStatusText<ExperimentalWithCallbackMethod_SubscribeActuatorControlTarget<ExperimentalWithCallbackMethod_SubscribeActuatorOutputStatus<ExperimentalWithCallbackMethod_SubscribeOdometry<Service > > > > > > > > > > > > > > > > > > > > > > > > ExperimentalCallbackService;
+  typedef ExperimentalWithCallbackMethod_SubscribePosition<ExperimentalWithCallbackMethod_SubscribeHome<ExperimentalWithCallbackMethod_SubscribeInAir<ExperimentalWithCallbackMethod_SubscribeLandedState<ExperimentalWithCallbackMethod_SubscribeArmed<ExperimentalWithCallbackMethod_SubscribeAttitudeQuaternion<ExperimentalWithCallbackMethod_SubscribeAttitudeEuler<ExperimentalWithCallbackMethod_SubscribeAttitudeAngularVelocityBody<ExperimentalWithCallbackMethod_SubscribeCameraAttitudeQuaternion<ExperimentalWithCallbackMethod_SubscribeCameraAttitudeEuler<ExperimentalWithCallbackMethod_SubscribeGroundSpeedNed<ExperimentalWithCallbackMethod_SubscribeGpsInfo<ExperimentalWithCallbackMethod_SubscribeDistanceSensor<ExperimentalWithCallbackMethod_SubscribeImuReadingNed<ExperimentalWithCallbackMethod_SubscribeBattery<ExperimentalWithCallbackMethod_SubscribeBatteryStatus<ExperimentalWithCallbackMethod_SubscribeFlightMode<ExperimentalWithCallbackMethod_SubscribeModeInfo<ExperimentalWithCallbackMethod_SubscribeHealth<ExperimentalWithCallbackMethod_SubscribeRcStatus<ExperimentalWithCallbackMethod_SubscribeStatusText<ExperimentalWithCallbackMethod_SubscribeActuatorControlTarget<ExperimentalWithCallbackMethod_SubscribeActuatorOutputStatus<ExperimentalWithCallbackMethod_SubscribeServoOutputRaw<ExperimentalWithCallbackMethod_SubscribeOdometry<Service > > > > > > > > > > > > > > > > > > > > > > > > > ExperimentalCallbackService;
   template <class BaseClass>
   class WithGenericMethod_SubscribePosition : public BaseClass {
    private:
@@ -2182,12 +2253,29 @@ class TelemetryService final {
     }
   };
   template <class BaseClass>
+  class WithGenericMethod_SubscribeServoOutputRaw : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_SubscribeServoOutputRaw() {
+      ::grpc::Service::MarkMethodGeneric(23);
+    }
+    ~WithGenericMethod_SubscribeServoOutputRaw() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SubscribeServoOutputRaw(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::telemetry::SubscribeServoOutputRawRequest* /*request*/, ::grpc::ServerWriter< ::mavsdk::rpc::telemetry::ServoOutputRawResponse>* /*writer*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
   class WithGenericMethod_SubscribeOdometry : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithGenericMethod_SubscribeOdometry() {
-      ::grpc::Service::MarkMethodGeneric(23);
+      ::grpc::Service::MarkMethodGeneric(24);
     }
     ~WithGenericMethod_SubscribeOdometry() override {
       BaseClassMustBeDerivedFromService(this);
@@ -2659,12 +2747,32 @@ class TelemetryService final {
     }
   };
   template <class BaseClass>
+  class WithRawMethod_SubscribeServoOutputRaw : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_SubscribeServoOutputRaw() {
+      ::grpc::Service::MarkMethodRaw(23);
+    }
+    ~WithRawMethod_SubscribeServoOutputRaw() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SubscribeServoOutputRaw(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::telemetry::SubscribeServoOutputRawRequest* /*request*/, ::grpc::ServerWriter< ::mavsdk::rpc::telemetry::ServoOutputRawResponse>* /*writer*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestSubscribeServoOutputRaw(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncWriter< ::grpc::ByteBuffer>* writer, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncServerStreaming(23, context, request, writer, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
   class WithRawMethod_SubscribeOdometry : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawMethod_SubscribeOdometry() {
-      ::grpc::Service::MarkMethodRaw(23);
+      ::grpc::Service::MarkMethodRaw(24);
     }
     ~WithRawMethod_SubscribeOdometry() override {
       BaseClassMustBeDerivedFromService(this);
@@ -2675,7 +2783,7 @@ class TelemetryService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestSubscribeOdometry(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncWriter< ::grpc::ByteBuffer>* writer, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncServerStreaming(23, context, request, writer, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncServerStreaming(24, context, request, writer, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -3139,12 +3247,32 @@ class TelemetryService final {
     virtual ::grpc::experimental::ServerWriteReactor< ::grpc::ByteBuffer>* SubscribeActuatorOutputStatus(::grpc::experimental::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/) { return nullptr; }
   };
   template <class BaseClass>
+  class ExperimentalWithRawCallbackMethod_SubscribeServoOutputRaw : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    ExperimentalWithRawCallbackMethod_SubscribeServoOutputRaw() {
+      ::grpc::Service::experimental().MarkMethodRawCallback(23,
+        new ::grpc_impl::internal::CallbackServerStreamingHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+          [this](::grpc::experimental::CallbackServerContext* context, const::grpc::ByteBuffer* request) { return this->SubscribeServoOutputRaw(context, request); }));
+    }
+    ~ExperimentalWithRawCallbackMethod_SubscribeServoOutputRaw() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SubscribeServoOutputRaw(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::telemetry::SubscribeServoOutputRawRequest* /*request*/, ::grpc::ServerWriter< ::mavsdk::rpc::telemetry::ServoOutputRawResponse>* /*writer*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::experimental::ServerWriteReactor< ::grpc::ByteBuffer>* SubscribeServoOutputRaw(::grpc::experimental::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/) { return nullptr; }
+  };
+  template <class BaseClass>
   class ExperimentalWithRawCallbackMethod_SubscribeOdometry : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     ExperimentalWithRawCallbackMethod_SubscribeOdometry() {
-      ::grpc::Service::experimental().MarkMethodRawCallback(23,
+      ::grpc::Service::experimental().MarkMethodRawCallback(24,
         new ::grpc_impl::internal::CallbackServerStreamingHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
           [this](::grpc::experimental::CallbackServerContext* context, const::grpc::ByteBuffer* request) { return this->SubscribeOdometry(context, request); }));
     }
@@ -3620,12 +3748,32 @@ class TelemetryService final {
     virtual ::grpc::Status StreamedSubscribeActuatorOutputStatus(::grpc::ServerContext* context, ::grpc::ServerSplitStreamer< ::mavsdk::rpc::telemetry::SubscribeActuatorOutputStatusRequest,::mavsdk::rpc::telemetry::ActuatorOutputStatusResponse>* server_split_streamer) = 0;
   };
   template <class BaseClass>
+  class WithSplitStreamingMethod_SubscribeServoOutputRaw : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithSplitStreamingMethod_SubscribeServoOutputRaw() {
+      ::grpc::Service::MarkMethodStreamed(23,
+        new ::grpc::internal::SplitServerStreamingHandler< ::mavsdk::rpc::telemetry::SubscribeServoOutputRawRequest, ::mavsdk::rpc::telemetry::ServoOutputRawResponse>(std::bind(&WithSplitStreamingMethod_SubscribeServoOutputRaw<BaseClass>::StreamedSubscribeServoOutputRaw, this, std::placeholders::_1, std::placeholders::_2)));
+    }
+    ~WithSplitStreamingMethod_SubscribeServoOutputRaw() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status SubscribeServoOutputRaw(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::telemetry::SubscribeServoOutputRawRequest* /*request*/, ::grpc::ServerWriter< ::mavsdk::rpc::telemetry::ServoOutputRawResponse>* /*writer*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with split streamed
+    virtual ::grpc::Status StreamedSubscribeServoOutputRaw(::grpc::ServerContext* context, ::grpc::ServerSplitStreamer< ::mavsdk::rpc::telemetry::SubscribeServoOutputRawRequest,::mavsdk::rpc::telemetry::ServoOutputRawResponse>* server_split_streamer) = 0;
+  };
+  template <class BaseClass>
   class WithSplitStreamingMethod_SubscribeOdometry : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithSplitStreamingMethod_SubscribeOdometry() {
-      ::grpc::Service::MarkMethodStreamed(23,
+      ::grpc::Service::MarkMethodStreamed(24,
         new ::grpc::internal::SplitServerStreamingHandler< ::mavsdk::rpc::telemetry::SubscribeOdometryRequest, ::mavsdk::rpc::telemetry::OdometryResponse>(std::bind(&WithSplitStreamingMethod_SubscribeOdometry<BaseClass>::StreamedSubscribeOdometry, this, std::placeholders::_1, std::placeholders::_2)));
     }
     ~WithSplitStreamingMethod_SubscribeOdometry() override {
@@ -3639,8 +3787,8 @@ class TelemetryService final {
     // replace default version of method with split streamed
     virtual ::grpc::Status StreamedSubscribeOdometry(::grpc::ServerContext* context, ::grpc::ServerSplitStreamer< ::mavsdk::rpc::telemetry::SubscribeOdometryRequest,::mavsdk::rpc::telemetry::OdometryResponse>* server_split_streamer) = 0;
   };
-  typedef WithSplitStreamingMethod_SubscribePosition<WithSplitStreamingMethod_SubscribeHome<WithSplitStreamingMethod_SubscribeInAir<WithSplitStreamingMethod_SubscribeLandedState<WithSplitStreamingMethod_SubscribeArmed<WithSplitStreamingMethod_SubscribeAttitudeQuaternion<WithSplitStreamingMethod_SubscribeAttitudeEuler<WithSplitStreamingMethod_SubscribeAttitudeAngularVelocityBody<WithSplitStreamingMethod_SubscribeCameraAttitudeQuaternion<WithSplitStreamingMethod_SubscribeCameraAttitudeEuler<WithSplitStreamingMethod_SubscribeGroundSpeedNed<WithSplitStreamingMethod_SubscribeGpsInfo<WithSplitStreamingMethod_SubscribeDistanceSensor<WithSplitStreamingMethod_SubscribeImuReadingNed<WithSplitStreamingMethod_SubscribeBattery<WithSplitStreamingMethod_SubscribeBatteryStatus<WithSplitStreamingMethod_SubscribeFlightMode<WithSplitStreamingMethod_SubscribeModeInfo<WithSplitStreamingMethod_SubscribeHealth<WithSplitStreamingMethod_SubscribeRcStatus<WithSplitStreamingMethod_SubscribeStatusText<WithSplitStreamingMethod_SubscribeActuatorControlTarget<WithSplitStreamingMethod_SubscribeActuatorOutputStatus<WithSplitStreamingMethod_SubscribeOdometry<Service > > > > > > > > > > > > > > > > > > > > > > > > SplitStreamedService;
-  typedef WithSplitStreamingMethod_SubscribePosition<WithSplitStreamingMethod_SubscribeHome<WithSplitStreamingMethod_SubscribeInAir<WithSplitStreamingMethod_SubscribeLandedState<WithSplitStreamingMethod_SubscribeArmed<WithSplitStreamingMethod_SubscribeAttitudeQuaternion<WithSplitStreamingMethod_SubscribeAttitudeEuler<WithSplitStreamingMethod_SubscribeAttitudeAngularVelocityBody<WithSplitStreamingMethod_SubscribeCameraAttitudeQuaternion<WithSplitStreamingMethod_SubscribeCameraAttitudeEuler<WithSplitStreamingMethod_SubscribeGroundSpeedNed<WithSplitStreamingMethod_SubscribeGpsInfo<WithSplitStreamingMethod_SubscribeDistanceSensor<WithSplitStreamingMethod_SubscribeImuReadingNed<WithSplitStreamingMethod_SubscribeBattery<WithSplitStreamingMethod_SubscribeBatteryStatus<WithSplitStreamingMethod_SubscribeFlightMode<WithSplitStreamingMethod_SubscribeModeInfo<WithSplitStreamingMethod_SubscribeHealth<WithSplitStreamingMethod_SubscribeRcStatus<WithSplitStreamingMethod_SubscribeStatusText<WithSplitStreamingMethod_SubscribeActuatorControlTarget<WithSplitStreamingMethod_SubscribeActuatorOutputStatus<WithSplitStreamingMethod_SubscribeOdometry<Service > > > > > > > > > > > > > > > > > > > > > > > > StreamedService;
+  typedef WithSplitStreamingMethod_SubscribePosition<WithSplitStreamingMethod_SubscribeHome<WithSplitStreamingMethod_SubscribeInAir<WithSplitStreamingMethod_SubscribeLandedState<WithSplitStreamingMethod_SubscribeArmed<WithSplitStreamingMethod_SubscribeAttitudeQuaternion<WithSplitStreamingMethod_SubscribeAttitudeEuler<WithSplitStreamingMethod_SubscribeAttitudeAngularVelocityBody<WithSplitStreamingMethod_SubscribeCameraAttitudeQuaternion<WithSplitStreamingMethod_SubscribeCameraAttitudeEuler<WithSplitStreamingMethod_SubscribeGroundSpeedNed<WithSplitStreamingMethod_SubscribeGpsInfo<WithSplitStreamingMethod_SubscribeDistanceSensor<WithSplitStreamingMethod_SubscribeImuReadingNed<WithSplitStreamingMethod_SubscribeBattery<WithSplitStreamingMethod_SubscribeBatteryStatus<WithSplitStreamingMethod_SubscribeFlightMode<WithSplitStreamingMethod_SubscribeModeInfo<WithSplitStreamingMethod_SubscribeHealth<WithSplitStreamingMethod_SubscribeRcStatus<WithSplitStreamingMethod_SubscribeStatusText<WithSplitStreamingMethod_SubscribeActuatorControlTarget<WithSplitStreamingMethod_SubscribeActuatorOutputStatus<WithSplitStreamingMethod_SubscribeServoOutputRaw<WithSplitStreamingMethod_SubscribeOdometry<Service > > > > > > > > > > > > > > > > > > > > > > > > > SplitStreamedService;
+  typedef WithSplitStreamingMethod_SubscribePosition<WithSplitStreamingMethod_SubscribeHome<WithSplitStreamingMethod_SubscribeInAir<WithSplitStreamingMethod_SubscribeLandedState<WithSplitStreamingMethod_SubscribeArmed<WithSplitStreamingMethod_SubscribeAttitudeQuaternion<WithSplitStreamingMethod_SubscribeAttitudeEuler<WithSplitStreamingMethod_SubscribeAttitudeAngularVelocityBody<WithSplitStreamingMethod_SubscribeCameraAttitudeQuaternion<WithSplitStreamingMethod_SubscribeCameraAttitudeEuler<WithSplitStreamingMethod_SubscribeGroundSpeedNed<WithSplitStreamingMethod_SubscribeGpsInfo<WithSplitStreamingMethod_SubscribeDistanceSensor<WithSplitStreamingMethod_SubscribeImuReadingNed<WithSplitStreamingMethod_SubscribeBattery<WithSplitStreamingMethod_SubscribeBatteryStatus<WithSplitStreamingMethod_SubscribeFlightMode<WithSplitStreamingMethod_SubscribeModeInfo<WithSplitStreamingMethod_SubscribeHealth<WithSplitStreamingMethod_SubscribeRcStatus<WithSplitStreamingMethod_SubscribeStatusText<WithSplitStreamingMethod_SubscribeActuatorControlTarget<WithSplitStreamingMethod_SubscribeActuatorOutputStatus<WithSplitStreamingMethod_SubscribeServoOutputRaw<WithSplitStreamingMethod_SubscribeOdometry<Service > > > > > > > > > > > > > > > > > > > > > > > > > StreamedService;
 };
 
 }  // namespace telemetry

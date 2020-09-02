@@ -262,8 +262,8 @@ public:
     };
 
     /**
-    * @brief Mode Info structure.
-    */
+     * @brief Mode Info structure.
+     */
     struct ModeInfo {
         uint8_t base_mode; /**< @brief Base mode flags. */
         uint32_t custom_mode; /**< @brief Custom mode (made up of main & submode). */
@@ -360,6 +360,13 @@ public:
     struct ActuatorOutputStatus {
         uint32_t active; /**< @brief Active outputs */
         float actuator[32]; /**< @brief Servo / motor output array values. */
+    };
+
+    /**
+     * @brief The raw values of the servo output ppms for port 0 (Pixhawk MAIN)
+     */
+    struct ServoOutputRaw {
+        uint16_t servo[16]; /**< @brief Servo output values for port 0 */
     };
 
     /**
@@ -1155,7 +1162,7 @@ public:
      *
      * @param callback function to call with updates.
      */
-     void distance_sensor_async(distance_sensor_callback_t callback);
+    void distance_sensor_async(distance_sensor_callback_t callback);
 
     /**
      * @brief Callback type for GPS information updates.
@@ -1315,6 +1322,13 @@ public:
         actuator_output_status_callback_t;
 
     /**
+     * @brief Callback type for servo output raw updates (asynchronous).
+     *
+     * @param callback Function to call with updates.
+     */
+    typedef std::function<void(ServoOutputRaw servo_output_raw)> servo_output_raw_callback_t;
+
+    /**
      * @brief Callback type for odometry updates (asynchronous).
      *
      * @param callback Function to call with updates.
@@ -1327,6 +1341,13 @@ public:
      * @param callback Function to call with updates.
      */
     void actuator_output_status_async(actuator_output_status_callback_t callback);
+
+    /**
+     * @brief Subscribe to actuator output status target updates (asynchronous).
+     *
+     * @param callback Function to call with updates.
+     */
+    void servo_output_raw_async(servo_output_raw_callback_t callback);
 
     /**
      * @brief Subscribe to odometry updates (asynchronous).

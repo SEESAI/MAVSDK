@@ -438,6 +438,10 @@ void Telemetry::actuator_output_status_async(actuator_output_status_callback_t c
     return _impl->actuator_output_status_async(callback);
 }
 
+void Telemetry::servo_output_raw_async(servo_output_raw_callback_t callback){
+    return _impl->servo_output_raw_async(callback);
+}
+
 void Telemetry::odometry_async(odometry_callback_t callback)
 {
     return _impl->odometry_async(callback);

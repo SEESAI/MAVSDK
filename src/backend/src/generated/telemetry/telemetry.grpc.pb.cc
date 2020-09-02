@@ -46,6 +46,7 @@ static const char* TelemetryService_method_names[] = {
   "/mavsdk.rpc.telemetry.TelemetryService/SubscribeStatusText",
   "/mavsdk.rpc.telemetry.TelemetryService/SubscribeActuatorControlTarget",
   "/mavsdk.rpc.telemetry.TelemetryService/SubscribeActuatorOutputStatus",
+  "/mavsdk.rpc.telemetry.TelemetryService/SubscribeServoOutputRaw",
   "/mavsdk.rpc.telemetry.TelemetryService/SubscribeOdometry",
 };
 
@@ -79,7 +80,8 @@ TelemetryService::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& c
   , rpcmethod_SubscribeStatusText_(TelemetryService_method_names[20], ::grpc::internal::RpcMethod::SERVER_STREAMING, channel)
   , rpcmethod_SubscribeActuatorControlTarget_(TelemetryService_method_names[21], ::grpc::internal::RpcMethod::SERVER_STREAMING, channel)
   , rpcmethod_SubscribeActuatorOutputStatus_(TelemetryService_method_names[22], ::grpc::internal::RpcMethod::SERVER_STREAMING, channel)
-  , rpcmethod_SubscribeOdometry_(TelemetryService_method_names[23], ::grpc::internal::RpcMethod::SERVER_STREAMING, channel)
+  , rpcmethod_SubscribeServoOutputRaw_(TelemetryService_method_names[23], ::grpc::internal::RpcMethod::SERVER_STREAMING, channel)
+  , rpcmethod_SubscribeOdometry_(TelemetryService_method_names[24], ::grpc::internal::RpcMethod::SERVER_STREAMING, channel)
   {}
 
 ::grpc::ClientReader< ::mavsdk::rpc::telemetry::PositionResponse>* TelemetryService::Stub::SubscribePositionRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribePositionRequest& request) {
@@ -450,6 +452,22 @@ void TelemetryService::Stub::experimental_async::SubscribeActuatorOutputStatus(:
   return ::grpc_impl::internal::ClientAsyncReaderFactory< ::mavsdk::rpc::telemetry::ActuatorOutputStatusResponse>::Create(channel_.get(), cq, rpcmethod_SubscribeActuatorOutputStatus_, context, request, false, nullptr);
 }
 
+::grpc::ClientReader< ::mavsdk::rpc::telemetry::ServoOutputRawResponse>* TelemetryService::Stub::SubscribeServoOutputRawRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeServoOutputRawRequest& request) {
+  return ::grpc_impl::internal::ClientReaderFactory< ::mavsdk::rpc::telemetry::ServoOutputRawResponse>::Create(channel_.get(), rpcmethod_SubscribeServoOutputRaw_, context, request);
+}
+
+void TelemetryService::Stub::experimental_async::SubscribeServoOutputRaw(::grpc::ClientContext* context, ::mavsdk::rpc::telemetry::SubscribeServoOutputRawRequest* request, ::grpc::experimental::ClientReadReactor< ::mavsdk::rpc::telemetry::ServoOutputRawResponse>* reactor) {
+  ::grpc_impl::internal::ClientCallbackReaderFactory< ::mavsdk::rpc::telemetry::ServoOutputRawResponse>::Create(stub_->channel_.get(), stub_->rpcmethod_SubscribeServoOutputRaw_, context, request, reactor);
+}
+
+::grpc::ClientAsyncReader< ::mavsdk::rpc::telemetry::ServoOutputRawResponse>* TelemetryService::Stub::AsyncSubscribeServoOutputRawRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeServoOutputRawRequest& request, ::grpc::CompletionQueue* cq, void* tag) {
+  return ::grpc_impl::internal::ClientAsyncReaderFactory< ::mavsdk::rpc::telemetry::ServoOutputRawResponse>::Create(channel_.get(), cq, rpcmethod_SubscribeServoOutputRaw_, context, request, true, tag);
+}
+
+::grpc::ClientAsyncReader< ::mavsdk::rpc::telemetry::ServoOutputRawResponse>* TelemetryService::Stub::PrepareAsyncSubscribeServoOutputRawRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeServoOutputRawRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc_impl::internal::ClientAsyncReaderFactory< ::mavsdk::rpc::telemetry::ServoOutputRawResponse>::Create(channel_.get(), cq, rpcmethod_SubscribeServoOutputRaw_, context, request, false, nullptr);
+}
+
 ::grpc::ClientReader< ::mavsdk::rpc::telemetry::OdometryResponse>* TelemetryService::Stub::SubscribeOdometryRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeOdometryRequest& request) {
   return ::grpc_impl::internal::ClientReaderFactory< ::mavsdk::rpc::telemetry::OdometryResponse>::Create(channel_.get(), rpcmethod_SubscribeOdometry_, context, request);
 }
@@ -584,6 +602,11 @@ TelemetryService::Service::Service() {
           std::mem_fn(&TelemetryService::Service::SubscribeActuatorOutputStatus), this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       TelemetryService_method_names[23],
+      ::grpc::internal::RpcMethod::SERVER_STREAMING,
+      new ::grpc::internal::ServerStreamingHandler< TelemetryService::Service, ::mavsdk::rpc::telemetry::SubscribeServoOutputRawRequest, ::mavsdk::rpc::telemetry::ServoOutputRawResponse>(
+          std::mem_fn(&TelemetryService::Service::SubscribeServoOutputRaw), this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      TelemetryService_method_names[24],
       ::grpc::internal::RpcMethod::SERVER_STREAMING,
       new ::grpc::internal::ServerStreamingHandler< TelemetryService::Service, ::mavsdk::rpc::telemetry::SubscribeOdometryRequest, ::mavsdk::rpc::telemetry::OdometryResponse>(
           std::mem_fn(&TelemetryService::Service::SubscribeOdometry), this)));
@@ -747,6 +770,13 @@ TelemetryService::Service::~Service() {
 }
 
 ::grpc::Status TelemetryService::Service::SubscribeActuatorOutputStatus(::grpc::ServerContext* context, const ::mavsdk::rpc::telemetry::SubscribeActuatorOutputStatusRequest* request, ::grpc::ServerWriter< ::mavsdk::rpc::telemetry::ActuatorOutputStatusResponse>* writer) {
+  (void) context;
+  (void) request;
+  (void) writer;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status TelemetryService::Service::SubscribeServoOutputRaw(::grpc::ServerContext* context, const ::mavsdk::rpc::telemetry::SubscribeServoOutputRawRequest* request, ::grpc::ServerWriter< ::mavsdk::rpc::telemetry::ServoOutputRawResponse>* writer) {
   (void) context;
   (void) request;
   (void) writer;

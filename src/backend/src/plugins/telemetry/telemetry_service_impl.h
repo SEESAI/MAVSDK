@@ -692,6 +692,35 @@ public:
         return grpc::Status::OK;
     }
 
+    grpc::Status SubscribeServoOutputRaw(
+        grpc::ServerContext* /* context */,
+        const mavsdk::rpc::telemetry::SubscribeServoOutputRawRequest* /* request */,
+        grpc::ServerWriter<rpc::telemetry::ServoOutputRawResponse>* writer) override
+    {
+        std::mutex servo_output_raw_mutex{};
+
+        _telemetry.servo_output_raw_async(
+            [&writer, &servo_output_raw_mutex](
+                mavsdk::Telemetry::ServoOutputRaw servo_output_raw) {
+              auto rpc_servo_output_raw =
+                  new mavsdk::rpc::telemetry::ServoOutputRaw();
+              for (unsigned i = 0; i < 16; i++) {
+                  rpc_servo_output_raw->add_servo(servo_output_raw.servo[i]);
+              }
+
+              mavsdk::rpc::telemetry::ServoOutputRawResponse
+                  rpc_servo_output_raw_response;
+              rpc_servo_output_raw_response.set_allocated_servo_output_raw(
+                  rpc_servo_output_raw);
+
+              std::lock_guard<std::mutex> lock(servo_output_raw_mutex);
+              writer->Write(rpc_servo_output_raw_response);
+            });
+
+        _stop_future.wait();
+        return grpc::Status::OK;
+    }
+
     mavsdk::rpc::telemetry::Odometry::MavFrame
     translateFrameId(const mavsdk::Telemetry::Odometry::MavFrame id) const
     {
