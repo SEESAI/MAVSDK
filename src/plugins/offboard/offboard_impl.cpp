@@ -35,6 +35,12 @@ void OffboardImpl::enable() {}
 
 void OffboardImpl::disable() {}
 
+Offboard::Result OffboardImpl::request_offboard()
+{
+    return offboard_result_from_command_result(
+        _parent->set_flight_mode(SystemImpl::FlightMode::Offboard));
+}
+
 Offboard::Result OffboardImpl::start()
 {
     {
@@ -60,6 +66,13 @@ Offboard::Result OffboardImpl::stop()
 
     return offboard_result_from_command_result(
         _parent->set_flight_mode(SystemImpl::FlightMode::Hold));
+}
+
+void OffboardImpl::request_offboard_async(Offboard::ResultCallback callback)
+{
+    _parent->set_flight_mode_async(
+            SystemImpl::FlightMode::Offboard,
+            std::bind(&OffboardImpl::receive_command_result, this, std::placeholders::_1, callback));
 }
 
 void OffboardImpl::start_async(Offboard::ResultCallback callback)
@@ -108,6 +121,22 @@ void OffboardImpl::receive_command_result(
     if (callback) {
         callback(offboard_result);
     }
+}
+
+Offboard::Result OffboardImpl::set_position_ned_once(Offboard::PositionNedYaw position_ned_yaw)
+{
+    _mutex.lock();
+    _position_ned_yaw = position_ned_yaw;
+
+    if (_call_every_cookie) {
+        // If we're already sending other setpoints, stop that now.
+        _parent->remove_call_every(_call_every_cookie);
+        _call_every_cookie = nullptr;
+    }
+    _mutex.unlock();
+
+    // also send it right now to reduce latency
+    return send_position_ned();
 }
 
 Offboard::Result OffboardImpl::set_position_ned(Offboard::PositionNedYaw position_ned_yaw)
@@ -165,6 +194,23 @@ Offboard::Result OffboardImpl::set_velocity_ned(Offboard::VelocityNedYaw velocit
 }
 
 Offboard::Result
+OffboardImpl::set_velocity_body_once(Offboard::VelocityBodyYawspeed velocity_body_yawspeed)
+{
+    _mutex.lock();
+    _velocity_body_yawspeed = velocity_body_yawspeed;
+
+    if (_call_every_cookie) {
+        // If we're already sending other setpoints, stop that now.
+        _parent->remove_call_every(_call_every_cookie);
+        _call_every_cookie = nullptr;
+    }
+    _mutex.unlock();
+
+    // send single velocity setpoint
+    return send_velocity_body();
+}
+
+Offboard::Result
 OffboardImpl::set_velocity_body(Offboard::VelocityBodyYawspeed velocity_body_yawspeed)
 {
     _mutex.lock();
@@ -190,6 +236,22 @@ OffboardImpl::set_velocity_body(Offboard::VelocityBodyYawspeed velocity_body_yaw
 
     // also send it right now to reduce latency
     return send_velocity_body();
+}
+
+Offboard::Result OffboardImpl::set_attitude_once(Offboard::Attitude attitude)
+{
+    _mutex.lock();
+    _attitude = attitude;
+
+    if (_call_every_cookie) {
+        // If we're already sending other setpoints, stop that now.
+        _parent->remove_call_every(_call_every_cookie);
+        _call_every_cookie = nullptr;
+    }
+    _mutex.unlock();
+
+    // send single attitude setpoint
+    return send_attitude();
 }
 
 Offboard::Result OffboardImpl::set_attitude(Offboard::Attitude attitude)
@@ -219,6 +281,21 @@ Offboard::Result OffboardImpl::set_attitude(Offboard::Attitude attitude)
     return send_attitude();
 }
 
+Offboard::Result OffboardImpl::set_attitude_rate_once(Offboard::AttitudeRate attitude_rate) {
+    _mutex.lock();
+    _attitude_rate = attitude_rate;
+
+    if (_call_every_cookie) {
+        // If we're already sending other setpoints, stop that now.
+        _parent->remove_call_every(_call_every_cookie);
+        _call_every_cookie = nullptr;
+    }
+    _mutex.unlock();
+
+    // send a single attitude rate request
+    return send_attitude_rate();
+}
+
 Offboard::Result OffboardImpl::set_attitude_rate(Offboard::AttitudeRate attitude_rate)
 {
     _mutex.lock();
@@ -244,6 +321,22 @@ Offboard::Result OffboardImpl::set_attitude_rate(Offboard::AttitudeRate attitude
 
     // also send it right now to reduce latency
     return send_attitude_rate();
+}
+
+Offboard::Result OffboardImpl::set_actuator_control_once(Offboard::ActuatorControl actuator_control)
+{
+    _mutex.lock();
+    _actuator_control = actuator_control;
+
+    if (_call_every_cookie) {
+        // If we're already sending other setpoints, stop that now.
+        _parent->remove_call_every(_call_every_cookie);
+        _call_every_cookie = nullptr;
+    }
+    _mutex.unlock();
+
+    // send a single actuator control request
+    return send_actuator_control();
 }
 
 Offboard::Result OffboardImpl::set_actuator_control(Offboard::ActuatorControl actuator_control)
