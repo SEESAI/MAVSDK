@@ -367,6 +367,16 @@ public:
 
         rpc_obj->set_fix_type(translateToRpcFixType(gps_info.fix_type));
 
+        rpc_obj->set_latitude_deg(gps_info.latitude_deg);
+
+        rpc_obj->set_longitude_deg(gps_info.longitude_deg);
+
+        rpc_obj->set_absolute_altitude_m(gps_info.absolute_altitude_m);
+
+        rpc_obj->set_h_acc_m(gps_info.h_acc_m);
+
+        rpc_obj->set_v_acc_m(gps_info.v_acc_m);
+
         return rpc_obj;
     }
 
@@ -379,6 +389,16 @@ public:
 
         obj.fix_type = translateFromRpcFixType(gps_info.fix_type());
 
+        obj.latitude_deg = gps_info.latitude_deg();
+
+        obj.longitude_deg = gps_info.longitude_deg();
+
+        obj.absolute_altitude_m = gps_info.absolute_altitude_m();
+
+        obj.h_acc_m = gps_info.h_acc_m();
+
+        obj.v_acc_m = gps_info.v_acc_m();
+
         return obj;
     }
 
@@ -388,6 +408,8 @@ public:
         std::unique_ptr<rpc::telemetry::Battery> rpc_obj(new rpc::telemetry::Battery());
 
         rpc_obj->set_voltage_v(battery.voltage_v);
+
+        rpc_obj->set_current_a(battery.current_a);
 
         rpc_obj->set_remaining_percent(battery.remaining_percent);
 
@@ -401,9 +423,48 @@ public:
 
         obj.voltage_v = battery.voltage_v();
 
+        obj.current_a = battery.current_a();
+
         obj.remaining_percent = battery.remaining_percent();
 
         return obj;
+    }
+
+    static std::unique_ptr<rpc::telemetry::BatteryStatus>
+    translateToRpcBatteryStatus(const mavsdk::Telemetry::BatteryStatus& battery_status)
+    {
+        std::unique_ptr<rpc::telemetry::BatteryStatus> rpc_obj(new rpc::telemetry::BatteryStatus());
+
+        rpc_obj->set_mah_consumed(battery_status.mah_consumed);
+
+        return rpc_obj;
+    }
+
+    static mavsdk::Telemetry::BatteryStatus
+    translateFromRpcBatteryStatus(const rpc::telemetry::BatteryStatus& battery_status)
+    {
+        mavsdk::Telemetry::BatteryStatus obj;
+
+        obj.mah_consumed = battery_status.mah_consumed();
+
+        return obj;
+    }
+
+    static std::unique_ptr<rpc::telemetry::ModeInfo>
+    translateToRpcModeInfo(const mavsdk::Telemetry::ModeInfo &mode_info)
+    {
+        std::unique_ptr<rpc::telemetry::ModeInfo> rpc_obj(new rpc::telemetry::ModeInfo());
+
+        auto custom_main_mode = uint8_t((mode_info.custom_mode >> 16U) & 0xffU);
+        auto custom_sub_mode = uint8_t((mode_info.custom_mode >> 24U) & 0xffU);
+            
+        rpc_obj->set_base_mode(mode_info.base_mode);
+
+        rpc_obj->set_custom_main_mode(custom_main_mode);
+
+        rpc_obj->set_custom_sub_mode(custom_sub_mode);
+
+        return rpc_obj;
     }
 
     static std::unique_ptr<rpc::telemetry::Health>
@@ -555,6 +616,31 @@ public:
 
         for (const auto& elem : actuator_output_status.actuator()) {
             obj.actuator.push_back(elem);
+        }
+
+        return obj;
+    }
+
+    static std::unique_ptr<rpc::telemetry::ServoOutputRaw> translateToRpcServoOutputRaw(
+        const mavsdk::Telemetry::ServoOutputRaw &servo_output_raw)
+    {
+        std::unique_ptr<rpc::telemetry::ServoOutputRaw> rpc_obj(
+            new rpc::telemetry::ServoOutputRaw());
+
+        for (const auto& elem : servo_output_raw.servo) {
+            rpc_obj->add_servo(elem);
+        }
+
+        return rpc_obj;
+    }
+
+    static mavsdk::Telemetry::ServoOutputRaw translateFromRpcServoOutputRaw(
+        const rpc::telemetry::ServoOutputRaw& servo_output_raw)
+    {
+        mavsdk::Telemetry::ServoOutputRaw obj;
+
+        for (const auto& elem : servo_output_raw.servo()) {
+            obj.servo.push_back(elem);
         }
 
         return obj;
@@ -974,6 +1060,10 @@ public:
         rpc_obj->set_allocated_magnetic_field_frd(
             translateToRpcMagneticFieldFrd(imu.magnetic_field_frd).release());
 
+        rpc_obj->set_abs_pressure(imu.abs_pressure);
+
+        rpc_obj->set_pressure_alt(imu.pressure_alt);
+
         rpc_obj->set_temperature_degc(imu.temperature_degc);
 
         return rpc_obj;
@@ -989,7 +1079,30 @@ public:
 
         obj.magnetic_field_frd = translateFromRpcMagneticFieldFrd(imu.magnetic_field_frd());
 
+        obj.abs_pressure = imu.abs_pressure();
+
+        obj.pressure_alt = imu.pressure_alt();
+
         obj.temperature_degc = imu.temperature_degc();
+
+        return obj;
+    }
+
+    static std::unique_ptr<rpc::telemetry::DistanceSensor>
+    translateToRpcDistanceSensor(const mavsdk::Telemetry::DistanceSensor& distance_sensor)
+    {
+        std::unique_ptr<rpc::telemetry::DistanceSensor> rpc_obj(new rpc::telemetry::DistanceSensor());
+
+        rpc_obj->set_current_distance_m(distance_sensor.current_distance_m);
+
+        return rpc_obj;
+    }
+
+    static mavsdk::Telemetry::DistanceSensor translateFromRpcDistanceSensor(const rpc::telemetry::DistanceSensor& distance_sensor)
+    {
+        mavsdk::Telemetry::DistanceSensor obj;
+
+        obj.current_distance_m = distance_sensor.current_distance_m();
 
         return obj;
     }
@@ -1468,6 +1581,42 @@ public:
         return grpc::Status::OK;
     }
 
+    grpc::Status SubscribeDistanceSensor(
+        grpc::ServerContext* /* context */,
+        const mavsdk::rpc::telemetry::SubscribeDistanceSensorRequest* /* request */,
+        grpc::ServerWriter<rpc::telemetry::DistanceSensorResponse>* writer) override
+    {
+        auto stream_closed_promise = std::make_shared<std::promise<void>>();
+        auto stream_closed_future = stream_closed_promise->get_future();
+        register_stream_stop_promise(stream_closed_promise);
+
+        auto is_finished = std::make_shared<bool>(false);
+
+        std::mutex subscribe_mutex{};
+
+        _telemetry.subscribe_distance_sensor(
+            [this, &writer, &stream_closed_promise, is_finished, &subscribe_mutex](
+                const mavsdk::Telemetry::DistanceSensor distance_sensor) {
+                rpc::telemetry::DistanceSensorResponse rpc_response;
+
+                rpc_response.set_allocated_distance_sensor(
+                    translateToRpcDistanceSensor(distance_sensor).release());
+
+                std::unique_lock<std::mutex> lock(subscribe_mutex);
+                if (!*is_finished && !writer->Write(rpc_response)) {
+                    _telemetry.subscribe_distance_sensor(nullptr);
+
+                    *is_finished = true;
+                    unregister_stream_stop_promise(stream_closed_promise);
+                    lock.unlock();
+                    stream_closed_promise->set_value();
+                }
+            });
+
+        stream_closed_future.wait();
+        return grpc::Status::OK;
+    }
+
     grpc::Status SubscribeBattery(
         grpc::ServerContext* /* context */,
         const mavsdk::rpc::telemetry::SubscribeBatteryRequest* /* request */,
@@ -1503,6 +1652,43 @@ public:
         return grpc::Status::OK;
     }
 
+    grpc::Status SubscribeBatteryStatus(
+        grpc::ServerContext* /* context */,
+        const mavsdk::rpc::telemetry::SubscribeBatteryStatusRequest* /* request */,
+        grpc::ServerWriter<rpc::telemetry::BatteryStatusResponse>* writer) override
+    {
+        auto stream_closed_promise = std::make_shared<std::promise<void>>();
+        auto stream_closed_future = stream_closed_promise->get_future();
+        register_stream_stop_promise(stream_closed_promise);
+
+        auto is_finished = std::make_shared<bool>(false);
+
+        std::mutex subscribe_mutex{};
+
+        _telemetry.subscribe_battery_status(
+            [this, &writer, &stream_closed_promise, is_finished, &subscribe_mutex](
+                const mavsdk::Telemetry::BatteryStatus battery_status) {
+                rpc::telemetry::BatteryStatusResponse rpc_response;
+
+                rpc_response.set_allocated_battery_status(
+                    translateToRpcBatteryStatus(battery_status).release());
+        
+
+                std::unique_lock<std::mutex> lock(subscribe_mutex);
+                if (!*is_finished && !writer->Write(rpc_response)) {
+                    _telemetry.subscribe_battery_status(nullptr);
+
+                    *is_finished = true;
+                    unregister_stream_stop_promise(stream_closed_promise);
+                    lock.unlock();
+                    stream_closed_promise->set_value();
+                }
+            });
+
+        stream_closed_future.wait();
+        return grpc::Status::OK;
+    }
+
     grpc::Status SubscribeFlightMode(
         grpc::ServerContext* /* context */,
         const mavsdk::rpc::telemetry::SubscribeFlightModeRequest* /* request */,
@@ -1526,6 +1712,41 @@ public:
                 std::unique_lock<std::mutex> lock(subscribe_mutex);
                 if (!*is_finished && !writer->Write(rpc_response)) {
                     _telemetry.subscribe_flight_mode(nullptr);
+
+                    *is_finished = true;
+                    unregister_stream_stop_promise(stream_closed_promise);
+                    lock.unlock();
+                    stream_closed_promise->set_value();
+                }
+            });
+
+        stream_closed_future.wait();
+        return grpc::Status::OK;
+    }
+
+    grpc::Status SubscribeModeInfo(
+        grpc::ServerContext* /* context */,
+        const mavsdk::rpc::telemetry::SubscribeModeInfoRequest* /* request */,
+        grpc::ServerWriter<rpc::telemetry::ModeInfoResponse>* writer) override
+    {
+        auto stream_closed_promise = std::make_shared<std::promise<void>>();
+        auto stream_closed_future = stream_closed_promise->get_future();
+        register_stream_stop_promise(stream_closed_promise);
+
+        auto is_finished = std::make_shared<bool>(false);
+
+        std::mutex subscribe_mutex{};
+
+        _telemetry.subscribe_mode_info(
+            [this, &writer, &stream_closed_promise, is_finished, &subscribe_mutex](
+                const mavsdk::Telemetry::ModeInfo mode_info) {
+                rpc::telemetry::ModeInfoResponse rpc_response;
+
+                rpc_response.set_allocated_mode_info(translateToRpcModeInfo(mode_info).release());
+
+                std::unique_lock<std::mutex> lock(subscribe_mutex);
+                if (!*is_finished && !writer->Write(rpc_response)) {
+                    _telemetry.subscribe_mode_info(nullptr);
 
                     *is_finished = true;
                     unregister_stream_stop_promise(stream_closed_promise);
@@ -1704,6 +1925,41 @@ public:
                 std::unique_lock<std::mutex> lock(subscribe_mutex);
                 if (!*is_finished && !writer->Write(rpc_response)) {
                     _telemetry.subscribe_actuator_output_status(nullptr);
+
+                    *is_finished = true;
+                    unregister_stream_stop_promise(stream_closed_promise);
+                    lock.unlock();
+                    stream_closed_promise->set_value();
+                }
+            });
+
+        stream_closed_future.wait();
+        return grpc::Status::OK;
+    }
+
+    grpc::Status SubscribeServoOutputRaw(
+        grpc::ServerContext* /* context */,
+        const mavsdk::rpc::telemetry::SubscribeServoOutputRawRequest* /* request */,
+        grpc::ServerWriter<rpc::telemetry::ServoOutputRawResponse>* writer) override
+    {
+        auto stream_closed_promise = std::make_shared<std::promise<void>>();
+        auto stream_closed_future = stream_closed_promise->get_future();
+        register_stream_stop_promise(stream_closed_promise);
+
+        auto is_finished = std::make_shared<bool>(false);
+
+        std::mutex subscribe_mutex{};
+
+        _telemetry.subscribe_servo_output_raw(
+            [this, &writer, &stream_closed_promise, is_finished, &subscribe_mutex](
+                const mavsdk::Telemetry::ServoOutputRaw servo_output_raw) {
+                rpc::telemetry::ServoOutputRawResponse rpc_response;
+
+                rpc_response.set_allocated_servo_output_raw(translateToRpcServoOutputRaw(servo_output_raw).release());
+
+                std::unique_lock<std::mutex> lock(subscribe_mutex);
+                if (!*is_finished && !writer->Write(rpc_response)) {
+                    _telemetry.subscribe_servo_output_raw(nullptr);
 
                     *is_finished = true;
                     unregister_stream_stop_promise(stream_closed_promise);

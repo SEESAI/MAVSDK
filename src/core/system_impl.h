@@ -145,7 +145,9 @@ public:
     using SubscribeParamFloatCallback = std::function<void(float)>;
     void subscribe_param_float(
         const std::string& name, SubscribeParamFloatCallback callback, const void* cookie);
-
+    
+    uint8_t get_base_mode() const;
+    uint32_t get_custom_mode() const;
     FlightMode get_flight_mode() const;
 
     MAVLinkCommands::Result
@@ -329,6 +331,8 @@ private:
     std::function<bool(mavlink_message_t&)> _outgoing_messages_intercept_callback{nullptr};
 
     std::atomic<FlightMode> _flight_mode{FlightMode::Unknown};
+    std::atomic<uint8_t> _base_mode{0};
+    std::atomic<uint32_t> _custom_mode{0};
 };
 
 } // namespace mavsdk

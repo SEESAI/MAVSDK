@@ -22,7 +22,7 @@ MavsdkImpl::MavsdkImpl() :
     _systems(),
     _on_discover_callback(nullptr),
     _on_timeout_callback(nullptr),
-    _configuration(Mavsdk::Configuration::UsageType::GroundStation)
+    _configuration(Mavsdk::Configuration::UsageType::CompanionComputer)
 {
     LogInfo() << "MAVSDK version: " << mavsdk_version;
     set_configuration(_configuration);

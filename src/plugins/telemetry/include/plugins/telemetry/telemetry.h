@@ -249,6 +249,11 @@ public:
     struct GpsInfo {
         int32_t num_satellites{0}; /**< @brief Number of visible satellites in use */
         FixType fix_type{}; /**< @brief Fix type */
+        double latitude_deg{double(NAN)}; /**< @brief Latitude in degrees (range: -90 to +90) */
+        double longitude_deg{double(NAN)}; /**< @brief Longitude in degrees (range: -180 to +180) */
+        float absolute_altitude_m{float(NAN)}; /**< @brief Altitude AMSL (above mean sea level) in metres */
+        float h_acc_m{float(NAN)}; /**< @brief Position uncertainty in metres */
+        float v_acc_m{float(NAN)}; /**< @brief Altitude uncertainty in metres */
     };
 
     /**
@@ -270,6 +275,7 @@ public:
      */
     struct Battery {
         float voltage_v{float(NAN)}; /**< @brief Voltage in volts */
+        float current_a{float(NAN)}; /**< @brief Current in amps */
         float remaining_percent{
             float(NAN)}; /**< @brief Estimated battery remaining (range: 0.0 to 1.0) */
     };
@@ -287,6 +293,49 @@ public:
      * @return A reference to the stream.
      */
     friend std::ostream& operator<<(std::ostream& str, Telemetry::Battery const& battery);
+
+    /**
+     * @brief Battery current type.
+     */
+    struct BatteryStatus {
+        float mah_consumed{float(NAN)}; /**< @brief */
+    };
+
+    /**
+     * @brief Equal operator to compare two `Telemetry::BatteryStatus` objects.
+     *
+     * @return `true` if items are equal.
+     */
+    friend bool operator==(const Telemetry::BatteryStatus& lhs, const Telemetry::BatteryStatus& rhs);
+
+    /**
+     * @brief Stream operator to print information about a `Telemetry::BatteryStatus`.
+     *
+     * @return A reference to the stream.
+     */
+    friend std::ostream& operator<<(std::ostream& str, Telemetry::BatteryStatus const& battery_status);
+
+    /**
+     * @brief Mode Info structure.
+     */
+    struct ModeInfo {
+        uint32_t base_mode{0}; /**< @brief Base mode flags. */
+        uint32_t custom_mode{0}; /**< @brief Custom mode (made up of main & sub mode). */
+    };
+
+    /**
+     * @brief Equal operator to compare two `Telemetry::ModeInfo` objects.
+     *
+     * @return `true` if items are equal.
+     */
+    friend bool operator==(const Telemetry::ModeInfo& lhs, const Telemetry::ModeInfo& rhs);
+
+    /**
+     * @brief Stream operator to print information about a `Telemetry::ModeInfo`.
+     *
+     * @return A reference to the stream.
+     */
+    friend std::ostream& operator<<(std::ostream& str, Telemetry::ModeInfo const& mode_info);
 
     /**
      * @brief Health type.
@@ -415,6 +464,27 @@ public:
      */
     friend std::ostream&
     operator<<(std::ostream& str, Telemetry::ActuatorOutputStatus const& actuator_output_status);
+
+    /**
+     * @brief The raw values of the servo output ppms for port 0 (Pixhawk MAIN)
+     */
+    struct ServoOutputRaw {
+        std::vector<uint32_t> servo{}; /**< @brief */
+    };
+
+    /**
+     * @brief Equal operator to compare two `Telemetry::ServoOutputRaw` objects.
+     *
+     * @return `true` if items are equal.
+     */
+    friend bool operator==(const Telemetry::ServoOutputRaw& lhs, const Telemetry::ServoOutputRaw& rhs);
+
+    /**
+     * @brief Stream operator to print information about a `Telemetry::ServoOutputRaw`.
+     *
+     * @return A reference to the stream.
+     */
+    friend std::ostream& operator<<(std::ostream& str, Telemetry::ServoOutputRaw const& servo_output_raw);
 
     /**
      * @brief Covariance type.
@@ -754,6 +824,8 @@ public:
         AccelerationFrd acceleration_frd{}; /**< @brief Acceleration */
         AngularVelocityFrd angular_velocity_frd{}; /**< @brief Angular velocity */
         MagneticFieldFrd magnetic_field_frd{}; /**< @brief Magnetic field */
+        float abs_pressure{float(NAN)}; /**< @brief Absolute pressure */
+        float pressure_alt{float(NAN)}; /**< @brief Pressure altitude*/
         float temperature_degc{float(NAN)}; /**< @brief Temperature */
     };
 
@@ -770,6 +842,28 @@ public:
      * @return A reference to the stream.
      */
     friend std::ostream& operator<<(std::ostream& str, Telemetry::Imu const& imu);
+    /**
+     * @brief 
+     */
+    struct DistanceSensor {
+        float current_distance_m{float(NAN)}; /**< @brief Current distance*/
+    };
+
+    /**
+     * @brief Equal operator to compare two `Telemetry::DistanceSensor` objects.
+     *
+     * @return `true` if items are equal.
+     */
+    friend bool
+    operator==(const Telemetry::DistanceSensor& lhs, const Telemetry::DistanceSensor& rhs);
+
+    /**
+     * @brief Stream operator to print information about a `Telemetry::DistanceSensor`.
+     *
+     * @return A reference to the stream.
+     */
+    friend std::ostream&
+    operator<<(std::ostream& str, Telemetry::DistanceSensor const& distance_sensor);
 
     /**
      * @brief Possible results returned for telemetry requests.
@@ -1013,6 +1107,24 @@ public:
     GpsInfo gps_info() const;
 
     /**
+     * @brief Callback type for subscribe_distance_sensor.
+     */
+        
+    using DistanceSensorCallback = std::function<void(DistanceSensor)>;
+
+    /**
+     * @brief Subscribe to 'Distance sensor' updates.
+     */
+    void subscribe_distance_sensor(DistanceSensorCallback callback);
+
+    /**
+     * @brief Poll for 'DistanceSensor' (blocking).
+     *
+     * @return One DistanceSensor update.
+     */
+    DistanceSensor distance_sensor() const;
+
+    /**
      * @brief Callback type for subscribe_battery.
      */
 
@@ -1031,6 +1143,24 @@ public:
     Battery battery() const;
 
     /**
+     * @brief Callback type for subscribe_battery_status.
+     */
+        
+    using BatteryStatusCallback = std::function<void(BatteryStatus)>;
+
+    /**
+     * @brief Subscribe to 'battery current' updates.
+     */
+    void subscribe_battery_status(BatteryStatusCallback callback);
+
+    /**
+     * @brief Poll for 'BatteryStatus' (blocking).
+     *
+     * @return One BatteryStatus update.
+     */
+    BatteryStatus battery_status() const;
+
+    /**
      * @brief Callback type for subscribe_flight_mode.
      */
 
@@ -1047,6 +1177,24 @@ public:
      * @return One FlightMode update.
      */
     FlightMode flight_mode() const;
+
+    /**
+    * @brief Callback type for subscribe_mode_info.
+    */
+        
+    using ModeInfoCallback = std::function<void(ModeInfo)>;
+
+    /**
+     * @brief Subscribe to 'mode' updates.
+     */
+    void subscribe_mode_info(ModeInfoCallback callback);
+
+    /**
+     * @brief Poll for 'ModeInfo' (blocking).
+     *
+     * @return One ModeInfo update.
+     */
+    ModeInfo mode_info() const;
 
     /**
      * @brief Callback type for subscribe_health.
@@ -1137,6 +1285,24 @@ public:
      * @return One ActuatorOutputStatus update.
      */
     ActuatorOutputStatus actuator_output_status() const;
+
+    /**
+     * @brief Callback type for subscribe_servo_output_raw.
+     */
+
+    using ServoOutputRawCallback = std::function<void(ServoOutputRaw)>;
+
+    /**
+     * @brief Subscribe to 'servo output raw' updates.
+     */
+    void subscribe_servo_output_raw(ServoOutputRawCallback callback);
+
+    /**
+     * @brief Poll for 'ServoOutputRaw' (blocking).
+     *
+     * @return One ServoOutputRaw update.
+     */
+    ServoOutputRaw servo_output_raw() const;
 
     /**
      * @brief Callback type for subscribe_odometry.
