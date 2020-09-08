@@ -587,6 +587,7 @@ namespace telemetry {
 enum Odometry_MavFrame : int {
   Odometry_MavFrame_MAV_FRAME_UNDEF = 0,
   Odometry_MavFrame_MAV_FRAME_BODY_NED = 8,
+  Odometry_MavFrame_MAV_FRAME_BODY_FRD = 12,
   Odometry_MavFrame_MAV_FRAME_VISION_NED = 16,
   Odometry_MavFrame_MAV_FRAME_ESTIM_NED = 18,
   Odometry_MavFrame_Odometry_MavFrame_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
@@ -16176,6 +16177,8 @@ class Odometry :
     Odometry_MavFrame_MAV_FRAME_UNDEF;
   static constexpr MavFrame MAV_FRAME_BODY_NED =
     Odometry_MavFrame_MAV_FRAME_BODY_NED;
+  static constexpr MavFrame MAV_FRAME_BODY_FRD =
+    Odometry_MavFrame_MAV_FRAME_BODY_FRD;
   static constexpr MavFrame MAV_FRAME_VISION_NED =
     Odometry_MavFrame_MAV_FRAME_VISION_NED;
   static constexpr MavFrame MAV_FRAME_ESTIM_NED =
