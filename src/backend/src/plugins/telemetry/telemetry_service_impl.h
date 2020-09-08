@@ -633,7 +633,7 @@ public:
 
         return rpc_obj;
     }
-    
+
     static std::unique_ptr<rpc::telemetry::Covariance>
     translateToRpcCovariance(const mavsdk::Telemetry::Covariance& covariance)
     {
@@ -725,6 +725,8 @@ public:
                 return rpc::telemetry::Odometry_MavFrame_MAV_FRAME_UNDEF;
             case mavsdk::Telemetry::Odometry::MavFrame::BodyNed:
                 return rpc::telemetry::Odometry_MavFrame_MAV_FRAME_BODY_NED;
+            case mavsdk::Telemetry::Odometry::MavFrame::BodyFrd:
+                return rpc::telemetry::Odometry_MavFrame_MAV_FRAME_BODY_FRD;
             case mavsdk::Telemetry::Odometry::MavFrame::VisionNed:
                 return rpc::telemetry::Odometry_MavFrame_MAV_FRAME_VISION_NED;
             case mavsdk::Telemetry::Odometry::MavFrame::EstimNed:
@@ -743,6 +745,8 @@ public:
                 return mavsdk::Telemetry::Odometry::MavFrame::Undef;
             case rpc::telemetry::Odometry_MavFrame_MAV_FRAME_BODY_NED:
                 return mavsdk::Telemetry::Odometry::MavFrame::BodyNed;
+            case rpc::telemetry::Odometry_MavFrame_MAV_FRAME_BODY_FRD:
+                return mavsdk::Telemetry::Odometry::MavFrame::BodyFrd;
             case rpc::telemetry::Odometry_MavFrame_MAV_FRAME_VISION_NED:
                 return mavsdk::Telemetry::Odometry::MavFrame::VisionNed;
             case rpc::telemetry::Odometry_MavFrame_MAV_FRAME_ESTIM_NED:

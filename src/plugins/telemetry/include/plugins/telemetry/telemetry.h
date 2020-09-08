@@ -561,13 +561,14 @@ public:
          * @brief Mavlink frame id
          */
         enum class MavFrame {
-            Undef, /**< @brief Frame is undefined.. */
-            BodyNed, /**< @brief Setpoint in body NED frame. This makes sense if all position
+            Undef = 0, /**< @brief Frame is undefined.. */
+            BodyNed = 8, /**< @brief Setpoint in body NED frame. This makes sense if all position
                         control is externalized - e.g. useful to command 2 m/s^2 acceleration to the
                         right.. */
-            VisionNed, /**< @brief Odometry local coordinate frame of data given by a vision
+            BodyFrd = 12,
+            VisionNed = 16, /**< @brief Odometry local coordinate frame of data given by a vision
                           estimation system, Z-down (x: north, y: east, z: down).. */
-            EstimNed, /**< @brief Odometry local coordinate frame of data given by an estimator
+            EstimNed = 18, /**< @brief Odometry local coordinate frame of data given by an estimator
                          running onboard the vehicle, Z-down (x: north, y: east, z: down).. */
         };
 
