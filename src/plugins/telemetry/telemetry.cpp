@@ -798,19 +798,6 @@ bool operator==(const Telemetry::ServoOutputRaw& lhs, const Telemetry::ServoOutp
     return (rhs.servo == lhs.servo);
 }
 
-std::ostream& operator<<(std::ostream& str, Telemetry::ServoOutputRaw const& servo_output_raw)
-{
-    str << std::setprecision(15);
-    str << "servo_output_raw:" << '\n' << "{\n";
-    str << "    servo: [";
-    for (auto it = servo_output_raw.servo.begin(); it != servo_output_raw.servo.end(); ++it) {
-        str << *it;
-        str << (it + 1 != servo_output_raw.servo.end() ? ", " : "]\n");
-    }
-    str << '}';
-    return str;
-}
-
 bool operator==(const Telemetry::Covariance& lhs, const Telemetry::Covariance& rhs)
 {
     return (rhs.covariance_matrix == lhs.covariance_matrix);
