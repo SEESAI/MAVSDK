@@ -49,7 +49,7 @@ struct TableStruct_telemetry_2ftelemetry_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxillaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[131]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[132]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
@@ -440,6 +440,9 @@ extern TelemetryResultDefaultTypeInternal _TelemetryResult_default_instance_;
 class UnixEpochTimeResponse;
 class UnixEpochTimeResponseDefaultTypeInternal;
 extern UnixEpochTimeResponseDefaultTypeInternal _UnixEpochTimeResponse_default_instance_;
+class VehicleStatus;
+class VehicleStatusDefaultTypeInternal;
+extern VehicleStatusDefaultTypeInternal _VehicleStatus_default_instance_;
 class VehicleStatusResponse;
 class VehicleStatusResponseDefaultTypeInternal;
 extern VehicleStatusResponseDefaultTypeInternal _VehicleStatusResponse_default_instance_;
@@ -583,6 +586,7 @@ template<> ::mavsdk::rpc::telemetry::SubscribeVehicleStatusRequest* Arena::Creat
 template<> ::mavsdk::rpc::telemetry::SubscribeVelocityNedRequest* Arena::CreateMaybeMessage<::mavsdk::rpc::telemetry::SubscribeVelocityNedRequest>(Arena*);
 template<> ::mavsdk::rpc::telemetry::TelemetryResult* Arena::CreateMaybeMessage<::mavsdk::rpc::telemetry::TelemetryResult>(Arena*);
 template<> ::mavsdk::rpc::telemetry::UnixEpochTimeResponse* Arena::CreateMaybeMessage<::mavsdk::rpc::telemetry::UnixEpochTimeResponse>(Arena*);
+template<> ::mavsdk::rpc::telemetry::VehicleStatus* Arena::CreateMaybeMessage<::mavsdk::rpc::telemetry::VehicleStatus>(Arena*);
 template<> ::mavsdk::rpc::telemetry::VehicleStatusResponse* Arena::CreateMaybeMessage<::mavsdk::rpc::telemetry::VehicleStatusResponse>(Arena*);
 template<> ::mavsdk::rpc::telemetry::VelocityBody* Arena::CreateMaybeMessage<::mavsdk::rpc::telemetry::VelocityBody>(Arena*);
 template<> ::mavsdk::rpc::telemetry::VelocityNed* Arena::CreateMaybeMessage<::mavsdk::rpc::telemetry::VelocityNed>(Arena*);
@@ -4717,15 +4721,21 @@ class VehicleStatusResponse :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kDataLinkLossFieldNumber = 1,
+    kVehicleStatusFieldNumber = 1,
   };
-  // bool data_link_loss = 1;
-  void clear_data_link_loss();
-  bool data_link_loss() const;
-  void set_data_link_loss(bool value);
+  // .mavsdk.rpc.telemetry.VehicleStatus vehicle_status = 1;
+  bool has_vehicle_status() const;
   private:
-  bool _internal_data_link_loss() const;
-  void _internal_set_data_link_loss(bool value);
+  bool _internal_has_vehicle_status() const;
+  public:
+  void clear_vehicle_status();
+  const ::mavsdk::rpc::telemetry::VehicleStatus& vehicle_status() const;
+  ::mavsdk::rpc::telemetry::VehicleStatus* release_vehicle_status();
+  ::mavsdk::rpc::telemetry::VehicleStatus* mutable_vehicle_status();
+  void set_allocated_vehicle_status(::mavsdk::rpc::telemetry::VehicleStatus* vehicle_status);
+  private:
+  const ::mavsdk::rpc::telemetry::VehicleStatus& _internal_vehicle_status() const;
+  ::mavsdk::rpc::telemetry::VehicleStatus* _internal_mutable_vehicle_status();
   public:
 
   // @@protoc_insertion_point(class_scope:mavsdk.rpc.telemetry.VehicleStatusResponse)
@@ -4733,7 +4743,7 @@ class VehicleStatusResponse :
   class _Internal;
 
   ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
-  bool data_link_loss_;
+  ::mavsdk::rpc::telemetry::VehicleStatus* vehicle_status_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_telemetry_2ftelemetry_2eproto;
 };
@@ -14790,6 +14800,134 @@ class BatteryStatus :
 };
 // -------------------------------------------------------------------
 
+class VehicleStatus :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:mavsdk.rpc.telemetry.VehicleStatus) */ {
+ public:
+  VehicleStatus();
+  virtual ~VehicleStatus();
+
+  VehicleStatus(const VehicleStatus& from);
+  VehicleStatus(VehicleStatus&& from) noexcept
+    : VehicleStatus() {
+    *this = ::std::move(from);
+  }
+
+  inline VehicleStatus& operator=(const VehicleStatus& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline VehicleStatus& operator=(VehicleStatus&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const VehicleStatus& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const VehicleStatus* internal_default_instance() {
+    return reinterpret_cast<const VehicleStatus*>(
+               &_VehicleStatus_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    109;
+
+  friend void swap(VehicleStatus& a, VehicleStatus& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(VehicleStatus* other) {
+    if (other == this) return;
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline VehicleStatus* New() const final {
+    return CreateMaybeMessage<VehicleStatus>(nullptr);
+  }
+
+  VehicleStatus* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<VehicleStatus>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const VehicleStatus& from);
+  void MergeFrom(const VehicleStatus& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(VehicleStatus* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "mavsdk.rpc.telemetry.VehicleStatus";
+  }
+  private:
+  inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
+    return nullptr;
+  }
+  inline void* MaybeArenaPtr() const {
+    return nullptr;
+  }
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_telemetry_2ftelemetry_2eproto);
+    return ::descriptor_table_telemetry_2ftelemetry_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kDataLinkLossFieldNumber = 1,
+  };
+  // bool data_link_loss = 1 [(.mavsdk.options.default_value) = "false"];
+  void clear_data_link_loss();
+  bool data_link_loss() const;
+  void set_data_link_loss(bool value);
+  private:
+  bool _internal_data_link_loss() const;
+  void _internal_set_data_link_loss(bool value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:mavsdk.rpc.telemetry.VehicleStatus)
+ private:
+  class _Internal;
+
+  ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
+  bool data_link_loss_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_telemetry_2ftelemetry_2eproto;
+};
+// -------------------------------------------------------------------
+
 class ModeInfo :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:mavsdk.rpc.telemetry.ModeInfo) */ {
  public:
@@ -14832,7 +14970,7 @@ class ModeInfo :
                &_ModeInfo_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    109;
+    110;
 
   friend void swap(ModeInfo& a, ModeInfo& b) {
     a.Swap(&b);
@@ -14982,7 +15120,7 @@ class Health :
                &_Health_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    110;
+    111;
 
   friend void swap(Health& a, Health& b) {
     a.Swap(&b);
@@ -15176,7 +15314,7 @@ class RcStatus :
                &_RcStatus_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    111;
+    112;
 
   friend void swap(RcStatus& a, RcStatus& b) {
     a.Swap(&b);
@@ -15326,7 +15464,7 @@ class StatusText :
                &_StatusText_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    112;
+    113;
 
   friend void swap(StatusText& a, StatusText& b) {
     a.Swap(&b);
@@ -15472,7 +15610,7 @@ class ActuatorControlTarget :
                &_ActuatorControlTarget_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    113;
+    114;
 
   friend void swap(ActuatorControlTarget& a, ActuatorControlTarget& b) {
     a.Swap(&b);
@@ -15625,7 +15763,7 @@ class ActuatorOutputStatus :
                &_ActuatorOutputStatus_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    114;
+    115;
 
   friend void swap(ActuatorOutputStatus& a, ActuatorOutputStatus& b) {
     a.Swap(&b);
@@ -15778,7 +15916,7 @@ class ServoOutputRaw :
                &_ServoOutputRaw_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    115;
+    116;
 
   friend void swap(ServoOutputRaw& a, ServoOutputRaw& b) {
     a.Swap(&b);
@@ -15920,7 +16058,7 @@ class Covariance :
                &_Covariance_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    116;
+    117;
 
   friend void swap(Covariance& a, Covariance& b) {
     a.Swap(&b);
@@ -16062,7 +16200,7 @@ class VelocityBody :
                &_VelocityBody_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    117;
+    118;
 
   friend void swap(VelocityBody& a, VelocityBody& b) {
     a.Swap(&b);
@@ -16212,7 +16350,7 @@ class PositionBody :
                &_PositionBody_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    118;
+    119;
 
   friend void swap(PositionBody& a, PositionBody& b) {
     a.Swap(&b);
@@ -16362,7 +16500,7 @@ class Odometry :
                &_Odometry_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    119;
+    120;
 
   friend void swap(Odometry& a, Odometry& b) {
     a.Swap(&b);
@@ -16650,7 +16788,7 @@ class PositionNed :
                &_PositionNed_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    120;
+    121;
 
   friend void swap(PositionNed& a, PositionNed& b) {
     a.Swap(&b);
@@ -16800,7 +16938,7 @@ class VelocityNed :
                &_VelocityNed_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    121;
+    122;
 
   friend void swap(VelocityNed& a, VelocityNed& b) {
     a.Swap(&b);
@@ -16950,7 +17088,7 @@ class PositionVelocityNed :
                &_PositionVelocityNed_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    122;
+    123;
 
   friend void swap(PositionVelocityNed& a, PositionVelocityNed& b) {
     a.Swap(&b);
@@ -17101,7 +17239,7 @@ class GroundTruth :
                &_GroundTruth_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    123;
+    124;
 
   friend void swap(GroundTruth& a, GroundTruth& b) {
     a.Swap(&b);
@@ -17251,7 +17389,7 @@ class FixedwingMetrics :
                &_FixedwingMetrics_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    124;
+    125;
 
   friend void swap(FixedwingMetrics& a, FixedwingMetrics& b) {
     a.Swap(&b);
@@ -17401,7 +17539,7 @@ class AccelerationFrd :
                &_AccelerationFrd_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    125;
+    126;
 
   friend void swap(AccelerationFrd& a, AccelerationFrd& b) {
     a.Swap(&b);
@@ -17551,7 +17689,7 @@ class AngularVelocityFrd :
                &_AngularVelocityFrd_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    126;
+    127;
 
   friend void swap(AngularVelocityFrd& a, AngularVelocityFrd& b) {
     a.Swap(&b);
@@ -17701,7 +17839,7 @@ class MagneticFieldFrd :
                &_MagneticFieldFrd_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    127;
+    128;
 
   friend void swap(MagneticFieldFrd& a, MagneticFieldFrd& b) {
     a.Swap(&b);
@@ -17851,7 +17989,7 @@ class Imu :
                &_Imu_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    128;
+    129;
 
   friend void swap(Imu& a, Imu& b) {
     a.Swap(&b);
@@ -18052,7 +18190,7 @@ class DistanceSensor :
                &_DistanceSensor_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    129;
+    130;
 
   friend void swap(DistanceSensor& a, DistanceSensor& b) {
     a.Swap(&b);
@@ -18180,7 +18318,7 @@ class TelemetryResult :
                &_TelemetryResult_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    130;
+    131;
 
   friend void swap(TelemetryResult& a, TelemetryResult& b) {
     a.Swap(&b);
@@ -19237,24 +19375,64 @@ inline void BatteryStatusResponse::set_allocated_battery_status(::mavsdk::rpc::t
 
 // VehicleStatusResponse
 
-// bool data_link_loss = 1;
-inline void VehicleStatusResponse::clear_data_link_loss() {
-  data_link_loss_ = false;
+// .mavsdk.rpc.telemetry.VehicleStatus vehicle_status = 1;
+inline bool VehicleStatusResponse::_internal_has_vehicle_status() const {
+  return this != internal_default_instance() && vehicle_status_ != nullptr;
 }
-inline bool VehicleStatusResponse::_internal_data_link_loss() const {
-  return data_link_loss_;
+inline bool VehicleStatusResponse::has_vehicle_status() const {
+  return _internal_has_vehicle_status();
 }
-inline bool VehicleStatusResponse::data_link_loss() const {
-  // @@protoc_insertion_point(field_get:mavsdk.rpc.telemetry.VehicleStatusResponse.data_link_loss)
-  return _internal_data_link_loss();
+inline void VehicleStatusResponse::clear_vehicle_status() {
+  if (GetArenaNoVirtual() == nullptr && vehicle_status_ != nullptr) {
+    delete vehicle_status_;
+  }
+  vehicle_status_ = nullptr;
 }
-inline void VehicleStatusResponse::_internal_set_data_link_loss(bool value) {
+inline const ::mavsdk::rpc::telemetry::VehicleStatus& VehicleStatusResponse::_internal_vehicle_status() const {
+  const ::mavsdk::rpc::telemetry::VehicleStatus* p = vehicle_status_;
+  return p != nullptr ? *p : *reinterpret_cast<const ::mavsdk::rpc::telemetry::VehicleStatus*>(
+      &::mavsdk::rpc::telemetry::_VehicleStatus_default_instance_);
+}
+inline const ::mavsdk::rpc::telemetry::VehicleStatus& VehicleStatusResponse::vehicle_status() const {
+  // @@protoc_insertion_point(field_get:mavsdk.rpc.telemetry.VehicleStatusResponse.vehicle_status)
+  return _internal_vehicle_status();
+}
+inline ::mavsdk::rpc::telemetry::VehicleStatus* VehicleStatusResponse::release_vehicle_status() {
+  // @@protoc_insertion_point(field_release:mavsdk.rpc.telemetry.VehicleStatusResponse.vehicle_status)
   
-  data_link_loss_ = value;
+  ::mavsdk::rpc::telemetry::VehicleStatus* temp = vehicle_status_;
+  vehicle_status_ = nullptr;
+  return temp;
 }
-inline void VehicleStatusResponse::set_data_link_loss(bool value) {
-  _internal_set_data_link_loss(value);
-  // @@protoc_insertion_point(field_set:mavsdk.rpc.telemetry.VehicleStatusResponse.data_link_loss)
+inline ::mavsdk::rpc::telemetry::VehicleStatus* VehicleStatusResponse::_internal_mutable_vehicle_status() {
+  
+  if (vehicle_status_ == nullptr) {
+    auto* p = CreateMaybeMessage<::mavsdk::rpc::telemetry::VehicleStatus>(GetArenaNoVirtual());
+    vehicle_status_ = p;
+  }
+  return vehicle_status_;
+}
+inline ::mavsdk::rpc::telemetry::VehicleStatus* VehicleStatusResponse::mutable_vehicle_status() {
+  // @@protoc_insertion_point(field_mutable:mavsdk.rpc.telemetry.VehicleStatusResponse.vehicle_status)
+  return _internal_mutable_vehicle_status();
+}
+inline void VehicleStatusResponse::set_allocated_vehicle_status(::mavsdk::rpc::telemetry::VehicleStatus* vehicle_status) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaNoVirtual();
+  if (message_arena == nullptr) {
+    delete vehicle_status_;
+  }
+  if (vehicle_status) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena = nullptr;
+    if (message_arena != submessage_arena) {
+      vehicle_status = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, vehicle_status, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  vehicle_status_ = vehicle_status;
+  // @@protoc_insertion_point(field_set_allocated:mavsdk.rpc.telemetry.VehicleStatusResponse.vehicle_status)
 }
 
 // -------------------------------------------------------------------
@@ -22447,6 +22625,30 @@ inline void BatteryStatus::set_mah_consumed(float value) {
 
 // -------------------------------------------------------------------
 
+// VehicleStatus
+
+// bool data_link_loss = 1 [(.mavsdk.options.default_value) = "false"];
+inline void VehicleStatus::clear_data_link_loss() {
+  data_link_loss_ = false;
+}
+inline bool VehicleStatus::_internal_data_link_loss() const {
+  return data_link_loss_;
+}
+inline bool VehicleStatus::data_link_loss() const {
+  // @@protoc_insertion_point(field_get:mavsdk.rpc.telemetry.VehicleStatus.data_link_loss)
+  return _internal_data_link_loss();
+}
+inline void VehicleStatus::_internal_set_data_link_loss(bool value) {
+  
+  data_link_loss_ = value;
+}
+inline void VehicleStatus::set_data_link_loss(bool value) {
+  _internal_set_data_link_loss(value);
+  // @@protoc_insertion_point(field_set:mavsdk.rpc.telemetry.VehicleStatus.data_link_loss)
+}
+
+// -------------------------------------------------------------------
+
 // ModeInfo
 
 // uint32 base_mode = 1 [(.mavsdk.options.default_value) = "0"];
@@ -24524,6 +24726,8 @@ inline void TelemetryResult::set_allocated_result_str(std::string* result_str) {
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------
