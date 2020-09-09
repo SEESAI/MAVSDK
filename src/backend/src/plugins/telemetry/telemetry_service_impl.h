@@ -450,6 +450,16 @@ public:
         return obj;
     }
 
+    static std::unique_ptr<rpc::telemetry::VehicleStatus>
+    translateToRpcVehicleStatus(const mavsdk::Telemetry::VehicleStatus& vehicle_status)
+    {
+        std::unique_ptr<rpc::telemetry::VehicleStatus> rpc_obj(new rpc::telemetry::VehicleStatus());
+
+        rpc_obj->set_data_link_loss(vehicle_status.data_link_loss);
+
+        return rpc_obj;
+    }
+
     static std::unique_ptr<rpc::telemetry::ModeInfo>
     translateToRpcModeInfo(const mavsdk::Telemetry::ModeInfo &mode_info)
     {
@@ -1675,6 +1685,43 @@ public:
                     lock.unlock();
                     stream_closed_promise->set_value();
                 }
+            });
+
+        stream_closed_future.wait();
+        return grpc::Status::OK;
+    }
+
+    grpc::Status SubscribeVehicleStatus(
+        grpc::ServerContext* /* context */,
+        const mavsdk::rpc::telemetry::SubscribeVehicleStatusRequest* /* request */,
+        grpc::ServerWriter<rpc::telemetry::VehicleStatusResponse>* writer) override
+    {
+        auto stream_closed_promise = std::make_shared<std::promise<void>>();
+        auto stream_closed_future = stream_closed_promise->get_future();
+        register_stream_stop_promise(stream_closed_promise);
+
+        auto is_finished = std::make_shared<bool>(false);
+
+        std::mutex subscribe_mutex{};
+
+        _telemetry.subscribe_vehicle_status(
+            [this, &writer, &stream_closed_promise, is_finished, &subscribe_mutex](
+                const mavsdk::Telemetry::VehicleStatus vehicle_status) {
+              rpc::telemetry::VehicleStatusResponse rpc_response;
+
+              rpc_response.set_allocated_vehicle_status(
+                  translateToRpcBatteryStatus(battery_status).release());
+
+
+              std::unique_lock<std::mutex> lock(subscribe_mutex);
+              if (!*is_finished && !writer->Write(rpc_response)) {
+                  _telemetry.subscribe_battery_status(nullptr);
+
+                  *is_finished = true;
+                  unregister_stream_stop_promise(stream_closed_promise);
+                  lock.unlock();
+                  stream_closed_promise->set_value();
+              }
             });
 
         stream_closed_future.wait();
