@@ -876,7 +876,7 @@ void TelemetryImpl::process_sys_status(const mavlink_message_t& message)
     set_battery(new_battery);
 
     Telemetry::VehicleStatus new_vehicle_status;
-    new_vehicle_status.manual_control_signal_lost = sys_status.errors_count1;
+    new_vehicle_status.manual_control_signal_loss = sys_status.errors_count1;
     new_vehicle_status.data_link_loss = sys_status.errors_count2;
     new_vehicle_status.rc_signal_loss = sys_status.errors_count3;
     new_vehicle_status.manual_control_data_source = sys_status.errors_count4;

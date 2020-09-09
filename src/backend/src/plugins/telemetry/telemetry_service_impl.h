@@ -454,7 +454,10 @@ public:
     translateToRpcVehicleStatus(const mavsdk::Telemetry::VehicleStatus& vehicle_status)
     {
         std::unique_ptr<rpc::telemetry::VehicleStatus> rpc_obj(new rpc::telemetry::VehicleStatus());
+        rpc_obj->set_manual_control_signal_loss(vehicle_status.manual_control_signal_loss);
         rpc_obj->set_data_link_loss(vehicle_status.data_link_loss);
+        rpc_obj->set_rc_signal_loss(vehicle_status.rc_signal_loss);
+        rpc_obj->set_manual_contol_data_source(vehicle_status.manual_control_data_source);
 
         return rpc_obj;
     }

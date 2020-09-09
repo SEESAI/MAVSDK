@@ -14906,9 +14906,21 @@ class VehicleStatus :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kDataLinkLossFieldNumber = 1,
+    kManualControlSignalLossFieldNumber = 1,
+    kDataLinkLossFieldNumber = 2,
+    kRcSignalLossFieldNumber = 3,
+    kManualContolDataSourceFieldNumber = 4,
   };
-  // bool data_link_loss = 1 [(.mavsdk.options.default_value) = "false"];
+  // bool manual_control_signal_loss = 1 [(.mavsdk.options.default_value) = "false"];
+  void clear_manual_control_signal_loss();
+  bool manual_control_signal_loss() const;
+  void set_manual_control_signal_loss(bool value);
+  private:
+  bool _internal_manual_control_signal_loss() const;
+  void _internal_set_manual_control_signal_loss(bool value);
+  public:
+
+  // bool data_link_loss = 2 [(.mavsdk.options.default_value) = "false"];
   void clear_data_link_loss();
   bool data_link_loss() const;
   void set_data_link_loss(bool value);
@@ -14917,12 +14929,33 @@ class VehicleStatus :
   void _internal_set_data_link_loss(bool value);
   public:
 
+  // bool rc_signal_loss = 3 [(.mavsdk.options.default_value) = "false"];
+  void clear_rc_signal_loss();
+  bool rc_signal_loss() const;
+  void set_rc_signal_loss(bool value);
+  private:
+  bool _internal_rc_signal_loss() const;
+  void _internal_set_rc_signal_loss(bool value);
+  public:
+
+  // uint32 manual_contol_data_source = 4 [(.mavsdk.options.default_value) = "0"];
+  void clear_manual_contol_data_source();
+  ::PROTOBUF_NAMESPACE_ID::uint32 manual_contol_data_source() const;
+  void set_manual_contol_data_source(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::uint32 _internal_manual_contol_data_source() const;
+  void _internal_set_manual_contol_data_source(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  public:
+
   // @@protoc_insertion_point(class_scope:mavsdk.rpc.telemetry.VehicleStatus)
  private:
   class _Internal;
 
   ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
+  bool manual_control_signal_loss_;
   bool data_link_loss_;
+  bool rc_signal_loss_;
+  ::PROTOBUF_NAMESPACE_ID::uint32 manual_contol_data_source_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_telemetry_2ftelemetry_2eproto;
 };
@@ -22627,7 +22660,27 @@ inline void BatteryStatus::set_mah_consumed(float value) {
 
 // VehicleStatus
 
-// bool data_link_loss = 1 [(.mavsdk.options.default_value) = "false"];
+// bool manual_control_signal_loss = 1 [(.mavsdk.options.default_value) = "false"];
+inline void VehicleStatus::clear_manual_control_signal_loss() {
+  manual_control_signal_loss_ = false;
+}
+inline bool VehicleStatus::_internal_manual_control_signal_loss() const {
+  return manual_control_signal_loss_;
+}
+inline bool VehicleStatus::manual_control_signal_loss() const {
+  // @@protoc_insertion_point(field_get:mavsdk.rpc.telemetry.VehicleStatus.manual_control_signal_loss)
+  return _internal_manual_control_signal_loss();
+}
+inline void VehicleStatus::_internal_set_manual_control_signal_loss(bool value) {
+  
+  manual_control_signal_loss_ = value;
+}
+inline void VehicleStatus::set_manual_control_signal_loss(bool value) {
+  _internal_set_manual_control_signal_loss(value);
+  // @@protoc_insertion_point(field_set:mavsdk.rpc.telemetry.VehicleStatus.manual_control_signal_loss)
+}
+
+// bool data_link_loss = 2 [(.mavsdk.options.default_value) = "false"];
 inline void VehicleStatus::clear_data_link_loss() {
   data_link_loss_ = false;
 }
@@ -22645,6 +22698,46 @@ inline void VehicleStatus::_internal_set_data_link_loss(bool value) {
 inline void VehicleStatus::set_data_link_loss(bool value) {
   _internal_set_data_link_loss(value);
   // @@protoc_insertion_point(field_set:mavsdk.rpc.telemetry.VehicleStatus.data_link_loss)
+}
+
+// bool rc_signal_loss = 3 [(.mavsdk.options.default_value) = "false"];
+inline void VehicleStatus::clear_rc_signal_loss() {
+  rc_signal_loss_ = false;
+}
+inline bool VehicleStatus::_internal_rc_signal_loss() const {
+  return rc_signal_loss_;
+}
+inline bool VehicleStatus::rc_signal_loss() const {
+  // @@protoc_insertion_point(field_get:mavsdk.rpc.telemetry.VehicleStatus.rc_signal_loss)
+  return _internal_rc_signal_loss();
+}
+inline void VehicleStatus::_internal_set_rc_signal_loss(bool value) {
+  
+  rc_signal_loss_ = value;
+}
+inline void VehicleStatus::set_rc_signal_loss(bool value) {
+  _internal_set_rc_signal_loss(value);
+  // @@protoc_insertion_point(field_set:mavsdk.rpc.telemetry.VehicleStatus.rc_signal_loss)
+}
+
+// uint32 manual_contol_data_source = 4 [(.mavsdk.options.default_value) = "0"];
+inline void VehicleStatus::clear_manual_contol_data_source() {
+  manual_contol_data_source_ = 0u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint32 VehicleStatus::_internal_manual_contol_data_source() const {
+  return manual_contol_data_source_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint32 VehicleStatus::manual_contol_data_source() const {
+  // @@protoc_insertion_point(field_get:mavsdk.rpc.telemetry.VehicleStatus.manual_contol_data_source)
+  return _internal_manual_contol_data_source();
+}
+inline void VehicleStatus::_internal_set_manual_contol_data_source(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  
+  manual_contol_data_source_ = value;
+}
+inline void VehicleStatus::set_manual_contol_data_source(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  _internal_set_manual_contol_data_source(value);
+  // @@protoc_insertion_point(field_set:mavsdk.rpc.telemetry.VehicleStatus.manual_contol_data_source)
 }
 
 // -------------------------------------------------------------------
