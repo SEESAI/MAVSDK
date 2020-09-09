@@ -878,6 +878,8 @@ void TelemetryImpl::process_sys_status(const mavlink_message_t& message)
     Telemetry::VehicleStatus new_vehicle_status;
     new_vehicle_status.data_link_loss = sys_status.errors_count2;
 
+    set_vehicle_status(new_vehicle_status);
+
     if (_battery_subscription) {
         auto callback = _battery_subscription;
         auto arg = battery();

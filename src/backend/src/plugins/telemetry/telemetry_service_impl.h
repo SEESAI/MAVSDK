@@ -454,7 +454,6 @@ public:
     translateToRpcVehicleStatus(const mavsdk::Telemetry::VehicleStatus& vehicle_status)
     {
         std::unique_ptr<rpc::telemetry::VehicleStatus> rpc_obj(new rpc::telemetry::VehicleStatus());
-
         rpc_obj->set_data_link_loss(vehicle_status.data_link_loss);
 
         return rpc_obj;
@@ -1716,21 +1715,20 @@ public:
         _telemetry.subscribe_vehicle_status(
             [this, &writer, &stream_closed_promise, is_finished, &subscribe_mutex](
                 const mavsdk::Telemetry::VehicleStatus vehicle_status) {
-              rpc::telemetry::VehicleStatusResponse rpc_response;
+                rpc::telemetry::VehicleStatusResponse rpc_response;
 
-              rpc_response.set_allocated_vehicle_status(
-                  translateToRpcVehicleStatus(vehicle_status).release());
+                rpc_response.set_allocated_vehicle_status(
+                    translateToRpcVehicleStatus(vehicle_status).release());
 
+                std::unique_lock<std::mutex> lock(subscribe_mutex);
+                if (!*is_finished && !writer->Write(rpc_response)) {
+                    _telemetry.subscribe_vehicle_status(nullptr);
 
-              std::unique_lock<std::mutex> lock(subscribe_mutex);
-              if (!*is_finished && !writer->Write(rpc_response)) {
-                  _telemetry.subscribe_vehicle_status(nullptr);
-
-                  *is_finished = true;
-                  unregister_stream_stop_promise(stream_closed_promise);
-                  lock.unlock();
-                  stream_closed_promise->set_value();
-              }
+                    *is_finished = true;
+                    unregister_stream_stop_promise(stream_closed_promise);
+                    lock.unlock();
+                    stream_closed_promise->set_value();
+                }
             });
 
         stream_closed_future.wait();

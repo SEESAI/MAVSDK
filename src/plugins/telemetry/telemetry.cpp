@@ -682,6 +682,20 @@ std::ostream& operator<<(std::ostream& str, Telemetry::BatteryStatus const& batt
     return str;
 }
 
+bool operator==(const Telemetry::VehicleStatus& lhs, const Telemetry::VehicleStatus& rhs)
+{
+    return ((std::isnan(rhs.data_link_loss) && std::isnan(lhs.data_link_loss)) || rhs.data_link_loss == lhs.data_link_loss);
+}
+
+std::ostream& operator<<(std::ostream& str, Telemetry::VehicleStatus const& vehicle_status)
+{
+    str << std::setprecision(15);
+    str << "vehicle_status" << '\n' << "{\n";
+    str << "    data_link_loss: " << vehicle_status.data_link_loss << '\n';
+    str << '}';
+    return str;
+}
+
 bool operator==(const Telemetry::ModeInfo& lhs, const Telemetry::ModeInfo& rhs)
 {
     return (rhs.base_mode == lhs.base_mode) && (rhs.custom_mode == lhs.custom_mode);

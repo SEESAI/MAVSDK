@@ -319,7 +319,7 @@ public:
      * @brief Backup Link status.
      */
     struct VehicleStatus {
-        bool data_link_loss {false};
+        bool data_link_loss {true};
     };
 
     /**
