@@ -316,6 +316,28 @@ public:
     friend std::ostream& operator<<(std::ostream& str, Telemetry::BatteryStatus const& battery_status);
 
     /**
+     * @brief Backup Link status.
+     */
+    struct VehicleStatus {
+        bool data_link_loss {false};
+    };
+
+    /**
+     *
+     * @brief Equal operator to compare two `Telemetry::VehicleStatus` objects.
+     *
+     * @return `true` if items are equal.
+     */
+    friend bool operator==(const Telemetry::VehicleStatus& lhs, const Telemetry::VehicleStatus& rhs);
+
+    /**
+     * @brief Stream operator to print information about a `Telemetry::VehicleStatus`.
+     *
+     * @return A reference to the stream.
+     */
+    friend std::ostream& operator<<(std::ostream& str, Telemetry::VehicleStatus const& backup_link_status);
+
+    /**
      * @brief Mode Info structure.
      */
     struct ModeInfo {
@@ -1153,6 +1175,21 @@ public:
      * @return One BatteryStatus update.
      */
     BatteryStatus battery_status() const;
+
+    using VehicleStatusCallback = std::function<void(VehicleStatus)>;
+
+    /**
+     * @brief Subscribe to 'vehicle status' updates.
+     */
+    void subscribe_vehicle_status(VehicleStatusCallback callback);
+
+    /**
+     *
+     * @brief Poll for 'VehicleStatus' (blocking).
+     *
+     * @return One VehicleStatus update.
+     */
+     VehicleStatus vehicle_status() const;
 
     /**
      * @brief Callback type for subscribe_flight_mode.

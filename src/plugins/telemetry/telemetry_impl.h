@@ -85,6 +85,7 @@ public:
     Telemetry::GpsInfo gps_info() const;
     Telemetry::Battery battery() const;
     Telemetry::BatteryStatus battery_status() const;
+    Telemetry::VehicleStatus vehicle_status() const;
     Telemetry::ModeInfo mode_info() const;
     Telemetry::FlightMode flight_mode() const;
     Telemetry::Health health() const;
@@ -116,6 +117,7 @@ public:
     void gps_info_async(Telemetry::GpsInfoCallback& callback);
     void battery_async(Telemetry::BatteryCallback& callback);
     void battery_status_async(Telemetry::BatteryStatusCallback& callback);
+    void vehicle_status_async(Telemetry::VehicleStatusCallback& callback);
     void mode_info_async(Telemetry::ModeInfoCallback& callback);
     void flight_mode_async(Telemetry::FlightModeCallback& callback);
     void health_async(Telemetry::HealthCallback& callback);
@@ -150,6 +152,7 @@ private:
     void set_gps_info(Telemetry::GpsInfo gps_info);
     void set_battery(Telemetry::Battery battery);
     void set_battery_status(Telemetry::BatteryStatus battery_status);
+    void set_vehicle_status(Telemetry::VehicleStatus vehicle_status);
     void set_health_local_position(bool ok);
     void set_health_global_position(bool ok);
     void set_health_home_position(bool ok);
@@ -264,6 +267,9 @@ private:
     mutable std::mutex _battery_status_mutex{};
     Telemetry::BatteryStatus _battery_status{};
 
+    mutable std::mutex _vehicle_status_mutex{};
+    Telemetry::VehicleStatus _vehicle_status{};
+
     mutable std::mutex _health_mutex{};
     Telemetry::Health _health{};
 
@@ -310,6 +316,7 @@ private:
     Telemetry::GpsInfoCallback _gps_info_subscription{nullptr};
     Telemetry::BatteryCallback _battery_subscription{nullptr};
     Telemetry::BatteryStatusCallback _battery_status_subscription{nullptr};
+    Telemetry::VehicleStatusCallback _vehicle_status_subscription{nullptr};
     Telemetry::ModeInfoCallback _mode_info_subscription{nullptr};
     Telemetry::FlightModeCallback _flight_mode_subscription{nullptr};
     Telemetry::HealthCallback _health_subscription{nullptr};

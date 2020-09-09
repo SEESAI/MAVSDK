@@ -875,9 +875,18 @@ void TelemetryImpl::process_sys_status(const mavlink_message_t& message)
 
     set_battery(new_battery);
 
+    Telemetry::VehicleStatus new_vehicle_status;
+    new_vehicle_status.data_link_loss = sys_status.errors_count2;
+
     if (_battery_subscription) {
         auto callback = _battery_subscription;
         auto arg = battery();
+        _parent->call_user_callback([callback, arg]() { callback(arg); });
+    }
+
+    if (_vehicle_status_subscription) {
+        auto callback = _vehicle_status_subscription;
+        auto arg = vehicle_status();
         _parent->call_user_callback([callback, arg]() { callback(arg); });
     }
 }
@@ -1494,6 +1503,12 @@ Telemetry::BatteryStatus TelemetryImpl::battery_status() const
     return _battery_status;
 }
 
+Telemetry::VehicleStatus TelemetryImpl::vehicle_status() const
+{
+    std::lock_guard<std::mutex> lock(_vehicle_status_mutex);
+    return _vehicle_status;
+}
+
 void TelemetryImpl::set_battery(Telemetry::Battery battery)
 {
     std::lock_guard<std::mutex> lock(_battery_mutex);
@@ -1504,6 +1519,12 @@ void TelemetryImpl::set_battery_status(Telemetry::BatteryStatus battery_status)
 {
     std::lock_guard<std::mutex> lock(_battery_status_mutex);
     _battery_status = battery_status;
+}
+
+void TelemetryImpl::set_vehicle_status(Telemetry::VehicleStatus vehicle_status)
+{
+    std::lock_guard<std::mutex> lock(_vehicle_status_mutex);
+    _vehicle_status = vehicle_status;
 }
 
 Telemetry::ModeInfo TelemetryImpl::mode_info() const
@@ -1769,6 +1790,11 @@ void TelemetryImpl::battery_async(Telemetry::BatteryCallback& callback)
 void TelemetryImpl::battery_status_async(Telemetry::BatteryStatusCallback& callback)
 {
     _battery_status_subscription = callback;
+}
+
+void TelemetryImpl::vehicle_status_async(Telemetry::VehicleStatusCallback& callback)
+{
+    _vehicle_status_subscription = callback;
 }
 
 void TelemetryImpl::mode_info_async(Telemetry::ModeInfoCallback& callback)
