@@ -460,6 +460,15 @@ public:
         return rpc_obj;
     }
 
+    static mavsdk::Telemetry::VehicleStatus
+    translateFromRpcVehicleStatus(const rpc::telemetry::VehicleStatus& vehicle_status)
+    {
+        mavsdk::Telemetry::VehicleStatus obj;
+        obj.data_link_loss = vehicle_status.data_link_loss();
+
+        return obj;
+    }
+
     static std::unique_ptr<rpc::telemetry::ModeInfo>
     translateToRpcModeInfo(const mavsdk::Telemetry::ModeInfo &mode_info)
     {
@@ -1710,12 +1719,12 @@ public:
               rpc::telemetry::VehicleStatusResponse rpc_response;
 
               rpc_response.set_allocated_vehicle_status(
-                  translateToRpcBatteryStatus(battery_status).release());
+                  translateToRpcVehicleStatus(vehicle_status).release());
 
 
               std::unique_lock<std::mutex> lock(subscribe_mutex);
               if (!*is_finished && !writer->Write(rpc_response)) {
-                  _telemetry.subscribe_battery_status(nullptr);
+                  _telemetry.subscribe_vehicle_status(nullptr);
 
                   *is_finished = true;
                   unregister_stream_stop_promise(stream_closed_promise);
