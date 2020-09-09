@@ -319,7 +319,10 @@ public:
      * @brief Backup Link status.
      */
     struct VehicleStatus {
+        bool manual_control_signal_loss {true};
         bool data_link_loss {true};
+        bool rc_signal_loss {true};
+        uint16_t manual_control_data_source {0};
     };
 
     /**
