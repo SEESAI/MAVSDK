@@ -31,19 +31,19 @@ void GimbalImpl::deinit() {}
 
 void GimbalImpl::enable()
 {
-    _parent->register_timeout_handler(
-        [this]() { receive_protocol_timeout(); }, 1.0, &_protocol_cookie);
-
-    MAVLinkCommands::CommandLong command{};
-    command.command = MAV_CMD_REQUEST_MESSAGE;
-    command.params.param1 = static_cast<float>(MAVLINK_MSG_ID_GIMBAL_MANAGER_INFORMATION);
-    command.target_component_id = 0; // any component
-    _parent->send_command_async(command, nullptr);
+//    _parent->register_timeout_handler(
+//        [this]() { receive_protocol_timeout(); }, 1.0, &_protocol_cookie);
+//
+//    MAVLinkCommands::CommandLong command{};
+//    command.command = MAV_CMD_REQUEST_MESSAGE;
+//    command.params.param1 = static_cast<float>(MAVLINK_MSG_ID_GIMBAL_MANAGER_INFORMATION);
+//    command.target_component_id = 0; // any component
+//    _parent->send_command_async(command, nullptr);
 }
 
 void GimbalImpl::disable()
 {
-    _gimbal_protocol.reset(nullptr);
+//    _gimbal_protocol.reset(nullptr);
 }
 
 void GimbalImpl::receive_protocol_timeout()
