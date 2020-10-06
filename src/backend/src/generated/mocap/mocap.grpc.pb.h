@@ -660,7 +660,14 @@ class MocapService final {
    public:
     WithStreamedUnaryMethod_SetVisionPositionEstimate() {
       ::grpc::Service::MarkMethodStreamed(0,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::mocap::SetVisionPositionEstimateRequest, ::mavsdk::rpc::mocap::SetVisionPositionEstimateResponse>(std::bind(&WithStreamedUnaryMethod_SetVisionPositionEstimate<BaseClass>::StreamedSetVisionPositionEstimate, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::mocap::SetVisionPositionEstimateRequest, ::mavsdk::rpc::mocap::SetVisionPositionEstimateResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::mocap::SetVisionPositionEstimateRequest, ::mavsdk::rpc::mocap::SetVisionPositionEstimateResponse>* streamer) {
+                       return this->StreamedSetVisionPositionEstimate(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_SetVisionPositionEstimate() override {
       BaseClassMustBeDerivedFromService(this);
@@ -680,7 +687,14 @@ class MocapService final {
    public:
     WithStreamedUnaryMethod_SetAttitudePositionMocap() {
       ::grpc::Service::MarkMethodStreamed(1,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::mocap::SetAttitudePositionMocapRequest, ::mavsdk::rpc::mocap::SetAttitudePositionMocapResponse>(std::bind(&WithStreamedUnaryMethod_SetAttitudePositionMocap<BaseClass>::StreamedSetAttitudePositionMocap, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::mocap::SetAttitudePositionMocapRequest, ::mavsdk::rpc::mocap::SetAttitudePositionMocapResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::mocap::SetAttitudePositionMocapRequest, ::mavsdk::rpc::mocap::SetAttitudePositionMocapResponse>* streamer) {
+                       return this->StreamedSetAttitudePositionMocap(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_SetAttitudePositionMocap() override {
       BaseClassMustBeDerivedFromService(this);
@@ -700,7 +714,14 @@ class MocapService final {
    public:
     WithStreamedUnaryMethod_SetOdometry() {
       ::grpc::Service::MarkMethodStreamed(2,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::mocap::SetOdometryRequest, ::mavsdk::rpc::mocap::SetOdometryResponse>(std::bind(&WithStreamedUnaryMethod_SetOdometry<BaseClass>::StreamedSetOdometry, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::mocap::SetOdometryRequest, ::mavsdk::rpc::mocap::SetOdometryResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::mocap::SetOdometryRequest, ::mavsdk::rpc::mocap::SetOdometryResponse>* streamer) {
+                       return this->StreamedSetOdometry(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_SetOdometry() override {
       BaseClassMustBeDerivedFromService(this);

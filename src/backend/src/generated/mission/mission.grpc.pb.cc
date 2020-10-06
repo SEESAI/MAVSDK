@@ -418,67 +418,132 @@ MissionService::Service::Service() {
       MissionService_method_names[0],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< MissionService::Service, ::mavsdk::rpc::mission::UploadMissionRequest, ::mavsdk::rpc::mission::UploadMissionResponse>(
-          std::mem_fn(&MissionService::Service::UploadMission), this)));
+          [](MissionService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::mission::UploadMissionRequest* req,
+             ::mavsdk::rpc::mission::UploadMissionResponse* resp) {
+               return service->UploadMission(ctx, req, resp);
+             }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       MissionService_method_names[1],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< MissionService::Service, ::mavsdk::rpc::mission::CancelMissionUploadRequest, ::mavsdk::rpc::mission::CancelMissionUploadResponse>(
-          std::mem_fn(&MissionService::Service::CancelMissionUpload), this)));
+          [](MissionService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::mission::CancelMissionUploadRequest* req,
+             ::mavsdk::rpc::mission::CancelMissionUploadResponse* resp) {
+               return service->CancelMissionUpload(ctx, req, resp);
+             }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       MissionService_method_names[2],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< MissionService::Service, ::mavsdk::rpc::mission::DownloadMissionRequest, ::mavsdk::rpc::mission::DownloadMissionResponse>(
-          std::mem_fn(&MissionService::Service::DownloadMission), this)));
+          [](MissionService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::mission::DownloadMissionRequest* req,
+             ::mavsdk::rpc::mission::DownloadMissionResponse* resp) {
+               return service->DownloadMission(ctx, req, resp);
+             }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       MissionService_method_names[3],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< MissionService::Service, ::mavsdk::rpc::mission::CancelMissionDownloadRequest, ::mavsdk::rpc::mission::CancelMissionDownloadResponse>(
-          std::mem_fn(&MissionService::Service::CancelMissionDownload), this)));
+          [](MissionService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::mission::CancelMissionDownloadRequest* req,
+             ::mavsdk::rpc::mission::CancelMissionDownloadResponse* resp) {
+               return service->CancelMissionDownload(ctx, req, resp);
+             }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       MissionService_method_names[4],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< MissionService::Service, ::mavsdk::rpc::mission::StartMissionRequest, ::mavsdk::rpc::mission::StartMissionResponse>(
-          std::mem_fn(&MissionService::Service::StartMission), this)));
+          [](MissionService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::mission::StartMissionRequest* req,
+             ::mavsdk::rpc::mission::StartMissionResponse* resp) {
+               return service->StartMission(ctx, req, resp);
+             }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       MissionService_method_names[5],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< MissionService::Service, ::mavsdk::rpc::mission::PauseMissionRequest, ::mavsdk::rpc::mission::PauseMissionResponse>(
-          std::mem_fn(&MissionService::Service::PauseMission), this)));
+          [](MissionService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::mission::PauseMissionRequest* req,
+             ::mavsdk::rpc::mission::PauseMissionResponse* resp) {
+               return service->PauseMission(ctx, req, resp);
+             }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       MissionService_method_names[6],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< MissionService::Service, ::mavsdk::rpc::mission::ClearMissionRequest, ::mavsdk::rpc::mission::ClearMissionResponse>(
-          std::mem_fn(&MissionService::Service::ClearMission), this)));
+          [](MissionService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::mission::ClearMissionRequest* req,
+             ::mavsdk::rpc::mission::ClearMissionResponse* resp) {
+               return service->ClearMission(ctx, req, resp);
+             }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       MissionService_method_names[7],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< MissionService::Service, ::mavsdk::rpc::mission::SetCurrentMissionItemRequest, ::mavsdk::rpc::mission::SetCurrentMissionItemResponse>(
-          std::mem_fn(&MissionService::Service::SetCurrentMissionItem), this)));
+          [](MissionService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::mission::SetCurrentMissionItemRequest* req,
+             ::mavsdk::rpc::mission::SetCurrentMissionItemResponse* resp) {
+               return service->SetCurrentMissionItem(ctx, req, resp);
+             }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       MissionService_method_names[8],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< MissionService::Service, ::mavsdk::rpc::mission::IsMissionFinishedRequest, ::mavsdk::rpc::mission::IsMissionFinishedResponse>(
-          std::mem_fn(&MissionService::Service::IsMissionFinished), this)));
+          [](MissionService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::mission::IsMissionFinishedRequest* req,
+             ::mavsdk::rpc::mission::IsMissionFinishedResponse* resp) {
+               return service->IsMissionFinished(ctx, req, resp);
+             }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       MissionService_method_names[9],
       ::grpc::internal::RpcMethod::SERVER_STREAMING,
       new ::grpc::internal::ServerStreamingHandler< MissionService::Service, ::mavsdk::rpc::mission::SubscribeMissionProgressRequest, ::mavsdk::rpc::mission::MissionProgressResponse>(
-          std::mem_fn(&MissionService::Service::SubscribeMissionProgress), this)));
+          [](MissionService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::mission::SubscribeMissionProgressRequest* req,
+             ::grpc_impl::ServerWriter<::mavsdk::rpc::mission::MissionProgressResponse>* writer) {
+               return service->SubscribeMissionProgress(ctx, req, writer);
+             }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       MissionService_method_names[10],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< MissionService::Service, ::mavsdk::rpc::mission::GetReturnToLaunchAfterMissionRequest, ::mavsdk::rpc::mission::GetReturnToLaunchAfterMissionResponse>(
-          std::mem_fn(&MissionService::Service::GetReturnToLaunchAfterMission), this)));
+          [](MissionService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::mission::GetReturnToLaunchAfterMissionRequest* req,
+             ::mavsdk::rpc::mission::GetReturnToLaunchAfterMissionResponse* resp) {
+               return service->GetReturnToLaunchAfterMission(ctx, req, resp);
+             }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       MissionService_method_names[11],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< MissionService::Service, ::mavsdk::rpc::mission::SetReturnToLaunchAfterMissionRequest, ::mavsdk::rpc::mission::SetReturnToLaunchAfterMissionResponse>(
-          std::mem_fn(&MissionService::Service::SetReturnToLaunchAfterMission), this)));
+          [](MissionService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::mission::SetReturnToLaunchAfterMissionRequest* req,
+             ::mavsdk::rpc::mission::SetReturnToLaunchAfterMissionResponse* resp) {
+               return service->SetReturnToLaunchAfterMission(ctx, req, resp);
+             }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       MissionService_method_names[12],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< MissionService::Service, ::mavsdk::rpc::mission::ImportQgroundcontrolMissionRequest, ::mavsdk::rpc::mission::ImportQgroundcontrolMissionResponse>(
-          std::mem_fn(&MissionService::Service::ImportQgroundcontrolMission), this)));
+          [](MissionService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::mission::ImportQgroundcontrolMissionRequest* req,
+             ::mavsdk::rpc::mission::ImportQgroundcontrolMissionResponse* resp) {
+               return service->ImportQgroundcontrolMission(ctx, req, resp);
+             }, this)));
 }
 
 MissionService::Service::~Service() {

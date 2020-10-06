@@ -70,7 +70,12 @@ GeofenceService::Service::Service() {
       GeofenceService_method_names[0],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< GeofenceService::Service, ::mavsdk::rpc::geofence::UploadGeofenceRequest, ::mavsdk::rpc::geofence::UploadGeofenceResponse>(
-          std::mem_fn(&GeofenceService::Service::UploadGeofence), this)));
+          [](GeofenceService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::geofence::UploadGeofenceRequest* req,
+             ::mavsdk::rpc::geofence::UploadGeofenceResponse* resp) {
+               return service->UploadGeofence(ctx, req, resp);
+             }, this)));
 }
 
 GeofenceService::Service::~Service() {

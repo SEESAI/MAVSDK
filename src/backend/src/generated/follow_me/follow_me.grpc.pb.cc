@@ -250,37 +250,72 @@ FollowMeService::Service::Service() {
       FollowMeService_method_names[0],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< FollowMeService::Service, ::mavsdk::rpc::follow_me::GetConfigRequest, ::mavsdk::rpc::follow_me::GetConfigResponse>(
-          std::mem_fn(&FollowMeService::Service::GetConfig), this)));
+          [](FollowMeService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::follow_me::GetConfigRequest* req,
+             ::mavsdk::rpc::follow_me::GetConfigResponse* resp) {
+               return service->GetConfig(ctx, req, resp);
+             }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       FollowMeService_method_names[1],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< FollowMeService::Service, ::mavsdk::rpc::follow_me::SetConfigRequest, ::mavsdk::rpc::follow_me::SetConfigResponse>(
-          std::mem_fn(&FollowMeService::Service::SetConfig), this)));
+          [](FollowMeService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::follow_me::SetConfigRequest* req,
+             ::mavsdk::rpc::follow_me::SetConfigResponse* resp) {
+               return service->SetConfig(ctx, req, resp);
+             }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       FollowMeService_method_names[2],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< FollowMeService::Service, ::mavsdk::rpc::follow_me::IsActiveRequest, ::mavsdk::rpc::follow_me::IsActiveResponse>(
-          std::mem_fn(&FollowMeService::Service::IsActive), this)));
+          [](FollowMeService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::follow_me::IsActiveRequest* req,
+             ::mavsdk::rpc::follow_me::IsActiveResponse* resp) {
+               return service->IsActive(ctx, req, resp);
+             }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       FollowMeService_method_names[3],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< FollowMeService::Service, ::mavsdk::rpc::follow_me::SetTargetLocationRequest, ::mavsdk::rpc::follow_me::SetTargetLocationResponse>(
-          std::mem_fn(&FollowMeService::Service::SetTargetLocation), this)));
+          [](FollowMeService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::follow_me::SetTargetLocationRequest* req,
+             ::mavsdk::rpc::follow_me::SetTargetLocationResponse* resp) {
+               return service->SetTargetLocation(ctx, req, resp);
+             }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       FollowMeService_method_names[4],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< FollowMeService::Service, ::mavsdk::rpc::follow_me::GetLastLocationRequest, ::mavsdk::rpc::follow_me::GetLastLocationResponse>(
-          std::mem_fn(&FollowMeService::Service::GetLastLocation), this)));
+          [](FollowMeService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::follow_me::GetLastLocationRequest* req,
+             ::mavsdk::rpc::follow_me::GetLastLocationResponse* resp) {
+               return service->GetLastLocation(ctx, req, resp);
+             }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       FollowMeService_method_names[5],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< FollowMeService::Service, ::mavsdk::rpc::follow_me::StartRequest, ::mavsdk::rpc::follow_me::StartResponse>(
-          std::mem_fn(&FollowMeService::Service::Start), this)));
+          [](FollowMeService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::follow_me::StartRequest* req,
+             ::mavsdk::rpc::follow_me::StartResponse* resp) {
+               return service->Start(ctx, req, resp);
+             }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       FollowMeService_method_names[6],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< FollowMeService::Service, ::mavsdk::rpc::follow_me::StopRequest, ::mavsdk::rpc::follow_me::StopResponse>(
-          std::mem_fn(&FollowMeService::Service::Stop), this)));
+          [](FollowMeService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::follow_me::StopRequest* req,
+             ::mavsdk::rpc::follow_me::StopResponse* resp) {
+               return service->Stop(ctx, req, resp);
+             }, this)));
 }
 
 FollowMeService::Service::~Service() {

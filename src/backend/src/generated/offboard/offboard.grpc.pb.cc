@@ -490,77 +490,152 @@ OffboardService::Service::Service() {
       OffboardService_method_names[0],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< OffboardService::Service, ::mavsdk::rpc::offboard::StartRequest, ::mavsdk::rpc::offboard::StartResponse>(
-          std::mem_fn(&OffboardService::Service::RequestOffboard), this)));
+          [](OffboardService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::offboard::StartRequest* req,
+             ::mavsdk::rpc::offboard::StartResponse* resp) {
+               return service->RequestOffboard(ctx, req, resp);
+             }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       OffboardService_method_names[1],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< OffboardService::Service, ::mavsdk::rpc::offboard::StartRequest, ::mavsdk::rpc::offboard::StartResponse>(
-          std::mem_fn(&OffboardService::Service::Start), this)));
+          [](OffboardService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::offboard::StartRequest* req,
+             ::mavsdk::rpc::offboard::StartResponse* resp) {
+               return service->Start(ctx, req, resp);
+             }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       OffboardService_method_names[2],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< OffboardService::Service, ::mavsdk::rpc::offboard::StopRequest, ::mavsdk::rpc::offboard::StopResponse>(
-          std::mem_fn(&OffboardService::Service::Stop), this)));
+          [](OffboardService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::offboard::StopRequest* req,
+             ::mavsdk::rpc::offboard::StopResponse* resp) {
+               return service->Stop(ctx, req, resp);
+             }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       OffboardService_method_names[3],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< OffboardService::Service, ::mavsdk::rpc::offboard::IsActiveRequest, ::mavsdk::rpc::offboard::IsActiveResponse>(
-          std::mem_fn(&OffboardService::Service::IsActive), this)));
+          [](OffboardService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::offboard::IsActiveRequest* req,
+             ::mavsdk::rpc::offboard::IsActiveResponse* resp) {
+               return service->IsActive(ctx, req, resp);
+             }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       OffboardService_method_names[4],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< OffboardService::Service, ::mavsdk::rpc::offboard::SetAttitudeRequest, ::mavsdk::rpc::offboard::SetAttitudeResponse>(
-          std::mem_fn(&OffboardService::Service::SetAttitudeOnce), this)));
+          [](OffboardService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::offboard::SetAttitudeRequest* req,
+             ::mavsdk::rpc::offboard::SetAttitudeResponse* resp) {
+               return service->SetAttitudeOnce(ctx, req, resp);
+             }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       OffboardService_method_names[5],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< OffboardService::Service, ::mavsdk::rpc::offboard::SetAttitudeRequest, ::mavsdk::rpc::offboard::SetAttitudeResponse>(
-          std::mem_fn(&OffboardService::Service::SetAttitude), this)));
+          [](OffboardService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::offboard::SetAttitudeRequest* req,
+             ::mavsdk::rpc::offboard::SetAttitudeResponse* resp) {
+               return service->SetAttitude(ctx, req, resp);
+             }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       OffboardService_method_names[6],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< OffboardService::Service, ::mavsdk::rpc::offboard::SetActuatorControlRequest, ::mavsdk::rpc::offboard::SetActuatorControlResponse>(
-          std::mem_fn(&OffboardService::Service::SetActuatorControlOnce), this)));
+          [](OffboardService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::offboard::SetActuatorControlRequest* req,
+             ::mavsdk::rpc::offboard::SetActuatorControlResponse* resp) {
+               return service->SetActuatorControlOnce(ctx, req, resp);
+             }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       OffboardService_method_names[7],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< OffboardService::Service, ::mavsdk::rpc::offboard::SetActuatorControlRequest, ::mavsdk::rpc::offboard::SetActuatorControlResponse>(
-          std::mem_fn(&OffboardService::Service::SetActuatorControl), this)));
+          [](OffboardService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::offboard::SetActuatorControlRequest* req,
+             ::mavsdk::rpc::offboard::SetActuatorControlResponse* resp) {
+               return service->SetActuatorControl(ctx, req, resp);
+             }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       OffboardService_method_names[8],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< OffboardService::Service, ::mavsdk::rpc::offboard::SetAttitudeRateRequest, ::mavsdk::rpc::offboard::SetAttitudeRateResponse>(
-          std::mem_fn(&OffboardService::Service::SetAttitudeRateOnce), this)));
+          [](OffboardService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::offboard::SetAttitudeRateRequest* req,
+             ::mavsdk::rpc::offboard::SetAttitudeRateResponse* resp) {
+               return service->SetAttitudeRateOnce(ctx, req, resp);
+             }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       OffboardService_method_names[9],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< OffboardService::Service, ::mavsdk::rpc::offboard::SetAttitudeRateRequest, ::mavsdk::rpc::offboard::SetAttitudeRateResponse>(
-          std::mem_fn(&OffboardService::Service::SetAttitudeRate), this)));
+          [](OffboardService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::offboard::SetAttitudeRateRequest* req,
+             ::mavsdk::rpc::offboard::SetAttitudeRateResponse* resp) {
+               return service->SetAttitudeRate(ctx, req, resp);
+             }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       OffboardService_method_names[10],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< OffboardService::Service, ::mavsdk::rpc::offboard::SetPositionNedRequest, ::mavsdk::rpc::offboard::SetPositionNedResponse>(
-          std::mem_fn(&OffboardService::Service::SetPositionNedOnce), this)));
+          [](OffboardService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::offboard::SetPositionNedRequest* req,
+             ::mavsdk::rpc::offboard::SetPositionNedResponse* resp) {
+               return service->SetPositionNedOnce(ctx, req, resp);
+             }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       OffboardService_method_names[11],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< OffboardService::Service, ::mavsdk::rpc::offboard::SetPositionNedRequest, ::mavsdk::rpc::offboard::SetPositionNedResponse>(
-          std::mem_fn(&OffboardService::Service::SetPositionNed), this)));
+          [](OffboardService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::offboard::SetPositionNedRequest* req,
+             ::mavsdk::rpc::offboard::SetPositionNedResponse* resp) {
+               return service->SetPositionNed(ctx, req, resp);
+             }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       OffboardService_method_names[12],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< OffboardService::Service, ::mavsdk::rpc::offboard::SetVelocityBodyRequest, ::mavsdk::rpc::offboard::SetVelocityBodyResponse>(
-          std::mem_fn(&OffboardService::Service::SetVelocityBodyOnce), this)));
+          [](OffboardService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::offboard::SetVelocityBodyRequest* req,
+             ::mavsdk::rpc::offboard::SetVelocityBodyResponse* resp) {
+               return service->SetVelocityBodyOnce(ctx, req, resp);
+             }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       OffboardService_method_names[13],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< OffboardService::Service, ::mavsdk::rpc::offboard::SetVelocityBodyRequest, ::mavsdk::rpc::offboard::SetVelocityBodyResponse>(
-          std::mem_fn(&OffboardService::Service::SetVelocityBody), this)));
+          [](OffboardService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::offboard::SetVelocityBodyRequest* req,
+             ::mavsdk::rpc::offboard::SetVelocityBodyResponse* resp) {
+               return service->SetVelocityBody(ctx, req, resp);
+             }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       OffboardService_method_names[14],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< OffboardService::Service, ::mavsdk::rpc::offboard::SetVelocityNedRequest, ::mavsdk::rpc::offboard::SetVelocityNedResponse>(
-          std::mem_fn(&OffboardService::Service::SetVelocityNed), this)));
+          [](OffboardService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::offboard::SetVelocityNedRequest* req,
+             ::mavsdk::rpc::offboard::SetVelocityNedResponse* resp) {
+               return service->SetVelocityNed(ctx, req, resp);
+             }, this)));
 }
 
 OffboardService::Service::~Service() {

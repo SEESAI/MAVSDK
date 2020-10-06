@@ -464,7 +464,14 @@ class ShellService final {
    public:
     WithStreamedUnaryMethod_Send() {
       ::grpc::Service::MarkMethodStreamed(0,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::shell::SendRequest, ::mavsdk::rpc::shell::SendResponse>(std::bind(&WithStreamedUnaryMethod_Send<BaseClass>::StreamedSend, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::shell::SendRequest, ::mavsdk::rpc::shell::SendResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::shell::SendRequest, ::mavsdk::rpc::shell::SendResponse>* streamer) {
+                       return this->StreamedSend(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_Send() override {
       BaseClassMustBeDerivedFromService(this);
@@ -485,7 +492,14 @@ class ShellService final {
    public:
     WithSplitStreamingMethod_SubscribeReceive() {
       ::grpc::Service::MarkMethodStreamed(1,
-        new ::grpc::internal::SplitServerStreamingHandler< ::mavsdk::rpc::shell::SubscribeReceiveRequest, ::mavsdk::rpc::shell::ReceiveResponse>(std::bind(&WithSplitStreamingMethod_SubscribeReceive<BaseClass>::StreamedSubscribeReceive, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::SplitServerStreamingHandler<
+          ::mavsdk::rpc::shell::SubscribeReceiveRequest, ::mavsdk::rpc::shell::ReceiveResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerSplitStreamer<
+                     ::mavsdk::rpc::shell::SubscribeReceiveRequest, ::mavsdk::rpc::shell::ReceiveResponse>* streamer) {
+                       return this->StreamedSubscribeReceive(context,
+                         streamer);
+                  }));
     }
     ~WithSplitStreamingMethod_SubscribeReceive() override {
       BaseClassMustBeDerivedFromService(this);

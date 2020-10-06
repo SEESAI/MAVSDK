@@ -693,7 +693,14 @@ class ManualControlService final {
    public:
     WithStreamedUnaryMethod_StartPositionControl() {
       ::grpc::Service::MarkMethodStreamed(0,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::manual_control::StartPositionControlRequest, ::mavsdk::rpc::manual_control::StartPositionControlResponse>(std::bind(&WithStreamedUnaryMethod_StartPositionControl<BaseClass>::StreamedStartPositionControl, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::manual_control::StartPositionControlRequest, ::mavsdk::rpc::manual_control::StartPositionControlResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::manual_control::StartPositionControlRequest, ::mavsdk::rpc::manual_control::StartPositionControlResponse>* streamer) {
+                       return this->StreamedStartPositionControl(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_StartPositionControl() override {
       BaseClassMustBeDerivedFromService(this);
@@ -713,7 +720,14 @@ class ManualControlService final {
    public:
     WithStreamedUnaryMethod_StartAltitudeControl() {
       ::grpc::Service::MarkMethodStreamed(1,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::manual_control::StartAltitudeControlRequest, ::mavsdk::rpc::manual_control::StartAltitudeControlResponse>(std::bind(&WithStreamedUnaryMethod_StartAltitudeControl<BaseClass>::StreamedStartAltitudeControl, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::manual_control::StartAltitudeControlRequest, ::mavsdk::rpc::manual_control::StartAltitudeControlResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::manual_control::StartAltitudeControlRequest, ::mavsdk::rpc::manual_control::StartAltitudeControlResponse>* streamer) {
+                       return this->StreamedStartAltitudeControl(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_StartAltitudeControl() override {
       BaseClassMustBeDerivedFromService(this);
@@ -733,7 +747,14 @@ class ManualControlService final {
    public:
     WithStreamedUnaryMethod_SetManualControlInput() {
       ::grpc::Service::MarkMethodStreamed(2,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::manual_control::SetManualControlInputRequest, ::mavsdk::rpc::manual_control::SetManualControlInputResponse>(std::bind(&WithStreamedUnaryMethod_SetManualControlInput<BaseClass>::StreamedSetManualControlInput, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::manual_control::SetManualControlInputRequest, ::mavsdk::rpc::manual_control::SetManualControlInputResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::manual_control::SetManualControlInputRequest, ::mavsdk::rpc::manual_control::SetManualControlInputResponse>* streamer) {
+                       return this->StreamedSetManualControlInput(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_SetManualControlInput() override {
       BaseClassMustBeDerivedFromService(this);

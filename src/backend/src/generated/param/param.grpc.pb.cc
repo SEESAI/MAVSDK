@@ -160,22 +160,42 @@ ParamService::Service::Service() {
       ParamService_method_names[0],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< ParamService::Service, ::mavsdk::rpc::param::GetParamIntRequest, ::mavsdk::rpc::param::GetParamIntResponse>(
-          std::mem_fn(&ParamService::Service::GetParamInt), this)));
+          [](ParamService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::param::GetParamIntRequest* req,
+             ::mavsdk::rpc::param::GetParamIntResponse* resp) {
+               return service->GetParamInt(ctx, req, resp);
+             }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       ParamService_method_names[1],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< ParamService::Service, ::mavsdk::rpc::param::SetParamIntRequest, ::mavsdk::rpc::param::SetParamIntResponse>(
-          std::mem_fn(&ParamService::Service::SetParamInt), this)));
+          [](ParamService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::param::SetParamIntRequest* req,
+             ::mavsdk::rpc::param::SetParamIntResponse* resp) {
+               return service->SetParamInt(ctx, req, resp);
+             }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       ParamService_method_names[2],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< ParamService::Service, ::mavsdk::rpc::param::GetParamFloatRequest, ::mavsdk::rpc::param::GetParamFloatResponse>(
-          std::mem_fn(&ParamService::Service::GetParamFloat), this)));
+          [](ParamService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::param::GetParamFloatRequest* req,
+             ::mavsdk::rpc::param::GetParamFloatResponse* resp) {
+               return service->GetParamFloat(ctx, req, resp);
+             }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       ParamService_method_names[3],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< ParamService::Service, ::mavsdk::rpc::param::SetParamFloatRequest, ::mavsdk::rpc::param::SetParamFloatResponse>(
-          std::mem_fn(&ParamService::Service::SetParamFloat), this)));
+          [](ParamService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::param::SetParamFloatRequest* req,
+             ::mavsdk::rpc::param::SetParamFloatResponse* resp) {
+               return service->SetParamFloat(ctx, req, resp);
+             }, this)));
 }
 
 ParamService::Service::~Service() {

@@ -451,7 +451,14 @@ class CoreService final {
    public:
     WithStreamedUnaryMethod_ListRunningPlugins() {
       ::grpc::Service::MarkMethodStreamed(1,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::core::ListRunningPluginsRequest, ::mavsdk::rpc::core::ListRunningPluginsResponse>(std::bind(&WithStreamedUnaryMethod_ListRunningPlugins<BaseClass>::StreamedListRunningPlugins, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::core::ListRunningPluginsRequest, ::mavsdk::rpc::core::ListRunningPluginsResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::core::ListRunningPluginsRequest, ::mavsdk::rpc::core::ListRunningPluginsResponse>* streamer) {
+                       return this->StreamedListRunningPlugins(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_ListRunningPlugins() override {
       BaseClassMustBeDerivedFromService(this);
@@ -472,7 +479,14 @@ class CoreService final {
    public:
     WithSplitStreamingMethod_SubscribeConnectionState() {
       ::grpc::Service::MarkMethodStreamed(0,
-        new ::grpc::internal::SplitServerStreamingHandler< ::mavsdk::rpc::core::SubscribeConnectionStateRequest, ::mavsdk::rpc::core::ConnectionStateResponse>(std::bind(&WithSplitStreamingMethod_SubscribeConnectionState<BaseClass>::StreamedSubscribeConnectionState, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::SplitServerStreamingHandler<
+          ::mavsdk::rpc::core::SubscribeConnectionStateRequest, ::mavsdk::rpc::core::ConnectionStateResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerSplitStreamer<
+                     ::mavsdk::rpc::core::SubscribeConnectionStateRequest, ::mavsdk::rpc::core::ConnectionStateResponse>* streamer) {
+                       return this->StreamedSubscribeConnectionState(context,
+                         streamer);
+                  }));
     }
     ~WithSplitStreamingMethod_SubscribeConnectionState() override {
       BaseClassMustBeDerivedFromService(this);

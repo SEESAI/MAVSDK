@@ -190,27 +190,52 @@ InfoService::Service::Service() {
       InfoService_method_names[0],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< InfoService::Service, ::mavsdk::rpc::info::GetFlightInformationRequest, ::mavsdk::rpc::info::GetFlightInformationResponse>(
-          std::mem_fn(&InfoService::Service::GetFlightInformation), this)));
+          [](InfoService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::info::GetFlightInformationRequest* req,
+             ::mavsdk::rpc::info::GetFlightInformationResponse* resp) {
+               return service->GetFlightInformation(ctx, req, resp);
+             }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       InfoService_method_names[1],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< InfoService::Service, ::mavsdk::rpc::info::GetIdentificationRequest, ::mavsdk::rpc::info::GetIdentificationResponse>(
-          std::mem_fn(&InfoService::Service::GetIdentification), this)));
+          [](InfoService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::info::GetIdentificationRequest* req,
+             ::mavsdk::rpc::info::GetIdentificationResponse* resp) {
+               return service->GetIdentification(ctx, req, resp);
+             }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       InfoService_method_names[2],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< InfoService::Service, ::mavsdk::rpc::info::GetProductRequest, ::mavsdk::rpc::info::GetProductResponse>(
-          std::mem_fn(&InfoService::Service::GetProduct), this)));
+          [](InfoService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::info::GetProductRequest* req,
+             ::mavsdk::rpc::info::GetProductResponse* resp) {
+               return service->GetProduct(ctx, req, resp);
+             }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       InfoService_method_names[3],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< InfoService::Service, ::mavsdk::rpc::info::GetVersionRequest, ::mavsdk::rpc::info::GetVersionResponse>(
-          std::mem_fn(&InfoService::Service::GetVersion), this)));
+          [](InfoService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::info::GetVersionRequest* req,
+             ::mavsdk::rpc::info::GetVersionResponse* resp) {
+               return service->GetVersion(ctx, req, resp);
+             }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       InfoService_method_names[4],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< InfoService::Service, ::mavsdk::rpc::info::GetSpeedFactorRequest, ::mavsdk::rpc::info::GetSpeedFactorResponse>(
-          std::mem_fn(&InfoService::Service::GetSpeedFactor), this)));
+          [](InfoService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::info::GetSpeedFactorRequest* req,
+             ::mavsdk::rpc::info::GetSpeedFactorResponse* resp) {
+               return service->GetSpeedFactor(ctx, req, resp);
+             }, this)));
 }
 
 InfoService::Service::~Service() {

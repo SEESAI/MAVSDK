@@ -130,17 +130,32 @@ ManualControlService::Service::Service() {
       ManualControlService_method_names[0],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< ManualControlService::Service, ::mavsdk::rpc::manual_control::StartPositionControlRequest, ::mavsdk::rpc::manual_control::StartPositionControlResponse>(
-          std::mem_fn(&ManualControlService::Service::StartPositionControl), this)));
+          [](ManualControlService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::manual_control::StartPositionControlRequest* req,
+             ::mavsdk::rpc::manual_control::StartPositionControlResponse* resp) {
+               return service->StartPositionControl(ctx, req, resp);
+             }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       ManualControlService_method_names[1],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< ManualControlService::Service, ::mavsdk::rpc::manual_control::StartAltitudeControlRequest, ::mavsdk::rpc::manual_control::StartAltitudeControlResponse>(
-          std::mem_fn(&ManualControlService::Service::StartAltitudeControl), this)));
+          [](ManualControlService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::manual_control::StartAltitudeControlRequest* req,
+             ::mavsdk::rpc::manual_control::StartAltitudeControlResponse* resp) {
+               return service->StartAltitudeControl(ctx, req, resp);
+             }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       ManualControlService_method_names[2],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< ManualControlService::Service, ::mavsdk::rpc::manual_control::SetManualControlInputRequest, ::mavsdk::rpc::manual_control::SetManualControlInputResponse>(
-          std::mem_fn(&ManualControlService::Service::SetManualControlInput), this)));
+          [](ManualControlService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::manual_control::SetManualControlInputRequest* req,
+             ::mavsdk::rpc::manual_control::SetManualControlInputResponse* resp) {
+               return service->SetManualControlInput(ctx, req, resp);
+             }, this)));
 }
 
 ManualControlService::Service::~Service() {

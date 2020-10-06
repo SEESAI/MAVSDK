@@ -8826,7 +8826,14 @@ class TelemetryService final {
    public:
     WithStreamedUnaryMethod_SetRatePosition() {
       ::grpc::Service::MarkMethodStreamed(31,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::telemetry::SetRatePositionRequest, ::mavsdk::rpc::telemetry::SetRatePositionResponse>(std::bind(&WithStreamedUnaryMethod_SetRatePosition<BaseClass>::StreamedSetRatePosition, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::telemetry::SetRatePositionRequest, ::mavsdk::rpc::telemetry::SetRatePositionResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::telemetry::SetRatePositionRequest, ::mavsdk::rpc::telemetry::SetRatePositionResponse>* streamer) {
+                       return this->StreamedSetRatePosition(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_SetRatePosition() override {
       BaseClassMustBeDerivedFromService(this);
@@ -8846,7 +8853,14 @@ class TelemetryService final {
    public:
     WithStreamedUnaryMethod_SetRateHome() {
       ::grpc::Service::MarkMethodStreamed(32,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::telemetry::SetRateHomeRequest, ::mavsdk::rpc::telemetry::SetRateHomeResponse>(std::bind(&WithStreamedUnaryMethod_SetRateHome<BaseClass>::StreamedSetRateHome, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::telemetry::SetRateHomeRequest, ::mavsdk::rpc::telemetry::SetRateHomeResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::telemetry::SetRateHomeRequest, ::mavsdk::rpc::telemetry::SetRateHomeResponse>* streamer) {
+                       return this->StreamedSetRateHome(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_SetRateHome() override {
       BaseClassMustBeDerivedFromService(this);
@@ -8866,7 +8880,14 @@ class TelemetryService final {
    public:
     WithStreamedUnaryMethod_SetRateInAir() {
       ::grpc::Service::MarkMethodStreamed(33,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::telemetry::SetRateInAirRequest, ::mavsdk::rpc::telemetry::SetRateInAirResponse>(std::bind(&WithStreamedUnaryMethod_SetRateInAir<BaseClass>::StreamedSetRateInAir, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::telemetry::SetRateInAirRequest, ::mavsdk::rpc::telemetry::SetRateInAirResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::telemetry::SetRateInAirRequest, ::mavsdk::rpc::telemetry::SetRateInAirResponse>* streamer) {
+                       return this->StreamedSetRateInAir(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_SetRateInAir() override {
       BaseClassMustBeDerivedFromService(this);
@@ -8886,7 +8907,14 @@ class TelemetryService final {
    public:
     WithStreamedUnaryMethod_SetRateLandedState() {
       ::grpc::Service::MarkMethodStreamed(34,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::telemetry::SetRateLandedStateRequest, ::mavsdk::rpc::telemetry::SetRateLandedStateResponse>(std::bind(&WithStreamedUnaryMethod_SetRateLandedState<BaseClass>::StreamedSetRateLandedState, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::telemetry::SetRateLandedStateRequest, ::mavsdk::rpc::telemetry::SetRateLandedStateResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::telemetry::SetRateLandedStateRequest, ::mavsdk::rpc::telemetry::SetRateLandedStateResponse>* streamer) {
+                       return this->StreamedSetRateLandedState(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_SetRateLandedState() override {
       BaseClassMustBeDerivedFromService(this);
@@ -8906,7 +8934,14 @@ class TelemetryService final {
    public:
     WithStreamedUnaryMethod_SetRateAttitude() {
       ::grpc::Service::MarkMethodStreamed(35,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::telemetry::SetRateAttitudeRequest, ::mavsdk::rpc::telemetry::SetRateAttitudeResponse>(std::bind(&WithStreamedUnaryMethod_SetRateAttitude<BaseClass>::StreamedSetRateAttitude, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::telemetry::SetRateAttitudeRequest, ::mavsdk::rpc::telemetry::SetRateAttitudeResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::telemetry::SetRateAttitudeRequest, ::mavsdk::rpc::telemetry::SetRateAttitudeResponse>* streamer) {
+                       return this->StreamedSetRateAttitude(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_SetRateAttitude() override {
       BaseClassMustBeDerivedFromService(this);
@@ -8926,7 +8961,14 @@ class TelemetryService final {
    public:
     WithStreamedUnaryMethod_SetRateCameraAttitude() {
       ::grpc::Service::MarkMethodStreamed(36,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::telemetry::SetRateCameraAttitudeRequest, ::mavsdk::rpc::telemetry::SetRateCameraAttitudeResponse>(std::bind(&WithStreamedUnaryMethod_SetRateCameraAttitude<BaseClass>::StreamedSetRateCameraAttitude, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::telemetry::SetRateCameraAttitudeRequest, ::mavsdk::rpc::telemetry::SetRateCameraAttitudeResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::telemetry::SetRateCameraAttitudeRequest, ::mavsdk::rpc::telemetry::SetRateCameraAttitudeResponse>* streamer) {
+                       return this->StreamedSetRateCameraAttitude(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_SetRateCameraAttitude() override {
       BaseClassMustBeDerivedFromService(this);
@@ -8946,7 +8988,14 @@ class TelemetryService final {
    public:
     WithStreamedUnaryMethod_SetRateVelocityNed() {
       ::grpc::Service::MarkMethodStreamed(37,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::telemetry::SetRateVelocityNedRequest, ::mavsdk::rpc::telemetry::SetRateVelocityNedResponse>(std::bind(&WithStreamedUnaryMethod_SetRateVelocityNed<BaseClass>::StreamedSetRateVelocityNed, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::telemetry::SetRateVelocityNedRequest, ::mavsdk::rpc::telemetry::SetRateVelocityNedResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::telemetry::SetRateVelocityNedRequest, ::mavsdk::rpc::telemetry::SetRateVelocityNedResponse>* streamer) {
+                       return this->StreamedSetRateVelocityNed(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_SetRateVelocityNed() override {
       BaseClassMustBeDerivedFromService(this);
@@ -8966,7 +9015,14 @@ class TelemetryService final {
    public:
     WithStreamedUnaryMethod_SetRateGpsInfo() {
       ::grpc::Service::MarkMethodStreamed(38,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::telemetry::SetRateGpsInfoRequest, ::mavsdk::rpc::telemetry::SetRateGpsInfoResponse>(std::bind(&WithStreamedUnaryMethod_SetRateGpsInfo<BaseClass>::StreamedSetRateGpsInfo, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::telemetry::SetRateGpsInfoRequest, ::mavsdk::rpc::telemetry::SetRateGpsInfoResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::telemetry::SetRateGpsInfoRequest, ::mavsdk::rpc::telemetry::SetRateGpsInfoResponse>* streamer) {
+                       return this->StreamedSetRateGpsInfo(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_SetRateGpsInfo() override {
       BaseClassMustBeDerivedFromService(this);
@@ -8986,7 +9042,14 @@ class TelemetryService final {
    public:
     WithStreamedUnaryMethod_SetRateBattery() {
       ::grpc::Service::MarkMethodStreamed(39,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::telemetry::SetRateBatteryRequest, ::mavsdk::rpc::telemetry::SetRateBatteryResponse>(std::bind(&WithStreamedUnaryMethod_SetRateBattery<BaseClass>::StreamedSetRateBattery, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::telemetry::SetRateBatteryRequest, ::mavsdk::rpc::telemetry::SetRateBatteryResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::telemetry::SetRateBatteryRequest, ::mavsdk::rpc::telemetry::SetRateBatteryResponse>* streamer) {
+                       return this->StreamedSetRateBattery(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_SetRateBattery() override {
       BaseClassMustBeDerivedFromService(this);
@@ -9006,7 +9069,14 @@ class TelemetryService final {
    public:
     WithStreamedUnaryMethod_SetRateRcStatus() {
       ::grpc::Service::MarkMethodStreamed(40,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::telemetry::SetRateRcStatusRequest, ::mavsdk::rpc::telemetry::SetRateRcStatusResponse>(std::bind(&WithStreamedUnaryMethod_SetRateRcStatus<BaseClass>::StreamedSetRateRcStatus, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::telemetry::SetRateRcStatusRequest, ::mavsdk::rpc::telemetry::SetRateRcStatusResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::telemetry::SetRateRcStatusRequest, ::mavsdk::rpc::telemetry::SetRateRcStatusResponse>* streamer) {
+                       return this->StreamedSetRateRcStatus(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_SetRateRcStatus() override {
       BaseClassMustBeDerivedFromService(this);
@@ -9026,7 +9096,14 @@ class TelemetryService final {
    public:
     WithStreamedUnaryMethod_SetRateActuatorControlTarget() {
       ::grpc::Service::MarkMethodStreamed(41,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::telemetry::SetRateActuatorControlTargetRequest, ::mavsdk::rpc::telemetry::SetRateActuatorControlTargetResponse>(std::bind(&WithStreamedUnaryMethod_SetRateActuatorControlTarget<BaseClass>::StreamedSetRateActuatorControlTarget, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::telemetry::SetRateActuatorControlTargetRequest, ::mavsdk::rpc::telemetry::SetRateActuatorControlTargetResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::telemetry::SetRateActuatorControlTargetRequest, ::mavsdk::rpc::telemetry::SetRateActuatorControlTargetResponse>* streamer) {
+                       return this->StreamedSetRateActuatorControlTarget(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_SetRateActuatorControlTarget() override {
       BaseClassMustBeDerivedFromService(this);
@@ -9046,7 +9123,14 @@ class TelemetryService final {
    public:
     WithStreamedUnaryMethod_SetRateActuatorOutputStatus() {
       ::grpc::Service::MarkMethodStreamed(42,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::telemetry::SetRateActuatorOutputStatusRequest, ::mavsdk::rpc::telemetry::SetRateActuatorOutputStatusResponse>(std::bind(&WithStreamedUnaryMethod_SetRateActuatorOutputStatus<BaseClass>::StreamedSetRateActuatorOutputStatus, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::telemetry::SetRateActuatorOutputStatusRequest, ::mavsdk::rpc::telemetry::SetRateActuatorOutputStatusResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::telemetry::SetRateActuatorOutputStatusRequest, ::mavsdk::rpc::telemetry::SetRateActuatorOutputStatusResponse>* streamer) {
+                       return this->StreamedSetRateActuatorOutputStatus(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_SetRateActuatorOutputStatus() override {
       BaseClassMustBeDerivedFromService(this);
@@ -9066,7 +9150,14 @@ class TelemetryService final {
    public:
     WithStreamedUnaryMethod_SetRateOdometry() {
       ::grpc::Service::MarkMethodStreamed(43,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::telemetry::SetRateOdometryRequest, ::mavsdk::rpc::telemetry::SetRateOdometryResponse>(std::bind(&WithStreamedUnaryMethod_SetRateOdometry<BaseClass>::StreamedSetRateOdometry, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::telemetry::SetRateOdometryRequest, ::mavsdk::rpc::telemetry::SetRateOdometryResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::telemetry::SetRateOdometryRequest, ::mavsdk::rpc::telemetry::SetRateOdometryResponse>* streamer) {
+                       return this->StreamedSetRateOdometry(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_SetRateOdometry() override {
       BaseClassMustBeDerivedFromService(this);
@@ -9086,7 +9177,14 @@ class TelemetryService final {
    public:
     WithStreamedUnaryMethod_SetRatePositionVelocityNed() {
       ::grpc::Service::MarkMethodStreamed(44,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::telemetry::SetRatePositionVelocityNedRequest, ::mavsdk::rpc::telemetry::SetRatePositionVelocityNedResponse>(std::bind(&WithStreamedUnaryMethod_SetRatePositionVelocityNed<BaseClass>::StreamedSetRatePositionVelocityNed, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::telemetry::SetRatePositionVelocityNedRequest, ::mavsdk::rpc::telemetry::SetRatePositionVelocityNedResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::telemetry::SetRatePositionVelocityNedRequest, ::mavsdk::rpc::telemetry::SetRatePositionVelocityNedResponse>* streamer) {
+                       return this->StreamedSetRatePositionVelocityNed(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_SetRatePositionVelocityNed() override {
       BaseClassMustBeDerivedFromService(this);
@@ -9106,7 +9204,14 @@ class TelemetryService final {
    public:
     WithStreamedUnaryMethod_SetRateGroundTruth() {
       ::grpc::Service::MarkMethodStreamed(45,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::telemetry::SetRateGroundTruthRequest, ::mavsdk::rpc::telemetry::SetRateGroundTruthResponse>(std::bind(&WithStreamedUnaryMethod_SetRateGroundTruth<BaseClass>::StreamedSetRateGroundTruth, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::telemetry::SetRateGroundTruthRequest, ::mavsdk::rpc::telemetry::SetRateGroundTruthResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::telemetry::SetRateGroundTruthRequest, ::mavsdk::rpc::telemetry::SetRateGroundTruthResponse>* streamer) {
+                       return this->StreamedSetRateGroundTruth(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_SetRateGroundTruth() override {
       BaseClassMustBeDerivedFromService(this);
@@ -9126,7 +9231,14 @@ class TelemetryService final {
    public:
     WithStreamedUnaryMethod_SetRateFixedwingMetrics() {
       ::grpc::Service::MarkMethodStreamed(46,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::telemetry::SetRateFixedwingMetricsRequest, ::mavsdk::rpc::telemetry::SetRateFixedwingMetricsResponse>(std::bind(&WithStreamedUnaryMethod_SetRateFixedwingMetrics<BaseClass>::StreamedSetRateFixedwingMetrics, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::telemetry::SetRateFixedwingMetricsRequest, ::mavsdk::rpc::telemetry::SetRateFixedwingMetricsResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::telemetry::SetRateFixedwingMetricsRequest, ::mavsdk::rpc::telemetry::SetRateFixedwingMetricsResponse>* streamer) {
+                       return this->StreamedSetRateFixedwingMetrics(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_SetRateFixedwingMetrics() override {
       BaseClassMustBeDerivedFromService(this);
@@ -9146,7 +9258,14 @@ class TelemetryService final {
    public:
     WithStreamedUnaryMethod_SetRateImu() {
       ::grpc::Service::MarkMethodStreamed(47,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::telemetry::SetRateImuRequest, ::mavsdk::rpc::telemetry::SetRateImuResponse>(std::bind(&WithStreamedUnaryMethod_SetRateImu<BaseClass>::StreamedSetRateImu, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::telemetry::SetRateImuRequest, ::mavsdk::rpc::telemetry::SetRateImuResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::telemetry::SetRateImuRequest, ::mavsdk::rpc::telemetry::SetRateImuResponse>* streamer) {
+                       return this->StreamedSetRateImu(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_SetRateImu() override {
       BaseClassMustBeDerivedFromService(this);
@@ -9166,7 +9285,14 @@ class TelemetryService final {
    public:
     WithStreamedUnaryMethod_SetRateUnixEpochTime() {
       ::grpc::Service::MarkMethodStreamed(48,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::telemetry::SetRateUnixEpochTimeRequest, ::mavsdk::rpc::telemetry::SetRateUnixEpochTimeResponse>(std::bind(&WithStreamedUnaryMethod_SetRateUnixEpochTime<BaseClass>::StreamedSetRateUnixEpochTime, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::telemetry::SetRateUnixEpochTimeRequest, ::mavsdk::rpc::telemetry::SetRateUnixEpochTimeResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::telemetry::SetRateUnixEpochTimeRequest, ::mavsdk::rpc::telemetry::SetRateUnixEpochTimeResponse>* streamer) {
+                       return this->StreamedSetRateUnixEpochTime(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_SetRateUnixEpochTime() override {
       BaseClassMustBeDerivedFromService(this);
@@ -9187,7 +9313,14 @@ class TelemetryService final {
    public:
     WithSplitStreamingMethod_SubscribePosition() {
       ::grpc::Service::MarkMethodStreamed(0,
-        new ::grpc::internal::SplitServerStreamingHandler< ::mavsdk::rpc::telemetry::SubscribePositionRequest, ::mavsdk::rpc::telemetry::PositionResponse>(std::bind(&WithSplitStreamingMethod_SubscribePosition<BaseClass>::StreamedSubscribePosition, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::SplitServerStreamingHandler<
+          ::mavsdk::rpc::telemetry::SubscribePositionRequest, ::mavsdk::rpc::telemetry::PositionResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerSplitStreamer<
+                     ::mavsdk::rpc::telemetry::SubscribePositionRequest, ::mavsdk::rpc::telemetry::PositionResponse>* streamer) {
+                       return this->StreamedSubscribePosition(context,
+                         streamer);
+                  }));
     }
     ~WithSplitStreamingMethod_SubscribePosition() override {
       BaseClassMustBeDerivedFromService(this);
@@ -9207,7 +9340,14 @@ class TelemetryService final {
    public:
     WithSplitStreamingMethod_SubscribeHome() {
       ::grpc::Service::MarkMethodStreamed(1,
-        new ::grpc::internal::SplitServerStreamingHandler< ::mavsdk::rpc::telemetry::SubscribeHomeRequest, ::mavsdk::rpc::telemetry::HomeResponse>(std::bind(&WithSplitStreamingMethod_SubscribeHome<BaseClass>::StreamedSubscribeHome, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::SplitServerStreamingHandler<
+          ::mavsdk::rpc::telemetry::SubscribeHomeRequest, ::mavsdk::rpc::telemetry::HomeResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerSplitStreamer<
+                     ::mavsdk::rpc::telemetry::SubscribeHomeRequest, ::mavsdk::rpc::telemetry::HomeResponse>* streamer) {
+                       return this->StreamedSubscribeHome(context,
+                         streamer);
+                  }));
     }
     ~WithSplitStreamingMethod_SubscribeHome() override {
       BaseClassMustBeDerivedFromService(this);
@@ -9227,7 +9367,14 @@ class TelemetryService final {
    public:
     WithSplitStreamingMethod_SubscribeInAir() {
       ::grpc::Service::MarkMethodStreamed(2,
-        new ::grpc::internal::SplitServerStreamingHandler< ::mavsdk::rpc::telemetry::SubscribeInAirRequest, ::mavsdk::rpc::telemetry::InAirResponse>(std::bind(&WithSplitStreamingMethod_SubscribeInAir<BaseClass>::StreamedSubscribeInAir, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::SplitServerStreamingHandler<
+          ::mavsdk::rpc::telemetry::SubscribeInAirRequest, ::mavsdk::rpc::telemetry::InAirResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerSplitStreamer<
+                     ::mavsdk::rpc::telemetry::SubscribeInAirRequest, ::mavsdk::rpc::telemetry::InAirResponse>* streamer) {
+                       return this->StreamedSubscribeInAir(context,
+                         streamer);
+                  }));
     }
     ~WithSplitStreamingMethod_SubscribeInAir() override {
       BaseClassMustBeDerivedFromService(this);
@@ -9247,7 +9394,14 @@ class TelemetryService final {
    public:
     WithSplitStreamingMethod_SubscribeLandedState() {
       ::grpc::Service::MarkMethodStreamed(3,
-        new ::grpc::internal::SplitServerStreamingHandler< ::mavsdk::rpc::telemetry::SubscribeLandedStateRequest, ::mavsdk::rpc::telemetry::LandedStateResponse>(std::bind(&WithSplitStreamingMethod_SubscribeLandedState<BaseClass>::StreamedSubscribeLandedState, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::SplitServerStreamingHandler<
+          ::mavsdk::rpc::telemetry::SubscribeLandedStateRequest, ::mavsdk::rpc::telemetry::LandedStateResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerSplitStreamer<
+                     ::mavsdk::rpc::telemetry::SubscribeLandedStateRequest, ::mavsdk::rpc::telemetry::LandedStateResponse>* streamer) {
+                       return this->StreamedSubscribeLandedState(context,
+                         streamer);
+                  }));
     }
     ~WithSplitStreamingMethod_SubscribeLandedState() override {
       BaseClassMustBeDerivedFromService(this);
@@ -9267,7 +9421,14 @@ class TelemetryService final {
    public:
     WithSplitStreamingMethod_SubscribeArmed() {
       ::grpc::Service::MarkMethodStreamed(4,
-        new ::grpc::internal::SplitServerStreamingHandler< ::mavsdk::rpc::telemetry::SubscribeArmedRequest, ::mavsdk::rpc::telemetry::ArmedResponse>(std::bind(&WithSplitStreamingMethod_SubscribeArmed<BaseClass>::StreamedSubscribeArmed, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::SplitServerStreamingHandler<
+          ::mavsdk::rpc::telemetry::SubscribeArmedRequest, ::mavsdk::rpc::telemetry::ArmedResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerSplitStreamer<
+                     ::mavsdk::rpc::telemetry::SubscribeArmedRequest, ::mavsdk::rpc::telemetry::ArmedResponse>* streamer) {
+                       return this->StreamedSubscribeArmed(context,
+                         streamer);
+                  }));
     }
     ~WithSplitStreamingMethod_SubscribeArmed() override {
       BaseClassMustBeDerivedFromService(this);
@@ -9287,7 +9448,14 @@ class TelemetryService final {
    public:
     WithSplitStreamingMethod_SubscribeAttitudeQuaternion() {
       ::grpc::Service::MarkMethodStreamed(5,
-        new ::grpc::internal::SplitServerStreamingHandler< ::mavsdk::rpc::telemetry::SubscribeAttitudeQuaternionRequest, ::mavsdk::rpc::telemetry::AttitudeQuaternionResponse>(std::bind(&WithSplitStreamingMethod_SubscribeAttitudeQuaternion<BaseClass>::StreamedSubscribeAttitudeQuaternion, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::SplitServerStreamingHandler<
+          ::mavsdk::rpc::telemetry::SubscribeAttitudeQuaternionRequest, ::mavsdk::rpc::telemetry::AttitudeQuaternionResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerSplitStreamer<
+                     ::mavsdk::rpc::telemetry::SubscribeAttitudeQuaternionRequest, ::mavsdk::rpc::telemetry::AttitudeQuaternionResponse>* streamer) {
+                       return this->StreamedSubscribeAttitudeQuaternion(context,
+                         streamer);
+                  }));
     }
     ~WithSplitStreamingMethod_SubscribeAttitudeQuaternion() override {
       BaseClassMustBeDerivedFromService(this);
@@ -9307,7 +9475,14 @@ class TelemetryService final {
    public:
     WithSplitStreamingMethod_SubscribeAttitudeEuler() {
       ::grpc::Service::MarkMethodStreamed(6,
-        new ::grpc::internal::SplitServerStreamingHandler< ::mavsdk::rpc::telemetry::SubscribeAttitudeEulerRequest, ::mavsdk::rpc::telemetry::AttitudeEulerResponse>(std::bind(&WithSplitStreamingMethod_SubscribeAttitudeEuler<BaseClass>::StreamedSubscribeAttitudeEuler, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::SplitServerStreamingHandler<
+          ::mavsdk::rpc::telemetry::SubscribeAttitudeEulerRequest, ::mavsdk::rpc::telemetry::AttitudeEulerResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerSplitStreamer<
+                     ::mavsdk::rpc::telemetry::SubscribeAttitudeEulerRequest, ::mavsdk::rpc::telemetry::AttitudeEulerResponse>* streamer) {
+                       return this->StreamedSubscribeAttitudeEuler(context,
+                         streamer);
+                  }));
     }
     ~WithSplitStreamingMethod_SubscribeAttitudeEuler() override {
       BaseClassMustBeDerivedFromService(this);
@@ -9327,7 +9502,14 @@ class TelemetryService final {
    public:
     WithSplitStreamingMethod_SubscribeAttitudeAngularVelocityBody() {
       ::grpc::Service::MarkMethodStreamed(7,
-        new ::grpc::internal::SplitServerStreamingHandler< ::mavsdk::rpc::telemetry::SubscribeAttitudeAngularVelocityBodyRequest, ::mavsdk::rpc::telemetry::AttitudeAngularVelocityBodyResponse>(std::bind(&WithSplitStreamingMethod_SubscribeAttitudeAngularVelocityBody<BaseClass>::StreamedSubscribeAttitudeAngularVelocityBody, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::SplitServerStreamingHandler<
+          ::mavsdk::rpc::telemetry::SubscribeAttitudeAngularVelocityBodyRequest, ::mavsdk::rpc::telemetry::AttitudeAngularVelocityBodyResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerSplitStreamer<
+                     ::mavsdk::rpc::telemetry::SubscribeAttitudeAngularVelocityBodyRequest, ::mavsdk::rpc::telemetry::AttitudeAngularVelocityBodyResponse>* streamer) {
+                       return this->StreamedSubscribeAttitudeAngularVelocityBody(context,
+                         streamer);
+                  }));
     }
     ~WithSplitStreamingMethod_SubscribeAttitudeAngularVelocityBody() override {
       BaseClassMustBeDerivedFromService(this);
@@ -9347,7 +9529,14 @@ class TelemetryService final {
    public:
     WithSplitStreamingMethod_SubscribeCameraAttitudeQuaternion() {
       ::grpc::Service::MarkMethodStreamed(8,
-        new ::grpc::internal::SplitServerStreamingHandler< ::mavsdk::rpc::telemetry::SubscribeCameraAttitudeQuaternionRequest, ::mavsdk::rpc::telemetry::CameraAttitudeQuaternionResponse>(std::bind(&WithSplitStreamingMethod_SubscribeCameraAttitudeQuaternion<BaseClass>::StreamedSubscribeCameraAttitudeQuaternion, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::SplitServerStreamingHandler<
+          ::mavsdk::rpc::telemetry::SubscribeCameraAttitudeQuaternionRequest, ::mavsdk::rpc::telemetry::CameraAttitudeQuaternionResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerSplitStreamer<
+                     ::mavsdk::rpc::telemetry::SubscribeCameraAttitudeQuaternionRequest, ::mavsdk::rpc::telemetry::CameraAttitudeQuaternionResponse>* streamer) {
+                       return this->StreamedSubscribeCameraAttitudeQuaternion(context,
+                         streamer);
+                  }));
     }
     ~WithSplitStreamingMethod_SubscribeCameraAttitudeQuaternion() override {
       BaseClassMustBeDerivedFromService(this);
@@ -9367,7 +9556,14 @@ class TelemetryService final {
    public:
     WithSplitStreamingMethod_SubscribeCameraAttitudeEuler() {
       ::grpc::Service::MarkMethodStreamed(9,
-        new ::grpc::internal::SplitServerStreamingHandler< ::mavsdk::rpc::telemetry::SubscribeCameraAttitudeEulerRequest, ::mavsdk::rpc::telemetry::CameraAttitudeEulerResponse>(std::bind(&WithSplitStreamingMethod_SubscribeCameraAttitudeEuler<BaseClass>::StreamedSubscribeCameraAttitudeEuler, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::SplitServerStreamingHandler<
+          ::mavsdk::rpc::telemetry::SubscribeCameraAttitudeEulerRequest, ::mavsdk::rpc::telemetry::CameraAttitudeEulerResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerSplitStreamer<
+                     ::mavsdk::rpc::telemetry::SubscribeCameraAttitudeEulerRequest, ::mavsdk::rpc::telemetry::CameraAttitudeEulerResponse>* streamer) {
+                       return this->StreamedSubscribeCameraAttitudeEuler(context,
+                         streamer);
+                  }));
     }
     ~WithSplitStreamingMethod_SubscribeCameraAttitudeEuler() override {
       BaseClassMustBeDerivedFromService(this);
@@ -9387,7 +9583,14 @@ class TelemetryService final {
    public:
     WithSplitStreamingMethod_SubscribeVelocityNed() {
       ::grpc::Service::MarkMethodStreamed(10,
-        new ::grpc::internal::SplitServerStreamingHandler< ::mavsdk::rpc::telemetry::SubscribeVelocityNedRequest, ::mavsdk::rpc::telemetry::VelocityNedResponse>(std::bind(&WithSplitStreamingMethod_SubscribeVelocityNed<BaseClass>::StreamedSubscribeVelocityNed, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::SplitServerStreamingHandler<
+          ::mavsdk::rpc::telemetry::SubscribeVelocityNedRequest, ::mavsdk::rpc::telemetry::VelocityNedResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerSplitStreamer<
+                     ::mavsdk::rpc::telemetry::SubscribeVelocityNedRequest, ::mavsdk::rpc::telemetry::VelocityNedResponse>* streamer) {
+                       return this->StreamedSubscribeVelocityNed(context,
+                         streamer);
+                  }));
     }
     ~WithSplitStreamingMethod_SubscribeVelocityNed() override {
       BaseClassMustBeDerivedFromService(this);
@@ -9407,7 +9610,14 @@ class TelemetryService final {
    public:
     WithSplitStreamingMethod_SubscribeGpsInfo() {
       ::grpc::Service::MarkMethodStreamed(11,
-        new ::grpc::internal::SplitServerStreamingHandler< ::mavsdk::rpc::telemetry::SubscribeGpsInfoRequest, ::mavsdk::rpc::telemetry::GpsInfoResponse>(std::bind(&WithSplitStreamingMethod_SubscribeGpsInfo<BaseClass>::StreamedSubscribeGpsInfo, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::SplitServerStreamingHandler<
+          ::mavsdk::rpc::telemetry::SubscribeGpsInfoRequest, ::mavsdk::rpc::telemetry::GpsInfoResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerSplitStreamer<
+                     ::mavsdk::rpc::telemetry::SubscribeGpsInfoRequest, ::mavsdk::rpc::telemetry::GpsInfoResponse>* streamer) {
+                       return this->StreamedSubscribeGpsInfo(context,
+                         streamer);
+                  }));
     }
     ~WithSplitStreamingMethod_SubscribeGpsInfo() override {
       BaseClassMustBeDerivedFromService(this);
@@ -9427,7 +9637,14 @@ class TelemetryService final {
    public:
     WithSplitStreamingMethod_SubscribeDistanceSensor() {
       ::grpc::Service::MarkMethodStreamed(12,
-        new ::grpc::internal::SplitServerStreamingHandler< ::mavsdk::rpc::telemetry::SubscribeDistanceSensorRequest, ::mavsdk::rpc::telemetry::DistanceSensorResponse>(std::bind(&WithSplitStreamingMethod_SubscribeDistanceSensor<BaseClass>::StreamedSubscribeDistanceSensor, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::SplitServerStreamingHandler<
+          ::mavsdk::rpc::telemetry::SubscribeDistanceSensorRequest, ::mavsdk::rpc::telemetry::DistanceSensorResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerSplitStreamer<
+                     ::mavsdk::rpc::telemetry::SubscribeDistanceSensorRequest, ::mavsdk::rpc::telemetry::DistanceSensorResponse>* streamer) {
+                       return this->StreamedSubscribeDistanceSensor(context,
+                         streamer);
+                  }));
     }
     ~WithSplitStreamingMethod_SubscribeDistanceSensor() override {
       BaseClassMustBeDerivedFromService(this);
@@ -9447,7 +9664,14 @@ class TelemetryService final {
    public:
     WithSplitStreamingMethod_SubscribeBattery() {
       ::grpc::Service::MarkMethodStreamed(13,
-        new ::grpc::internal::SplitServerStreamingHandler< ::mavsdk::rpc::telemetry::SubscribeBatteryRequest, ::mavsdk::rpc::telemetry::BatteryResponse>(std::bind(&WithSplitStreamingMethod_SubscribeBattery<BaseClass>::StreamedSubscribeBattery, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::SplitServerStreamingHandler<
+          ::mavsdk::rpc::telemetry::SubscribeBatteryRequest, ::mavsdk::rpc::telemetry::BatteryResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerSplitStreamer<
+                     ::mavsdk::rpc::telemetry::SubscribeBatteryRequest, ::mavsdk::rpc::telemetry::BatteryResponse>* streamer) {
+                       return this->StreamedSubscribeBattery(context,
+                         streamer);
+                  }));
     }
     ~WithSplitStreamingMethod_SubscribeBattery() override {
       BaseClassMustBeDerivedFromService(this);
@@ -9467,7 +9691,14 @@ class TelemetryService final {
    public:
     WithSplitStreamingMethod_SubscribeBatteryStatus() {
       ::grpc::Service::MarkMethodStreamed(14,
-        new ::grpc::internal::SplitServerStreamingHandler< ::mavsdk::rpc::telemetry::SubscribeBatteryStatusRequest, ::mavsdk::rpc::telemetry::BatteryStatusResponse>(std::bind(&WithSplitStreamingMethod_SubscribeBatteryStatus<BaseClass>::StreamedSubscribeBatteryStatus, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::SplitServerStreamingHandler<
+          ::mavsdk::rpc::telemetry::SubscribeBatteryStatusRequest, ::mavsdk::rpc::telemetry::BatteryStatusResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerSplitStreamer<
+                     ::mavsdk::rpc::telemetry::SubscribeBatteryStatusRequest, ::mavsdk::rpc::telemetry::BatteryStatusResponse>* streamer) {
+                       return this->StreamedSubscribeBatteryStatus(context,
+                         streamer);
+                  }));
     }
     ~WithSplitStreamingMethod_SubscribeBatteryStatus() override {
       BaseClassMustBeDerivedFromService(this);
@@ -9487,7 +9718,14 @@ class TelemetryService final {
    public:
     WithSplitStreamingMethod_SubscribeVehicleStatus() {
       ::grpc::Service::MarkMethodStreamed(15,
-        new ::grpc::internal::SplitServerStreamingHandler< ::mavsdk::rpc::telemetry::SubscribeVehicleStatusRequest, ::mavsdk::rpc::telemetry::VehicleStatusResponse>(std::bind(&WithSplitStreamingMethod_SubscribeVehicleStatus<BaseClass>::StreamedSubscribeVehicleStatus, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::SplitServerStreamingHandler<
+          ::mavsdk::rpc::telemetry::SubscribeVehicleStatusRequest, ::mavsdk::rpc::telemetry::VehicleStatusResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerSplitStreamer<
+                     ::mavsdk::rpc::telemetry::SubscribeVehicleStatusRequest, ::mavsdk::rpc::telemetry::VehicleStatusResponse>* streamer) {
+                       return this->StreamedSubscribeVehicleStatus(context,
+                         streamer);
+                  }));
     }
     ~WithSplitStreamingMethod_SubscribeVehicleStatus() override {
       BaseClassMustBeDerivedFromService(this);
@@ -9507,7 +9745,14 @@ class TelemetryService final {
    public:
     WithSplitStreamingMethod_SubscribeFlightMode() {
       ::grpc::Service::MarkMethodStreamed(16,
-        new ::grpc::internal::SplitServerStreamingHandler< ::mavsdk::rpc::telemetry::SubscribeFlightModeRequest, ::mavsdk::rpc::telemetry::FlightModeResponse>(std::bind(&WithSplitStreamingMethod_SubscribeFlightMode<BaseClass>::StreamedSubscribeFlightMode, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::SplitServerStreamingHandler<
+          ::mavsdk::rpc::telemetry::SubscribeFlightModeRequest, ::mavsdk::rpc::telemetry::FlightModeResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerSplitStreamer<
+                     ::mavsdk::rpc::telemetry::SubscribeFlightModeRequest, ::mavsdk::rpc::telemetry::FlightModeResponse>* streamer) {
+                       return this->StreamedSubscribeFlightMode(context,
+                         streamer);
+                  }));
     }
     ~WithSplitStreamingMethod_SubscribeFlightMode() override {
       BaseClassMustBeDerivedFromService(this);
@@ -9527,7 +9772,14 @@ class TelemetryService final {
    public:
     WithSplitStreamingMethod_SubscribeModeInfo() {
       ::grpc::Service::MarkMethodStreamed(17,
-        new ::grpc::internal::SplitServerStreamingHandler< ::mavsdk::rpc::telemetry::SubscribeModeInfoRequest, ::mavsdk::rpc::telemetry::ModeInfoResponse>(std::bind(&WithSplitStreamingMethod_SubscribeModeInfo<BaseClass>::StreamedSubscribeModeInfo, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::SplitServerStreamingHandler<
+          ::mavsdk::rpc::telemetry::SubscribeModeInfoRequest, ::mavsdk::rpc::telemetry::ModeInfoResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerSplitStreamer<
+                     ::mavsdk::rpc::telemetry::SubscribeModeInfoRequest, ::mavsdk::rpc::telemetry::ModeInfoResponse>* streamer) {
+                       return this->StreamedSubscribeModeInfo(context,
+                         streamer);
+                  }));
     }
     ~WithSplitStreamingMethod_SubscribeModeInfo() override {
       BaseClassMustBeDerivedFromService(this);
@@ -9547,7 +9799,14 @@ class TelemetryService final {
    public:
     WithSplitStreamingMethod_SubscribeHealth() {
       ::grpc::Service::MarkMethodStreamed(18,
-        new ::grpc::internal::SplitServerStreamingHandler< ::mavsdk::rpc::telemetry::SubscribeHealthRequest, ::mavsdk::rpc::telemetry::HealthResponse>(std::bind(&WithSplitStreamingMethod_SubscribeHealth<BaseClass>::StreamedSubscribeHealth, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::SplitServerStreamingHandler<
+          ::mavsdk::rpc::telemetry::SubscribeHealthRequest, ::mavsdk::rpc::telemetry::HealthResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerSplitStreamer<
+                     ::mavsdk::rpc::telemetry::SubscribeHealthRequest, ::mavsdk::rpc::telemetry::HealthResponse>* streamer) {
+                       return this->StreamedSubscribeHealth(context,
+                         streamer);
+                  }));
     }
     ~WithSplitStreamingMethod_SubscribeHealth() override {
       BaseClassMustBeDerivedFromService(this);
@@ -9567,7 +9826,14 @@ class TelemetryService final {
    public:
     WithSplitStreamingMethod_SubscribeRcStatus() {
       ::grpc::Service::MarkMethodStreamed(19,
-        new ::grpc::internal::SplitServerStreamingHandler< ::mavsdk::rpc::telemetry::SubscribeRcStatusRequest, ::mavsdk::rpc::telemetry::RcStatusResponse>(std::bind(&WithSplitStreamingMethod_SubscribeRcStatus<BaseClass>::StreamedSubscribeRcStatus, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::SplitServerStreamingHandler<
+          ::mavsdk::rpc::telemetry::SubscribeRcStatusRequest, ::mavsdk::rpc::telemetry::RcStatusResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerSplitStreamer<
+                     ::mavsdk::rpc::telemetry::SubscribeRcStatusRequest, ::mavsdk::rpc::telemetry::RcStatusResponse>* streamer) {
+                       return this->StreamedSubscribeRcStatus(context,
+                         streamer);
+                  }));
     }
     ~WithSplitStreamingMethod_SubscribeRcStatus() override {
       BaseClassMustBeDerivedFromService(this);
@@ -9587,7 +9853,14 @@ class TelemetryService final {
    public:
     WithSplitStreamingMethod_SubscribeStatusText() {
       ::grpc::Service::MarkMethodStreamed(20,
-        new ::grpc::internal::SplitServerStreamingHandler< ::mavsdk::rpc::telemetry::SubscribeStatusTextRequest, ::mavsdk::rpc::telemetry::StatusTextResponse>(std::bind(&WithSplitStreamingMethod_SubscribeStatusText<BaseClass>::StreamedSubscribeStatusText, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::SplitServerStreamingHandler<
+          ::mavsdk::rpc::telemetry::SubscribeStatusTextRequest, ::mavsdk::rpc::telemetry::StatusTextResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerSplitStreamer<
+                     ::mavsdk::rpc::telemetry::SubscribeStatusTextRequest, ::mavsdk::rpc::telemetry::StatusTextResponse>* streamer) {
+                       return this->StreamedSubscribeStatusText(context,
+                         streamer);
+                  }));
     }
     ~WithSplitStreamingMethod_SubscribeStatusText() override {
       BaseClassMustBeDerivedFromService(this);
@@ -9607,7 +9880,14 @@ class TelemetryService final {
    public:
     WithSplitStreamingMethod_SubscribeActuatorControlTarget() {
       ::grpc::Service::MarkMethodStreamed(21,
-        new ::grpc::internal::SplitServerStreamingHandler< ::mavsdk::rpc::telemetry::SubscribeActuatorControlTargetRequest, ::mavsdk::rpc::telemetry::ActuatorControlTargetResponse>(std::bind(&WithSplitStreamingMethod_SubscribeActuatorControlTarget<BaseClass>::StreamedSubscribeActuatorControlTarget, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::SplitServerStreamingHandler<
+          ::mavsdk::rpc::telemetry::SubscribeActuatorControlTargetRequest, ::mavsdk::rpc::telemetry::ActuatorControlTargetResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerSplitStreamer<
+                     ::mavsdk::rpc::telemetry::SubscribeActuatorControlTargetRequest, ::mavsdk::rpc::telemetry::ActuatorControlTargetResponse>* streamer) {
+                       return this->StreamedSubscribeActuatorControlTarget(context,
+                         streamer);
+                  }));
     }
     ~WithSplitStreamingMethod_SubscribeActuatorControlTarget() override {
       BaseClassMustBeDerivedFromService(this);
@@ -9627,7 +9907,14 @@ class TelemetryService final {
    public:
     WithSplitStreamingMethod_SubscribeActuatorOutputStatus() {
       ::grpc::Service::MarkMethodStreamed(22,
-        new ::grpc::internal::SplitServerStreamingHandler< ::mavsdk::rpc::telemetry::SubscribeActuatorOutputStatusRequest, ::mavsdk::rpc::telemetry::ActuatorOutputStatusResponse>(std::bind(&WithSplitStreamingMethod_SubscribeActuatorOutputStatus<BaseClass>::StreamedSubscribeActuatorOutputStatus, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::SplitServerStreamingHandler<
+          ::mavsdk::rpc::telemetry::SubscribeActuatorOutputStatusRequest, ::mavsdk::rpc::telemetry::ActuatorOutputStatusResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerSplitStreamer<
+                     ::mavsdk::rpc::telemetry::SubscribeActuatorOutputStatusRequest, ::mavsdk::rpc::telemetry::ActuatorOutputStatusResponse>* streamer) {
+                       return this->StreamedSubscribeActuatorOutputStatus(context,
+                         streamer);
+                  }));
     }
     ~WithSplitStreamingMethod_SubscribeActuatorOutputStatus() override {
       BaseClassMustBeDerivedFromService(this);
@@ -9647,7 +9934,14 @@ class TelemetryService final {
    public:
     WithSplitStreamingMethod_SubscribeServoOutputRaw() {
       ::grpc::Service::MarkMethodStreamed(23,
-        new ::grpc::internal::SplitServerStreamingHandler< ::mavsdk::rpc::telemetry::SubscribeServoOutputRawRequest, ::mavsdk::rpc::telemetry::ServoOutputRawResponse>(std::bind(&WithSplitStreamingMethod_SubscribeServoOutputRaw<BaseClass>::StreamedSubscribeServoOutputRaw, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::SplitServerStreamingHandler<
+          ::mavsdk::rpc::telemetry::SubscribeServoOutputRawRequest, ::mavsdk::rpc::telemetry::ServoOutputRawResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerSplitStreamer<
+                     ::mavsdk::rpc::telemetry::SubscribeServoOutputRawRequest, ::mavsdk::rpc::telemetry::ServoOutputRawResponse>* streamer) {
+                       return this->StreamedSubscribeServoOutputRaw(context,
+                         streamer);
+                  }));
     }
     ~WithSplitStreamingMethod_SubscribeServoOutputRaw() override {
       BaseClassMustBeDerivedFromService(this);
@@ -9667,7 +9961,14 @@ class TelemetryService final {
    public:
     WithSplitStreamingMethod_SubscribeOdometry() {
       ::grpc::Service::MarkMethodStreamed(24,
-        new ::grpc::internal::SplitServerStreamingHandler< ::mavsdk::rpc::telemetry::SubscribeOdometryRequest, ::mavsdk::rpc::telemetry::OdometryResponse>(std::bind(&WithSplitStreamingMethod_SubscribeOdometry<BaseClass>::StreamedSubscribeOdometry, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::SplitServerStreamingHandler<
+          ::mavsdk::rpc::telemetry::SubscribeOdometryRequest, ::mavsdk::rpc::telemetry::OdometryResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerSplitStreamer<
+                     ::mavsdk::rpc::telemetry::SubscribeOdometryRequest, ::mavsdk::rpc::telemetry::OdometryResponse>* streamer) {
+                       return this->StreamedSubscribeOdometry(context,
+                         streamer);
+                  }));
     }
     ~WithSplitStreamingMethod_SubscribeOdometry() override {
       BaseClassMustBeDerivedFromService(this);
@@ -9687,7 +9988,14 @@ class TelemetryService final {
    public:
     WithSplitStreamingMethod_SubscribePositionVelocityNed() {
       ::grpc::Service::MarkMethodStreamed(25,
-        new ::grpc::internal::SplitServerStreamingHandler< ::mavsdk::rpc::telemetry::SubscribePositionVelocityNedRequest, ::mavsdk::rpc::telemetry::PositionVelocityNedResponse>(std::bind(&WithSplitStreamingMethod_SubscribePositionVelocityNed<BaseClass>::StreamedSubscribePositionVelocityNed, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::SplitServerStreamingHandler<
+          ::mavsdk::rpc::telemetry::SubscribePositionVelocityNedRequest, ::mavsdk::rpc::telemetry::PositionVelocityNedResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerSplitStreamer<
+                     ::mavsdk::rpc::telemetry::SubscribePositionVelocityNedRequest, ::mavsdk::rpc::telemetry::PositionVelocityNedResponse>* streamer) {
+                       return this->StreamedSubscribePositionVelocityNed(context,
+                         streamer);
+                  }));
     }
     ~WithSplitStreamingMethod_SubscribePositionVelocityNed() override {
       BaseClassMustBeDerivedFromService(this);
@@ -9707,7 +10015,14 @@ class TelemetryService final {
    public:
     WithSplitStreamingMethod_SubscribeGroundTruth() {
       ::grpc::Service::MarkMethodStreamed(26,
-        new ::grpc::internal::SplitServerStreamingHandler< ::mavsdk::rpc::telemetry::SubscribeGroundTruthRequest, ::mavsdk::rpc::telemetry::GroundTruthResponse>(std::bind(&WithSplitStreamingMethod_SubscribeGroundTruth<BaseClass>::StreamedSubscribeGroundTruth, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::SplitServerStreamingHandler<
+          ::mavsdk::rpc::telemetry::SubscribeGroundTruthRequest, ::mavsdk::rpc::telemetry::GroundTruthResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerSplitStreamer<
+                     ::mavsdk::rpc::telemetry::SubscribeGroundTruthRequest, ::mavsdk::rpc::telemetry::GroundTruthResponse>* streamer) {
+                       return this->StreamedSubscribeGroundTruth(context,
+                         streamer);
+                  }));
     }
     ~WithSplitStreamingMethod_SubscribeGroundTruth() override {
       BaseClassMustBeDerivedFromService(this);
@@ -9727,7 +10042,14 @@ class TelemetryService final {
    public:
     WithSplitStreamingMethod_SubscribeFixedwingMetrics() {
       ::grpc::Service::MarkMethodStreamed(27,
-        new ::grpc::internal::SplitServerStreamingHandler< ::mavsdk::rpc::telemetry::SubscribeFixedwingMetricsRequest, ::mavsdk::rpc::telemetry::FixedwingMetricsResponse>(std::bind(&WithSplitStreamingMethod_SubscribeFixedwingMetrics<BaseClass>::StreamedSubscribeFixedwingMetrics, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::SplitServerStreamingHandler<
+          ::mavsdk::rpc::telemetry::SubscribeFixedwingMetricsRequest, ::mavsdk::rpc::telemetry::FixedwingMetricsResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerSplitStreamer<
+                     ::mavsdk::rpc::telemetry::SubscribeFixedwingMetricsRequest, ::mavsdk::rpc::telemetry::FixedwingMetricsResponse>* streamer) {
+                       return this->StreamedSubscribeFixedwingMetrics(context,
+                         streamer);
+                  }));
     }
     ~WithSplitStreamingMethod_SubscribeFixedwingMetrics() override {
       BaseClassMustBeDerivedFromService(this);
@@ -9747,7 +10069,14 @@ class TelemetryService final {
    public:
     WithSplitStreamingMethod_SubscribeImu() {
       ::grpc::Service::MarkMethodStreamed(28,
-        new ::grpc::internal::SplitServerStreamingHandler< ::mavsdk::rpc::telemetry::SubscribeImuRequest, ::mavsdk::rpc::telemetry::ImuResponse>(std::bind(&WithSplitStreamingMethod_SubscribeImu<BaseClass>::StreamedSubscribeImu, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::SplitServerStreamingHandler<
+          ::mavsdk::rpc::telemetry::SubscribeImuRequest, ::mavsdk::rpc::telemetry::ImuResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerSplitStreamer<
+                     ::mavsdk::rpc::telemetry::SubscribeImuRequest, ::mavsdk::rpc::telemetry::ImuResponse>* streamer) {
+                       return this->StreamedSubscribeImu(context,
+                         streamer);
+                  }));
     }
     ~WithSplitStreamingMethod_SubscribeImu() override {
       BaseClassMustBeDerivedFromService(this);
@@ -9767,7 +10096,14 @@ class TelemetryService final {
    public:
     WithSplitStreamingMethod_SubscribeHealthAllOk() {
       ::grpc::Service::MarkMethodStreamed(29,
-        new ::grpc::internal::SplitServerStreamingHandler< ::mavsdk::rpc::telemetry::SubscribeHealthAllOkRequest, ::mavsdk::rpc::telemetry::HealthAllOkResponse>(std::bind(&WithSplitStreamingMethod_SubscribeHealthAllOk<BaseClass>::StreamedSubscribeHealthAllOk, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::SplitServerStreamingHandler<
+          ::mavsdk::rpc::telemetry::SubscribeHealthAllOkRequest, ::mavsdk::rpc::telemetry::HealthAllOkResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerSplitStreamer<
+                     ::mavsdk::rpc::telemetry::SubscribeHealthAllOkRequest, ::mavsdk::rpc::telemetry::HealthAllOkResponse>* streamer) {
+                       return this->StreamedSubscribeHealthAllOk(context,
+                         streamer);
+                  }));
     }
     ~WithSplitStreamingMethod_SubscribeHealthAllOk() override {
       BaseClassMustBeDerivedFromService(this);
@@ -9787,7 +10123,14 @@ class TelemetryService final {
    public:
     WithSplitStreamingMethod_SubscribeUnixEpochTime() {
       ::grpc::Service::MarkMethodStreamed(30,
-        new ::grpc::internal::SplitServerStreamingHandler< ::mavsdk::rpc::telemetry::SubscribeUnixEpochTimeRequest, ::mavsdk::rpc::telemetry::UnixEpochTimeResponse>(std::bind(&WithSplitStreamingMethod_SubscribeUnixEpochTime<BaseClass>::StreamedSubscribeUnixEpochTime, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::SplitServerStreamingHandler<
+          ::mavsdk::rpc::telemetry::SubscribeUnixEpochTimeRequest, ::mavsdk::rpc::telemetry::UnixEpochTimeResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerSplitStreamer<
+                     ::mavsdk::rpc::telemetry::SubscribeUnixEpochTimeRequest, ::mavsdk::rpc::telemetry::UnixEpochTimeResponse>* streamer) {
+                       return this->StreamedSubscribeUnixEpochTime(context,
+                         streamer);
+                  }));
     }
     ~WithSplitStreamingMethod_SubscribeUnixEpochTime() override {
       BaseClassMustBeDerivedFromService(this);

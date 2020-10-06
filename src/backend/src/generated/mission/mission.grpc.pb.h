@@ -2653,7 +2653,14 @@ class MissionService final {
    public:
     WithStreamedUnaryMethod_UploadMission() {
       ::grpc::Service::MarkMethodStreamed(0,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::mission::UploadMissionRequest, ::mavsdk::rpc::mission::UploadMissionResponse>(std::bind(&WithStreamedUnaryMethod_UploadMission<BaseClass>::StreamedUploadMission, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::mission::UploadMissionRequest, ::mavsdk::rpc::mission::UploadMissionResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::mission::UploadMissionRequest, ::mavsdk::rpc::mission::UploadMissionResponse>* streamer) {
+                       return this->StreamedUploadMission(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_UploadMission() override {
       BaseClassMustBeDerivedFromService(this);
@@ -2673,7 +2680,14 @@ class MissionService final {
    public:
     WithStreamedUnaryMethod_CancelMissionUpload() {
       ::grpc::Service::MarkMethodStreamed(1,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::mission::CancelMissionUploadRequest, ::mavsdk::rpc::mission::CancelMissionUploadResponse>(std::bind(&WithStreamedUnaryMethod_CancelMissionUpload<BaseClass>::StreamedCancelMissionUpload, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::mission::CancelMissionUploadRequest, ::mavsdk::rpc::mission::CancelMissionUploadResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::mission::CancelMissionUploadRequest, ::mavsdk::rpc::mission::CancelMissionUploadResponse>* streamer) {
+                       return this->StreamedCancelMissionUpload(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_CancelMissionUpload() override {
       BaseClassMustBeDerivedFromService(this);
@@ -2693,7 +2707,14 @@ class MissionService final {
    public:
     WithStreamedUnaryMethod_DownloadMission() {
       ::grpc::Service::MarkMethodStreamed(2,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::mission::DownloadMissionRequest, ::mavsdk::rpc::mission::DownloadMissionResponse>(std::bind(&WithStreamedUnaryMethod_DownloadMission<BaseClass>::StreamedDownloadMission, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::mission::DownloadMissionRequest, ::mavsdk::rpc::mission::DownloadMissionResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::mission::DownloadMissionRequest, ::mavsdk::rpc::mission::DownloadMissionResponse>* streamer) {
+                       return this->StreamedDownloadMission(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_DownloadMission() override {
       BaseClassMustBeDerivedFromService(this);
@@ -2713,7 +2734,14 @@ class MissionService final {
    public:
     WithStreamedUnaryMethod_CancelMissionDownload() {
       ::grpc::Service::MarkMethodStreamed(3,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::mission::CancelMissionDownloadRequest, ::mavsdk::rpc::mission::CancelMissionDownloadResponse>(std::bind(&WithStreamedUnaryMethod_CancelMissionDownload<BaseClass>::StreamedCancelMissionDownload, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::mission::CancelMissionDownloadRequest, ::mavsdk::rpc::mission::CancelMissionDownloadResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::mission::CancelMissionDownloadRequest, ::mavsdk::rpc::mission::CancelMissionDownloadResponse>* streamer) {
+                       return this->StreamedCancelMissionDownload(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_CancelMissionDownload() override {
       BaseClassMustBeDerivedFromService(this);
@@ -2733,7 +2761,14 @@ class MissionService final {
    public:
     WithStreamedUnaryMethod_StartMission() {
       ::grpc::Service::MarkMethodStreamed(4,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::mission::StartMissionRequest, ::mavsdk::rpc::mission::StartMissionResponse>(std::bind(&WithStreamedUnaryMethod_StartMission<BaseClass>::StreamedStartMission, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::mission::StartMissionRequest, ::mavsdk::rpc::mission::StartMissionResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::mission::StartMissionRequest, ::mavsdk::rpc::mission::StartMissionResponse>* streamer) {
+                       return this->StreamedStartMission(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_StartMission() override {
       BaseClassMustBeDerivedFromService(this);
@@ -2753,7 +2788,14 @@ class MissionService final {
    public:
     WithStreamedUnaryMethod_PauseMission() {
       ::grpc::Service::MarkMethodStreamed(5,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::mission::PauseMissionRequest, ::mavsdk::rpc::mission::PauseMissionResponse>(std::bind(&WithStreamedUnaryMethod_PauseMission<BaseClass>::StreamedPauseMission, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::mission::PauseMissionRequest, ::mavsdk::rpc::mission::PauseMissionResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::mission::PauseMissionRequest, ::mavsdk::rpc::mission::PauseMissionResponse>* streamer) {
+                       return this->StreamedPauseMission(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_PauseMission() override {
       BaseClassMustBeDerivedFromService(this);
@@ -2773,7 +2815,14 @@ class MissionService final {
    public:
     WithStreamedUnaryMethod_ClearMission() {
       ::grpc::Service::MarkMethodStreamed(6,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::mission::ClearMissionRequest, ::mavsdk::rpc::mission::ClearMissionResponse>(std::bind(&WithStreamedUnaryMethod_ClearMission<BaseClass>::StreamedClearMission, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::mission::ClearMissionRequest, ::mavsdk::rpc::mission::ClearMissionResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::mission::ClearMissionRequest, ::mavsdk::rpc::mission::ClearMissionResponse>* streamer) {
+                       return this->StreamedClearMission(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_ClearMission() override {
       BaseClassMustBeDerivedFromService(this);
@@ -2793,7 +2842,14 @@ class MissionService final {
    public:
     WithStreamedUnaryMethod_SetCurrentMissionItem() {
       ::grpc::Service::MarkMethodStreamed(7,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::mission::SetCurrentMissionItemRequest, ::mavsdk::rpc::mission::SetCurrentMissionItemResponse>(std::bind(&WithStreamedUnaryMethod_SetCurrentMissionItem<BaseClass>::StreamedSetCurrentMissionItem, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::mission::SetCurrentMissionItemRequest, ::mavsdk::rpc::mission::SetCurrentMissionItemResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::mission::SetCurrentMissionItemRequest, ::mavsdk::rpc::mission::SetCurrentMissionItemResponse>* streamer) {
+                       return this->StreamedSetCurrentMissionItem(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_SetCurrentMissionItem() override {
       BaseClassMustBeDerivedFromService(this);
@@ -2813,7 +2869,14 @@ class MissionService final {
    public:
     WithStreamedUnaryMethod_IsMissionFinished() {
       ::grpc::Service::MarkMethodStreamed(8,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::mission::IsMissionFinishedRequest, ::mavsdk::rpc::mission::IsMissionFinishedResponse>(std::bind(&WithStreamedUnaryMethod_IsMissionFinished<BaseClass>::StreamedIsMissionFinished, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::mission::IsMissionFinishedRequest, ::mavsdk::rpc::mission::IsMissionFinishedResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::mission::IsMissionFinishedRequest, ::mavsdk::rpc::mission::IsMissionFinishedResponse>* streamer) {
+                       return this->StreamedIsMissionFinished(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_IsMissionFinished() override {
       BaseClassMustBeDerivedFromService(this);
@@ -2833,7 +2896,14 @@ class MissionService final {
    public:
     WithStreamedUnaryMethod_GetReturnToLaunchAfterMission() {
       ::grpc::Service::MarkMethodStreamed(10,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::mission::GetReturnToLaunchAfterMissionRequest, ::mavsdk::rpc::mission::GetReturnToLaunchAfterMissionResponse>(std::bind(&WithStreamedUnaryMethod_GetReturnToLaunchAfterMission<BaseClass>::StreamedGetReturnToLaunchAfterMission, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::mission::GetReturnToLaunchAfterMissionRequest, ::mavsdk::rpc::mission::GetReturnToLaunchAfterMissionResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::mission::GetReturnToLaunchAfterMissionRequest, ::mavsdk::rpc::mission::GetReturnToLaunchAfterMissionResponse>* streamer) {
+                       return this->StreamedGetReturnToLaunchAfterMission(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_GetReturnToLaunchAfterMission() override {
       BaseClassMustBeDerivedFromService(this);
@@ -2853,7 +2923,14 @@ class MissionService final {
    public:
     WithStreamedUnaryMethod_SetReturnToLaunchAfterMission() {
       ::grpc::Service::MarkMethodStreamed(11,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::mission::SetReturnToLaunchAfterMissionRequest, ::mavsdk::rpc::mission::SetReturnToLaunchAfterMissionResponse>(std::bind(&WithStreamedUnaryMethod_SetReturnToLaunchAfterMission<BaseClass>::StreamedSetReturnToLaunchAfterMission, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::mission::SetReturnToLaunchAfterMissionRequest, ::mavsdk::rpc::mission::SetReturnToLaunchAfterMissionResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::mission::SetReturnToLaunchAfterMissionRequest, ::mavsdk::rpc::mission::SetReturnToLaunchAfterMissionResponse>* streamer) {
+                       return this->StreamedSetReturnToLaunchAfterMission(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_SetReturnToLaunchAfterMission() override {
       BaseClassMustBeDerivedFromService(this);
@@ -2873,7 +2950,14 @@ class MissionService final {
    public:
     WithStreamedUnaryMethod_ImportQgroundcontrolMission() {
       ::grpc::Service::MarkMethodStreamed(12,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::mission::ImportQgroundcontrolMissionRequest, ::mavsdk::rpc::mission::ImportQgroundcontrolMissionResponse>(std::bind(&WithStreamedUnaryMethod_ImportQgroundcontrolMission<BaseClass>::StreamedImportQgroundcontrolMission, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::mission::ImportQgroundcontrolMissionRequest, ::mavsdk::rpc::mission::ImportQgroundcontrolMissionResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::mission::ImportQgroundcontrolMissionRequest, ::mavsdk::rpc::mission::ImportQgroundcontrolMissionResponse>* streamer) {
+                       return this->StreamedImportQgroundcontrolMission(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_ImportQgroundcontrolMission() override {
       BaseClassMustBeDerivedFromService(this);
@@ -2894,7 +2978,14 @@ class MissionService final {
    public:
     WithSplitStreamingMethod_SubscribeMissionProgress() {
       ::grpc::Service::MarkMethodStreamed(9,
-        new ::grpc::internal::SplitServerStreamingHandler< ::mavsdk::rpc::mission::SubscribeMissionProgressRequest, ::mavsdk::rpc::mission::MissionProgressResponse>(std::bind(&WithSplitStreamingMethod_SubscribeMissionProgress<BaseClass>::StreamedSubscribeMissionProgress, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::SplitServerStreamingHandler<
+          ::mavsdk::rpc::mission::SubscribeMissionProgressRequest, ::mavsdk::rpc::mission::MissionProgressResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerSplitStreamer<
+                     ::mavsdk::rpc::mission::SubscribeMissionProgressRequest, ::mavsdk::rpc::mission::MissionProgressResponse>* streamer) {
+                       return this->StreamedSubscribeMissionProgress(context,
+                         streamer);
+                  }));
     }
     ~WithSplitStreamingMethod_SubscribeMissionProgress() override {
       BaseClassMustBeDerivedFromService(this);

@@ -3029,7 +3029,14 @@ class OffboardService final {
    public:
     WithStreamedUnaryMethod_RequestOffboard() {
       ::grpc::Service::MarkMethodStreamed(0,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::offboard::StartRequest, ::mavsdk::rpc::offboard::StartResponse>(std::bind(&WithStreamedUnaryMethod_RequestOffboard<BaseClass>::StreamedRequestOffboard, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::offboard::StartRequest, ::mavsdk::rpc::offboard::StartResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::offboard::StartRequest, ::mavsdk::rpc::offboard::StartResponse>* streamer) {
+                       return this->StreamedRequestOffboard(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_RequestOffboard() override {
       BaseClassMustBeDerivedFromService(this);
@@ -3049,7 +3056,14 @@ class OffboardService final {
    public:
     WithStreamedUnaryMethod_Start() {
       ::grpc::Service::MarkMethodStreamed(1,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::offboard::StartRequest, ::mavsdk::rpc::offboard::StartResponse>(std::bind(&WithStreamedUnaryMethod_Start<BaseClass>::StreamedStart, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::offboard::StartRequest, ::mavsdk::rpc::offboard::StartResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::offboard::StartRequest, ::mavsdk::rpc::offboard::StartResponse>* streamer) {
+                       return this->StreamedStart(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_Start() override {
       BaseClassMustBeDerivedFromService(this);
@@ -3069,7 +3083,14 @@ class OffboardService final {
    public:
     WithStreamedUnaryMethod_Stop() {
       ::grpc::Service::MarkMethodStreamed(2,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::offboard::StopRequest, ::mavsdk::rpc::offboard::StopResponse>(std::bind(&WithStreamedUnaryMethod_Stop<BaseClass>::StreamedStop, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::offboard::StopRequest, ::mavsdk::rpc::offboard::StopResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::offboard::StopRequest, ::mavsdk::rpc::offboard::StopResponse>* streamer) {
+                       return this->StreamedStop(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_Stop() override {
       BaseClassMustBeDerivedFromService(this);
@@ -3089,7 +3110,14 @@ class OffboardService final {
    public:
     WithStreamedUnaryMethod_IsActive() {
       ::grpc::Service::MarkMethodStreamed(3,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::offboard::IsActiveRequest, ::mavsdk::rpc::offboard::IsActiveResponse>(std::bind(&WithStreamedUnaryMethod_IsActive<BaseClass>::StreamedIsActive, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::offboard::IsActiveRequest, ::mavsdk::rpc::offboard::IsActiveResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::offboard::IsActiveRequest, ::mavsdk::rpc::offboard::IsActiveResponse>* streamer) {
+                       return this->StreamedIsActive(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_IsActive() override {
       BaseClassMustBeDerivedFromService(this);
@@ -3109,7 +3137,14 @@ class OffboardService final {
    public:
     WithStreamedUnaryMethod_SetAttitudeOnce() {
       ::grpc::Service::MarkMethodStreamed(4,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::offboard::SetAttitudeRequest, ::mavsdk::rpc::offboard::SetAttitudeResponse>(std::bind(&WithStreamedUnaryMethod_SetAttitudeOnce<BaseClass>::StreamedSetAttitudeOnce, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::offboard::SetAttitudeRequest, ::mavsdk::rpc::offboard::SetAttitudeResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::offboard::SetAttitudeRequest, ::mavsdk::rpc::offboard::SetAttitudeResponse>* streamer) {
+                       return this->StreamedSetAttitudeOnce(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_SetAttitudeOnce() override {
       BaseClassMustBeDerivedFromService(this);
@@ -3129,7 +3164,14 @@ class OffboardService final {
    public:
     WithStreamedUnaryMethod_SetAttitude() {
       ::grpc::Service::MarkMethodStreamed(5,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::offboard::SetAttitudeRequest, ::mavsdk::rpc::offboard::SetAttitudeResponse>(std::bind(&WithStreamedUnaryMethod_SetAttitude<BaseClass>::StreamedSetAttitude, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::offboard::SetAttitudeRequest, ::mavsdk::rpc::offboard::SetAttitudeResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::offboard::SetAttitudeRequest, ::mavsdk::rpc::offboard::SetAttitudeResponse>* streamer) {
+                       return this->StreamedSetAttitude(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_SetAttitude() override {
       BaseClassMustBeDerivedFromService(this);
@@ -3149,7 +3191,14 @@ class OffboardService final {
    public:
     WithStreamedUnaryMethod_SetActuatorControlOnce() {
       ::grpc::Service::MarkMethodStreamed(6,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::offboard::SetActuatorControlRequest, ::mavsdk::rpc::offboard::SetActuatorControlResponse>(std::bind(&WithStreamedUnaryMethod_SetActuatorControlOnce<BaseClass>::StreamedSetActuatorControlOnce, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::offboard::SetActuatorControlRequest, ::mavsdk::rpc::offboard::SetActuatorControlResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::offboard::SetActuatorControlRequest, ::mavsdk::rpc::offboard::SetActuatorControlResponse>* streamer) {
+                       return this->StreamedSetActuatorControlOnce(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_SetActuatorControlOnce() override {
       BaseClassMustBeDerivedFromService(this);
@@ -3169,7 +3218,14 @@ class OffboardService final {
    public:
     WithStreamedUnaryMethod_SetActuatorControl() {
       ::grpc::Service::MarkMethodStreamed(7,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::offboard::SetActuatorControlRequest, ::mavsdk::rpc::offboard::SetActuatorControlResponse>(std::bind(&WithStreamedUnaryMethod_SetActuatorControl<BaseClass>::StreamedSetActuatorControl, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::offboard::SetActuatorControlRequest, ::mavsdk::rpc::offboard::SetActuatorControlResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::offboard::SetActuatorControlRequest, ::mavsdk::rpc::offboard::SetActuatorControlResponse>* streamer) {
+                       return this->StreamedSetActuatorControl(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_SetActuatorControl() override {
       BaseClassMustBeDerivedFromService(this);
@@ -3189,7 +3245,14 @@ class OffboardService final {
    public:
     WithStreamedUnaryMethod_SetAttitudeRateOnce() {
       ::grpc::Service::MarkMethodStreamed(8,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::offboard::SetAttitudeRateRequest, ::mavsdk::rpc::offboard::SetAttitudeRateResponse>(std::bind(&WithStreamedUnaryMethod_SetAttitudeRateOnce<BaseClass>::StreamedSetAttitudeRateOnce, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::offboard::SetAttitudeRateRequest, ::mavsdk::rpc::offboard::SetAttitudeRateResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::offboard::SetAttitudeRateRequest, ::mavsdk::rpc::offboard::SetAttitudeRateResponse>* streamer) {
+                       return this->StreamedSetAttitudeRateOnce(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_SetAttitudeRateOnce() override {
       BaseClassMustBeDerivedFromService(this);
@@ -3209,7 +3272,14 @@ class OffboardService final {
    public:
     WithStreamedUnaryMethod_SetAttitudeRate() {
       ::grpc::Service::MarkMethodStreamed(9,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::offboard::SetAttitudeRateRequest, ::mavsdk::rpc::offboard::SetAttitudeRateResponse>(std::bind(&WithStreamedUnaryMethod_SetAttitudeRate<BaseClass>::StreamedSetAttitudeRate, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::offboard::SetAttitudeRateRequest, ::mavsdk::rpc::offboard::SetAttitudeRateResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::offboard::SetAttitudeRateRequest, ::mavsdk::rpc::offboard::SetAttitudeRateResponse>* streamer) {
+                       return this->StreamedSetAttitudeRate(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_SetAttitudeRate() override {
       BaseClassMustBeDerivedFromService(this);
@@ -3229,7 +3299,14 @@ class OffboardService final {
    public:
     WithStreamedUnaryMethod_SetPositionNedOnce() {
       ::grpc::Service::MarkMethodStreamed(10,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::offboard::SetPositionNedRequest, ::mavsdk::rpc::offboard::SetPositionNedResponse>(std::bind(&WithStreamedUnaryMethod_SetPositionNedOnce<BaseClass>::StreamedSetPositionNedOnce, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::offboard::SetPositionNedRequest, ::mavsdk::rpc::offboard::SetPositionNedResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::offboard::SetPositionNedRequest, ::mavsdk::rpc::offboard::SetPositionNedResponse>* streamer) {
+                       return this->StreamedSetPositionNedOnce(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_SetPositionNedOnce() override {
       BaseClassMustBeDerivedFromService(this);
@@ -3249,7 +3326,14 @@ class OffboardService final {
    public:
     WithStreamedUnaryMethod_SetPositionNed() {
       ::grpc::Service::MarkMethodStreamed(11,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::offboard::SetPositionNedRequest, ::mavsdk::rpc::offboard::SetPositionNedResponse>(std::bind(&WithStreamedUnaryMethod_SetPositionNed<BaseClass>::StreamedSetPositionNed, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::offboard::SetPositionNedRequest, ::mavsdk::rpc::offboard::SetPositionNedResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::offboard::SetPositionNedRequest, ::mavsdk::rpc::offboard::SetPositionNedResponse>* streamer) {
+                       return this->StreamedSetPositionNed(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_SetPositionNed() override {
       BaseClassMustBeDerivedFromService(this);
@@ -3269,7 +3353,14 @@ class OffboardService final {
    public:
     WithStreamedUnaryMethod_SetVelocityBodyOnce() {
       ::grpc::Service::MarkMethodStreamed(12,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::offboard::SetVelocityBodyRequest, ::mavsdk::rpc::offboard::SetVelocityBodyResponse>(std::bind(&WithStreamedUnaryMethod_SetVelocityBodyOnce<BaseClass>::StreamedSetVelocityBodyOnce, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::offboard::SetVelocityBodyRequest, ::mavsdk::rpc::offboard::SetVelocityBodyResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::offboard::SetVelocityBodyRequest, ::mavsdk::rpc::offboard::SetVelocityBodyResponse>* streamer) {
+                       return this->StreamedSetVelocityBodyOnce(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_SetVelocityBodyOnce() override {
       BaseClassMustBeDerivedFromService(this);
@@ -3289,7 +3380,14 @@ class OffboardService final {
    public:
     WithStreamedUnaryMethod_SetVelocityBody() {
       ::grpc::Service::MarkMethodStreamed(13,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::offboard::SetVelocityBodyRequest, ::mavsdk::rpc::offboard::SetVelocityBodyResponse>(std::bind(&WithStreamedUnaryMethod_SetVelocityBody<BaseClass>::StreamedSetVelocityBody, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::offboard::SetVelocityBodyRequest, ::mavsdk::rpc::offboard::SetVelocityBodyResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::offboard::SetVelocityBodyRequest, ::mavsdk::rpc::offboard::SetVelocityBodyResponse>* streamer) {
+                       return this->StreamedSetVelocityBody(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_SetVelocityBody() override {
       BaseClassMustBeDerivedFromService(this);
@@ -3309,7 +3407,14 @@ class OffboardService final {
    public:
     WithStreamedUnaryMethod_SetVelocityNed() {
       ::grpc::Service::MarkMethodStreamed(14,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::offboard::SetVelocityNedRequest, ::mavsdk::rpc::offboard::SetVelocityNedResponse>(std::bind(&WithStreamedUnaryMethod_SetVelocityNed<BaseClass>::StreamedSetVelocityNed, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::offboard::SetVelocityNedRequest, ::mavsdk::rpc::offboard::SetVelocityNedResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::offboard::SetVelocityNedRequest, ::mavsdk::rpc::offboard::SetVelocityNedResponse>* streamer) {
+                       return this->StreamedSetVelocityNed(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_SetVelocityNed() override {
       BaseClassMustBeDerivedFromService(this);

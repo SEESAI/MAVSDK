@@ -3471,7 +3471,14 @@ class ActionService final {
    public:
     WithStreamedUnaryMethod_Arm() {
       ::grpc::Service::MarkMethodStreamed(0,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::action::ArmRequest, ::mavsdk::rpc::action::ArmResponse>(std::bind(&WithStreamedUnaryMethod_Arm<BaseClass>::StreamedArm, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::action::ArmRequest, ::mavsdk::rpc::action::ArmResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::action::ArmRequest, ::mavsdk::rpc::action::ArmResponse>* streamer) {
+                       return this->StreamedArm(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_Arm() override {
       BaseClassMustBeDerivedFromService(this);
@@ -3491,7 +3498,14 @@ class ActionService final {
    public:
     WithStreamedUnaryMethod_Disarm() {
       ::grpc::Service::MarkMethodStreamed(1,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::action::DisarmRequest, ::mavsdk::rpc::action::DisarmResponse>(std::bind(&WithStreamedUnaryMethod_Disarm<BaseClass>::StreamedDisarm, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::action::DisarmRequest, ::mavsdk::rpc::action::DisarmResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::action::DisarmRequest, ::mavsdk::rpc::action::DisarmResponse>* streamer) {
+                       return this->StreamedDisarm(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_Disarm() override {
       BaseClassMustBeDerivedFromService(this);
@@ -3511,7 +3525,14 @@ class ActionService final {
    public:
     WithStreamedUnaryMethod_Takeoff() {
       ::grpc::Service::MarkMethodStreamed(2,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::action::TakeoffRequest, ::mavsdk::rpc::action::TakeoffResponse>(std::bind(&WithStreamedUnaryMethod_Takeoff<BaseClass>::StreamedTakeoff, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::action::TakeoffRequest, ::mavsdk::rpc::action::TakeoffResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::action::TakeoffRequest, ::mavsdk::rpc::action::TakeoffResponse>* streamer) {
+                       return this->StreamedTakeoff(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_Takeoff() override {
       BaseClassMustBeDerivedFromService(this);
@@ -3531,7 +3552,14 @@ class ActionService final {
    public:
     WithStreamedUnaryMethod_Land() {
       ::grpc::Service::MarkMethodStreamed(3,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::action::LandRequest, ::mavsdk::rpc::action::LandResponse>(std::bind(&WithStreamedUnaryMethod_Land<BaseClass>::StreamedLand, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::action::LandRequest, ::mavsdk::rpc::action::LandResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::action::LandRequest, ::mavsdk::rpc::action::LandResponse>* streamer) {
+                       return this->StreamedLand(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_Land() override {
       BaseClassMustBeDerivedFromService(this);
@@ -3551,7 +3579,14 @@ class ActionService final {
    public:
     WithStreamedUnaryMethod_Reboot() {
       ::grpc::Service::MarkMethodStreamed(4,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::action::RebootRequest, ::mavsdk::rpc::action::RebootResponse>(std::bind(&WithStreamedUnaryMethod_Reboot<BaseClass>::StreamedReboot, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::action::RebootRequest, ::mavsdk::rpc::action::RebootResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::action::RebootRequest, ::mavsdk::rpc::action::RebootResponse>* streamer) {
+                       return this->StreamedReboot(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_Reboot() override {
       BaseClassMustBeDerivedFromService(this);
@@ -3571,7 +3606,14 @@ class ActionService final {
    public:
     WithStreamedUnaryMethod_Shutdown() {
       ::grpc::Service::MarkMethodStreamed(5,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::action::ShutdownRequest, ::mavsdk::rpc::action::ShutdownResponse>(std::bind(&WithStreamedUnaryMethod_Shutdown<BaseClass>::StreamedShutdown, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::action::ShutdownRequest, ::mavsdk::rpc::action::ShutdownResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::action::ShutdownRequest, ::mavsdk::rpc::action::ShutdownResponse>* streamer) {
+                       return this->StreamedShutdown(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_Shutdown() override {
       BaseClassMustBeDerivedFromService(this);
@@ -3591,7 +3633,14 @@ class ActionService final {
    public:
     WithStreamedUnaryMethod_Kill() {
       ::grpc::Service::MarkMethodStreamed(6,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::action::KillRequest, ::mavsdk::rpc::action::KillResponse>(std::bind(&WithStreamedUnaryMethod_Kill<BaseClass>::StreamedKill, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::action::KillRequest, ::mavsdk::rpc::action::KillResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::action::KillRequest, ::mavsdk::rpc::action::KillResponse>* streamer) {
+                       return this->StreamedKill(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_Kill() override {
       BaseClassMustBeDerivedFromService(this);
@@ -3611,7 +3660,14 @@ class ActionService final {
    public:
     WithStreamedUnaryMethod_ReturnToLaunch() {
       ::grpc::Service::MarkMethodStreamed(7,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::action::ReturnToLaunchRequest, ::mavsdk::rpc::action::ReturnToLaunchResponse>(std::bind(&WithStreamedUnaryMethod_ReturnToLaunch<BaseClass>::StreamedReturnToLaunch, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::action::ReturnToLaunchRequest, ::mavsdk::rpc::action::ReturnToLaunchResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::action::ReturnToLaunchRequest, ::mavsdk::rpc::action::ReturnToLaunchResponse>* streamer) {
+                       return this->StreamedReturnToLaunch(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_ReturnToLaunch() override {
       BaseClassMustBeDerivedFromService(this);
@@ -3631,7 +3687,14 @@ class ActionService final {
    public:
     WithStreamedUnaryMethod_GotoLocation() {
       ::grpc::Service::MarkMethodStreamed(8,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::action::GotoLocationRequest, ::mavsdk::rpc::action::GotoLocationResponse>(std::bind(&WithStreamedUnaryMethod_GotoLocation<BaseClass>::StreamedGotoLocation, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::action::GotoLocationRequest, ::mavsdk::rpc::action::GotoLocationResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::action::GotoLocationRequest, ::mavsdk::rpc::action::GotoLocationResponse>* streamer) {
+                       return this->StreamedGotoLocation(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_GotoLocation() override {
       BaseClassMustBeDerivedFromService(this);
@@ -3651,7 +3714,14 @@ class ActionService final {
    public:
     WithStreamedUnaryMethod_TransitionToFixedwing() {
       ::grpc::Service::MarkMethodStreamed(9,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::action::TransitionToFixedwingRequest, ::mavsdk::rpc::action::TransitionToFixedwingResponse>(std::bind(&WithStreamedUnaryMethod_TransitionToFixedwing<BaseClass>::StreamedTransitionToFixedwing, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::action::TransitionToFixedwingRequest, ::mavsdk::rpc::action::TransitionToFixedwingResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::action::TransitionToFixedwingRequest, ::mavsdk::rpc::action::TransitionToFixedwingResponse>* streamer) {
+                       return this->StreamedTransitionToFixedwing(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_TransitionToFixedwing() override {
       BaseClassMustBeDerivedFromService(this);
@@ -3671,7 +3741,14 @@ class ActionService final {
    public:
     WithStreamedUnaryMethod_TransitionToMulticopter() {
       ::grpc::Service::MarkMethodStreamed(10,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::action::TransitionToMulticopterRequest, ::mavsdk::rpc::action::TransitionToMulticopterResponse>(std::bind(&WithStreamedUnaryMethod_TransitionToMulticopter<BaseClass>::StreamedTransitionToMulticopter, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::action::TransitionToMulticopterRequest, ::mavsdk::rpc::action::TransitionToMulticopterResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::action::TransitionToMulticopterRequest, ::mavsdk::rpc::action::TransitionToMulticopterResponse>* streamer) {
+                       return this->StreamedTransitionToMulticopter(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_TransitionToMulticopter() override {
       BaseClassMustBeDerivedFromService(this);
@@ -3691,7 +3768,14 @@ class ActionService final {
    public:
     WithStreamedUnaryMethod_GetTakeoffAltitude() {
       ::grpc::Service::MarkMethodStreamed(11,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::action::GetTakeoffAltitudeRequest, ::mavsdk::rpc::action::GetTakeoffAltitudeResponse>(std::bind(&WithStreamedUnaryMethod_GetTakeoffAltitude<BaseClass>::StreamedGetTakeoffAltitude, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::action::GetTakeoffAltitudeRequest, ::mavsdk::rpc::action::GetTakeoffAltitudeResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::action::GetTakeoffAltitudeRequest, ::mavsdk::rpc::action::GetTakeoffAltitudeResponse>* streamer) {
+                       return this->StreamedGetTakeoffAltitude(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_GetTakeoffAltitude() override {
       BaseClassMustBeDerivedFromService(this);
@@ -3711,7 +3795,14 @@ class ActionService final {
    public:
     WithStreamedUnaryMethod_SetTakeoffAltitude() {
       ::grpc::Service::MarkMethodStreamed(12,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::action::SetTakeoffAltitudeRequest, ::mavsdk::rpc::action::SetTakeoffAltitudeResponse>(std::bind(&WithStreamedUnaryMethod_SetTakeoffAltitude<BaseClass>::StreamedSetTakeoffAltitude, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::action::SetTakeoffAltitudeRequest, ::mavsdk::rpc::action::SetTakeoffAltitudeResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::action::SetTakeoffAltitudeRequest, ::mavsdk::rpc::action::SetTakeoffAltitudeResponse>* streamer) {
+                       return this->StreamedSetTakeoffAltitude(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_SetTakeoffAltitude() override {
       BaseClassMustBeDerivedFromService(this);
@@ -3731,7 +3822,14 @@ class ActionService final {
    public:
     WithStreamedUnaryMethod_GetMaximumSpeed() {
       ::grpc::Service::MarkMethodStreamed(13,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::action::GetMaximumSpeedRequest, ::mavsdk::rpc::action::GetMaximumSpeedResponse>(std::bind(&WithStreamedUnaryMethod_GetMaximumSpeed<BaseClass>::StreamedGetMaximumSpeed, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::action::GetMaximumSpeedRequest, ::mavsdk::rpc::action::GetMaximumSpeedResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::action::GetMaximumSpeedRequest, ::mavsdk::rpc::action::GetMaximumSpeedResponse>* streamer) {
+                       return this->StreamedGetMaximumSpeed(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_GetMaximumSpeed() override {
       BaseClassMustBeDerivedFromService(this);
@@ -3751,7 +3849,14 @@ class ActionService final {
    public:
     WithStreamedUnaryMethod_SetMaximumSpeed() {
       ::grpc::Service::MarkMethodStreamed(14,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::action::SetMaximumSpeedRequest, ::mavsdk::rpc::action::SetMaximumSpeedResponse>(std::bind(&WithStreamedUnaryMethod_SetMaximumSpeed<BaseClass>::StreamedSetMaximumSpeed, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::action::SetMaximumSpeedRequest, ::mavsdk::rpc::action::SetMaximumSpeedResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::action::SetMaximumSpeedRequest, ::mavsdk::rpc::action::SetMaximumSpeedResponse>* streamer) {
+                       return this->StreamedSetMaximumSpeed(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_SetMaximumSpeed() override {
       BaseClassMustBeDerivedFromService(this);
@@ -3771,7 +3876,14 @@ class ActionService final {
    public:
     WithStreamedUnaryMethod_GetReturnToLaunchAltitude() {
       ::grpc::Service::MarkMethodStreamed(15,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::action::GetReturnToLaunchAltitudeRequest, ::mavsdk::rpc::action::GetReturnToLaunchAltitudeResponse>(std::bind(&WithStreamedUnaryMethod_GetReturnToLaunchAltitude<BaseClass>::StreamedGetReturnToLaunchAltitude, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::action::GetReturnToLaunchAltitudeRequest, ::mavsdk::rpc::action::GetReturnToLaunchAltitudeResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::action::GetReturnToLaunchAltitudeRequest, ::mavsdk::rpc::action::GetReturnToLaunchAltitudeResponse>* streamer) {
+                       return this->StreamedGetReturnToLaunchAltitude(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_GetReturnToLaunchAltitude() override {
       BaseClassMustBeDerivedFromService(this);
@@ -3791,7 +3903,14 @@ class ActionService final {
    public:
     WithStreamedUnaryMethod_SetReturnToLaunchAltitude() {
       ::grpc::Service::MarkMethodStreamed(16,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::action::SetReturnToLaunchAltitudeRequest, ::mavsdk::rpc::action::SetReturnToLaunchAltitudeResponse>(std::bind(&WithStreamedUnaryMethod_SetReturnToLaunchAltitude<BaseClass>::StreamedSetReturnToLaunchAltitude, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::action::SetReturnToLaunchAltitudeRequest, ::mavsdk::rpc::action::SetReturnToLaunchAltitudeResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::action::SetReturnToLaunchAltitudeRequest, ::mavsdk::rpc::action::SetReturnToLaunchAltitudeResponse>* streamer) {
+                       return this->StreamedSetReturnToLaunchAltitude(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_SetReturnToLaunchAltitude() override {
       BaseClassMustBeDerivedFromService(this);

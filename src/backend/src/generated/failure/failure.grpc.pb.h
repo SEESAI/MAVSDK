@@ -279,7 +279,14 @@ class FailureService final {
    public:
     WithStreamedUnaryMethod_Inject() {
       ::grpc::Service::MarkMethodStreamed(0,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::failure::InjectRequest, ::mavsdk::rpc::failure::InjectResponse>(std::bind(&WithStreamedUnaryMethod_Inject<BaseClass>::StreamedInject, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::failure::InjectRequest, ::mavsdk::rpc::failure::InjectResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::failure::InjectRequest, ::mavsdk::rpc::failure::InjectResponse>* streamer) {
+                       return this->StreamedInject(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_Inject() override {
       BaseClassMustBeDerivedFromService(this);

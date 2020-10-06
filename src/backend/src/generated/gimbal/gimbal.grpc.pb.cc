@@ -130,17 +130,32 @@ GimbalService::Service::Service() {
       GimbalService_method_names[0],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< GimbalService::Service, ::mavsdk::rpc::gimbal::SetPitchAndYawRequest, ::mavsdk::rpc::gimbal::SetPitchAndYawResponse>(
-          std::mem_fn(&GimbalService::Service::SetPitchAndYaw), this)));
+          [](GimbalService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::gimbal::SetPitchAndYawRequest* req,
+             ::mavsdk::rpc::gimbal::SetPitchAndYawResponse* resp) {
+               return service->SetPitchAndYaw(ctx, req, resp);
+             }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       GimbalService_method_names[1],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< GimbalService::Service, ::mavsdk::rpc::gimbal::SetModeRequest, ::mavsdk::rpc::gimbal::SetModeResponse>(
-          std::mem_fn(&GimbalService::Service::SetMode), this)));
+          [](GimbalService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::gimbal::SetModeRequest* req,
+             ::mavsdk::rpc::gimbal::SetModeResponse* resp) {
+               return service->SetMode(ctx, req, resp);
+             }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       GimbalService_method_names[2],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< GimbalService::Service, ::mavsdk::rpc::gimbal::SetRoiLocationRequest, ::mavsdk::rpc::gimbal::SetRoiLocationResponse>(
-          std::mem_fn(&GimbalService::Service::SetRoiLocation), this)));
+          [](GimbalService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::gimbal::SetRoiLocationRequest* req,
+             ::mavsdk::rpc::gimbal::SetRoiLocationResponse* resp) {
+               return service->SetRoiLocation(ctx, req, resp);
+             }, this)));
 }
 
 GimbalService::Service::~Service() {

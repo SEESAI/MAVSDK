@@ -882,7 +882,14 @@ class ParamService final {
    public:
     WithStreamedUnaryMethod_GetParamInt() {
       ::grpc::Service::MarkMethodStreamed(0,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::param::GetParamIntRequest, ::mavsdk::rpc::param::GetParamIntResponse>(std::bind(&WithStreamedUnaryMethod_GetParamInt<BaseClass>::StreamedGetParamInt, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::param::GetParamIntRequest, ::mavsdk::rpc::param::GetParamIntResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::param::GetParamIntRequest, ::mavsdk::rpc::param::GetParamIntResponse>* streamer) {
+                       return this->StreamedGetParamInt(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_GetParamInt() override {
       BaseClassMustBeDerivedFromService(this);
@@ -902,7 +909,14 @@ class ParamService final {
    public:
     WithStreamedUnaryMethod_SetParamInt() {
       ::grpc::Service::MarkMethodStreamed(1,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::param::SetParamIntRequest, ::mavsdk::rpc::param::SetParamIntResponse>(std::bind(&WithStreamedUnaryMethod_SetParamInt<BaseClass>::StreamedSetParamInt, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::param::SetParamIntRequest, ::mavsdk::rpc::param::SetParamIntResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::param::SetParamIntRequest, ::mavsdk::rpc::param::SetParamIntResponse>* streamer) {
+                       return this->StreamedSetParamInt(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_SetParamInt() override {
       BaseClassMustBeDerivedFromService(this);
@@ -922,7 +936,14 @@ class ParamService final {
    public:
     WithStreamedUnaryMethod_GetParamFloat() {
       ::grpc::Service::MarkMethodStreamed(2,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::param::GetParamFloatRequest, ::mavsdk::rpc::param::GetParamFloatResponse>(std::bind(&WithStreamedUnaryMethod_GetParamFloat<BaseClass>::StreamedGetParamFloat, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::param::GetParamFloatRequest, ::mavsdk::rpc::param::GetParamFloatResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::param::GetParamFloatRequest, ::mavsdk::rpc::param::GetParamFloatResponse>* streamer) {
+                       return this->StreamedGetParamFloat(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_GetParamFloat() override {
       BaseClassMustBeDerivedFromService(this);
@@ -942,7 +963,14 @@ class ParamService final {
    public:
     WithStreamedUnaryMethod_SetParamFloat() {
       ::grpc::Service::MarkMethodStreamed(3,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::param::SetParamFloatRequest, ::mavsdk::rpc::param::SetParamFloatResponse>(std::bind(&WithStreamedUnaryMethod_SetParamFloat<BaseClass>::StreamedSetParamFloat, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::param::SetParamFloatRequest, ::mavsdk::rpc::param::SetParamFloatResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::param::SetParamFloatRequest, ::mavsdk::rpc::param::SetParamFloatResponse>* streamer) {
+                       return this->StreamedSetParamFloat(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_SetParamFloat() override {
       BaseClassMustBeDerivedFromService(this);

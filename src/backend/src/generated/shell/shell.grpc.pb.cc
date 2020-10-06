@@ -88,12 +88,22 @@ ShellService::Service::Service() {
       ShellService_method_names[0],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< ShellService::Service, ::mavsdk::rpc::shell::SendRequest, ::mavsdk::rpc::shell::SendResponse>(
-          std::mem_fn(&ShellService::Service::Send), this)));
+          [](ShellService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::shell::SendRequest* req,
+             ::mavsdk::rpc::shell::SendResponse* resp) {
+               return service->Send(ctx, req, resp);
+             }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       ShellService_method_names[1],
       ::grpc::internal::RpcMethod::SERVER_STREAMING,
       new ::grpc::internal::ServerStreamingHandler< ShellService::Service, ::mavsdk::rpc::shell::SubscribeReceiveRequest, ::mavsdk::rpc::shell::ReceiveResponse>(
-          std::mem_fn(&ShellService::Service::SubscribeReceive), this)));
+          [](ShellService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::shell::SubscribeReceiveRequest* req,
+             ::grpc_impl::ServerWriter<::mavsdk::rpc::shell::ReceiveResponse>* writer) {
+               return service->SubscribeReceive(ctx, req, writer);
+             }, this)));
 }
 
 ShellService::Service::~Service() {

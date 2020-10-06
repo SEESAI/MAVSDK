@@ -1139,7 +1139,14 @@ class CalibrationService final {
    public:
     WithStreamedUnaryMethod_Cancel() {
       ::grpc::Service::MarkMethodStreamed(5,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::calibration::CancelRequest, ::mavsdk::rpc::calibration::CancelResponse>(std::bind(&WithStreamedUnaryMethod_Cancel<BaseClass>::StreamedCancel, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::calibration::CancelRequest, ::mavsdk::rpc::calibration::CancelResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::calibration::CancelRequest, ::mavsdk::rpc::calibration::CancelResponse>* streamer) {
+                       return this->StreamedCancel(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_Cancel() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1160,7 +1167,14 @@ class CalibrationService final {
    public:
     WithSplitStreamingMethod_SubscribeCalibrateGyro() {
       ::grpc::Service::MarkMethodStreamed(0,
-        new ::grpc::internal::SplitServerStreamingHandler< ::mavsdk::rpc::calibration::SubscribeCalibrateGyroRequest, ::mavsdk::rpc::calibration::CalibrateGyroResponse>(std::bind(&WithSplitStreamingMethod_SubscribeCalibrateGyro<BaseClass>::StreamedSubscribeCalibrateGyro, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::SplitServerStreamingHandler<
+          ::mavsdk::rpc::calibration::SubscribeCalibrateGyroRequest, ::mavsdk::rpc::calibration::CalibrateGyroResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerSplitStreamer<
+                     ::mavsdk::rpc::calibration::SubscribeCalibrateGyroRequest, ::mavsdk::rpc::calibration::CalibrateGyroResponse>* streamer) {
+                       return this->StreamedSubscribeCalibrateGyro(context,
+                         streamer);
+                  }));
     }
     ~WithSplitStreamingMethod_SubscribeCalibrateGyro() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1180,7 +1194,14 @@ class CalibrationService final {
    public:
     WithSplitStreamingMethod_SubscribeCalibrateAccelerometer() {
       ::grpc::Service::MarkMethodStreamed(1,
-        new ::grpc::internal::SplitServerStreamingHandler< ::mavsdk::rpc::calibration::SubscribeCalibrateAccelerometerRequest, ::mavsdk::rpc::calibration::CalibrateAccelerometerResponse>(std::bind(&WithSplitStreamingMethod_SubscribeCalibrateAccelerometer<BaseClass>::StreamedSubscribeCalibrateAccelerometer, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::SplitServerStreamingHandler<
+          ::mavsdk::rpc::calibration::SubscribeCalibrateAccelerometerRequest, ::mavsdk::rpc::calibration::CalibrateAccelerometerResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerSplitStreamer<
+                     ::mavsdk::rpc::calibration::SubscribeCalibrateAccelerometerRequest, ::mavsdk::rpc::calibration::CalibrateAccelerometerResponse>* streamer) {
+                       return this->StreamedSubscribeCalibrateAccelerometer(context,
+                         streamer);
+                  }));
     }
     ~WithSplitStreamingMethod_SubscribeCalibrateAccelerometer() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1200,7 +1221,14 @@ class CalibrationService final {
    public:
     WithSplitStreamingMethod_SubscribeCalibrateMagnetometer() {
       ::grpc::Service::MarkMethodStreamed(2,
-        new ::grpc::internal::SplitServerStreamingHandler< ::mavsdk::rpc::calibration::SubscribeCalibrateMagnetometerRequest, ::mavsdk::rpc::calibration::CalibrateMagnetometerResponse>(std::bind(&WithSplitStreamingMethod_SubscribeCalibrateMagnetometer<BaseClass>::StreamedSubscribeCalibrateMagnetometer, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::SplitServerStreamingHandler<
+          ::mavsdk::rpc::calibration::SubscribeCalibrateMagnetometerRequest, ::mavsdk::rpc::calibration::CalibrateMagnetometerResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerSplitStreamer<
+                     ::mavsdk::rpc::calibration::SubscribeCalibrateMagnetometerRequest, ::mavsdk::rpc::calibration::CalibrateMagnetometerResponse>* streamer) {
+                       return this->StreamedSubscribeCalibrateMagnetometer(context,
+                         streamer);
+                  }));
     }
     ~WithSplitStreamingMethod_SubscribeCalibrateMagnetometer() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1220,7 +1248,14 @@ class CalibrationService final {
    public:
     WithSplitStreamingMethod_SubscribeCalibrateLevelHorizon() {
       ::grpc::Service::MarkMethodStreamed(3,
-        new ::grpc::internal::SplitServerStreamingHandler< ::mavsdk::rpc::calibration::SubscribeCalibrateLevelHorizonRequest, ::mavsdk::rpc::calibration::CalibrateLevelHorizonResponse>(std::bind(&WithSplitStreamingMethod_SubscribeCalibrateLevelHorizon<BaseClass>::StreamedSubscribeCalibrateLevelHorizon, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::SplitServerStreamingHandler<
+          ::mavsdk::rpc::calibration::SubscribeCalibrateLevelHorizonRequest, ::mavsdk::rpc::calibration::CalibrateLevelHorizonResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerSplitStreamer<
+                     ::mavsdk::rpc::calibration::SubscribeCalibrateLevelHorizonRequest, ::mavsdk::rpc::calibration::CalibrateLevelHorizonResponse>* streamer) {
+                       return this->StreamedSubscribeCalibrateLevelHorizon(context,
+                         streamer);
+                  }));
     }
     ~WithSplitStreamingMethod_SubscribeCalibrateLevelHorizon() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1240,7 +1275,14 @@ class CalibrationService final {
    public:
     WithSplitStreamingMethod_SubscribeCalibrateGimbalAccelerometer() {
       ::grpc::Service::MarkMethodStreamed(4,
-        new ::grpc::internal::SplitServerStreamingHandler< ::mavsdk::rpc::calibration::SubscribeCalibrateGimbalAccelerometerRequest, ::mavsdk::rpc::calibration::CalibrateGimbalAccelerometerResponse>(std::bind(&WithSplitStreamingMethod_SubscribeCalibrateGimbalAccelerometer<BaseClass>::StreamedSubscribeCalibrateGimbalAccelerometer, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::SplitServerStreamingHandler<
+          ::mavsdk::rpc::calibration::SubscribeCalibrateGimbalAccelerometerRequest, ::mavsdk::rpc::calibration::CalibrateGimbalAccelerometerResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerSplitStreamer<
+                     ::mavsdk::rpc::calibration::SubscribeCalibrateGimbalAccelerometerRequest, ::mavsdk::rpc::calibration::CalibrateGimbalAccelerometerResponse>* streamer) {
+                       return this->StreamedSubscribeCalibrateGimbalAccelerometer(context,
+                         streamer);
+                  }));
     }
     ~WithSplitStreamingMethod_SubscribeCalibrateGimbalAccelerometer() override {
       BaseClassMustBeDerivedFromService(this);

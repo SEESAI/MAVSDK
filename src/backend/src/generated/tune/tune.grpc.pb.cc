@@ -70,7 +70,12 @@ TuneService::Service::Service() {
       TuneService_method_names[0],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< TuneService::Service, ::mavsdk::rpc::tune::PlayTuneRequest, ::mavsdk::rpc::tune::PlayTuneResponse>(
-          std::mem_fn(&TuneService::Service::PlayTune), this)));
+          [](TuneService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::tune::PlayTuneRequest* req,
+             ::mavsdk::rpc::tune::PlayTuneResponse* resp) {
+               return service->PlayTune(ctx, req, resp);
+             }, this)));
 }
 
 TuneService::Service::~Service() {

@@ -1035,7 +1035,14 @@ class InfoService final {
    public:
     WithStreamedUnaryMethod_GetFlightInformation() {
       ::grpc::Service::MarkMethodStreamed(0,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::info::GetFlightInformationRequest, ::mavsdk::rpc::info::GetFlightInformationResponse>(std::bind(&WithStreamedUnaryMethod_GetFlightInformation<BaseClass>::StreamedGetFlightInformation, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::info::GetFlightInformationRequest, ::mavsdk::rpc::info::GetFlightInformationResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::info::GetFlightInformationRequest, ::mavsdk::rpc::info::GetFlightInformationResponse>* streamer) {
+                       return this->StreamedGetFlightInformation(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_GetFlightInformation() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1055,7 +1062,14 @@ class InfoService final {
    public:
     WithStreamedUnaryMethod_GetIdentification() {
       ::grpc::Service::MarkMethodStreamed(1,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::info::GetIdentificationRequest, ::mavsdk::rpc::info::GetIdentificationResponse>(std::bind(&WithStreamedUnaryMethod_GetIdentification<BaseClass>::StreamedGetIdentification, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::info::GetIdentificationRequest, ::mavsdk::rpc::info::GetIdentificationResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::info::GetIdentificationRequest, ::mavsdk::rpc::info::GetIdentificationResponse>* streamer) {
+                       return this->StreamedGetIdentification(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_GetIdentification() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1075,7 +1089,14 @@ class InfoService final {
    public:
     WithStreamedUnaryMethod_GetProduct() {
       ::grpc::Service::MarkMethodStreamed(2,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::info::GetProductRequest, ::mavsdk::rpc::info::GetProductResponse>(std::bind(&WithStreamedUnaryMethod_GetProduct<BaseClass>::StreamedGetProduct, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::info::GetProductRequest, ::mavsdk::rpc::info::GetProductResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::info::GetProductRequest, ::mavsdk::rpc::info::GetProductResponse>* streamer) {
+                       return this->StreamedGetProduct(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_GetProduct() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1095,7 +1116,14 @@ class InfoService final {
    public:
     WithStreamedUnaryMethod_GetVersion() {
       ::grpc::Service::MarkMethodStreamed(3,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::info::GetVersionRequest, ::mavsdk::rpc::info::GetVersionResponse>(std::bind(&WithStreamedUnaryMethod_GetVersion<BaseClass>::StreamedGetVersion, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::info::GetVersionRequest, ::mavsdk::rpc::info::GetVersionResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::info::GetVersionRequest, ::mavsdk::rpc::info::GetVersionResponse>* streamer) {
+                       return this->StreamedGetVersion(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_GetVersion() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1115,7 +1143,14 @@ class InfoService final {
    public:
     WithStreamedUnaryMethod_GetSpeedFactor() {
       ::grpc::Service::MarkMethodStreamed(4,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::info::GetSpeedFactorRequest, ::mavsdk::rpc::info::GetSpeedFactorResponse>(std::bind(&WithStreamedUnaryMethod_GetSpeedFactor<BaseClass>::StreamedGetSpeedFactor, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::info::GetSpeedFactorRequest, ::mavsdk::rpc::info::GetSpeedFactorResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::info::GetSpeedFactorRequest, ::mavsdk::rpc::info::GetSpeedFactorResponse>* streamer) {
+                       return this->StreamedGetSpeedFactor(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_GetSpeedFactor() override {
       BaseClassMustBeDerivedFromService(this);

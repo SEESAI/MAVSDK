@@ -160,32 +160,62 @@ CalibrationService::Service::Service() {
       CalibrationService_method_names[0],
       ::grpc::internal::RpcMethod::SERVER_STREAMING,
       new ::grpc::internal::ServerStreamingHandler< CalibrationService::Service, ::mavsdk::rpc::calibration::SubscribeCalibrateGyroRequest, ::mavsdk::rpc::calibration::CalibrateGyroResponse>(
-          std::mem_fn(&CalibrationService::Service::SubscribeCalibrateGyro), this)));
+          [](CalibrationService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::calibration::SubscribeCalibrateGyroRequest* req,
+             ::grpc_impl::ServerWriter<::mavsdk::rpc::calibration::CalibrateGyroResponse>* writer) {
+               return service->SubscribeCalibrateGyro(ctx, req, writer);
+             }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       CalibrationService_method_names[1],
       ::grpc::internal::RpcMethod::SERVER_STREAMING,
       new ::grpc::internal::ServerStreamingHandler< CalibrationService::Service, ::mavsdk::rpc::calibration::SubscribeCalibrateAccelerometerRequest, ::mavsdk::rpc::calibration::CalibrateAccelerometerResponse>(
-          std::mem_fn(&CalibrationService::Service::SubscribeCalibrateAccelerometer), this)));
+          [](CalibrationService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::calibration::SubscribeCalibrateAccelerometerRequest* req,
+             ::grpc_impl::ServerWriter<::mavsdk::rpc::calibration::CalibrateAccelerometerResponse>* writer) {
+               return service->SubscribeCalibrateAccelerometer(ctx, req, writer);
+             }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       CalibrationService_method_names[2],
       ::grpc::internal::RpcMethod::SERVER_STREAMING,
       new ::grpc::internal::ServerStreamingHandler< CalibrationService::Service, ::mavsdk::rpc::calibration::SubscribeCalibrateMagnetometerRequest, ::mavsdk::rpc::calibration::CalibrateMagnetometerResponse>(
-          std::mem_fn(&CalibrationService::Service::SubscribeCalibrateMagnetometer), this)));
+          [](CalibrationService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::calibration::SubscribeCalibrateMagnetometerRequest* req,
+             ::grpc_impl::ServerWriter<::mavsdk::rpc::calibration::CalibrateMagnetometerResponse>* writer) {
+               return service->SubscribeCalibrateMagnetometer(ctx, req, writer);
+             }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       CalibrationService_method_names[3],
       ::grpc::internal::RpcMethod::SERVER_STREAMING,
       new ::grpc::internal::ServerStreamingHandler< CalibrationService::Service, ::mavsdk::rpc::calibration::SubscribeCalibrateLevelHorizonRequest, ::mavsdk::rpc::calibration::CalibrateLevelHorizonResponse>(
-          std::mem_fn(&CalibrationService::Service::SubscribeCalibrateLevelHorizon), this)));
+          [](CalibrationService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::calibration::SubscribeCalibrateLevelHorizonRequest* req,
+             ::grpc_impl::ServerWriter<::mavsdk::rpc::calibration::CalibrateLevelHorizonResponse>* writer) {
+               return service->SubscribeCalibrateLevelHorizon(ctx, req, writer);
+             }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       CalibrationService_method_names[4],
       ::grpc::internal::RpcMethod::SERVER_STREAMING,
       new ::grpc::internal::ServerStreamingHandler< CalibrationService::Service, ::mavsdk::rpc::calibration::SubscribeCalibrateGimbalAccelerometerRequest, ::mavsdk::rpc::calibration::CalibrateGimbalAccelerometerResponse>(
-          std::mem_fn(&CalibrationService::Service::SubscribeCalibrateGimbalAccelerometer), this)));
+          [](CalibrationService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::calibration::SubscribeCalibrateGimbalAccelerometerRequest* req,
+             ::grpc_impl::ServerWriter<::mavsdk::rpc::calibration::CalibrateGimbalAccelerometerResponse>* writer) {
+               return service->SubscribeCalibrateGimbalAccelerometer(ctx, req, writer);
+             }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       CalibrationService_method_names[5],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< CalibrationService::Service, ::mavsdk::rpc::calibration::CancelRequest, ::mavsdk::rpc::calibration::CancelResponse>(
-          std::mem_fn(&CalibrationService::Service::Cancel), this)));
+          [](CalibrationService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::calibration::CancelRequest* req,
+             ::mavsdk::rpc::calibration::CancelResponse* resp) {
+               return service->Cancel(ctx, req, resp);
+             }, this)));
 }
 
 CalibrationService::Service::~Service() {

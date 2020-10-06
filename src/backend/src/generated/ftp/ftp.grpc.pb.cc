@@ -376,62 +376,122 @@ FtpService::Service::Service() {
       FtpService_method_names[0],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< FtpService::Service, ::mavsdk::rpc::ftp::ResetRequest, ::mavsdk::rpc::ftp::ResetResponse>(
-          std::mem_fn(&FtpService::Service::Reset), this)));
+          [](FtpService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::ftp::ResetRequest* req,
+             ::mavsdk::rpc::ftp::ResetResponse* resp) {
+               return service->Reset(ctx, req, resp);
+             }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       FtpService_method_names[1],
       ::grpc::internal::RpcMethod::SERVER_STREAMING,
       new ::grpc::internal::ServerStreamingHandler< FtpService::Service, ::mavsdk::rpc::ftp::SubscribeDownloadRequest, ::mavsdk::rpc::ftp::DownloadResponse>(
-          std::mem_fn(&FtpService::Service::SubscribeDownload), this)));
+          [](FtpService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::ftp::SubscribeDownloadRequest* req,
+             ::grpc_impl::ServerWriter<::mavsdk::rpc::ftp::DownloadResponse>* writer) {
+               return service->SubscribeDownload(ctx, req, writer);
+             }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       FtpService_method_names[2],
       ::grpc::internal::RpcMethod::SERVER_STREAMING,
       new ::grpc::internal::ServerStreamingHandler< FtpService::Service, ::mavsdk::rpc::ftp::SubscribeUploadRequest, ::mavsdk::rpc::ftp::UploadResponse>(
-          std::mem_fn(&FtpService::Service::SubscribeUpload), this)));
+          [](FtpService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::ftp::SubscribeUploadRequest* req,
+             ::grpc_impl::ServerWriter<::mavsdk::rpc::ftp::UploadResponse>* writer) {
+               return service->SubscribeUpload(ctx, req, writer);
+             }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       FtpService_method_names[3],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< FtpService::Service, ::mavsdk::rpc::ftp::ListDirectoryRequest, ::mavsdk::rpc::ftp::ListDirectoryResponse>(
-          std::mem_fn(&FtpService::Service::ListDirectory), this)));
+          [](FtpService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::ftp::ListDirectoryRequest* req,
+             ::mavsdk::rpc::ftp::ListDirectoryResponse* resp) {
+               return service->ListDirectory(ctx, req, resp);
+             }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       FtpService_method_names[4],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< FtpService::Service, ::mavsdk::rpc::ftp::CreateDirectoryRequest, ::mavsdk::rpc::ftp::CreateDirectoryResponse>(
-          std::mem_fn(&FtpService::Service::CreateDirectory), this)));
+          [](FtpService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::ftp::CreateDirectoryRequest* req,
+             ::mavsdk::rpc::ftp::CreateDirectoryResponse* resp) {
+               return service->CreateDirectory(ctx, req, resp);
+             }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       FtpService_method_names[5],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< FtpService::Service, ::mavsdk::rpc::ftp::RemoveDirectoryRequest, ::mavsdk::rpc::ftp::RemoveDirectoryResponse>(
-          std::mem_fn(&FtpService::Service::RemoveDirectory), this)));
+          [](FtpService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::ftp::RemoveDirectoryRequest* req,
+             ::mavsdk::rpc::ftp::RemoveDirectoryResponse* resp) {
+               return service->RemoveDirectory(ctx, req, resp);
+             }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       FtpService_method_names[6],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< FtpService::Service, ::mavsdk::rpc::ftp::RemoveFileRequest, ::mavsdk::rpc::ftp::RemoveFileResponse>(
-          std::mem_fn(&FtpService::Service::RemoveFile), this)));
+          [](FtpService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::ftp::RemoveFileRequest* req,
+             ::mavsdk::rpc::ftp::RemoveFileResponse* resp) {
+               return service->RemoveFile(ctx, req, resp);
+             }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       FtpService_method_names[7],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< FtpService::Service, ::mavsdk::rpc::ftp::RenameRequest, ::mavsdk::rpc::ftp::RenameResponse>(
-          std::mem_fn(&FtpService::Service::Rename), this)));
+          [](FtpService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::ftp::RenameRequest* req,
+             ::mavsdk::rpc::ftp::RenameResponse* resp) {
+               return service->Rename(ctx, req, resp);
+             }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       FtpService_method_names[8],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< FtpService::Service, ::mavsdk::rpc::ftp::AreFilesIdenticalRequest, ::mavsdk::rpc::ftp::AreFilesIdenticalResponse>(
-          std::mem_fn(&FtpService::Service::AreFilesIdentical), this)));
+          [](FtpService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::ftp::AreFilesIdenticalRequest* req,
+             ::mavsdk::rpc::ftp::AreFilesIdenticalResponse* resp) {
+               return service->AreFilesIdentical(ctx, req, resp);
+             }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       FtpService_method_names[9],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< FtpService::Service, ::mavsdk::rpc::ftp::SetRootDirectoryRequest, ::mavsdk::rpc::ftp::SetRootDirectoryResponse>(
-          std::mem_fn(&FtpService::Service::SetRootDirectory), this)));
+          [](FtpService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::ftp::SetRootDirectoryRequest* req,
+             ::mavsdk::rpc::ftp::SetRootDirectoryResponse* resp) {
+               return service->SetRootDirectory(ctx, req, resp);
+             }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       FtpService_method_names[10],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< FtpService::Service, ::mavsdk::rpc::ftp::SetTargetCompidRequest, ::mavsdk::rpc::ftp::SetTargetCompidResponse>(
-          std::mem_fn(&FtpService::Service::SetTargetCompid), this)));
+          [](FtpService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::ftp::SetTargetCompidRequest* req,
+             ::mavsdk::rpc::ftp::SetTargetCompidResponse* resp) {
+               return service->SetTargetCompid(ctx, req, resp);
+             }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       FtpService_method_names[11],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< FtpService::Service, ::mavsdk::rpc::ftp::GetOurCompidRequest, ::mavsdk::rpc::ftp::GetOurCompidResponse>(
-          std::mem_fn(&FtpService::Service::GetOurCompid), this)));
+          [](FtpService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::ftp::GetOurCompidRequest* req,
+             ::mavsdk::rpc::ftp::GetOurCompidResponse* resp) {
+               return service->GetOurCompid(ctx, req, resp);
+             }, this)));
 }
 
 FtpService::Service::~Service() {

@@ -279,7 +279,14 @@ class TuneService final {
    public:
     WithStreamedUnaryMethod_PlayTune() {
       ::grpc::Service::MarkMethodStreamed(0,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::tune::PlayTuneRequest, ::mavsdk::rpc::tune::PlayTuneResponse>(std::bind(&WithStreamedUnaryMethod_PlayTune<BaseClass>::StreamedPlayTune, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::tune::PlayTuneRequest, ::mavsdk::rpc::tune::PlayTuneResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::tune::PlayTuneRequest, ::mavsdk::rpc::tune::PlayTuneResponse>* streamer) {
+                       return this->StreamedPlayTune(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_PlayTune() override {
       BaseClassMustBeDerivedFromService(this);

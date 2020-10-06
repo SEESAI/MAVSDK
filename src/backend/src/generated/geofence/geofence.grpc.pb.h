@@ -291,7 +291,14 @@ class GeofenceService final {
    public:
     WithStreamedUnaryMethod_UploadGeofence() {
       ::grpc::Service::MarkMethodStreamed(0,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::geofence::UploadGeofenceRequest, ::mavsdk::rpc::geofence::UploadGeofenceResponse>(std::bind(&WithStreamedUnaryMethod_UploadGeofence<BaseClass>::StreamedUploadGeofence, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::geofence::UploadGeofenceRequest, ::mavsdk::rpc::geofence::UploadGeofenceResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::geofence::UploadGeofenceRequest, ::mavsdk::rpc::geofence::UploadGeofenceResponse>* streamer) {
+                       return this->StreamedUploadGeofence(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_UploadGeofence() override {
       BaseClassMustBeDerivedFromService(this);

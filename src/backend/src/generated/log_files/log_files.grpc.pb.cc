@@ -88,12 +88,22 @@ LogFilesService::Service::Service() {
       LogFilesService_method_names[0],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< LogFilesService::Service, ::mavsdk::rpc::log_files::GetEntriesRequest, ::mavsdk::rpc::log_files::GetEntriesResponse>(
-          std::mem_fn(&LogFilesService::Service::GetEntries), this)));
+          [](LogFilesService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::log_files::GetEntriesRequest* req,
+             ::mavsdk::rpc::log_files::GetEntriesResponse* resp) {
+               return service->GetEntries(ctx, req, resp);
+             }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       LogFilesService_method_names[1],
       ::grpc::internal::RpcMethod::SERVER_STREAMING,
       new ::grpc::internal::ServerStreamingHandler< LogFilesService::Service, ::mavsdk::rpc::log_files::SubscribeDownloadLogFileRequest, ::mavsdk::rpc::log_files::DownloadLogFileResponse>(
-          std::mem_fn(&LogFilesService::Service::SubscribeDownloadLogFile), this)));
+          [](LogFilesService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::log_files::SubscribeDownloadLogFileRequest* req,
+             ::grpc_impl::ServerWriter<::mavsdk::rpc::log_files::DownloadLogFileResponse>* writer) {
+               return service->SubscribeDownloadLogFile(ctx, req, writer);
+             }, this)));
 }
 
 LogFilesService::Service::~Service() {

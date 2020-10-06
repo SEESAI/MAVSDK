@@ -70,7 +70,12 @@ FailureService::Service::Service() {
       FailureService_method_names[0],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< FailureService::Service, ::mavsdk::rpc::failure::InjectRequest, ::mavsdk::rpc::failure::InjectResponse>(
-          std::mem_fn(&FailureService::Service::Inject), this)));
+          [](FailureService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::failure::InjectRequest* req,
+             ::mavsdk::rpc::failure::InjectResponse* resp) {
+               return service->Inject(ctx, req, resp);
+             }, this)));
 }
 
 FailureService::Service::~Service() {

@@ -711,7 +711,14 @@ class GimbalService final {
    public:
     WithStreamedUnaryMethod_SetPitchAndYaw() {
       ::grpc::Service::MarkMethodStreamed(0,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::gimbal::SetPitchAndYawRequest, ::mavsdk::rpc::gimbal::SetPitchAndYawResponse>(std::bind(&WithStreamedUnaryMethod_SetPitchAndYaw<BaseClass>::StreamedSetPitchAndYaw, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::gimbal::SetPitchAndYawRequest, ::mavsdk::rpc::gimbal::SetPitchAndYawResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::gimbal::SetPitchAndYawRequest, ::mavsdk::rpc::gimbal::SetPitchAndYawResponse>* streamer) {
+                       return this->StreamedSetPitchAndYaw(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_SetPitchAndYaw() override {
       BaseClassMustBeDerivedFromService(this);
@@ -731,7 +738,14 @@ class GimbalService final {
    public:
     WithStreamedUnaryMethod_SetMode() {
       ::grpc::Service::MarkMethodStreamed(1,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::gimbal::SetModeRequest, ::mavsdk::rpc::gimbal::SetModeResponse>(std::bind(&WithStreamedUnaryMethod_SetMode<BaseClass>::StreamedSetMode, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::gimbal::SetModeRequest, ::mavsdk::rpc::gimbal::SetModeResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::gimbal::SetModeRequest, ::mavsdk::rpc::gimbal::SetModeResponse>* streamer) {
+                       return this->StreamedSetMode(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_SetMode() override {
       BaseClassMustBeDerivedFromService(this);
@@ -751,7 +765,14 @@ class GimbalService final {
    public:
     WithStreamedUnaryMethod_SetRoiLocation() {
       ::grpc::Service::MarkMethodStreamed(2,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::gimbal::SetRoiLocationRequest, ::mavsdk::rpc::gimbal::SetRoiLocationResponse>(std::bind(&WithStreamedUnaryMethod_SetRoiLocation<BaseClass>::StreamedSetRoiLocation, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::gimbal::SetRoiLocationRequest, ::mavsdk::rpc::gimbal::SetRoiLocationResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::gimbal::SetRoiLocationRequest, ::mavsdk::rpc::gimbal::SetRoiLocationResponse>* streamer) {
+                       return this->StreamedSetRoiLocation(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_SetRoiLocation() override {
       BaseClassMustBeDerivedFromService(this);

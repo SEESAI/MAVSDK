@@ -2361,7 +2361,14 @@ class FtpService final {
    public:
     WithStreamedUnaryMethod_Reset() {
       ::grpc::Service::MarkMethodStreamed(0,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::ftp::ResetRequest, ::mavsdk::rpc::ftp::ResetResponse>(std::bind(&WithStreamedUnaryMethod_Reset<BaseClass>::StreamedReset, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::ftp::ResetRequest, ::mavsdk::rpc::ftp::ResetResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::ftp::ResetRequest, ::mavsdk::rpc::ftp::ResetResponse>* streamer) {
+                       return this->StreamedReset(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_Reset() override {
       BaseClassMustBeDerivedFromService(this);
@@ -2381,7 +2388,14 @@ class FtpService final {
    public:
     WithStreamedUnaryMethod_ListDirectory() {
       ::grpc::Service::MarkMethodStreamed(3,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::ftp::ListDirectoryRequest, ::mavsdk::rpc::ftp::ListDirectoryResponse>(std::bind(&WithStreamedUnaryMethod_ListDirectory<BaseClass>::StreamedListDirectory, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::ftp::ListDirectoryRequest, ::mavsdk::rpc::ftp::ListDirectoryResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::ftp::ListDirectoryRequest, ::mavsdk::rpc::ftp::ListDirectoryResponse>* streamer) {
+                       return this->StreamedListDirectory(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_ListDirectory() override {
       BaseClassMustBeDerivedFromService(this);
@@ -2401,7 +2415,14 @@ class FtpService final {
    public:
     WithStreamedUnaryMethod_CreateDirectory() {
       ::grpc::Service::MarkMethodStreamed(4,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::ftp::CreateDirectoryRequest, ::mavsdk::rpc::ftp::CreateDirectoryResponse>(std::bind(&WithStreamedUnaryMethod_CreateDirectory<BaseClass>::StreamedCreateDirectory, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::ftp::CreateDirectoryRequest, ::mavsdk::rpc::ftp::CreateDirectoryResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::ftp::CreateDirectoryRequest, ::mavsdk::rpc::ftp::CreateDirectoryResponse>* streamer) {
+                       return this->StreamedCreateDirectory(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_CreateDirectory() override {
       BaseClassMustBeDerivedFromService(this);
@@ -2421,7 +2442,14 @@ class FtpService final {
    public:
     WithStreamedUnaryMethod_RemoveDirectory() {
       ::grpc::Service::MarkMethodStreamed(5,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::ftp::RemoveDirectoryRequest, ::mavsdk::rpc::ftp::RemoveDirectoryResponse>(std::bind(&WithStreamedUnaryMethod_RemoveDirectory<BaseClass>::StreamedRemoveDirectory, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::ftp::RemoveDirectoryRequest, ::mavsdk::rpc::ftp::RemoveDirectoryResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::ftp::RemoveDirectoryRequest, ::mavsdk::rpc::ftp::RemoveDirectoryResponse>* streamer) {
+                       return this->StreamedRemoveDirectory(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_RemoveDirectory() override {
       BaseClassMustBeDerivedFromService(this);
@@ -2441,7 +2469,14 @@ class FtpService final {
    public:
     WithStreamedUnaryMethod_RemoveFile() {
       ::grpc::Service::MarkMethodStreamed(6,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::ftp::RemoveFileRequest, ::mavsdk::rpc::ftp::RemoveFileResponse>(std::bind(&WithStreamedUnaryMethod_RemoveFile<BaseClass>::StreamedRemoveFile, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::ftp::RemoveFileRequest, ::mavsdk::rpc::ftp::RemoveFileResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::ftp::RemoveFileRequest, ::mavsdk::rpc::ftp::RemoveFileResponse>* streamer) {
+                       return this->StreamedRemoveFile(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_RemoveFile() override {
       BaseClassMustBeDerivedFromService(this);
@@ -2461,7 +2496,14 @@ class FtpService final {
    public:
     WithStreamedUnaryMethod_Rename() {
       ::grpc::Service::MarkMethodStreamed(7,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::ftp::RenameRequest, ::mavsdk::rpc::ftp::RenameResponse>(std::bind(&WithStreamedUnaryMethod_Rename<BaseClass>::StreamedRename, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::ftp::RenameRequest, ::mavsdk::rpc::ftp::RenameResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::ftp::RenameRequest, ::mavsdk::rpc::ftp::RenameResponse>* streamer) {
+                       return this->StreamedRename(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_Rename() override {
       BaseClassMustBeDerivedFromService(this);
@@ -2481,7 +2523,14 @@ class FtpService final {
    public:
     WithStreamedUnaryMethod_AreFilesIdentical() {
       ::grpc::Service::MarkMethodStreamed(8,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::ftp::AreFilesIdenticalRequest, ::mavsdk::rpc::ftp::AreFilesIdenticalResponse>(std::bind(&WithStreamedUnaryMethod_AreFilesIdentical<BaseClass>::StreamedAreFilesIdentical, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::ftp::AreFilesIdenticalRequest, ::mavsdk::rpc::ftp::AreFilesIdenticalResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::ftp::AreFilesIdenticalRequest, ::mavsdk::rpc::ftp::AreFilesIdenticalResponse>* streamer) {
+                       return this->StreamedAreFilesIdentical(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_AreFilesIdentical() override {
       BaseClassMustBeDerivedFromService(this);
@@ -2501,7 +2550,14 @@ class FtpService final {
    public:
     WithStreamedUnaryMethod_SetRootDirectory() {
       ::grpc::Service::MarkMethodStreamed(9,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::ftp::SetRootDirectoryRequest, ::mavsdk::rpc::ftp::SetRootDirectoryResponse>(std::bind(&WithStreamedUnaryMethod_SetRootDirectory<BaseClass>::StreamedSetRootDirectory, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::ftp::SetRootDirectoryRequest, ::mavsdk::rpc::ftp::SetRootDirectoryResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::ftp::SetRootDirectoryRequest, ::mavsdk::rpc::ftp::SetRootDirectoryResponse>* streamer) {
+                       return this->StreamedSetRootDirectory(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_SetRootDirectory() override {
       BaseClassMustBeDerivedFromService(this);
@@ -2521,7 +2577,14 @@ class FtpService final {
    public:
     WithStreamedUnaryMethod_SetTargetCompid() {
       ::grpc::Service::MarkMethodStreamed(10,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::ftp::SetTargetCompidRequest, ::mavsdk::rpc::ftp::SetTargetCompidResponse>(std::bind(&WithStreamedUnaryMethod_SetTargetCompid<BaseClass>::StreamedSetTargetCompid, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::ftp::SetTargetCompidRequest, ::mavsdk::rpc::ftp::SetTargetCompidResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::ftp::SetTargetCompidRequest, ::mavsdk::rpc::ftp::SetTargetCompidResponse>* streamer) {
+                       return this->StreamedSetTargetCompid(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_SetTargetCompid() override {
       BaseClassMustBeDerivedFromService(this);
@@ -2541,7 +2604,14 @@ class FtpService final {
    public:
     WithStreamedUnaryMethod_GetOurCompid() {
       ::grpc::Service::MarkMethodStreamed(11,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::ftp::GetOurCompidRequest, ::mavsdk::rpc::ftp::GetOurCompidResponse>(std::bind(&WithStreamedUnaryMethod_GetOurCompid<BaseClass>::StreamedGetOurCompid, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::ftp::GetOurCompidRequest, ::mavsdk::rpc::ftp::GetOurCompidResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::ftp::GetOurCompidRequest, ::mavsdk::rpc::ftp::GetOurCompidResponse>* streamer) {
+                       return this->StreamedGetOurCompid(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_GetOurCompid() override {
       BaseClassMustBeDerivedFromService(this);
@@ -2562,7 +2632,14 @@ class FtpService final {
    public:
     WithSplitStreamingMethod_SubscribeDownload() {
       ::grpc::Service::MarkMethodStreamed(1,
-        new ::grpc::internal::SplitServerStreamingHandler< ::mavsdk::rpc::ftp::SubscribeDownloadRequest, ::mavsdk::rpc::ftp::DownloadResponse>(std::bind(&WithSplitStreamingMethod_SubscribeDownload<BaseClass>::StreamedSubscribeDownload, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::SplitServerStreamingHandler<
+          ::mavsdk::rpc::ftp::SubscribeDownloadRequest, ::mavsdk::rpc::ftp::DownloadResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerSplitStreamer<
+                     ::mavsdk::rpc::ftp::SubscribeDownloadRequest, ::mavsdk::rpc::ftp::DownloadResponse>* streamer) {
+                       return this->StreamedSubscribeDownload(context,
+                         streamer);
+                  }));
     }
     ~WithSplitStreamingMethod_SubscribeDownload() override {
       BaseClassMustBeDerivedFromService(this);
@@ -2582,7 +2659,14 @@ class FtpService final {
    public:
     WithSplitStreamingMethod_SubscribeUpload() {
       ::grpc::Service::MarkMethodStreamed(2,
-        new ::grpc::internal::SplitServerStreamingHandler< ::mavsdk::rpc::ftp::SubscribeUploadRequest, ::mavsdk::rpc::ftp::UploadResponse>(std::bind(&WithSplitStreamingMethod_SubscribeUpload<BaseClass>::StreamedSubscribeUpload, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::SplitServerStreamingHandler<
+          ::mavsdk::rpc::ftp::SubscribeUploadRequest, ::mavsdk::rpc::ftp::UploadResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerSplitStreamer<
+                     ::mavsdk::rpc::ftp::SubscribeUploadRequest, ::mavsdk::rpc::ftp::UploadResponse>* streamer) {
+                       return this->StreamedSubscribeUpload(context,
+                         streamer);
+                  }));
     }
     ~WithSplitStreamingMethod_SubscribeUpload() override {
       BaseClassMustBeDerivedFromService(this);

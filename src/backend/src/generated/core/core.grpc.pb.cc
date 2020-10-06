@@ -88,12 +88,22 @@ CoreService::Service::Service() {
       CoreService_method_names[0],
       ::grpc::internal::RpcMethod::SERVER_STREAMING,
       new ::grpc::internal::ServerStreamingHandler< CoreService::Service, ::mavsdk::rpc::core::SubscribeConnectionStateRequest, ::mavsdk::rpc::core::ConnectionStateResponse>(
-          std::mem_fn(&CoreService::Service::SubscribeConnectionState), this)));
+          [](CoreService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::core::SubscribeConnectionStateRequest* req,
+             ::grpc_impl::ServerWriter<::mavsdk::rpc::core::ConnectionStateResponse>* writer) {
+               return service->SubscribeConnectionState(ctx, req, writer);
+             }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       CoreService_method_names[1],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< CoreService::Service, ::mavsdk::rpc::core::ListRunningPluginsRequest, ::mavsdk::rpc::core::ListRunningPluginsResponse>(
-          std::mem_fn(&CoreService::Service::ListRunningPlugins), this)));
+          [](CoreService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::core::ListRunningPluginsRequest* req,
+             ::mavsdk::rpc::core::ListRunningPluginsResponse* resp) {
+               return service->ListRunningPlugins(ctx, req, resp);
+             }, this)));
 }
 
 CoreService::Service::~Service() {

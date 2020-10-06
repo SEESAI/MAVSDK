@@ -130,17 +130,32 @@ MocapService::Service::Service() {
       MocapService_method_names[0],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< MocapService::Service, ::mavsdk::rpc::mocap::SetVisionPositionEstimateRequest, ::mavsdk::rpc::mocap::SetVisionPositionEstimateResponse>(
-          std::mem_fn(&MocapService::Service::SetVisionPositionEstimate), this)));
+          [](MocapService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::mocap::SetVisionPositionEstimateRequest* req,
+             ::mavsdk::rpc::mocap::SetVisionPositionEstimateResponse* resp) {
+               return service->SetVisionPositionEstimate(ctx, req, resp);
+             }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       MocapService_method_names[1],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< MocapService::Service, ::mavsdk::rpc::mocap::SetAttitudePositionMocapRequest, ::mavsdk::rpc::mocap::SetAttitudePositionMocapResponse>(
-          std::mem_fn(&MocapService::Service::SetAttitudePositionMocap), this)));
+          [](MocapService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::mocap::SetAttitudePositionMocapRequest* req,
+             ::mavsdk::rpc::mocap::SetAttitudePositionMocapResponse* resp) {
+               return service->SetAttitudePositionMocap(ctx, req, resp);
+             }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       MocapService_method_names[2],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< MocapService::Service, ::mavsdk::rpc::mocap::SetOdometryRequest, ::mavsdk::rpc::mocap::SetOdometryResponse>(
-          std::mem_fn(&MocapService::Service::SetOdometry), this)));
+          [](MocapService::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::mavsdk::rpc::mocap::SetOdometryRequest* req,
+             ::mavsdk::rpc::mocap::SetOdometryResponse* resp) {
+               return service->SetOdometry(ctx, req, resp);
+             }, this)));
 }
 
 MocapService::Service::~Service() {

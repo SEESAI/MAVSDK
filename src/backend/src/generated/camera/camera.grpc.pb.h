@@ -3452,7 +3452,14 @@ class CameraService final {
    public:
     WithStreamedUnaryMethod_TakePhoto() {
       ::grpc::Service::MarkMethodStreamed(0,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::camera::TakePhotoRequest, ::mavsdk::rpc::camera::TakePhotoResponse>(std::bind(&WithStreamedUnaryMethod_TakePhoto<BaseClass>::StreamedTakePhoto, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::camera::TakePhotoRequest, ::mavsdk::rpc::camera::TakePhotoResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::camera::TakePhotoRequest, ::mavsdk::rpc::camera::TakePhotoResponse>* streamer) {
+                       return this->StreamedTakePhoto(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_TakePhoto() override {
       BaseClassMustBeDerivedFromService(this);
@@ -3472,7 +3479,14 @@ class CameraService final {
    public:
     WithStreamedUnaryMethod_StartPhotoInterval() {
       ::grpc::Service::MarkMethodStreamed(1,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::camera::StartPhotoIntervalRequest, ::mavsdk::rpc::camera::StartPhotoIntervalResponse>(std::bind(&WithStreamedUnaryMethod_StartPhotoInterval<BaseClass>::StreamedStartPhotoInterval, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::camera::StartPhotoIntervalRequest, ::mavsdk::rpc::camera::StartPhotoIntervalResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::camera::StartPhotoIntervalRequest, ::mavsdk::rpc::camera::StartPhotoIntervalResponse>* streamer) {
+                       return this->StreamedStartPhotoInterval(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_StartPhotoInterval() override {
       BaseClassMustBeDerivedFromService(this);
@@ -3492,7 +3506,14 @@ class CameraService final {
    public:
     WithStreamedUnaryMethod_StopPhotoInterval() {
       ::grpc::Service::MarkMethodStreamed(2,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::camera::StopPhotoIntervalRequest, ::mavsdk::rpc::camera::StopPhotoIntervalResponse>(std::bind(&WithStreamedUnaryMethod_StopPhotoInterval<BaseClass>::StreamedStopPhotoInterval, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::camera::StopPhotoIntervalRequest, ::mavsdk::rpc::camera::StopPhotoIntervalResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::camera::StopPhotoIntervalRequest, ::mavsdk::rpc::camera::StopPhotoIntervalResponse>* streamer) {
+                       return this->StreamedStopPhotoInterval(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_StopPhotoInterval() override {
       BaseClassMustBeDerivedFromService(this);
@@ -3512,7 +3533,14 @@ class CameraService final {
    public:
     WithStreamedUnaryMethod_StartVideo() {
       ::grpc::Service::MarkMethodStreamed(3,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::camera::StartVideoRequest, ::mavsdk::rpc::camera::StartVideoResponse>(std::bind(&WithStreamedUnaryMethod_StartVideo<BaseClass>::StreamedStartVideo, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::camera::StartVideoRequest, ::mavsdk::rpc::camera::StartVideoResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::camera::StartVideoRequest, ::mavsdk::rpc::camera::StartVideoResponse>* streamer) {
+                       return this->StreamedStartVideo(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_StartVideo() override {
       BaseClassMustBeDerivedFromService(this);
@@ -3532,7 +3560,14 @@ class CameraService final {
    public:
     WithStreamedUnaryMethod_StopVideo() {
       ::grpc::Service::MarkMethodStreamed(4,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::camera::StopVideoRequest, ::mavsdk::rpc::camera::StopVideoResponse>(std::bind(&WithStreamedUnaryMethod_StopVideo<BaseClass>::StreamedStopVideo, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::camera::StopVideoRequest, ::mavsdk::rpc::camera::StopVideoResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::camera::StopVideoRequest, ::mavsdk::rpc::camera::StopVideoResponse>* streamer) {
+                       return this->StreamedStopVideo(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_StopVideo() override {
       BaseClassMustBeDerivedFromService(this);
@@ -3552,7 +3587,14 @@ class CameraService final {
    public:
     WithStreamedUnaryMethod_StartVideoStreaming() {
       ::grpc::Service::MarkMethodStreamed(5,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::camera::StartVideoStreamingRequest, ::mavsdk::rpc::camera::StartVideoStreamingResponse>(std::bind(&WithStreamedUnaryMethod_StartVideoStreaming<BaseClass>::StreamedStartVideoStreaming, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::camera::StartVideoStreamingRequest, ::mavsdk::rpc::camera::StartVideoStreamingResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::camera::StartVideoStreamingRequest, ::mavsdk::rpc::camera::StartVideoStreamingResponse>* streamer) {
+                       return this->StreamedStartVideoStreaming(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_StartVideoStreaming() override {
       BaseClassMustBeDerivedFromService(this);
@@ -3572,7 +3614,14 @@ class CameraService final {
    public:
     WithStreamedUnaryMethod_StopVideoStreaming() {
       ::grpc::Service::MarkMethodStreamed(6,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::camera::StopVideoStreamingRequest, ::mavsdk::rpc::camera::StopVideoStreamingResponse>(std::bind(&WithStreamedUnaryMethod_StopVideoStreaming<BaseClass>::StreamedStopVideoStreaming, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::camera::StopVideoStreamingRequest, ::mavsdk::rpc::camera::StopVideoStreamingResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::camera::StopVideoStreamingRequest, ::mavsdk::rpc::camera::StopVideoStreamingResponse>* streamer) {
+                       return this->StreamedStopVideoStreaming(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_StopVideoStreaming() override {
       BaseClassMustBeDerivedFromService(this);
@@ -3592,7 +3641,14 @@ class CameraService final {
    public:
     WithStreamedUnaryMethod_SetMode() {
       ::grpc::Service::MarkMethodStreamed(7,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::camera::SetModeRequest, ::mavsdk::rpc::camera::SetModeResponse>(std::bind(&WithStreamedUnaryMethod_SetMode<BaseClass>::StreamedSetMode, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::camera::SetModeRequest, ::mavsdk::rpc::camera::SetModeResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::camera::SetModeRequest, ::mavsdk::rpc::camera::SetModeResponse>* streamer) {
+                       return this->StreamedSetMode(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_SetMode() override {
       BaseClassMustBeDerivedFromService(this);
@@ -3612,7 +3668,14 @@ class CameraService final {
    public:
     WithStreamedUnaryMethod_SetSetting() {
       ::grpc::Service::MarkMethodStreamed(15,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::camera::SetSettingRequest, ::mavsdk::rpc::camera::SetSettingResponse>(std::bind(&WithStreamedUnaryMethod_SetSetting<BaseClass>::StreamedSetSetting, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::camera::SetSettingRequest, ::mavsdk::rpc::camera::SetSettingResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::camera::SetSettingRequest, ::mavsdk::rpc::camera::SetSettingResponse>* streamer) {
+                       return this->StreamedSetSetting(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_SetSetting() override {
       BaseClassMustBeDerivedFromService(this);
@@ -3632,7 +3695,14 @@ class CameraService final {
    public:
     WithStreamedUnaryMethod_GetSetting() {
       ::grpc::Service::MarkMethodStreamed(16,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::camera::GetSettingRequest, ::mavsdk::rpc::camera::GetSettingResponse>(std::bind(&WithStreamedUnaryMethod_GetSetting<BaseClass>::StreamedGetSetting, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::camera::GetSettingRequest, ::mavsdk::rpc::camera::GetSettingResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::camera::GetSettingRequest, ::mavsdk::rpc::camera::GetSettingResponse>* streamer) {
+                       return this->StreamedGetSetting(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_GetSetting() override {
       BaseClassMustBeDerivedFromService(this);
@@ -3652,7 +3722,14 @@ class CameraService final {
    public:
     WithStreamedUnaryMethod_FormatStorage() {
       ::grpc::Service::MarkMethodStreamed(17,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::camera::FormatStorageRequest, ::mavsdk::rpc::camera::FormatStorageResponse>(std::bind(&WithStreamedUnaryMethod_FormatStorage<BaseClass>::StreamedFormatStorage, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::camera::FormatStorageRequest, ::mavsdk::rpc::camera::FormatStorageResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::camera::FormatStorageRequest, ::mavsdk::rpc::camera::FormatStorageResponse>* streamer) {
+                       return this->StreamedFormatStorage(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_FormatStorage() override {
       BaseClassMustBeDerivedFromService(this);
@@ -3673,7 +3750,14 @@ class CameraService final {
    public:
     WithSplitStreamingMethod_SubscribeMode() {
       ::grpc::Service::MarkMethodStreamed(8,
-        new ::grpc::internal::SplitServerStreamingHandler< ::mavsdk::rpc::camera::SubscribeModeRequest, ::mavsdk::rpc::camera::ModeResponse>(std::bind(&WithSplitStreamingMethod_SubscribeMode<BaseClass>::StreamedSubscribeMode, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::SplitServerStreamingHandler<
+          ::mavsdk::rpc::camera::SubscribeModeRequest, ::mavsdk::rpc::camera::ModeResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerSplitStreamer<
+                     ::mavsdk::rpc::camera::SubscribeModeRequest, ::mavsdk::rpc::camera::ModeResponse>* streamer) {
+                       return this->StreamedSubscribeMode(context,
+                         streamer);
+                  }));
     }
     ~WithSplitStreamingMethod_SubscribeMode() override {
       BaseClassMustBeDerivedFromService(this);
@@ -3693,7 +3777,14 @@ class CameraService final {
    public:
     WithSplitStreamingMethod_SubscribeInformation() {
       ::grpc::Service::MarkMethodStreamed(9,
-        new ::grpc::internal::SplitServerStreamingHandler< ::mavsdk::rpc::camera::SubscribeInformationRequest, ::mavsdk::rpc::camera::InformationResponse>(std::bind(&WithSplitStreamingMethod_SubscribeInformation<BaseClass>::StreamedSubscribeInformation, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::SplitServerStreamingHandler<
+          ::mavsdk::rpc::camera::SubscribeInformationRequest, ::mavsdk::rpc::camera::InformationResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerSplitStreamer<
+                     ::mavsdk::rpc::camera::SubscribeInformationRequest, ::mavsdk::rpc::camera::InformationResponse>* streamer) {
+                       return this->StreamedSubscribeInformation(context,
+                         streamer);
+                  }));
     }
     ~WithSplitStreamingMethod_SubscribeInformation() override {
       BaseClassMustBeDerivedFromService(this);
@@ -3713,7 +3804,14 @@ class CameraService final {
    public:
     WithSplitStreamingMethod_SubscribeVideoStreamInfo() {
       ::grpc::Service::MarkMethodStreamed(10,
-        new ::grpc::internal::SplitServerStreamingHandler< ::mavsdk::rpc::camera::SubscribeVideoStreamInfoRequest, ::mavsdk::rpc::camera::VideoStreamInfoResponse>(std::bind(&WithSplitStreamingMethod_SubscribeVideoStreamInfo<BaseClass>::StreamedSubscribeVideoStreamInfo, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::SplitServerStreamingHandler<
+          ::mavsdk::rpc::camera::SubscribeVideoStreamInfoRequest, ::mavsdk::rpc::camera::VideoStreamInfoResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerSplitStreamer<
+                     ::mavsdk::rpc::camera::SubscribeVideoStreamInfoRequest, ::mavsdk::rpc::camera::VideoStreamInfoResponse>* streamer) {
+                       return this->StreamedSubscribeVideoStreamInfo(context,
+                         streamer);
+                  }));
     }
     ~WithSplitStreamingMethod_SubscribeVideoStreamInfo() override {
       BaseClassMustBeDerivedFromService(this);
@@ -3733,7 +3831,14 @@ class CameraService final {
    public:
     WithSplitStreamingMethod_SubscribeCaptureInfo() {
       ::grpc::Service::MarkMethodStreamed(11,
-        new ::grpc::internal::SplitServerStreamingHandler< ::mavsdk::rpc::camera::SubscribeCaptureInfoRequest, ::mavsdk::rpc::camera::CaptureInfoResponse>(std::bind(&WithSplitStreamingMethod_SubscribeCaptureInfo<BaseClass>::StreamedSubscribeCaptureInfo, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::SplitServerStreamingHandler<
+          ::mavsdk::rpc::camera::SubscribeCaptureInfoRequest, ::mavsdk::rpc::camera::CaptureInfoResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerSplitStreamer<
+                     ::mavsdk::rpc::camera::SubscribeCaptureInfoRequest, ::mavsdk::rpc::camera::CaptureInfoResponse>* streamer) {
+                       return this->StreamedSubscribeCaptureInfo(context,
+                         streamer);
+                  }));
     }
     ~WithSplitStreamingMethod_SubscribeCaptureInfo() override {
       BaseClassMustBeDerivedFromService(this);
@@ -3753,7 +3858,14 @@ class CameraService final {
    public:
     WithSplitStreamingMethod_SubscribeStatus() {
       ::grpc::Service::MarkMethodStreamed(12,
-        new ::grpc::internal::SplitServerStreamingHandler< ::mavsdk::rpc::camera::SubscribeStatusRequest, ::mavsdk::rpc::camera::StatusResponse>(std::bind(&WithSplitStreamingMethod_SubscribeStatus<BaseClass>::StreamedSubscribeStatus, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::SplitServerStreamingHandler<
+          ::mavsdk::rpc::camera::SubscribeStatusRequest, ::mavsdk::rpc::camera::StatusResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerSplitStreamer<
+                     ::mavsdk::rpc::camera::SubscribeStatusRequest, ::mavsdk::rpc::camera::StatusResponse>* streamer) {
+                       return this->StreamedSubscribeStatus(context,
+                         streamer);
+                  }));
     }
     ~WithSplitStreamingMethod_SubscribeStatus() override {
       BaseClassMustBeDerivedFromService(this);
@@ -3773,7 +3885,14 @@ class CameraService final {
    public:
     WithSplitStreamingMethod_SubscribeCurrentSettings() {
       ::grpc::Service::MarkMethodStreamed(13,
-        new ::grpc::internal::SplitServerStreamingHandler< ::mavsdk::rpc::camera::SubscribeCurrentSettingsRequest, ::mavsdk::rpc::camera::CurrentSettingsResponse>(std::bind(&WithSplitStreamingMethod_SubscribeCurrentSettings<BaseClass>::StreamedSubscribeCurrentSettings, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::SplitServerStreamingHandler<
+          ::mavsdk::rpc::camera::SubscribeCurrentSettingsRequest, ::mavsdk::rpc::camera::CurrentSettingsResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerSplitStreamer<
+                     ::mavsdk::rpc::camera::SubscribeCurrentSettingsRequest, ::mavsdk::rpc::camera::CurrentSettingsResponse>* streamer) {
+                       return this->StreamedSubscribeCurrentSettings(context,
+                         streamer);
+                  }));
     }
     ~WithSplitStreamingMethod_SubscribeCurrentSettings() override {
       BaseClassMustBeDerivedFromService(this);
@@ -3793,7 +3912,14 @@ class CameraService final {
    public:
     WithSplitStreamingMethod_SubscribePossibleSettingOptions() {
       ::grpc::Service::MarkMethodStreamed(14,
-        new ::grpc::internal::SplitServerStreamingHandler< ::mavsdk::rpc::camera::SubscribePossibleSettingOptionsRequest, ::mavsdk::rpc::camera::PossibleSettingOptionsResponse>(std::bind(&WithSplitStreamingMethod_SubscribePossibleSettingOptions<BaseClass>::StreamedSubscribePossibleSettingOptions, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::SplitServerStreamingHandler<
+          ::mavsdk::rpc::camera::SubscribePossibleSettingOptionsRequest, ::mavsdk::rpc::camera::PossibleSettingOptionsResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerSplitStreamer<
+                     ::mavsdk::rpc::camera::SubscribePossibleSettingOptionsRequest, ::mavsdk::rpc::camera::PossibleSettingOptionsResponse>* streamer) {
+                       return this->StreamedSubscribePossibleSettingOptions(context,
+                         streamer);
+                  }));
     }
     ~WithSplitStreamingMethod_SubscribePossibleSettingOptions() override {
       BaseClassMustBeDerivedFromService(this);

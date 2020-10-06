@@ -1415,7 +1415,14 @@ class FollowMeService final {
    public:
     WithStreamedUnaryMethod_GetConfig() {
       ::grpc::Service::MarkMethodStreamed(0,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::follow_me::GetConfigRequest, ::mavsdk::rpc::follow_me::GetConfigResponse>(std::bind(&WithStreamedUnaryMethod_GetConfig<BaseClass>::StreamedGetConfig, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::follow_me::GetConfigRequest, ::mavsdk::rpc::follow_me::GetConfigResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::follow_me::GetConfigRequest, ::mavsdk::rpc::follow_me::GetConfigResponse>* streamer) {
+                       return this->StreamedGetConfig(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_GetConfig() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1435,7 +1442,14 @@ class FollowMeService final {
    public:
     WithStreamedUnaryMethod_SetConfig() {
       ::grpc::Service::MarkMethodStreamed(1,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::follow_me::SetConfigRequest, ::mavsdk::rpc::follow_me::SetConfigResponse>(std::bind(&WithStreamedUnaryMethod_SetConfig<BaseClass>::StreamedSetConfig, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::follow_me::SetConfigRequest, ::mavsdk::rpc::follow_me::SetConfigResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::follow_me::SetConfigRequest, ::mavsdk::rpc::follow_me::SetConfigResponse>* streamer) {
+                       return this->StreamedSetConfig(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_SetConfig() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1455,7 +1469,14 @@ class FollowMeService final {
    public:
     WithStreamedUnaryMethod_IsActive() {
       ::grpc::Service::MarkMethodStreamed(2,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::follow_me::IsActiveRequest, ::mavsdk::rpc::follow_me::IsActiveResponse>(std::bind(&WithStreamedUnaryMethod_IsActive<BaseClass>::StreamedIsActive, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::follow_me::IsActiveRequest, ::mavsdk::rpc::follow_me::IsActiveResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::follow_me::IsActiveRequest, ::mavsdk::rpc::follow_me::IsActiveResponse>* streamer) {
+                       return this->StreamedIsActive(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_IsActive() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1475,7 +1496,14 @@ class FollowMeService final {
    public:
     WithStreamedUnaryMethod_SetTargetLocation() {
       ::grpc::Service::MarkMethodStreamed(3,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::follow_me::SetTargetLocationRequest, ::mavsdk::rpc::follow_me::SetTargetLocationResponse>(std::bind(&WithStreamedUnaryMethod_SetTargetLocation<BaseClass>::StreamedSetTargetLocation, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::follow_me::SetTargetLocationRequest, ::mavsdk::rpc::follow_me::SetTargetLocationResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::follow_me::SetTargetLocationRequest, ::mavsdk::rpc::follow_me::SetTargetLocationResponse>* streamer) {
+                       return this->StreamedSetTargetLocation(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_SetTargetLocation() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1495,7 +1523,14 @@ class FollowMeService final {
    public:
     WithStreamedUnaryMethod_GetLastLocation() {
       ::grpc::Service::MarkMethodStreamed(4,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::follow_me::GetLastLocationRequest, ::mavsdk::rpc::follow_me::GetLastLocationResponse>(std::bind(&WithStreamedUnaryMethod_GetLastLocation<BaseClass>::StreamedGetLastLocation, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::follow_me::GetLastLocationRequest, ::mavsdk::rpc::follow_me::GetLastLocationResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::follow_me::GetLastLocationRequest, ::mavsdk::rpc::follow_me::GetLastLocationResponse>* streamer) {
+                       return this->StreamedGetLastLocation(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_GetLastLocation() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1515,7 +1550,14 @@ class FollowMeService final {
    public:
     WithStreamedUnaryMethod_Start() {
       ::grpc::Service::MarkMethodStreamed(5,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::follow_me::StartRequest, ::mavsdk::rpc::follow_me::StartResponse>(std::bind(&WithStreamedUnaryMethod_Start<BaseClass>::StreamedStart, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::follow_me::StartRequest, ::mavsdk::rpc::follow_me::StartResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::follow_me::StartRequest, ::mavsdk::rpc::follow_me::StartResponse>* streamer) {
+                       return this->StreamedStart(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_Start() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1535,7 +1577,14 @@ class FollowMeService final {
    public:
     WithStreamedUnaryMethod_Stop() {
       ::grpc::Service::MarkMethodStreamed(6,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::follow_me::StopRequest, ::mavsdk::rpc::follow_me::StopResponse>(std::bind(&WithStreamedUnaryMethod_Stop<BaseClass>::StreamedStop, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::follow_me::StopRequest, ::mavsdk::rpc::follow_me::StopResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::follow_me::StopRequest, ::mavsdk::rpc::follow_me::StopResponse>* streamer) {
+                       return this->StreamedStop(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_Stop() override {
       BaseClassMustBeDerivedFromService(this);

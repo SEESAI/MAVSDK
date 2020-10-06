@@ -452,7 +452,14 @@ class LogFilesService final {
    public:
     WithStreamedUnaryMethod_GetEntries() {
       ::grpc::Service::MarkMethodStreamed(0,
-        new ::grpc::internal::StreamedUnaryHandler< ::mavsdk::rpc::log_files::GetEntriesRequest, ::mavsdk::rpc::log_files::GetEntriesResponse>(std::bind(&WithStreamedUnaryMethod_GetEntries<BaseClass>::StreamedGetEntries, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::log_files::GetEntriesRequest, ::mavsdk::rpc::log_files::GetEntriesResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerUnaryStreamer<
+                     ::mavsdk::rpc::log_files::GetEntriesRequest, ::mavsdk::rpc::log_files::GetEntriesResponse>* streamer) {
+                       return this->StreamedGetEntries(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_GetEntries() override {
       BaseClassMustBeDerivedFromService(this);
@@ -473,7 +480,14 @@ class LogFilesService final {
    public:
     WithSplitStreamingMethod_SubscribeDownloadLogFile() {
       ::grpc::Service::MarkMethodStreamed(1,
-        new ::grpc::internal::SplitServerStreamingHandler< ::mavsdk::rpc::log_files::SubscribeDownloadLogFileRequest, ::mavsdk::rpc::log_files::DownloadLogFileResponse>(std::bind(&WithSplitStreamingMethod_SubscribeDownloadLogFile<BaseClass>::StreamedSubscribeDownloadLogFile, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::SplitServerStreamingHandler<
+          ::mavsdk::rpc::log_files::SubscribeDownloadLogFileRequest, ::mavsdk::rpc::log_files::DownloadLogFileResponse>(
+            [this](::grpc_impl::ServerContext* context,
+                   ::grpc_impl::ServerSplitStreamer<
+                     ::mavsdk::rpc::log_files::SubscribeDownloadLogFileRequest, ::mavsdk::rpc::log_files::DownloadLogFileResponse>* streamer) {
+                       return this->StreamedSubscribeDownloadLogFile(context,
+                         streamer);
+                  }));
     }
     ~WithSplitStreamingMethod_SubscribeDownloadLogFile() override {
       BaseClassMustBeDerivedFromService(this);
