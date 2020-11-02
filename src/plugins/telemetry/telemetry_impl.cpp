@@ -1004,7 +1004,7 @@ void TelemetryImpl::process_statustext(const mavlink_message_t& message)
     // statustext.text is not null terminated, therefore we copy it first to
     // an array big enough that is zeroed.
     char text_with_null[sizeof(statustext.text) + 1]{};
-    memcpy(text_with_null, statustext.text, sizeof(statustext.text));
+    strncpy(text_with_null, statustext.text, sizeof(text_with_null) - 1);
 
     Telemetry::StatusText new_status_text;
     new_status_text.type = type;
@@ -1088,7 +1088,7 @@ void TelemetryImpl::process_actuator_output_status(const mavlink_message_t& mess
     const unsigned actuators_size = sizeof(status.actuator) / sizeof(status.actuator[0]);
     // Can't use std::copy because status is packed.
     for (std::size_t i = 0; i < actuators_size; ++i) {
-        actuators[i] = status.actuator[i];
+        actuators.push_back(status.actuator[i]);
     }
 
     set_actuator_output_status(active, actuators);
