@@ -921,7 +921,7 @@ void TelemetryImpl::process_battery_status(const mavlink_message_t& message)
     mavlink_msg_battery_status_decode(&message, &batt_status);
 
     Telemetry::BatteryStatus new_battery_status;
-    new_battery_status.mah_consumed = batt_status.current_consumed;
+    new_battery_status.mah_consumed = float(batt_status.current_consumed);
 
     set_battery_status(new_battery_status);
 
