@@ -393,7 +393,17 @@ public:
         rpc_obj->set_num_satellites(gps_info.num_satellites);
 
         rpc_obj->set_fix_type(translateToRpcFixType(gps_info.fix_type));
-
+                    
+        rpc_obj->set_latitude_deg(gps_info.latitude_deg);
+            
+        rpc_obj->set_longitude_deg(gps_info.longitude_deg);
+            
+        rpc_obj->set_absolute_altitude_m(gps_info.absolute_altitude_m);
+            
+        rpc_obj->set_h_acc_m(gps_info.h_acc_m);
+            
+        rpc_obj->set_v_acc_m(gps_info.v_acc_m);
+            
         return rpc_obj;
     }
 
@@ -405,7 +415,17 @@ public:
         obj.num_satellites = gps_info.num_satellites();
 
         obj.fix_type = translateFromRpcFixType(gps_info.fix_type());
+            
+        obj.latitude_deg = gps_info.latitude_deg();
+            
+        obj.longitude_deg = gps_info.longitude_deg();
+            
+        obj.absolute_altitude_m = gps_info.absolute_altitude_m();
 
+        obj.h_acc_m = gps_info.h_acc_m();
+            
+        obj.v_acc_m = gps_info.v_acc_m();
+        
         return obj;
     }
 
@@ -415,9 +435,11 @@ public:
         auto rpc_obj = std::make_unique<rpc::telemetry::Battery>();
 
         rpc_obj->set_voltage_v(battery.voltage_v);
+            
+        rpc_obj->set_current_a(battery.current_a);
 
         rpc_obj->set_remaining_percent(battery.remaining_percent);
-
+            
         return rpc_obj;
     }
 
@@ -427,8 +449,90 @@ public:
         mavsdk::Telemetry::Battery obj;
 
         obj.voltage_v = battery.voltage_v();
+            
+        obj.current_a = battery.current_a();
 
         obj.remaining_percent = battery.remaining_percent();
+            
+        return obj;
+    }
+
+    static std::unique_ptr<rpc::telemetry::BatteryStatus>
+    translateToRpcBatteryStatus(const mavsdk::Telemetry::BatteryStatus &battery_status)
+    {
+        auto rpc_obj = std::make_unique<rpc::telemetry::BatteryStatus>();
+        
+        rpc_obj->set_mah_consumed(battery_status.mah_consumed);
+        
+        return rpc_obj;
+    }
+
+    static mavsdk::Telemetry::BatteryStatus
+    translateFromRpcBatteryStatus(const rpc::telemetry::BatteryStatus& battery_status)
+    {
+        mavsdk::Telemetry::BatteryStatus obj;
+
+        obj.mah_consumed = battery_status.mah_consumed();
+        
+        return obj;
+    }
+
+    static std::unique_ptr<rpc::telemetry::VehicleStatus>
+    translateToRpcVehicleStatus(const mavsdk::Telemetry::VehicleStatus &vehicle_status)
+    {
+        auto rpc_obj = std::make_unique<rpc::telemetry::VehicleStatus>();
+
+        rpc_obj->set_manual_control_signal_loss(vehicle_status.manual_control_signal_loss);
+            
+        rpc_obj->set_data_link_loss(vehicle_status.data_link_loss);
+
+        rpc_obj->set_rc_signal_loss(vehicle_status.rc_signal_loss);
+
+        rpc_obj->set_manual_contol_data_source(vehicle_status.manual_contol_data_source);
+
+        return rpc_obj;
+    }
+
+    static mavsdk::Telemetry::VehicleStatus
+    translateFromRpcVehicleStatus(const rpc::telemetry::VehicleStatus& vehicle_status)
+    {
+        mavsdk::Telemetry::VehicleStatus obj;
+
+        obj.manual_control_signal_loss = vehicle_status.manual_control_signal_loss();
+
+        obj.data_link_loss = vehicle_status.data_link_loss();
+
+        obj.rc_signal_loss = vehicle_status.rc_signal_loss();
+
+        obj.manual_contol_data_source = vehicle_status.manual_contol_data_source();
+
+        return obj;
+    }
+
+    static std::unique_ptr<rpc::telemetry::ModeInfo> 
+    translateToRpcModeInfo(const mavsdk::Telemetry::ModeInfo &mode_info)
+    {
+        auto rpc_obj = std::make_unique<rpc::telemetry::ModeInfo>();
+        
+        rpc_obj->set_base_mode(mode_info.base_mode);
+            
+        rpc_obj->set_custom_main_mode(mode_info.custom_main_mode);
+            
+        rpc_obj->set_custom_sub_mode(mode_info.custom_sub_mode);
+
+        return rpc_obj;
+    }
+
+    static mavsdk::Telemetry::ModeInfo
+    translateFromRpcModeInfo(const rpc::telemetry::ModeInfo& mode_info)
+    {
+        mavsdk::Telemetry::ModeInfo obj;
+
+        obj.base_mode = mode_info.base_mode();
+
+        obj.custom_main_mode = mode_info.custom_main_mode();
+    
+        obj.custom_sub_mode = mode_info.custom_sub_mode();
 
         return obj;
     }
@@ -585,6 +689,30 @@ public:
         return obj;
     }
 
+    static std::unique_ptr<rpc::telemetry::ServoOutputRaw>
+    translateToRpcServoOutputRaw(const mavsdk::Telemetry::ServoOutputRaw &servo_output_raw)
+    {
+        auto rpc_obj = std::make_unique<rpc::telemetry::ServoOutputRaw>();
+
+        for (const auto& elem : servo_output_raw.servo) {
+            rpc_obj->add_servo(elem);
+        }
+
+        return rpc_obj;
+    }
+
+    static mavsdk::Telemetry::ServoOutputRaw
+    translateFromRpcServoOutputRaw(const rpc::telemetry::ServoOutputRaw& servo_output_raw)
+    {
+        mavsdk::Telemetry::ServoOutputRaw obj;
+            
+        for (const auto& elem : servo_output_raw.servo()) {
+            obj.servo.push_back(elem);
+        }
+            
+        return obj;
+    }
+
     static std::unique_ptr<rpc::telemetry::Covariance>
     translateToRpcCovariance(const mavsdk::Telemetry::Covariance& covariance)
     {
@@ -676,6 +804,8 @@ public:
                 return rpc::telemetry::Odometry_MavFrame_MAV_FRAME_UNDEF;
             case mavsdk::Telemetry::Odometry::MavFrame::BodyNed:
                 return rpc::telemetry::Odometry_MavFrame_MAV_FRAME_BODY_NED;
+            case mavsdk::Telemetry::Odometry::MavFrame::BodyFrd:
+                return rpc::telemetry::Odometry_MavFrame_MAV_FRAME_BODY_FRD;
             case mavsdk::Telemetry::Odometry::MavFrame::VisionNed:
                 return rpc::telemetry::Odometry_MavFrame_MAV_FRAME_VISION_NED;
             case mavsdk::Telemetry::Odometry::MavFrame::EstimNed:
@@ -694,6 +824,8 @@ public:
                 return mavsdk::Telemetry::Odometry::MavFrame::Undef;
             case rpc::telemetry::Odometry_MavFrame_MAV_FRAME_BODY_NED:
                 return mavsdk::Telemetry::Odometry::MavFrame::BodyNed;
+            case rpc::telemetry::Odometry_MavFrame_MAV_FRAME_BODY_FRD:
+                return mavsdk::Telemetry::Odometry::MavFrame::BodyFrd;
             case rpc::telemetry::Odometry_MavFrame_MAV_FRAME_VISION_NED:
                 return mavsdk::Telemetry::Odometry::MavFrame::VisionNed;
             case rpc::telemetry::Odometry_MavFrame_MAV_FRAME_ESTIM_NED:
@@ -1021,9 +1153,13 @@ public:
 
         rpc_obj->set_allocated_magnetic_field_frd(
             translateToRpcMagneticFieldFrd(imu.magnetic_field_frd).release());
+                
+        rpc_obj->set_abs_pressure(imu.abs_pressure);
 
+        rpc_obj->set_pressure_alt(imu.pressure_alt);
+            
         rpc_obj->set_temperature_degc(imu.temperature_degc);
-
+            
         return rpc_obj;
     }
 
@@ -1036,9 +1172,13 @@ public:
         obj.angular_velocity_frd = translateFromRpcAngularVelocityFrd(imu.angular_velocity_frd());
 
         obj.magnetic_field_frd = translateFromRpcMagneticFieldFrd(imu.magnetic_field_frd());
+            
+        obj.abs_pressure = imu.abs_pressure();
 
+        obj.pressure_alt = imu.pressure_alt();
+    
         obj.temperature_degc = imu.temperature_degc();
-
+        
         return obj;
     }
 
@@ -1579,6 +1719,78 @@ public:
         return grpc::Status::OK;
     }
 
+    grpc::Status SubscribeBatteryStatus(
+        grpc::ServerContext* /* context */,
+        const mavsdk::rpc::telemetry::SubscribeBatteryStatusRequest* /* request */,
+        grpc::ServerWriter<rpc::telemetry::BatteryStatusResponse>* writer) override
+    {
+        auto stream_closed_promise = std::make_shared<std::promise<void>>();
+        auto stream_closed_future = stream_closed_promise->get_future();
+        register_stream_stop_promise(stream_closed_promise);
+
+        auto is_finished = std::make_shared<bool>(false);
+
+        std::mutex subscribe_mutex{};
+
+        _telemetry.subscribe_battery_status(
+            [this, &writer, &stream_closed_promise, is_finished, &subscribe_mutex](
+                const mavsdk::Telemetry::BatteryStatus battery_status) {
+            rpc::telemetry::BatteryStatusResponse rpc_response;
+        
+            rpc_response.set_allocated_battery_status(translateToRpcBatteryStatus(battery_status).release());
+        
+            std::unique_lock<std::mutex> lock(subscribe_mutex);
+            if (!*is_finished && !writer->Write(rpc_response)) {
+                
+                _telemetry.subscribe_battery_status(nullptr);
+                
+                *is_finished = true;
+                unregister_stream_stop_promise(stream_closed_promise);
+                lock.unlock();
+                stream_closed_promise->set_value();
+            }
+        });
+
+        stream_closed_future.wait();
+        return grpc::Status::OK;
+    }
+
+    grpc::Status SubscribeVehicleStatus(
+        grpc::ServerContext* /* context */,
+        const mavsdk::rpc::telemetry::SubscribeVehicleStatusRequest* /* request */,
+        grpc::ServerWriter<rpc::telemetry::VehicleStatusResponse>* writer) override
+    {
+        auto stream_closed_promise = std::make_shared<std::promise<void>>();
+        auto stream_closed_future = stream_closed_promise->get_future();
+        register_stream_stop_promise(stream_closed_promise);
+
+        auto is_finished = std::make_shared<bool>(false);
+
+        std::mutex subscribe_mutex{};
+
+        _telemetry.subscribe_vehicle_status(
+            [this, &writer, &stream_closed_promise, is_finished, &subscribe_mutex](
+                const mavsdk::Telemetry::VehicleStatus vehicle_status) {
+            rpc::telemetry::VehicleStatusResponse rpc_response;
+        
+            rpc_response.set_allocated_vehicle_status(translateToRpcVehicleStatus(vehicle_status).release());
+
+            std::unique_lock<std::mutex> lock(subscribe_mutex);
+            if (!*is_finished && !writer->Write(rpc_response)) {
+                
+                _telemetry.subscribe_vehicle_status(nullptr);
+                
+                *is_finished = true;
+                unregister_stream_stop_promise(stream_closed_promise);
+                lock.unlock();
+                stream_closed_promise->set_value();
+            }
+        });
+
+        stream_closed_future.wait();
+        return grpc::Status::OK;
+    }
+
     grpc::Status SubscribeFlightMode(
         grpc::ServerContext* /* context */,
         const mavsdk::rpc::telemetry::SubscribeFlightModeRequest* /* request */,
@@ -1609,6 +1821,42 @@ public:
                     stream_closed_promise->set_value();
                 }
             });
+
+        stream_closed_future.wait();
+        return grpc::Status::OK;
+    }
+
+    grpc::Status SubscribeModeInfo(
+        grpc::ServerContext* /* context */,
+        const mavsdk::rpc::telemetry::SubscribeModeInfoRequest* /* request */,
+        grpc::ServerWriter<rpc::telemetry::ModeInfoResponse>* writer) override
+    {
+        auto stream_closed_promise = std::make_shared<std::promise<void>>();
+        auto stream_closed_future = stream_closed_promise->get_future();
+        register_stream_stop_promise(stream_closed_promise);
+
+        auto is_finished = std::make_shared<bool>(false);
+
+        std::mutex subscribe_mutex{};
+
+        _telemetry.subscribe_mode_info(
+            [this, &writer, &stream_closed_promise, is_finished, &subscribe_mutex](
+                const mavsdk::Telemetry::ModeInfo mode_info) {
+            rpc::telemetry::ModeInfoResponse rpc_response;
+        
+            rpc_response.set_allocated_mode_info(translateToRpcModeInfo(mode_info).release());
+        
+            std::unique_lock<std::mutex> lock(subscribe_mutex);
+            if (!*is_finished && !writer->Write(rpc_response)) {
+                
+                _telemetry.subscribe_mode_info(nullptr);
+                
+                *is_finished = true;
+                unregister_stream_stop_promise(stream_closed_promise);
+                lock.unlock();
+                stream_closed_promise->set_value();
+            }
+        });
 
         stream_closed_future.wait();
         return grpc::Status::OK;
@@ -1787,6 +2035,43 @@ public:
                     stream_closed_promise->set_value();
                 }
             });
+
+        stream_closed_future.wait();
+        return grpc::Status::OK;
+    }
+
+    grpc::Status SubscribeServoOutputRaw(
+        grpc::ServerContext* /* context */,
+        const mavsdk::rpc::telemetry::SubscribeServoOutputRawRequest* /* request */,
+        grpc::ServerWriter<rpc::telemetry::ServoOutputRawResponse>* writer) override
+    {
+        auto stream_closed_promise = std::make_shared<std::promise<void>>();
+        auto stream_closed_future = stream_closed_promise->get_future();
+        register_stream_stop_promise(stream_closed_promise);
+
+        auto is_finished = std::make_shared<bool>(false);
+
+        std::mutex subscribe_mutex{};
+
+        _telemetry.subscribe_servo_output_raw(
+            [this, &writer, &stream_closed_promise, is_finished, &subscribe_mutex](
+                const mavsdk::Telemetry::ServoOutputRaw servo_output_raw) {
+            rpc::telemetry::ServoOutputRawResponse rpc_response;
+        
+            rpc_response.set_allocated_servo_output_raw(
+                translateToRpcServoOutputRaw(servo_output_raw).release());
+
+            std::unique_lock<std::mutex> lock(subscribe_mutex);
+            if (!*is_finished && !writer->Write(rpc_response)) {
+                
+                _telemetry.subscribe_servo_output_raw(nullptr);
+                
+                *is_finished = true;
+                unregister_stream_stop_promise(stream_closed_promise);
+                lock.unlock();
+                stream_closed_promise->set_value();
+            }
+        });
 
         stream_closed_future.wait();
         return grpc::Status::OK;
