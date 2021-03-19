@@ -285,6 +285,22 @@ public:
     using ResultCallback = std::function<void(Result)>;
 
     /**
+     * @brief Request offboard mode only (don't send repeated setpoints)
+     *
+     * This function is non-blocking. See 'request_offboard' for the blocking counterpart.
+     */
+    void request_offboard_async(const ResultCallback callback);
+
+    /**
+     * @brief Request offboard mode only (don't send repeated setpoints)
+     *
+     * This function is blocking. See 'request_offboard_async' for the non-blocking counterpart.
+     *
+     * @return Result of request.
+     */
+    Result request_offboard() const;
+
+    /**
      * @brief Start offboard control.
      *
      * This function is non-blocking. See 'start' for the blocking counterpart.
@@ -334,12 +350,36 @@ public:
 
     /**
      * @brief Set the attitude in terms of roll, pitch and yaw in degrees with thrust.
+     * Only send one request.
+     *
+     * This function is blocking.
+     *
+     * @return Result of request.
+     */
+    Result set_attitude_once(Attitude attitude) const;
+
+    /**
+     * @brief Set the attitude in terms of roll, pitch and yaw in degrees with thrust.
      *
      * This function is blocking.
      *
      * @return Result of request.
      */
     Result set_attitude(Attitude attitude) const;
+
+    
+    /**
+     * @brief Set direct actuator control values to groups #0 and #1.
+     * Only send one request.
+     *
+     * First 8 controls will go to control group 0, the following 8 controls to control group 1 (if
+     * actuator_control.num_controls more than 8).
+     *
+     * This function is blocking.
+     *
+     * @return Result of request.
+     */
+    Result set_actuator_control_once(ActuatorControl actuator_control) const;
 
     /**
      * @brief Set direct actuator control values to groups #0 and #1.
@@ -353,6 +393,17 @@ public:
      */
     Result set_actuator_control(ActuatorControl actuator_control) const;
 
+
+    /**
+     * @brief Set the attitude rate in terms of pitch, roll and yaw angular rate along with thrust.
+     * Only send one request.
+     *
+     * This function is blocking.
+     *
+     * @return Result of request.
+     */
+    Result set_attitude_rate_once(AttitudeRate attitude_rate) const;
+
     /**
      * @brief Set the attitude rate in terms of pitch, roll and yaw angular rate along with thrust.
      *
@@ -362,6 +413,17 @@ public:
      */
     Result set_attitude_rate(AttitudeRate attitude_rate) const;
 
+
+    /**
+     * @brief Set the position in NED coordinates and yaw.
+     * Only send one request.
+     *
+     * This function is blocking.
+     *
+     * @return Result of request.
+     */
+    Result set_position_ned_once(PositionNedYaw position_ned_yaw) const;
+
     /**
      * @brief Set the position in NED coordinates and yaw.
      *
@@ -370,6 +432,16 @@ public:
      * @return Result of request.
      */
     Result set_position_ned(PositionNedYaw position_ned_yaw) const;
+
+    /**
+     * @brief Set the velocity in body coordinates and yaw angular rate. Not available for fixed-wing aircraft.
+     * Only send one request.
+     *
+     * This function is blocking.
+     *
+     * @return Result of request.
+     */
+    Result set_velocity_body_once(VelocityBodyYawspeed velocity_body_yawspeed) const;
 
     /**
      * @brief Set the velocity in body coordinates and yaw angular rate. Not available for
