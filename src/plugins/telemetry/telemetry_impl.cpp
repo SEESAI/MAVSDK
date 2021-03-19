@@ -74,6 +74,9 @@ void TelemetryImpl::init()
         MAVLINK_MSG_ID_SYS_STATUS, std::bind(&TelemetryImpl::process_sys_status, this, _1), this);
 
     _parent->register_mavlink_message_handler(
+        MAVLINK_MSG_ID_BATTERY_STATUS, std::bind(&TelemetryImpl::process_battery_status, this, _1), this);
+
+    _parent->register_mavlink_message_handler(
         MAVLINK_MSG_ID_HEARTBEAT, std::bind(&TelemetryImpl::process_heartbeat, this, _1), this);
 
     _parent->register_mavlink_message_handler(
@@ -90,6 +93,11 @@ void TelemetryImpl::init()
     _parent->register_mavlink_message_handler(
         MAVLINK_MSG_ID_ACTUATOR_OUTPUT_STATUS,
         std::bind(&TelemetryImpl::process_actuator_output_status, this, _1),
+        this);
+
+    _parent->register_mavlink_message_handler(
+        MAVLINK_MSG_ID_SERVO_OUTPUT_RAW,
+        std::bind(&TelemetryImpl::process_servo_output_raw, this, _1),
         this);
 
     _parent->register_mavlink_message_handler(
@@ -754,6 +762,8 @@ void TelemetryImpl::process_imu_reading_ned(const mavlink_message_t& message)
     new_imu.magnetic_field_frd.forward_gauss = highres_imu.xmag;
     new_imu.magnetic_field_frd.right_gauss = highres_imu.ymag;
     new_imu.magnetic_field_frd.down_gauss = highres_imu.zmag;
+    new_imu.abs_pressure = highres_imu.abs_pressure;
+    new_imu.pressure_alt = highres_imu.pressure_alt;
     new_imu.temperature_degc = highres_imu.temperature;
 
     set_imu_reading_ned(new_imu);
@@ -904,15 +914,46 @@ void TelemetryImpl::process_sys_status(const mavlink_message_t& message)
 
     Telemetry::Battery new_battery;
     new_battery.voltage_v = sys_status.voltage_battery * 1e-3f;
+    new_battery.current_a = sys_status.current_battery * 1e-2f;
     // FIXME: it is strange calling it percent when the range goes from 0 to 1.
     new_battery.remaining_percent = sys_status.battery_remaining * 1e-2f;
 
     set_battery(new_battery);
 
+    Telemetry::VehicleStatus new_vehicle_status;
+    new_vehicle_status.manual_control_signal_loss = sys_status.errors_count1;  // No manual_control setpoint messages arriving (can come from RC or MAV)
+    new_vehicle_status.data_link_loss = sys_status.errors_count2;  // No messages from GCS received
+    new_vehicle_status.rc_signal_loss = sys_status.errors_count3; // No messages from RC TX received
+    new_vehicle_status.manual_contol_data_source = sys_status.errors_count4; // Indicates whether the drone is controlled by RC (1) or MAVLink (2-5)
+
     std::lock_guard<std::mutex> lock(_subscription_mutex);
     if (_battery_subscription) {
         auto callback = _battery_subscription;
         auto arg = battery();
+        _parent->call_user_callback([callback, arg]() { callback(arg); });
+    }
+
+    if (_vehicle_status_subscription) {
+        auto callback = _vehicle_status_subscription;
+        auto arg = vehicle_status();
+        _parent->call_user_callback([callback, arg]() { callback(arg); });
+    }
+}
+
+void TelemetryImpl::process_battery_status(const mavlink_message_t& message)
+{
+    mavlink_battery_status_t batt_status;
+    mavlink_msg_battery_status_decode(&message, &batt_status);
+
+    Telemetry::BatteryStatus new_battery_status;
+    new_battery_status.mah_consumed = float(batt_status.current_consumed);
+
+    set_battery_status(new_battery_status);
+
+    std::lock_guard<std::mutex> lock(_subscription_mutex);
+    if (_battery_status_subscription) {
+        auto callback = _battery_status_subscription;
+        auto arg = battery_status();
         _parent->call_user_callback([callback, arg]() { callback(arg); });
     }
 }
@@ -932,6 +973,12 @@ void TelemetryImpl::process_heartbeat(const mavlink_message_t& message)
     if (_armed_subscription) {
         auto callback = _armed_subscription;
         auto arg = armed();
+        _parent->call_user_callback([callback, arg]() { callback(arg); });
+    }
+
+    if (_mode_info_subscription) {
+        auto callback = _mode_info_subscription;
+        auto arg = mode_info();
         _parent->call_user_callback([callback, arg]() { callback(arg); });
     }
 
@@ -1090,6 +1137,44 @@ void TelemetryImpl::process_actuator_output_status(const mavlink_message_t& mess
     if (_actuator_output_status_subscription) {
         auto callback = _actuator_output_status_subscription;
         auto arg = actuator_output_status();
+        _parent->call_user_callback([callback, arg]() { callback(arg); });
+    }
+}
+
+void TelemetryImpl::process_servo_output_raw(const mavlink_message_t& message)
+{
+    std::array<uint16_t, 16> servos;
+
+    uint8_t port = mavlink_msg_servo_output_raw_get_port(&message);
+
+    if (port != 0) {
+        return;
+    }
+
+    servos[0] = mavlink_msg_servo_output_raw_get_servo1_raw(&message);
+    servos[1] = mavlink_msg_servo_output_raw_get_servo2_raw(&message);
+    servos[2] = mavlink_msg_servo_output_raw_get_servo3_raw(&message);
+    servos[3] = mavlink_msg_servo_output_raw_get_servo4_raw(&message);
+    servos[4] = mavlink_msg_servo_output_raw_get_servo5_raw(&message);
+    servos[5] = mavlink_msg_servo_output_raw_get_servo6_raw(&message);
+    servos[6] = mavlink_msg_servo_output_raw_get_servo7_raw(&message);
+    servos[7] = mavlink_msg_servo_output_raw_get_servo8_raw(&message);
+
+    servos[8] = mavlink_msg_servo_output_raw_get_servo9_raw(&message);
+    servos[9] = mavlink_msg_servo_output_raw_get_servo10_raw(&message);
+    servos[10] = mavlink_msg_servo_output_raw_get_servo11_raw(&message);
+    servos[11] = mavlink_msg_servo_output_raw_get_servo12_raw(&message);
+    servos[12] = mavlink_msg_servo_output_raw_get_servo13_raw(&message);
+    servos[13] = mavlink_msg_servo_output_raw_get_servo14_raw(&message);
+    servos[14] = mavlink_msg_servo_output_raw_get_servo15_raw(&message);
+    servos[15] = mavlink_msg_servo_output_raw_get_servo16_raw(&message);
+
+    set_servo_output_raw(servos);
+
+    std::lock_guard<std::mutex> lock(_subscription_mutex);
+    if (_servo_output_raw_subscription) {
+        auto callback = _servo_output_raw_subscription;
+        auto arg = servo_output_raw();
         _parent->call_user_callback([callback, arg]() { callback(arg); });
     }
 }
@@ -1501,6 +1586,38 @@ void TelemetryImpl::set_battery(Telemetry::Battery battery)
     _battery = battery;
 }
 
+Telemetry::BatteryStatus TelemetryImpl::battery_status() const
+{
+    std::lock_guard<std::mutex> lock(_battery_status_mutex);
+    return _battery_status;
+}
+
+void TelemetryImpl::set_battery_status(Telemetry::BatteryStatus battery_status)
+{
+    std::lock_guard<std::mutex> lock(_battery_status_mutex);
+    _battery_status = battery_status;
+}
+
+Telemetry::VehicleStatus TelemetryImpl::vehicle_status() const
+{
+    std::lock_guard<std::mutex> lock(_vehicle_status_mutex);
+    return _vehicle_status;
+}
+
+void TelemetryImpl::set_vehicle_status(Telemetry::VehicleStatus vehicle_status)
+{
+    std::lock_guard<std::mutex> lock(_vehicle_status_mutex);
+    _vehicle_status = vehicle_status;
+}
+
+Telemetry::ModeInfo TelemetryImpl::mode_info() const
+{
+    Telemetry::ModeInfo mode_info;
+    mode_info.base_mode = _parent->get_base_mode();
+    mode_info.custom_mode = _parent->get_custom_mode();
+    return mode_info;
+}
+
 Telemetry::FlightMode TelemetryImpl::flight_mode() const
 {
     return telemetry_flight_mode_from_flight_mode(_parent->get_flight_mode());
@@ -1547,6 +1664,12 @@ Telemetry::ActuatorOutputStatus TelemetryImpl::actuator_output_status() const
 {
     std::lock_guard<std::mutex> lock(_actuator_output_status_mutex);
     return _actuator_output_status;
+}
+
+Telemetry::ServoOutputRaw TelemetryImpl::servo_output_raw() const
+{
+    std::lock_guard<std::mutex> lock(_servo_output_raw_mutex);
+    return _servo_output_raw;
 }
 
 Telemetry::Odometry TelemetryImpl::odometry() const
@@ -1647,6 +1770,12 @@ void TelemetryImpl::set_actuator_output_status(uint32_t active, const std::vecto
     std::lock_guard<std::mutex> lock(_actuator_output_status_mutex);
     _actuator_output_status.active = active;
     _actuator_output_status.actuator = actuators;
+}
+
+void TelemetryImpl::set_servo_output_raw(const std::array<uint16_t, 16>& servos)
+{
+    std::lock_guard<std::mutex> lock(_servo_output_raw_mutex);
+    std::copy(servos.begin(), servos.end(), _servo_output_raw.servo);
 }
 
 void TelemetryImpl::set_odometry(Telemetry::Odometry& odometry)
@@ -1764,6 +1893,24 @@ void TelemetryImpl::subscribe_battery(Telemetry::BatteryCallback& callback)
 {
     std::lock_guard<std::mutex> lock(_subscription_mutex);
     _battery_subscription = callback;
+}
+
+void TelemetryImpl::subscribe_battery_status(Telemetry::BatteryStatusCallback& callback)
+{
+    std::lock_guard<std::mutex> lock(_subscription_mutex);
+    _battery_status_subscription = callback;
+}
+
+void TelemetryImpl::subscribe_vehicle_status(Telemetry::VehicleStatusCallback& callback)
+{
+    std::lock_guard<std::mutex> lock(_subscription_mutex);
+    _vehicle_status_subscription = callback;
+}
+
+void TelemetryImpl::subscribe_mode_info(Telemetry::ModeInfoCallback& callback)
+{
+    std::lock_guard<std::mutex> lock(_subscription_mutex);
+    _mode_info_subscription = callback;
 }
 
 void TelemetryImpl::subscribe_flight_mode(Telemetry::FlightModeCallback& callback)

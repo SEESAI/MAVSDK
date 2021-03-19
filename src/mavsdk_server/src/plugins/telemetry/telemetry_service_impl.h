@@ -513,28 +513,17 @@ public:
     translateToRpcModeInfo(const mavsdk::Telemetry::ModeInfo &mode_info)
     {
         auto rpc_obj = std::make_unique<rpc::telemetry::ModeInfo>();
+
+        auto custom_main_mode = uint8_t((mode_info.custom_mode >> 16U) & 0xffU);
+        auto custom_sub_mode = uint8_t((mode_info.custom_mode >> 24U) & 0xffU);
         
         rpc_obj->set_base_mode(mode_info.base_mode);
             
-        rpc_obj->set_custom_main_mode(mode_info.custom_main_mode);
+        rpc_obj->set_custom_main_mode(custom_main_mode);
             
-        rpc_obj->set_custom_sub_mode(mode_info.custom_sub_mode);
+        rpc_obj->set_custom_sub_mode(custom_sub_mode);
 
         return rpc_obj;
-    }
-
-    static mavsdk::Telemetry::ModeInfo
-    translateFromRpcModeInfo(const rpc::telemetry::ModeInfo& mode_info)
-    {
-        mavsdk::Telemetry::ModeInfo obj;
-
-        obj.base_mode = mode_info.base_mode();
-
-        obj.custom_main_mode = mode_info.custom_main_mode();
-    
-        obj.custom_sub_mode = mode_info.custom_sub_mode();
-
-        return obj;
     }
 
     static std::unique_ptr<rpc::telemetry::Health>

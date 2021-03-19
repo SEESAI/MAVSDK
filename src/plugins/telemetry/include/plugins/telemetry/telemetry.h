@@ -269,6 +269,11 @@ public:
     struct GpsInfo {
         int32_t num_satellites{0}; /**< @brief Number of visible satellites in use */
         FixType fix_type{}; /**< @brief Fix type */
+        double latitude_deg{double(NAN)}; /**< @brief Latitude in degrees (range: -90 to +90) */
+        double longitude_deg{double(NAN)}; /**< @brief Longitude in degrees (range: -180 to +180) */
+        float absolute_altitude_m{float(NAN)}; /**< @brief Altitude AMSL (above mean sea level) in metres */
+        float h_acc_m{float(NAN)}; /**< @brief Position uncertainty in metres */
+        float v_acc_m{float(NAN)}; /**< @brief Altitude uncertainty in metres */
     };
 
     /**
@@ -359,8 +364,7 @@ public:
      */
     struct ModeInfo {
         uint32_t base_mode{0}; /**< @brief */
-        uint32_t custom_main_mode{0}; /**< @brief */
-        uint32_t custom_sub_mode{0}; /**< @brief */
+        uint32_t custom_mode{0}; /**< @brief Custom mode (made up of main & sub mode). */
     };
 
     /**
