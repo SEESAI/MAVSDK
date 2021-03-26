@@ -739,8 +739,7 @@ bool operator==(const Telemetry::ModeInfo& lhs, const Telemetry::ModeInfo& rhs)
 {
     return
         (rhs.base_mode == lhs.base_mode) &&
-        (rhs.custom_main_mode == lhs.custom_main_mode) &&
-        (rhs.custom_sub_mode == lhs.custom_sub_mode);
+        (rhs.custom_mode == lhs.custom_mode);
 }
 
 std::ostream& operator<<(std::ostream& str, Telemetry::ModeInfo const& mode_info)
@@ -748,8 +747,7 @@ std::ostream& operator<<(std::ostream& str, Telemetry::ModeInfo const& mode_info
     str << std::setprecision(15);
     str << "mode_info:" << '\n' << "{\n";
     str << "    base_mode: " << mode_info.base_mode << '\n';
-    str << "    custom_main_mode: " << mode_info.custom_main_mode << '\n';
-    str << "    custom_sub_mode: " << mode_info.custom_sub_mode << '\n';
+    str << "    custom_mode: " << mode_info.custom_mode << '\n';
     str << '}';
     return str;
 }
@@ -864,22 +862,6 @@ operator<<(std::ostream& str, Telemetry::ActuatorOutputStatus const& actuator_ou
 bool operator==(const Telemetry::ServoOutputRaw& lhs, const Telemetry::ServoOutputRaw& rhs)
 {
     return (rhs.servo == lhs.servo);
-}
-
-std::ostream&
-operator<<(std::ostream& str, Telemetry::ServoOutputRaw const& servo_output_raw)
-{
-    str << std::setprecision(15);
-    str << "servo_output_raw:" << '\n' << "{\n";
-    str << "    servo: [";
-    for (auto it = servo_output_raw.servo.begin();
-        it != servo_output_raw.servo.end();
-        ++it) {
-        str << *it;
-        str << (it + 1 != servo_output_raw.servo.end() ? ", " : "]\n");
-    }
-    str << '}';
-    return str;
 }
 
 bool operator==(const Telemetry::Covariance& lhs, const Telemetry::Covariance& rhs)

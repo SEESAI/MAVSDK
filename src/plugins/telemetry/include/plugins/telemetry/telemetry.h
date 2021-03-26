@@ -514,7 +514,7 @@ public:
      */
     struct ServoOutputRaw {
         
-        std::vector<uint32_t> servo{}; /**< @brief */
+        uint16_t servo[16]; /**< @brief */
     };
 
     /**
@@ -524,14 +524,6 @@ public:
      */
     friend bool operator==(
         const Telemetry::ServoOutputRaw& lhs, const Telemetry::ServoOutputRaw& rhs);
-
-    /**
-     * @brief Stream operator to print information about a `Telemetry::ServoOutputRaw`.
-     *
-     * @return A reference to the stream.
-     */
-    friend std::ostream&
-    operator<<(std::ostream& str, Telemetry::ServoOutputRaw const& servo_output_raw);
 
     /**
      * @brief Covariance type.

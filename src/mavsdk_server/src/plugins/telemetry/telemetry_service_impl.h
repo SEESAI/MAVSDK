@@ -690,18 +690,6 @@ public:
         return rpc_obj;
     }
 
-    static mavsdk::Telemetry::ServoOutputRaw
-    translateFromRpcServoOutputRaw(const rpc::telemetry::ServoOutputRaw& servo_output_raw)
-    {
-        mavsdk::Telemetry::ServoOutputRaw obj;
-            
-        for (const auto& elem : servo_output_raw.servo()) {
-            obj.servo.push_back(elem);
-        }
-            
-        return obj;
-    }
-
     static std::unique_ptr<rpc::telemetry::Covariance>
     translateToRpcCovariance(const mavsdk::Telemetry::Covariance& covariance)
     {

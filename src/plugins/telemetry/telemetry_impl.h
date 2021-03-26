@@ -132,6 +132,7 @@ public:
     void subscribe_unix_epoch_time(Telemetry::UnixEpochTimeCallback& callback);
     void subscribe_actuator_control_target(Telemetry::ActuatorControlTargetCallback& callback);
     void subscribe_actuator_output_status(Telemetry::ActuatorOutputStatusCallback& callback);
+    void subscribe_servo_output_raw(Telemetry::ServoOutputRawCallback& callback);
     void subscribe_odometry(Telemetry::OdometryCallback& callback);
     void subscribe_distance_sensor(Telemetry::DistanceSensorCallback& callback);
 

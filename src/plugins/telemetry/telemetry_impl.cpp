@@ -1963,6 +1963,13 @@ void TelemetryImpl::subscribe_actuator_output_status(
     _actuator_output_status_subscription = callback;
 }
 
+void TelemetryImpl::subscribe_servo_output_raw(
+    Telemetry::ServoOutputRawCallback& callback)
+{
+    std::lock_guard<std::mutex> lock(_subscription_mutex);
+    _servo_output_raw_subscription = callback;
+}
+
 void TelemetryImpl::subscribe_odometry(Telemetry::OdometryCallback& callback)
 {
     std::lock_guard<std::mutex> lock(_subscription_mutex);
