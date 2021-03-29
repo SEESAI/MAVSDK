@@ -108,7 +108,7 @@ private:
 
     Time _time{};
 
-    Mavsdk::Configuration _configuration{Mavsdk::Configuration::UsageType::GroundStation};
+    Mavsdk::Configuration _configuration{Mavsdk::Configuration::UsageType::CompanionComputer};
     bool _is_single_system{false};
 
     struct UserCallback {
