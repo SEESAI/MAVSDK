@@ -4,3 +4,6 @@
 [submodule "gtest"]
 	path = src/third_party/gtest
 	url = https://github.com/google/googletest
+[submodule "proto"]
+	path = proto
+	url = git@github.com:SEESAI/MAVSDK-Proto.git
