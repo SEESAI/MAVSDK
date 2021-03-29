@@ -608,6 +608,7 @@ public:
          */
         enum class MavFrame {
             Undef = 0, /**< @brief Frame is undefined.. */
+            LocalNed = 1, /**< @brief Local coordinate frame, Z-down (x: North, y: East, z: Down). */
             BodyNed = 8, /**< @brief Setpoint in body NED frame. This makes sense if all position
                         control is externalized - e.g. useful to command 2 m/s^2 acceleration to the
                         right.. */

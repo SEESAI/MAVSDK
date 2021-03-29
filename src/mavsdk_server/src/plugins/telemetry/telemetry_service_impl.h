@@ -779,6 +779,8 @@ public:
             // FALLTHROUGH
             case mavsdk::Telemetry::Odometry::MavFrame::Undef:
                 return rpc::telemetry::Odometry_MavFrame_MAV_FRAME_UNDEF;
+            case mavsdk::Telemetry::Odometry::MavFrame::LocalNed:
+                return rpc::telemetry::Odometry_MavFrame_MAV_FRAME_LOCAL_NED;
             case mavsdk::Telemetry::Odometry::MavFrame::BodyNed:
                 return rpc::telemetry::Odometry_MavFrame_MAV_FRAME_BODY_NED;
             case mavsdk::Telemetry::Odometry::MavFrame::BodyFrd:
@@ -799,6 +801,8 @@ public:
             // FALLTHROUGH
             case rpc::telemetry::Odometry_MavFrame_MAV_FRAME_UNDEF:
                 return mavsdk::Telemetry::Odometry::MavFrame::Undef;
+            case rpc::telemetry::Odometry_MavFrame_MAV_FRAME_LOCAL_NED:
+                return mavsdk::Telemetry::Odometry::MavFrame::LocalNed;
             case rpc::telemetry::Odometry_MavFrame_MAV_FRAME_BODY_NED:
                 return mavsdk::Telemetry::Odometry::MavFrame::BodyNed;
             case rpc::telemetry::Odometry_MavFrame_MAV_FRAME_BODY_FRD:

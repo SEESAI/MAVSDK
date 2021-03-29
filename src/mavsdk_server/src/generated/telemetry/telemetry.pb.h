@@ -618,6 +618,7 @@ namespace telemetry {
 
 enum Odometry_MavFrame : int {
   Odometry_MavFrame_MAV_FRAME_UNDEF = 0,
+  Odometry_MavFrame_MAV_FRAME_LOCAL_NED = 1,
   Odometry_MavFrame_MAV_FRAME_BODY_NED = 8,
   Odometry_MavFrame_MAV_FRAME_BODY_FRD = 12,
   Odometry_MavFrame_MAV_FRAME_VISION_NED = 16,
@@ -18434,6 +18435,8 @@ class Odometry PROTOBUF_FINAL :
   typedef Odometry_MavFrame MavFrame;
   static constexpr MavFrame MAV_FRAME_UNDEF =
     Odometry_MavFrame_MAV_FRAME_UNDEF;
+  static constexpr MavFrame MAV_FRAME_LOCAL_NED =
+    Odometry_MavFrame_MAV_FRAME_LOCAL_NED;
   static constexpr MavFrame MAV_FRAME_BODY_NED =
     Odometry_MavFrame_MAV_FRAME_BODY_NED;
   static constexpr MavFrame MAV_FRAME_BODY_FRD =
