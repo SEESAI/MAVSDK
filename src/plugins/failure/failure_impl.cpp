@@ -23,37 +23,39 @@ void FailureImpl::deinit() {}
 
 void FailureImpl::enable()
 {
-    constexpr auto param_name = "SYS_FAILURE_EN";
+    if (_parent->has_autopilot()) {
+        constexpr auto param_name = "SYS_FAILURE_EN";
 
-    _parent->get_param_int_async(
-        param_name,
-        [this](MAVLinkParameters::Result result, int32_t value) {
-            if (result == MAVLinkParameters::Result::Success) {
-                if (value == 1) {
-                    _enabled = EnabledState::Enabled;
-                } else if (value == 0) {
-                    _enabled = EnabledState::Disabled;
-                } else {
-                    _enabled = EnabledState::Unknown;
-                }
-            } else {
-                _enabled = EnabledState::Unknown;
-            }
-        },
-        this);
+        _parent->get_param_int_async(
+                param_name,
+                [this](MAVLinkParameters::Result result, int32_t value) {
+                    if (result == MAVLinkParameters::Result::Success) {
+                        if (value == 1) {
+                            _enabled = EnabledState::Enabled;
+                        } else if (value == 0) {
+                            _enabled = EnabledState::Disabled;
+                        } else {
+                            _enabled = EnabledState::Unknown;
+                        }
+                    } else {
+                        _enabled = EnabledState::Unknown;
+                    }
+                },
+                this);
 
-    _parent->subscribe_param_int(
-        param_name,
-        [this](int value) {
-            if (value == 1) {
-                _enabled = EnabledState::Enabled;
-            } else if (value == 0) {
-                _enabled = EnabledState::Disabled;
-            } else {
-                _enabled = EnabledState::Unknown;
-            }
-        },
-        this);
+        _parent->subscribe_param_int(
+                param_name,
+                [this](int value) {
+                    if (value == 1) {
+                        _enabled = EnabledState::Enabled;
+                    } else if (value == 0) {
+                        _enabled = EnabledState::Disabled;
+                    } else {
+                        _enabled = EnabledState::Unknown;
+                    }
+                },
+                this);
+    }
 }
 
 void FailureImpl::disable()
