@@ -43,7 +43,7 @@ void FollowMeImpl::deinit()
 
 void FollowMeImpl::enable()
 {
-    if (_parent->has_autopilot()) {
+    if (_parent->is_standalone()) {
         _parent->get_param_float_async(
                 "NAV_MIN_FT_HT",
                 [this](MAVLinkParameters::Result result, float value) {

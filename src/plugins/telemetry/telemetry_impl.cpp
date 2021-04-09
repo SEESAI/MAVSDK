@@ -159,7 +159,7 @@ void TelemetryImpl::enable()
     // FIXME: The calibration check should eventually be better than this.
     //        For now, we just do the same as QGC does.
 
-    if (_parent->has_autopilot()) {
+    if (_parent->is_standalone()) {
         _parent->get_param_int_async(
             std::string("CAL_GYRO0_ID"),
             std::bind(

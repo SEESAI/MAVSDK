@@ -23,7 +23,7 @@ void FailureImpl::deinit() {}
 
 void FailureImpl::enable()
 {
-    if (_parent->has_autopilot()) {
+    if (_parent->is_standalone()) {
         constexpr auto param_name = "SYS_FAILURE_EN";
 
         _parent->get_param_int_async(

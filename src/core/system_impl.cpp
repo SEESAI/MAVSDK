@@ -455,11 +455,13 @@ void SystemImpl::send_autopilot_version_request()
     // We don't care about an answer, we mostly care about receiving AUTOPILOT_VERSION.
     MavlinkCommandSender::CommandLong command{};
 
-    command.command = MAV_CMD_REQUEST_AUTOPILOT_CAPABILITIES;
-    command.params.param1 = 1.0f;
-    command.target_component_id = get_autopilot_id();
+    if (is_standalone()) {
+        command.command = MAV_CMD_REQUEST_AUTOPILOT_CAPABILITIES;
+        command.params.param1 = 1.0f;
+        command.target_component_id = get_autopilot_id();
 
-    send_command_async(command, nullptr);
+        send_command_async(command, nullptr);
+    }
 }
 
 void SystemImpl::send_flight_information_request()
