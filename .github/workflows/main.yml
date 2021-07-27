@@ -98,6 +98,7 @@ jobs:
   ubuntu20-proto-check:
     name: ubuntu-20.04 (proto check)
     runs-on: ubuntu-20.04
+    if: false  # turning off - not relevant for our use (Dominik/William)
     steps:
       - uses: actions/checkout@v2
         with:
@@ -143,6 +144,7 @@ jobs:
   deb-package:
     name: ${{ matrix.container_name }} (package, non-mavsdk_server)
     runs-on: ubuntu-18.04
+    if: false  # turning off - not relevant for our use (Dominik/William)    
     container: mavsdk/mavsdk-${{ matrix.container_name }}
     strategy:
       matrix:
@@ -490,6 +492,7 @@ jobs:
   Windows:
     name: Windows
     runs-on: windows-latest
+    if: false  # turning off - not relevant for our use (Dominik/William)    
     steps:
       - uses: actions/checkout@v2
         with:
@@ -537,6 +540,7 @@ jobs:
   px4-sitl-older:
     name: PX4 SITL ${{ matrix.px4_version }} (ubuntu-18.04)
     runs-on: ubuntu-18.04
+    if: false  # turning off - not relevant for our use (Dominik/William)    
     container: mavsdk/mavsdk-ubuntu-18.04-px4-sitl-${{ matrix.px4_version }}
     strategy:
       matrix:
@@ -551,6 +555,7 @@ jobs:
   px4-sitl-newer:
     name: PX4 SITL ${{ matrix.px4_version }} (ubuntu-20.04)
     runs-on: ubuntu-18.04
+    if: false  # turning off - not relevant for our use (Dominik/William)    
     container: mavsdk/mavsdk-ubuntu-20.04-px4-sitl-${{ matrix.px4_version }}
     strategy:
       matrix:

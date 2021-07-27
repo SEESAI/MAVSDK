@@ -136,6 +136,13 @@ public:
      */
     const System& operator=(const System&) = delete;
 
+    /**
+     * @brief Computes time now on connected autopilot. Needs timesync enabled to work correctly.
+     *
+     * @return Time since epoch on autopilot.
+     */
+    uint64_t auto_pilot_time() const;
+
 private:
     std::shared_ptr<SystemImpl> system_impl() { return _system_impl; };
 

@@ -66,6 +66,14 @@ void TelemetryImpl::init()
         MAVLINK_MSG_ID_GPS_RAW_INT, std::bind(&TelemetryImpl::process_gps_raw_int, this, _1), this);
 
     _parent->register_mavlink_message_handler(
+        MAVLINK_MSG_ID_GPS2_RAW, std::bind(&TelemetryImpl::process_gps_2_raw, this, _1), this);
+
+    _parent->register_mavlink_message_handler(
+        MAVLINK_MSG_ID_GPS_RTCM_DATA,
+        std::bind(&TelemetryImpl::process_gps_rtcm_data, this, _1),
+        this);
+
+    _parent->register_mavlink_message_handler(
         MAVLINK_MSG_ID_EXTENDED_SYS_STATE,
         std::bind(&TelemetryImpl::process_extended_sys_state, this, _1),
         this);
@@ -76,6 +84,11 @@ void TelemetryImpl::init()
     _parent->register_mavlink_message_handler(
         MAVLINK_MSG_ID_BATTERY_STATUS,
         std::bind(&TelemetryImpl::process_battery_status, this, _1),
+        this);
+
+    _parent->register_mavlink_message_handler(
+        MAVLINK_MSG_ID_RADIO_STATUS,
+        std::bind(&TelemetryImpl::process_radio_status, this, _1),
         this);
 
     _parent->register_mavlink_message_handler(
@@ -92,6 +105,11 @@ void TelemetryImpl::init()
     _parent->register_mavlink_message_handler(
         MAVLINK_MSG_ID_ACTUATOR_OUTPUT_STATUS,
         std::bind(&TelemetryImpl::process_actuator_output_status, this, _1),
+        this);
+
+    _parent->register_mavlink_message_handler(
+        MAVLINK_MSG_ID_SERVO_OUTPUT_RAW,
+        std::bind(&TelemetryImpl::process_servo_output_raw, this, _1),
         this);
 
     _parent->register_mavlink_message_handler(
@@ -297,10 +315,22 @@ Telemetry::Result TelemetryImpl::set_rate_gps_info(double rate_hz)
         _parent->set_msg_rate(MAVLINK_MSG_ID_GPS_RAW_INT, rate_hz));
 }
 
+Telemetry::Result TelemetryImpl::set_rate_gps_2_info(double rate_hz)
+{
+    return telemetry_result_from_command_result(
+        _parent->set_msg_rate(MAVLINK_MSG_ID_GPS2_RAW, rate_hz));
+}
+
 Telemetry::Result TelemetryImpl::set_rate_battery(double rate_hz)
 {
     return telemetry_result_from_command_result(
         _parent->set_msg_rate(MAVLINK_MSG_ID_SYS_STATUS, rate_hz));
+}
+
+Telemetry::Result TelemetryImpl::set_rate_battery_status(double rate_hz)
+{
+    return telemetry_result_from_command_result(
+        _parent->set_msg_rate(MAVLINK_MSG_ID_BATTERY_STATUS, rate_hz));
 }
 
 Telemetry::Result TelemetryImpl::set_rate_rc_status(double rate_hz)
@@ -468,6 +498,15 @@ void TelemetryImpl::set_rate_battery_async(double rate_hz, Telemetry::ResultCall
 {
     _parent->set_msg_rate_async(
         MAVLINK_MSG_ID_SYS_STATUS,
+        rate_hz,
+        std::bind(&TelemetryImpl::command_result_callback, std::placeholders::_1, callback));
+}
+
+void TelemetryImpl::set_rate_battery_status_async(
+    double rate_hz, Telemetry::ResultCallback callback)
+{
+    _parent->set_msg_rate_async(
+        MAVLINK_MSG_ID_BATTERY_STATUS,
         rate_hz,
         std::bind(&TelemetryImpl::command_result_callback, std::placeholders::_1, callback));
 }
@@ -801,6 +840,8 @@ void TelemetryImpl::process_imu_reading_ned(const mavlink_message_t& message)
     new_imu.magnetic_field_frd.forward_gauss = highres_imu.xmag;
     new_imu.magnetic_field_frd.right_gauss = highres_imu.ymag;
     new_imu.magnetic_field_frd.down_gauss = highres_imu.zmag;
+    new_imu.abs_pressure = highres_imu.abs_pressure;
+    new_imu.pressure_alt = highres_imu.pressure_alt;
     new_imu.temperature_degc = highres_imu.temperature;
     new_imu.timestamp_us = highres_imu.time_usec;
 
@@ -949,6 +990,102 @@ void TelemetryImpl::process_gps_raw_int(const mavlink_message_t& message)
     _parent->refresh_timeout_handler(_gps_raw_timeout_cookie);
 }
 
+void TelemetryImpl::process_gps_2_raw(const mavlink_message_t& message)
+{
+    mavlink_gps2_raw_t gps_2_raw;
+    mavlink_msg_gps2_raw_decode(&message, &gps_2_raw);
+
+    Telemetry::FixType fix_2_type;
+    switch (gps_2_raw.fix_type) {
+        case 0:
+            fix_2_type = Telemetry::FixType::NoGps;
+            break;
+        case 1:
+            fix_2_type = Telemetry::FixType::NoFix;
+            break;
+        case 2:
+            fix_2_type = Telemetry::FixType::Fix2D;
+            break;
+        case 3:
+            fix_2_type = Telemetry::FixType::Fix3D;
+            break;
+        case 4:
+            fix_2_type = Telemetry::FixType::FixDgps;
+            break;
+        case 5:
+            fix_2_type = Telemetry::FixType::RtkFloat;
+            break;
+        case 6:
+            fix_2_type = Telemetry::FixType::RtkFixed;
+            break;
+
+        default:
+            LogErr() << "Received unknown GPS fix type!";
+            fix_2_type = Telemetry::FixType::NoGps;
+            break;
+    }
+
+    Telemetry::GpsInfo new_gps_2_info;
+    new_gps_2_info.num_satellites = gps_2_raw.satellites_visible;
+    new_gps_2_info.fix_type = fix_2_type;
+    set_gps_2_info(new_gps_2_info);
+
+    Telemetry::RawGps raw_gps_2_info;
+    raw_gps_2_info.timestamp_us = gps_2_raw.time_usec;
+    raw_gps_2_info.latitude_deg = gps_2_raw.lat * 1e-7;
+    raw_gps_2_info.longitude_deg = gps_2_raw.lon * 1e-7;
+    raw_gps_2_info.absolute_altitude_m = gps_2_raw.alt * 1e-3;
+    raw_gps_2_info.hdop = static_cast<float>(gps_2_raw.eph) * 1e-2f;
+    raw_gps_2_info.vdop = static_cast<float>(gps_2_raw.epv) * 1e-2f;
+    raw_gps_2_info.velocity_m_s = static_cast<float>(gps_2_raw.vel) * 1e-2f;
+    raw_gps_2_info.cog_deg = static_cast<float>(gps_2_raw.cog) * 1e-2f;
+    raw_gps_2_info.altitude_ellipsoid_m = static_cast<float>(gps_2_raw.alt_ellipsoid) * 1e-3f;
+    raw_gps_2_info.horizontal_uncertainty_m = static_cast<float>(gps_2_raw.h_acc) * 1e-3f;
+    raw_gps_2_info.vertical_uncertainty_m = static_cast<float>(gps_2_raw.v_acc) * 1e-3f;
+    raw_gps_2_info.velocity_uncertainty_m_s = static_cast<float>(gps_2_raw.vel_acc) * 1e-3f;
+    raw_gps_2_info.heading_uncertainty_deg = static_cast<float>(gps_2_raw.hdg_acc) * 1e-5f;
+    raw_gps_2_info.yaw_deg = static_cast<float>(gps_2_raw.yaw) * 1e-2f;
+    set_raw_gps_2(raw_gps_2_info);
+
+    {
+        std::lock_guard<std::mutex> lock(_subscription_mutex);
+        if (_gps_2_info_subscription) {
+            auto callback = _gps_2_info_subscription;
+            auto arg = gps_2_info();
+            _parent->call_user_callback([callback, arg]() { callback(arg); });
+        }
+        if (_raw_gps_2_subscription) {
+            auto callback = _raw_gps_2_subscription;
+            auto arg = raw_gps_2();
+            _parent->call_user_callback([callback, arg]() { callback(arg); });
+        }
+    }
+}
+
+void TelemetryImpl::process_gps_rtcm_data(const mavlink_message_t& message)
+{
+    mavlink_gps_rtcm_data_t rtcm_gps_data;
+    mavlink_msg_gps_rtcm_data_decode(&message, &rtcm_gps_data);
+
+    Telemetry::GpsRtcmData new_gps_rtcm_data;
+    new_gps_rtcm_data.flags = rtcm_gps_data.flags;
+    new_gps_rtcm_data.len = rtcm_gps_data.len;
+
+    const unsigned rtcm_data_size = sizeof(rtcm_gps_data.data) / sizeof(rtcm_gps_data.data[0]);
+    for (std::size_t i = 0; i < rtcm_data_size; ++i) {
+        new_gps_rtcm_data.data.push_back(rtcm_gps_data.data[i]);
+    }
+
+    set_gps_rtcm_data(new_gps_rtcm_data);
+
+    std::lock_guard<std::mutex> lock(_subscription_mutex);
+    if (_gps_rtcm_data_subscription) {
+        auto callback = _gps_rtcm_data_subscription;
+        auto arg = gps_rtcm_data();
+        _parent->call_user_callback([callback, arg]() { callback(arg); });
+    }
+}
+
 void TelemetryImpl::process_ground_truth(const mavlink_message_t& message)
 {
     mavlink_hil_state_quaternion_t hil_state_quaternion;
@@ -1029,8 +1166,10 @@ void TelemetryImpl::process_sys_status(const mavlink_message_t& message)
     if (!_has_bat_status) {
         Telemetry::Battery new_battery;
         new_battery.voltage_v = sys_status.voltage_battery * 1e-3f;
+        new_battery.current_a = sys_status.current_battery * 1e-2f;
         // FIXME: it is strange calling it percent when the range goes from 0 to 1.
         new_battery.remaining_percent = sys_status.battery_remaining * 1e-2f;
+        new_battery.mah_consumed = -1.0f;
 
         set_battery(new_battery);
 
@@ -1066,6 +1205,27 @@ void TelemetryImpl::process_sys_status(const mavlink_message_t& message)
         auto arg = health_all_ok();
         _parent->call_user_callback([callback, arg]() { callback(arg); });
     }
+
+    Telemetry::VehicleStatus new_vehicle_status;
+    new_vehicle_status.manual_control_signal_loss =
+        sys_status.errors_count1; // No manual_control setpoint messages arriving (can come from RC
+                                  // or MAV)
+    new_vehicle_status.data_link_loss = sys_status.errors_count2; // No messages from GCS received
+    new_vehicle_status.rc_signal_loss = sys_status.errors_count3; // No messages from RC TX received
+    new_vehicle_status.manual_contol_data_source =
+        sys_status
+            .errors_count4; // Indicates whether the drone is controlled by RC (1) or MAVLink (2-5)
+
+    set_vehicle_status(new_vehicle_status);
+
+    {
+        std::lock_guard<std::mutex> lock(_subscription_mutex);
+        if (_vehicle_status_subscription) {
+            auto callback = _vehicle_status_subscription;
+            auto arg = vehicle_status();
+            _parent->call_user_callback([callback, arg]() { callback(arg); });
+        }
+    }
 }
 
 void TelemetryImpl::process_battery_status(const mavlink_message_t& message)
@@ -1073,23 +1233,75 @@ void TelemetryImpl::process_battery_status(const mavlink_message_t& message)
     mavlink_battery_status_t bat_status;
     mavlink_msg_battery_status_decode(&message, &bat_status);
 
-    _has_bat_status = true;
+    if (!_has_bat_status) {
+        _has_bat_status = false;
 
-    Telemetry::Battery new_battery;
-    new_battery.id = bat_status.id;
-    new_battery.voltage_v = bat_status.voltages[0] * 1e-3f;
-    // FIXME: it is strange calling it percent when the range goes from 0 to 1.
-    new_battery.remaining_percent = bat_status.battery_remaining * 1e-2f;
+        Telemetry::BatteryStatus new_battery_status;
+        new_battery_status.mah_consumed = float(bat_status.current_consumed);
+        set_battery_status(new_battery_status);
 
-    set_battery(new_battery);
-
-    {
         std::lock_guard<std::mutex> lock(_subscription_mutex);
-        if (_battery_subscription) {
-            auto callback = _battery_subscription;
-            auto arg = battery();
+        if (_battery_status_subscription) {
+            auto callback = _battery_status_subscription;
+            auto arg = battery_status();
             _parent->call_user_callback([callback, arg]() { callback(arg); });
         }
+
+    } else {
+        _has_bat_status = true;
+
+        Telemetry::Battery new_battery;
+        new_battery.id = bat_status.id;
+        new_battery.voltage_v = bat_status.voltages[0] * 1e-3f;
+        new_battery.current_a = bat_status.current_battery * 1e-2f;
+        // FIXME: it is strange calling it percent when the range goes from 0 to 1.
+        new_battery.remaining_percent = bat_status.battery_remaining * 1e-2f;
+        new_battery.mah_consumed = float(bat_status.current_consumed);
+
+        {
+            std::lock_guard<std::mutex> lock(_subscription_mutex);
+            if (_battery_subscription) {
+                auto callback = _battery_subscription;
+                auto arg = battery();
+                _parent->call_user_callback([callback, arg]() { callback(arg); });
+            }
+        }
+
+        Telemetry::BatteryStatus new_battery_status;
+        new_battery_status.mah_consumed = float(bat_status.current_consumed);
+
+        {
+            std::lock_guard<std::mutex> lock(_subscription_mutex);
+            if (_battery_status_subscription) {
+                auto callback = _battery_status_subscription;
+                auto arg = battery_status();
+                _parent->call_user_callback([callback, arg]() { callback(arg); });
+            }
+        }
+    }
+}
+
+void TelemetryImpl::process_radio_status(const mavlink_message_t& message)
+{
+    mavlink_radio_status_t radio_stats;
+    mavlink_msg_radio_status_decode(&message, &radio_stats);
+
+    Telemetry::RadioStatus new_radio_status;
+    new_radio_status.local_rssi = radio_stats.rssi;
+    new_radio_status.remote_rssi = radio_stats.remrssi;
+    new_radio_status.remaining_free_txbuf = float(radio_stats.txbuf);
+    new_radio_status.local_noise = radio_stats.noise;
+    new_radio_status.remote_noise = radio_stats.remnoise;
+    new_radio_status.rxerrors_count = radio_stats.rxerrors;
+    new_radio_status.fixed_count = radio_stats.fixed;
+
+    set_radio_status(new_radio_status);
+
+    std::lock_guard<std::mutex> lock(_subscription_mutex);
+    if (_radio_status_subscription) {
+        auto callback = _radio_status_subscription;
+        auto arg = radio_status();
+        _parent->call_user_callback([callback, arg]() { callback(arg); });
     }
 }
 
@@ -1108,6 +1320,12 @@ void TelemetryImpl::process_heartbeat(const mavlink_message_t& message)
     if (_armed_subscription) {
         auto callback = _armed_subscription;
         auto arg = armed();
+        _parent->call_user_callback([callback, arg]() { callback(arg); });
+    }
+
+    if (_mode_info_subscription) {
+        auto callback = _mode_info_subscription;
+        auto arg = mode_info();
         _parent->call_user_callback([callback, arg]() { callback(arg); });
     }
 
@@ -1266,6 +1484,46 @@ void TelemetryImpl::process_actuator_output_status(const mavlink_message_t& mess
     if (_actuator_output_status_subscription) {
         auto callback = _actuator_output_status_subscription;
         auto arg = actuator_output_status();
+        _parent->call_user_callback([callback, arg]() { callback(arg); });
+    }
+}
+
+void TelemetryImpl::process_servo_output_raw(const mavlink_message_t& message)
+{
+    std::array<uint16_t, 16> servos;
+
+    uint8_t port = mavlink_msg_servo_output_raw_get_port(&message);
+
+    if (port != 0) {
+        return;
+    }
+
+    servos[0] = mavlink_msg_servo_output_raw_get_servo1_raw(&message);
+    servos[1] = mavlink_msg_servo_output_raw_get_servo2_raw(&message);
+    servos[2] = mavlink_msg_servo_output_raw_get_servo3_raw(&message);
+    servos[3] = mavlink_msg_servo_output_raw_get_servo4_raw(&message);
+    servos[4] = mavlink_msg_servo_output_raw_get_servo5_raw(&message);
+    servos[5] = mavlink_msg_servo_output_raw_get_servo6_raw(&message);
+    servos[6] = mavlink_msg_servo_output_raw_get_servo7_raw(&message);
+    servos[7] = mavlink_msg_servo_output_raw_get_servo8_raw(&message);
+
+    servos[8] = mavlink_msg_servo_output_raw_get_servo9_raw(&message);
+    servos[9] = mavlink_msg_servo_output_raw_get_servo10_raw(&message);
+    servos[10] = mavlink_msg_servo_output_raw_get_servo11_raw(&message);
+    servos[11] = mavlink_msg_servo_output_raw_get_servo12_raw(&message);
+    servos[12] = mavlink_msg_servo_output_raw_get_servo13_raw(&message);
+    servos[13] = mavlink_msg_servo_output_raw_get_servo14_raw(&message);
+    servos[14] = mavlink_msg_servo_output_raw_get_servo15_raw(&message);
+    servos[15] = mavlink_msg_servo_output_raw_get_servo16_raw(&message);
+
+    uint32_t timestamp = mavlink_msg_servo_output_raw_get_time_usec(&message);
+
+    set_servo_output_raw(servos, timestamp);
+
+    std::lock_guard<std::mutex> lock(_subscription_mutex);
+    if (_servo_output_raw_subscription) {
+        auto callback = _servo_output_raw_subscription;
+        auto arg = servo_output_raw();
         _parent->call_user_callback([callback, arg]() { callback(arg); });
     }
 }
@@ -1687,10 +1945,22 @@ Telemetry::GpsInfo TelemetryImpl::gps_info() const
     return _gps_info;
 }
 
+Telemetry::GpsInfo TelemetryImpl::gps_2_info() const
+{
+    std::lock_guard<std::mutex> lock(_gps_2_info_mutex);
+    return _gps_2_info;
+}
+
 void TelemetryImpl::set_gps_info(Telemetry::GpsInfo gps_info)
 {
     std::lock_guard<std::mutex> lock(_gps_info_mutex);
     _gps_info = gps_info;
+}
+
+void TelemetryImpl::set_gps_2_info(Telemetry::GpsInfo gps_2_info)
+{
+    std::lock_guard<std::mutex> lock(_gps_2_info_mutex);
+    _gps_2_info = gps_2_info;
 }
 
 Telemetry::RawGps TelemetryImpl::raw_gps() const
@@ -1699,10 +1969,34 @@ Telemetry::RawGps TelemetryImpl::raw_gps() const
     return _raw_gps;
 }
 
+Telemetry::RawGps TelemetryImpl::raw_gps_2() const
+{
+    std::lock_guard<std::mutex> lock(_raw_gps_2_mutex);
+    return _raw_gps_2;
+}
+
 void TelemetryImpl::set_raw_gps(Telemetry::RawGps raw_gps)
 {
     std::lock_guard<std::mutex> lock(_raw_gps_mutex);
     _raw_gps = raw_gps;
+}
+
+void TelemetryImpl::set_raw_gps_2(Telemetry::RawGps raw_gps_2)
+{
+    std::lock_guard<std::mutex> lock(_raw_gps_2_mutex);
+    _raw_gps_2 = raw_gps_2;
+}
+
+Telemetry::GpsRtcmData TelemetryImpl::gps_rtcm_data() const
+{
+    std::lock_guard<std::mutex> lock(_gps_rtcm_data_mutex);
+    return _gps_rtcm_data;
+}
+
+void TelemetryImpl::set_gps_rtcm_data(Telemetry::GpsRtcmData gps_rtcm_data)
+{
+    std::lock_guard<std::mutex> lock(_gps_rtcm_data_mutex);
+    _gps_rtcm_data = gps_rtcm_data;
 }
 
 Telemetry::Battery TelemetryImpl::battery() const
@@ -1715,6 +2009,50 @@ void TelemetryImpl::set_battery(Telemetry::Battery battery)
 {
     std::lock_guard<std::mutex> lock(_battery_mutex);
     _battery = battery;
+}
+
+Telemetry::BatteryStatus TelemetryImpl::battery_status() const
+{
+    std::lock_guard<std::mutex> lock(_battery_status_mutex);
+    return _battery_status;
+}
+
+void TelemetryImpl::set_battery_status(Telemetry::BatteryStatus battery_status)
+{
+    std::lock_guard<std::mutex> lock(_battery_status_mutex);
+    _battery_status = battery_status;
+}
+
+Telemetry::VehicleStatus TelemetryImpl::vehicle_status() const
+{
+    std::lock_guard<std::mutex> lock(_vehicle_status_mutex);
+    return _vehicle_status;
+}
+
+void TelemetryImpl::set_vehicle_status(Telemetry::VehicleStatus vehicle_status)
+{
+    std::lock_guard<std::mutex> lock(_vehicle_status_mutex);
+    _vehicle_status = vehicle_status;
+}
+
+Telemetry::RadioStatus TelemetryImpl::radio_status() const
+{
+    std::lock_guard<std::mutex> lock(_radio_status_mutex);
+    return _radio_status;
+}
+
+void TelemetryImpl::set_radio_status(Telemetry::RadioStatus radio_status)
+{
+    std::lock_guard<std::mutex> lock(_radio_status_mutex);
+    _radio_status = radio_status;
+}
+
+Telemetry::ModeInfo TelemetryImpl::mode_info() const
+{
+    Telemetry::ModeInfo mode_info;
+    mode_info.base_mode = _parent->get_base_mode();
+    mode_info.custom_mode = _parent->get_custom_mode();
+    return mode_info;
 }
 
 Telemetry::FlightMode TelemetryImpl::flight_mode() const
@@ -1762,6 +2100,12 @@ Telemetry::ActuatorOutputStatus TelemetryImpl::actuator_output_status() const
 {
     std::lock_guard<std::mutex> lock(_actuator_output_status_mutex);
     return _actuator_output_status;
+}
+
+Telemetry::ServoOutputRaw TelemetryImpl::servo_output_raw() const
+{
+    std::lock_guard<std::mutex> lock(_servo_output_raw_mutex);
+    return _servo_output_raw;
 }
 
 Telemetry::Odometry TelemetryImpl::odometry() const
@@ -1871,6 +2215,14 @@ void TelemetryImpl::set_actuator_output_status(uint32_t active, const std::vecto
     std::lock_guard<std::mutex> lock(_actuator_output_status_mutex);
     _actuator_output_status.active = active;
     _actuator_output_status.actuator = actuators;
+}
+
+void TelemetryImpl::set_servo_output_raw(
+    const std::array<uint16_t, 16>& servos, uint64_t timestamp_us)
+{
+    std::lock_guard<std::mutex> lock(_servo_output_raw_mutex);
+    std::copy(servos.begin(), servos.end(), _servo_output_raw.servo);
+    _servo_output_raw.timestamp_us = timestamp_us;
 }
 
 void TelemetryImpl::set_odometry(Telemetry::Odometry& odometry)
@@ -2002,16 +2354,58 @@ void TelemetryImpl::subscribe_gps_info(Telemetry::GpsInfoCallback& callback)
     _gps_info_subscription = callback;
 }
 
+void TelemetryImpl::subscribe_gps_2_info(Telemetry::Gps2InfoCallback& callback)
+{
+    std::lock_guard<std::mutex> lock(_subscription_mutex);
+    _gps_2_info_subscription = callback;
+}
+
 void TelemetryImpl::subscribe_raw_gps(Telemetry::RawGpsCallback& callback)
 {
     std::lock_guard<std::mutex> lock(_subscription_mutex);
     _raw_gps_subscription = callback;
 }
 
+void TelemetryImpl::subscribe_raw_gps_2(Telemetry::RawGps2Callback& callback)
+{
+    std::lock_guard<std::mutex> lock(_subscription_mutex);
+    _raw_gps_2_subscription = callback;
+}
+
+void TelemetryImpl::subscribe_gps_rtcm_data(Telemetry::GpsRtcmDataCallback& callback)
+{
+    std::lock_guard<std::mutex> lock(_subscription_mutex);
+    _gps_rtcm_data_subscription = callback;
+}
+
 void TelemetryImpl::subscribe_battery(Telemetry::BatteryCallback& callback)
 {
     std::lock_guard<std::mutex> lock(_subscription_mutex);
     _battery_subscription = callback;
+}
+
+void TelemetryImpl::subscribe_battery_status(Telemetry::BatteryStatusCallback& callback)
+{
+    std::lock_guard<std::mutex> lock(_subscription_mutex);
+    _battery_status_subscription = callback;
+}
+
+void TelemetryImpl::subscribe_vehicle_status(Telemetry::VehicleStatusCallback& callback)
+{
+    std::lock_guard<std::mutex> lock(_subscription_mutex);
+    _vehicle_status_subscription = callback;
+}
+
+void TelemetryImpl::subscribe_radio_status(Telemetry::RadioStatusCallback& callback)
+{
+    std::lock_guard<std::mutex> lock(_subscription_mutex);
+    _radio_status_subscription = callback;
+}
+
+void TelemetryImpl::subscribe_mode_info(Telemetry::ModeInfoCallback& callback)
+{
+    std::lock_guard<std::mutex> lock(_subscription_mutex);
+    _mode_info_subscription = callback;
 }
 
 void TelemetryImpl::subscribe_flight_mode(Telemetry::FlightModeCallback& callback)
@@ -2062,6 +2456,12 @@ void TelemetryImpl::subscribe_actuator_output_status(
 {
     std::lock_guard<std::mutex> lock(_subscription_mutex);
     _actuator_output_status_subscription = callback;
+}
+
+void TelemetryImpl::subscribe_servo_output_raw(Telemetry::ServoOutputRawCallback& callback)
+{
+    std::lock_guard<std::mutex> lock(_subscription_mutex);
+    _servo_output_raw_subscription = callback;
 }
 
 void TelemetryImpl::subscribe_odometry(Telemetry::OdometryCallback& callback)

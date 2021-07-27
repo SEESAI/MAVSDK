@@ -28,6 +28,9 @@ public:
         const std::string& file_path,
         LogFiles::DownloadLogFileCallback callback);
 
+    LogFiles::Result erase_all_log_files();
+    void erase_all_log_files_async(const LogFiles::ResultCallback callback);
+
 private:
     void request_end();
 
@@ -39,6 +42,7 @@ private:
 
     void check_part();
     void request_log_data(unsigned id, unsigned start, unsigned count);
+    void request_erase_all_logs();
     void data_timeout();
 
     bool is_directory(const std::string& path) const;

@@ -185,6 +185,9 @@ void SystemImpl::process_heartbeat(const mavlink_message_t& message)
         _armed = ((heartbeat.base_mode & MAV_MODE_FLAG_SAFETY_ARMED) ? true : false);
         _hitl_enabled = ((heartbeat.base_mode & MAV_MODE_FLAG_HIL_ENABLED) ? true : false);
 
+        _base_mode = heartbeat.base_mode;
+        _custom_mode = heartbeat.custom_mode;
+
         if (heartbeat.base_mode & MAV_MODE_FLAG_CUSTOM_MODE_ENABLED) {
             _flight_mode = to_flight_mode_from_custom_mode(heartbeat.custom_mode);
         }
@@ -894,6 +897,16 @@ SystemImpl::make_command_flight_mode(FlightMode flight_mode, uint8_t component_i
     command.target_component_id = component_id;
 
     return std::make_pair<>(MavlinkCommandSender::Result::Success, command);
+}
+
+uint8_t SystemImpl::get_base_mode() const
+{
+    return _base_mode;
+}
+
+uint32_t SystemImpl::get_custom_mode() const
+{
+    return _custom_mode;
 }
 
 SystemImpl::FlightMode SystemImpl::get_flight_mode() const

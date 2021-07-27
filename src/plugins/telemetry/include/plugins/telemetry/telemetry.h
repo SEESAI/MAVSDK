@@ -328,13 +328,38 @@ public:
     friend std::ostream& operator<<(std::ostream& str, Telemetry::RawGps const& raw_gps);
 
     /**
+     * @brief GPS RTCM data type.
+     */
+    struct GpsRtcmData {
+        int32_t flags{0}; /**< @brief Fragment ID of RTCM data */
+        int32_t len{0}; /**< @brief RTCM data length */
+        std::vector<int32_t> data{}; /**< @brief RTCM message */
+    };
+
+    /**
+     * @brief Equal operator to compare two `Telemetry::GpsRtcmData` objects.
+     *
+     * @return `true` if items are equal.
+     */
+    friend bool operator==(const Telemetry::GpsRtcmData& lhs, const Telemetry::GpsRtcmData& rhs);
+
+    /**
+     * @brief Stream operator to print information about a `Telemetry::GpsRtcmData`.
+     *
+     * @return A reference to the stream.
+     */
+    friend std::ostream& operator<<(std::ostream& str, Telemetry::GpsRtcmData const& gps_rtcm_data);
+
+    /**
      * @brief Battery type.
      */
     struct Battery {
         uint32_t id{0}; /**< @brief Battery ID, for systems with multiple batteries */
         float voltage_v{float(NAN)}; /**< @brief Voltage in volts */
+        float current_a{float(NAN)}; /**< @brief Current in amps */
         float remaining_percent{
             float(NAN)}; /**< @brief Estimated battery remaining (range: 0.0 to 1.0) */
+        float mah_consumed{float(NAN)}; /**< @brief current consumed in mAh */
     };
 
     /**
@@ -350,6 +375,110 @@ public:
      * @return A reference to the stream.
      */
     friend std::ostream& operator<<(std::ostream& str, Telemetry::Battery const& battery);
+
+    /**
+     * @brief Battery status current type.
+     */
+    struct BatteryStatus {
+        float mah_consumed{float(NAN)}; /**< @brief current consumed in mAh */
+    };
+
+    /**
+     * @brief Equal operator to compare two `Telemetry::BatteryStatus` objects.
+     *
+     * @return `true` if items are equal.
+     */
+    friend bool
+    operator==(const Telemetry::BatteryStatus& lhs, const Telemetry::BatteryStatus& rhs);
+
+    /**
+     * @brief Stream operator to print information about a `Telemetry::BatteryStatus`.
+     *
+     * @return A reference to the stream.
+     */
+    friend std::ostream&
+    operator<<(std::ostream& str, Telemetry::BatteryStatus const& battery_status);
+
+    /**
+     * @brief Vehicle status type.
+     */
+    struct VehicleStatus {
+        bool manual_control_signal_loss{false}; /**< @brief True if manual control signal is loss */
+        bool data_link_loss{false}; /**< @brief True if the data link is loss */
+        bool rc_signal_loss{false}; /**< @brief True if RC signal is loss */
+        uint32_t manual_contol_data_source{
+            0}; /**< @brief Manual control source option, RC or MAVLink */
+    };
+
+    /**
+     * @brief Equal operator to compare two `Telemetry::VehicleStatus` objects.
+     *
+     * @return `true` if items are equal.
+     */
+    friend bool
+    operator==(const Telemetry::VehicleStatus& lhs, const Telemetry::VehicleStatus& rhs);
+
+    /**
+     * @brief Stream operator to print information about a `Telemetry::VehicleStatus`.
+     *
+     * @return A reference to the stream.
+     */
+    friend std::ostream&
+    operator<<(std::ostream& str, Telemetry::VehicleStatus const& vehicle_status);
+
+    /**
+     * @brief Radio status message type.
+     */
+    struct RadioStatus {
+        uint32_t local_rssi; /**< @brief Local (message sender) received signal strength indication
+                             in device-dependent units/scale. */
+        uint32_t remote_rssi; /**< @brief Remote (message receiver) signal strength indication in
+                              device-dependent units/scale. */
+        float remaining_free_txbuf; /**< @brief Remaining percentage of free transmitter buffer
+                                       space. */
+        uint32_t local_noise; /**< @brief Local background noise level. These are device dependent
+                                 RSSI values. */
+        uint32_t remote_noise; /**< @brief Remote background noise level. These are device dependent
+                                  RSSI values. */
+        uint32_t rxerrors_count; /**< @brief Count of radio packet receive errors (since boot). */
+        uint32_t fixed_count; /**< @brief Count of error corrected radio packets (since boot). */
+    };
+
+    /**
+     * @brief Equal operator to compare two `Telemetry::RadioStatus` objects.
+     *
+     * @return `true` if items are equal.
+     */
+    friend bool operator==(const Telemetry::RadioStatus& lhs, const Telemetry::RadioStatus& rhs);
+
+    /**
+     * @brief Stream operator to print information about a `Telemetry::RadioStatus`.
+     *
+     * @return A reference to the stream.
+     */
+    friend std::ostream& operator<<(std::ostream& str, Telemetry::RadioStatus const& radio_status);
+
+    /**
+     * @brief Mode info type.
+     */
+    struct ModeInfo {
+        uint32_t base_mode{0}; /**< @brief Base mode flags */
+        uint32_t custom_mode{0}; /**< @brief Custom mode (made up of main & sub mode) */
+    };
+
+    /**
+     * @brief Equal operator to compare two `Telemetry::ModeInfo` objects.
+     *
+     * @return `true` if items are equal.
+     */
+    friend bool operator==(const Telemetry::ModeInfo& lhs, const Telemetry::ModeInfo& rhs);
+
+    /**
+     * @brief Stream operator to print information about a `Telemetry::ModeInfo`.
+     *
+     * @return A reference to the stream.
+     */
+    friend std::ostream& operator<<(std::ostream& str, Telemetry::ModeInfo const& mode_info);
 
     /**
      * @brief Health type.
@@ -480,6 +609,22 @@ public:
     operator<<(std::ostream& str, Telemetry::ActuatorOutputStatus const& actuator_output_status);
 
     /**
+     * @brief Servo output raw type.
+     */
+    struct ServoOutputRaw {
+        uint64_t timestamp_us; /**<@brief timestamp nanoseconds */
+        uint16_t servo[16]; /**< @brief servo array */
+    };
+
+    /**
+     * @brief Equal operator to compare two `Telemetry::ServoOutputRaw` objects.
+     *
+     * @return `true` if items are equal.
+     */
+    friend bool
+    operator==(const Telemetry::ServoOutputRaw& lhs, const Telemetry::ServoOutputRaw& rhs);
+
+    /**
      * @brief Covariance type.
      *
      * Row-major representation of a 6x6 cross-covariance matrix
@@ -561,13 +706,17 @@ public:
          * @brief Mavlink frame id
          */
         enum class MavFrame {
-            Undef, /**< @brief Frame is undefined.. */
-            BodyNed, /**< @brief Setpoint in body NED frame. This makes sense if all position
+            Undef = 0, /**< @brief Frame is undefined.. */
+            LocalNed =
+                1, /**< @brief Local coordinate frame, Z-down (x: North, y: East, z: Down). */
+            BodyNed = 8, /**< @brief Setpoint in body NED frame. This makes sense if all position
                         control is externalized - e.g. useful to command 2 m/s^2 acceleration to the
                         right.. */
-            VisionNed, /**< @brief Odometry local coordinate frame of data given by a vision
+            BodyFrd = 12, /**< @brief Body fixed frame of reference, Z-down (x: forward, y: right,
+                             z: down).. */
+            VisionNed = 16, /**< @brief Odometry local coordinate frame of data given by a vision
                           estimation system, Z-down (x: north, y: east, z: down).. */
-            EstimNed, /**< @brief Odometry local coordinate frame of data given by an estimator
+            EstimNed = 18, /**< @brief Odometry local coordinate frame of data given by an estimator
                          running onboard the vehicle, Z-down (x: north, y: east, z: down).. */
         };
 
@@ -873,6 +1022,8 @@ public:
         AccelerationFrd acceleration_frd{}; /**< @brief Acceleration */
         AngularVelocityFrd angular_velocity_frd{}; /**< @brief Angular velocity */
         MagneticFieldFrd magnetic_field_frd{}; /**< @brief Magnetic field */
+        float abs_pressure{float(NAN)}; /**< @brief Absolute pressure */
+        float pressure_alt{float(NAN)}; /**< @brief Altitude pressure*/
         float temperature_degc{float(NAN)}; /**< @brief Temperature */
         uint64_t timestamp_us{}; /**< @brief Timestamp in microseconds */
     };
@@ -1152,11 +1303,29 @@ public:
     void subscribe_gps_info(GpsInfoCallback callback);
 
     /**
+     * @brief Callback type for subscribe_gps_2_info.
+     */
+
+    using Gps2InfoCallback = std::function<void(GpsInfo)>;
+
+    /**
+     * @brief Subscribe to 'GPS 2 info' updates.
+     */
+    void subscribe_gps_2_info(Gps2InfoCallback callback);
+
+    /**
      * @brief Poll for 'GpsInfo' (blocking).
      *
      * @return One GpsInfo update.
      */
     GpsInfo gps_info() const;
+
+    /**
+     * @brief Poll for 'Gps2Info' (blocking).
+     *
+     * @return One Gps2Info update.
+     */
+    GpsInfo gps_2_info() const;
 
     /**
      * @brief Callback type for subscribe_raw_gps.
@@ -1170,11 +1339,47 @@ public:
     void subscribe_raw_gps(RawGpsCallback callback);
 
     /**
+     * @brief Callback type for subscribe_raw_gps_2.
+     */
+
+    using RawGps2Callback = std::function<void(RawGps)>;
+
+    /**
+     * @brief Subscribe to 'Raw GPS 2' updates.
+     */
+    void subscribe_raw_gps_2(RawGps2Callback callback);
+
+    /**
      * @brief Poll for 'RawGps' (blocking).
      *
      * @return One RawGps update.
      */
     RawGps raw_gps() const;
+
+    /**
+     * @brief Poll for 'RawGps2' (blocking).
+     *
+     * @return One RawGps2 update.
+     */
+    RawGps raw_gps_2() const;
+
+    /**
+     * @brief Callback type for subscribe_gps_rtcm_data.
+     */
+
+    using GpsRtcmDataCallback = std::function<void(GpsRtcmData)>;
+
+    /**
+     * @brief Subscribe to 'GPS RTCM' updates.
+     */
+    void subscribe_gps_rtcm_data(GpsRtcmDataCallback callback);
+
+    /**
+     * @brief Poll for 'GpsRtcmData' (blocking).
+     *
+     * @return One GpsRtcmData update.
+     */
+    GpsRtcmData gps_rtcm_data() const;
 
     /**
      * @brief Callback type for subscribe_battery.
@@ -1195,6 +1400,60 @@ public:
     Battery battery() const;
 
     /**
+     * @brief Callback type for subscribe_battery_status.
+     */
+
+    using BatteryStatusCallback = std::function<void(BatteryStatus)>;
+
+    /**
+     * @brief Subscribe to 'battery_status' updates.
+     */
+    void subscribe_battery_status(BatteryStatusCallback callback);
+
+    /**
+     * @brief Poll for 'BatteryStatus' (blocking).
+     *
+     * @return One BatteryStatus update.
+     */
+    BatteryStatus battery_status() const;
+
+    /**
+     * @brief Callback type for subscribe_vehicle_status.
+     */
+
+    using VehicleStatusCallback = std::function<void(VehicleStatus)>;
+
+    /**
+     * @brief Subscribe to vehicle status updates.
+     */
+    void subscribe_vehicle_status(VehicleStatusCallback callback);
+
+    /**
+     * @brief Poll for 'VehicleStatus' (blocking).
+     *
+     * @return One VehicleStatus update.
+     */
+    VehicleStatus vehicle_status() const;
+
+    /**
+     * @brief Callback type for subscribe_radio_status.
+     */
+
+    using RadioStatusCallback = std::function<void(RadioStatus)>;
+
+    /**
+     * @brief Subscribe to radio status updates.
+     */
+    void subscribe_radio_status(RadioStatusCallback callback);
+
+    /**
+     * @brief Poll for 'RadioStatus' (blocking).
+     *
+     * @return One RadioStatus update.
+     */
+    RadioStatus radio_status() const;
+
+    /**
      * @brief Callback type for subscribe_flight_mode.
      */
 
@@ -1211,6 +1470,24 @@ public:
      * @return One FlightMode update.
      */
     FlightMode flight_mode() const;
+
+    /**
+     * @brief Callback type for subscribe_mode_info.
+     */
+
+    using ModeInfoCallback = std::function<void(ModeInfo)>;
+
+    /**
+     * @brief Subscribe to 'mode' updates.
+     */
+    void subscribe_mode_info(ModeInfoCallback callback);
+
+    /**
+     * @brief Poll for 'ModeInfo' (blocking).
+     *
+     * @return One ModeInfo update.
+     */
+    ModeInfo mode_info() const;
 
     /**
      * @brief Callback type for subscribe_health.
@@ -1301,6 +1578,24 @@ public:
      * @return One ActuatorOutputStatus update.
      */
     ActuatorOutputStatus actuator_output_status() const;
+
+    /**
+     * @brief Callback type for subscribe_servo_output_raw.
+     */
+
+    using ServoOutputRawCallback = std::function<void(ServoOutputRaw)>;
+
+    /**
+     * @brief Subscribe to 'servo output raw' updates.
+     */
+    void subscribe_servo_output_raw(ServoOutputRawCallback callback);
+
+    /**
+     * @brief Poll for 'ServoOutputRaw' (blocking).
+     *
+     * @return One ServoOutputRaw update.
+     */
+    ServoOutputRaw servo_output_raw() const;
 
     /**
      * @brief Callback type for subscribe_odometry.
@@ -1646,6 +1941,23 @@ public:
      * @return Result of request.
      */
     Result set_rate_battery(double rate_hz) const;
+
+    /**
+     * @brief Set rate to 'battery_status' updates.
+     *
+     * This function is non-blocking. See 'set_rate_battery_status' for the blocking counterpart.
+     */
+    void set_rate_battery_status_async(double rate_hz, const ResultCallback callback);
+
+    /**
+     * @brief Set rate to 'battery_status' updates.
+     *
+     * This function is blocking. See 'set_rate_battery_status_async' for the non-blocking
+     * counterpart.
+     *
+     * @return Result of request.
+     */
+    Result set_rate_battery_status(double rate_hz) const;
 
     /**
      * @brief Set rate to 'RC status' updates.

@@ -15,8 +15,12 @@ public:
     MOCK_CONST_METHOD1(subscribe_armed, void(Telemetry::ArmedCallback)){};
     MOCK_CONST_METHOD1(subscribe_gps_info, void(Telemetry::GpsInfoCallback)){};
     MOCK_CONST_METHOD1(subscribe_raw_gps, void(Telemetry::RawGpsCallback)){};
+    MOCK_CONST_METHOD1(subscribe_gps_rtcm_data, void(Telemetry::GpsRtcmDataCallback)){};
     MOCK_CONST_METHOD1(subscribe_battery, void(Telemetry::BatteryCallback)){};
+    MOCK_CONST_METHOD1(subscribe_battery_status, void(Telemetry::BatteryStatusCallback)){};
+    MOCK_CONST_METHOD1(subscribe_vehicle_status, void(Telemetry::VehicleStatusCallback)){};
     MOCK_CONST_METHOD1(subscribe_flight_mode, void(Telemetry::FlightModeCallback)){};
+    MOCK_CONST_METHOD1(subscribe_mode_info, void(Telemetry::ModeInfoCallback)){};
     MOCK_CONST_METHOD1(subscribe_landed_state, void(Telemetry::LandedStateCallback)){};
     MOCK_CONST_METHOD1(
         subscribe_attitude_quaternion, void(Telemetry::AttitudeQuaternionCallback)){};
@@ -33,6 +37,8 @@ public:
         subscribe_actuator_control_target, void(Telemetry::ActuatorControlTargetCallback)){};
     MOCK_CONST_METHOD1(
         subscribe_actuator_output_status, void(Telemetry::ActuatorOutputStatusCallback)){};
+    MOCK_CONST_METHOD1(
+        subscribe_servo_output_raw, void(Telemetry::ServoOutputRawCallback callback)){};
     MOCK_CONST_METHOD1(subscribe_odometry, void(Telemetry::OdometryCallback)){};
     MOCK_CONST_METHOD1(subscribe_distance_sensor, void(Telemetry::DistanceSensorCallback)){};
     MOCK_CONST_METHOD1(subscribe_scaled_pressure, void(Telemetry::ScaledPressureCallback)){};
@@ -56,6 +62,7 @@ public:
     MOCK_METHOD1(set_rate_gps_info, Telemetry::Result(double)){};
     MOCK_METHOD1(set_rate_raw_gps, Telemetry::Result(double)){};
     MOCK_METHOD1(set_rate_battery, Telemetry::Result(double)){};
+    MOCK_METHOD1(set_rate_battery_status, Telemetry::Result(double)){};
     MOCK_METHOD1(set_rate_rc_status, Telemetry::Result(double)){};
     MOCK_METHOD1(set_rate_actuator_control_target, Telemetry::Result(double)){};
     MOCK_METHOD1(set_rate_actuator_output_status, Telemetry::Result(double)){};
