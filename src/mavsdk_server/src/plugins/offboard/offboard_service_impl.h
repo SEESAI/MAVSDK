@@ -328,6 +328,29 @@ public:
         }
     }
 
+    grpc::Status RequestOffboard(
+        grpc::ServerContext* /* context */,
+        const rpc::offboard::RequestOffboardRequest* /* request */,
+        rpc::offboard::RequestOffboardResponse* response) override
+    {
+        if (_lazy_plugin.maybe_plugin() == nullptr) {
+            if (response != nullptr) {
+                auto result = mavsdk::Offboard::Result::NoSystem;
+                fillResponseWithResult(response, result);
+            }
+
+            return grpc::Status::OK;
+        }
+
+        auto result = _lazy_plugin.maybe_plugin()->request_offboard();
+
+        if (response != nullptr) {
+            fillResponseWithResult(response, result);
+        }
+
+        return grpc::Status::OK;
+    }
+
     grpc::Status Start(
         grpc::ServerContext* /* context */,
         const rpc::offboard::StartRequest* /* request */,
@@ -392,6 +415,34 @@ public:
         return grpc::Status::OK;
     }
 
+    grpc::Status SetAttitudeOnce(
+        grpc::ServerContext* /* context */,
+        const rpc::offboard::SetAttitudeOnceRequest* request,
+        rpc::offboard::SetAttitudeOnceResponse* response) override
+    {
+        if (_lazy_plugin.maybe_plugin() == nullptr) {
+            if (response != nullptr) {
+                auto result = mavsdk::Offboard::Result::NoSystem;
+                fillResponseWithResult(response, result);
+            }
+
+            return grpc::Status::OK;
+        }
+
+        if (request == nullptr) {
+            LogWarn() << "SetAttitudeOnce sent with a null request! Ignoring...";
+            return grpc::Status::OK;
+        }
+
+        auto result = _lazy_plugin.maybe_plugin()->set_attitude_once(translateFromRpcAttitude(request->attitude()));
+
+        if (response != nullptr) {
+            fillResponseWithResult(response, result);
+        }
+
+        return grpc::Status::OK;
+    }
+
     grpc::Status SetAttitude(
         grpc::ServerContext* /* context */,
         const rpc::offboard::SetAttitudeRequest* request,
@@ -413,6 +464,34 @@ public:
 
         auto result = _lazy_plugin.maybe_plugin()->set_attitude(
             translateFromRpcAttitude(request->attitude()));
+
+        if (response != nullptr) {
+            fillResponseWithResult(response, result);
+        }
+
+        return grpc::Status::OK;
+    }
+
+    grpc::Status SetActuatorControlOnce(
+        grpc::ServerContext* /* context */,
+        const rpc::offboard::SetActuatorControlOnceRequest* request,
+        rpc::offboard::SetActuatorControlOnceResponse* response) override
+    {
+        if (_lazy_plugin.maybe_plugin() == nullptr) {
+            if (response != nullptr) {
+                auto result = mavsdk::Offboard::Result::NoSystem;
+                fillResponseWithResult(response, result);
+            }
+
+            return grpc::Status::OK;
+        }
+
+        if (request == nullptr) {
+            LogWarn() << "SetActuatorControlOnce sent with a null request! Ignoring...";
+            return grpc::Status::OK;
+        }
+
+        auto result = _lazy_plugin.maybe_plugin()->set_actuator_control_once(translateFromRpcActuatorControl(request->actuator_control()));
 
         if (response != nullptr) {
             fillResponseWithResult(response, result);
@@ -450,6 +529,34 @@ public:
         return grpc::Status::OK;
     }
 
+    grpc::Status SetAttitudeRateOnce(
+        grpc::ServerContext* /* context */,
+        const rpc::offboard::SetAttitudeRateOnceRequest* request,
+        rpc::offboard::SetAttitudeRateOnceResponse* response) override
+    {
+        if (_lazy_plugin.maybe_plugin() == nullptr) {
+            if (response != nullptr) {
+                auto result = mavsdk::Offboard::Result::NoSystem;
+                fillResponseWithResult(response, result);
+            }
+
+            return grpc::Status::OK;
+        }
+
+        if (request == nullptr) {
+            LogWarn() << "SetAttitudeRateOnce sent with a null request! Ignoring...";
+            return grpc::Status::OK;
+        }
+
+        auto result = _lazy_plugin.maybe_plugin()->set_attitude_rate_once(translateFromRpcAttitudeRate(request->attitude_rate()));
+
+        if (response != nullptr) {
+            fillResponseWithResult(response, result);
+        }
+
+        return grpc::Status::OK;
+    }
+
     grpc::Status SetAttitudeRate(
         grpc::ServerContext* /* context */,
         const rpc::offboard::SetAttitudeRateRequest* request,
@@ -471,6 +578,34 @@ public:
 
         auto result = _lazy_plugin.maybe_plugin()->set_attitude_rate(
             translateFromRpcAttitudeRate(request->attitude_rate()));
+
+        if (response != nullptr) {
+            fillResponseWithResult(response, result);
+        }
+
+        return grpc::Status::OK;
+    }
+
+    grpc::Status SetPositionNedOnce(
+        grpc::ServerContext* /* context */,
+        const rpc::offboard::SetPositionNedOnceRequest* request,
+        rpc::offboard::SetPositionNedOnceResponse* response) override
+    {
+        if (_lazy_plugin.maybe_plugin() == nullptr) {
+            if (response != nullptr) {
+                auto result = mavsdk::Offboard::Result::NoSystem;
+                fillResponseWithResult(response, result);
+            }
+
+            return grpc::Status::OK;
+        }
+
+        if (request == nullptr) {
+            LogWarn() << "SetPositionNedOnce sent with a null request! Ignoring...";
+            return grpc::Status::OK;
+        }
+
+        auto result = _lazy_plugin.maybe_plugin()->set_position_ned_once(translateFromRpcPositionNedYaw(request->position_ned_yaw()));
 
         if (response != nullptr) {
             fillResponseWithResult(response, result);
@@ -501,6 +636,34 @@ public:
         auto result = _lazy_plugin.maybe_plugin()->set_position_ned(
             translateFromRpcPositionNedYaw(request->position_ned_yaw()));
 
+        if (response != nullptr) {
+            fillResponseWithResult(response, result);
+        }
+
+        return grpc::Status::OK;
+    }
+
+    grpc::Status SetVelocityBodyOnce(
+        grpc::ServerContext* /* context */,
+        const rpc::offboard::SetVelocityBodyOnceRequest* request,
+        rpc::offboard::SetVelocityBodyOnceResponse* response) override
+    {
+        if (_lazy_plugin.maybe_plugin() == nullptr) {
+            if (response != nullptr) {
+                auto result = mavsdk::Offboard::Result::NoSystem;
+                fillResponseWithResult(response, result);
+            }
+
+            return grpc::Status::OK;
+        }
+
+        if (request == nullptr) {
+            LogWarn() << "SetVelocityBodyOnce sent with a null request! Ignoring...";
+            return grpc::Status::OK;
+        }
+
+        auto result = _lazy_plugin.maybe_plugin()->set_velocity_body_once(translateFromRpcVelocityBodyYawspeed(request->velocity_body_yawspeed()));
+        
         if (response != nullptr) {
             fillResponseWithResult(response, result);
         }
