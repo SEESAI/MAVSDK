@@ -27,6 +27,16 @@ Offboard::Offboard(std::shared_ptr<System> system) :
 
 Offboard::~Offboard() {}
 
+void Offboard::request_offboard_async(const ResultCallback callback)
+{
+    _impl->request_offboard_async(callback);
+}
+
+Offboard::Result Offboard::request_offboard() const
+{
+    return _impl->request_offboard();
+}
+
 void Offboard::start_async(const ResultCallback callback)
 {
     _impl->start_async(callback);
@@ -52,9 +62,19 @@ bool Offboard::is_active() const
     return _impl->is_active();
 }
 
+Offboard::Result Offboard::set_attitude_once(Attitude attitude) const
+{
+    return _impl->set_attitude_once(attitude);
+}
+
 Offboard::Result Offboard::set_attitude(Attitude attitude) const
 {
     return _impl->set_attitude(attitude);
+}
+
+Offboard::Result Offboard::set_actuator_control_once(ActuatorControl actuator_control) const
+{
+    return _impl->set_actuator_control_once(actuator_control);
 }
 
 Offboard::Result Offboard::set_actuator_control(ActuatorControl actuator_control) const
@@ -62,14 +82,29 @@ Offboard::Result Offboard::set_actuator_control(ActuatorControl actuator_control
     return _impl->set_actuator_control(actuator_control);
 }
 
+Offboard::Result Offboard::set_attitude_rate_once(AttitudeRate attitude_rate) const
+{
+    return _impl->set_attitude_rate_once(attitude_rate);
+}
+
 Offboard::Result Offboard::set_attitude_rate(AttitudeRate attitude_rate) const
 {
     return _impl->set_attitude_rate(attitude_rate);
 }
 
+Offboard::Result Offboard::set_position_ned_once(PositionNedYaw position_ned_yaw) const
+{
+    return _impl->set_position_ned_once(position_ned_yaw);
+}
+
 Offboard::Result Offboard::set_position_ned(PositionNedYaw position_ned_yaw) const
 {
     return _impl->set_position_ned(position_ned_yaw);
+}
+
+Offboard::Result Offboard::set_velocity_body_once(VelocityBodyYawspeed velocity_body_yawspeed) const
+{
+    return _impl->set_velocity_body_once(velocity_body_yawspeed);
 }
 
 Offboard::Result Offboard::set_velocity_body(VelocityBodyYawspeed velocity_body_yawspeed) const
