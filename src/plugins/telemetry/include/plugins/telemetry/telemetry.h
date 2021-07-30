@@ -333,8 +333,10 @@ public:
     struct Battery {
         uint32_t id{0}; /**< @brief Battery ID, for systems with multiple batteries */
         float voltage_v{float(NAN)}; /**< @brief Voltage in volts */
+        float current_a{float(NAN)}; /**< @brief Current in amps */
         float remaining_percent{
             float(NAN)}; /**< @brief Estimated battery remaining (range: 0.0 to 1.0) */
+        float mah_consumed{float(NAN)}; /**< @brief current consumed in mAh */
     };
 
     /**
@@ -350,6 +352,52 @@ public:
      * @return A reference to the stream.
      */
     friend std::ostream& operator<<(std::ostream& str, Telemetry::Battery const& battery);
+
+    /**
+     * @brief 
+     */
+    struct VehicleStatus {
+        bool manual_control_signal_loss{false}; /**< @brief */
+        bool data_link_loss{false}; /**< @brief */
+        bool rc_signal_loss{false}; /**< @brief */
+        uint32_t manual_contol_data_source{0}; /**< @brief */
+    };
+
+    /**
+     * @brief Equal operator to compare two `Telemetry::VehicleStatus` objects.
+     *
+     * @return `true` if items are equal.
+     */
+    friend bool operator==(const Telemetry::VehicleStatus& lhs, const Telemetry::VehicleStatus& rhs);
+
+    /**
+     * @brief Stream operator to print information about a `Telemetry::VehicleStatus`.
+     *
+     * @return A reference to the stream.
+     */
+    friend std::ostream& operator<<(std::ostream& str, Telemetry::VehicleStatus const& vehicle_status);
+
+    /**
+     * @brief 
+     */
+    struct ModeInfo {
+        uint32_t base_mode{0}; /**< @brief */
+        uint32_t custom_mode{0}; /**< @brief Custom mode (made up of main & sub mode). */
+    };
+
+    /**
+     * @brief Equal operator to compare two `Telemetry::ModeInfo` objects.
+     *
+     * @return `true` if items are equal.
+     */
+    friend bool operator==(const Telemetry::ModeInfo& lhs, const Telemetry::ModeInfo& rhs);
+
+    /**
+     * @brief Stream operator to print information about a `Telemetry::ModeInfo`.
+     *
+     * @return A reference to the stream.
+     */
+    friend std::ostream& operator<<(std::ostream& str, Telemetry::ModeInfo const& mode_info);
 
     /**
      * @brief Health type.
@@ -480,6 +528,21 @@ public:
     operator<<(std::ostream& str, Telemetry::ActuatorOutputStatus const& actuator_output_status);
 
     /**
+     * @brief 
+     */
+    struct ServoOutputRaw {
+        uint16_t servo[16]; /**< @brief */
+    };
+
+    /**
+     * @brief Equal operator to compare two `Telemetry::ServoOutputRaw` objects.
+     *
+     * @return `true` if items are equal.
+     */
+    friend bool operator==(
+        const Telemetry::ServoOutputRaw& lhs, const Telemetry::ServoOutputRaw& rhs);
+
+    /**
      * @brief Covariance type.
      *
      * Row-major representation of a 6x6 cross-covariance matrix
@@ -560,14 +623,16 @@ public:
         /**
          * @brief Mavlink frame id
          */
-        enum class MavFrame {
-            Undef, /**< @brief Frame is undefined.. */
-            BodyNed, /**< @brief Setpoint in body NED frame. This makes sense if all position
+         enum class MavFrame {
+            Undef = 0, /**< @brief Frame is undefined.. */
+            LocalNed = 1, /**< @brief Local coordinate frame, Z-down (x: North, y: East, z: Down). */
+            BodyNed = 8, /**< @brief Setpoint in body NED frame. This makes sense if all position
                         control is externalized - e.g. useful to command 2 m/s^2 acceleration to the
                         right.. */
-            VisionNed, /**< @brief Odometry local coordinate frame of data given by a vision
+            BodyFrd = 12, /**< @brief Body fixed frame of reference, Z-down (x: forward, y: right, z: down).. */
+            VisionNed = 16, /**< @brief Odometry local coordinate frame of data given by a vision
                           estimation system, Z-down (x: north, y: east, z: down).. */
-            EstimNed, /**< @brief Odometry local coordinate frame of data given by an estimator
+            EstimNed = 18, /**< @brief Odometry local coordinate frame of data given by an estimator
                          running onboard the vehicle, Z-down (x: north, y: east, z: down).. */
         };
 
@@ -873,6 +938,8 @@ public:
         AccelerationFrd acceleration_frd{}; /**< @brief Acceleration */
         AngularVelocityFrd angular_velocity_frd{}; /**< @brief Angular velocity */
         MagneticFieldFrd magnetic_field_frd{}; /**< @brief Magnetic field */
+        float abs_pressure{float(NAN)}; /**< @brief */
+        float pressure_alt{float(NAN)}; /**< @brief */
         float temperature_degc{float(NAN)}; /**< @brief Temperature */
         uint64_t timestamp_us{}; /**< @brief Timestamp in microseconds */
     };
@@ -1195,6 +1262,24 @@ public:
     Battery battery() const;
 
     /**
+     * @brief Callback type for subscribe_vehicle_status.
+     */
+
+    using VehicleStatusCallback = std::function<void(VehicleStatus)>;
+
+    /**
+     * @brief Subscribe to vehicle status updates.
+     */
+    void subscribe_vehicle_status(VehicleStatusCallback callback);
+
+    /**
+     * @brief Poll for 'VehicleStatus' (blocking).
+     *
+     * @return One VehicleStatus update.
+     */
+    VehicleStatus vehicle_status() const;
+
+    /**
      * @brief Callback type for subscribe_flight_mode.
      */
 
@@ -1211,6 +1296,24 @@ public:
      * @return One FlightMode update.
      */
     FlightMode flight_mode() const;
+
+    /**
+     * @brief Callback type for subscribe_mode_info.
+     */
+
+    using ModeInfoCallback = std::function<void(ModeInfo)>;
+
+    /**
+     * @brief Subscribe to 'mode' updates.
+     */
+    void subscribe_mode_info(ModeInfoCallback callback);
+
+    /**
+     * @brief Poll for 'ModeInfo' (blocking).
+     *
+     * @return One ModeInfo update.
+     */
+    ModeInfo mode_info() const;
 
     /**
      * @brief Callback type for subscribe_health.
@@ -1301,6 +1404,24 @@ public:
      * @return One ActuatorOutputStatus update.
      */
     ActuatorOutputStatus actuator_output_status() const;
+
+    /**
+     * @brief Callback type for subscribe_servo_output_raw.
+     */
+
+    using ServoOutputRawCallback = std::function<void(ServoOutputRaw)>;
+
+    /**
+     * @brief Subscribe to 'servo output raw' updates.
+     */
+    void subscribe_servo_output_raw(ServoOutputRawCallback callback);
+
+    /**
+     * @brief Poll for 'ServoOutputRaw' (blocking).
+     *
+     * @return One ServoOutputRaw update.
+     */
+    ServoOutputRaw servo_output_raw() const;
 
     /**
      * @brief Callback type for subscribe_odometry.

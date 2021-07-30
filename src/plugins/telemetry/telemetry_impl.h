@@ -95,12 +95,15 @@ public:
     Telemetry::GpsInfo gps_info() const;
     Telemetry::RawGps raw_gps() const;
     Telemetry::Battery battery() const;
+    Telemetry::VehicleStatus vehicle_status() const;
+    Telemetry::ModeInfo mode_info() const;
     Telemetry::FlightMode flight_mode() const;
     Telemetry::Health health() const;
     bool health_all_ok() const;
     Telemetry::RcStatus rc_status() const;
     Telemetry::ActuatorControlTarget actuator_control_target() const;
     Telemetry::ActuatorOutputStatus actuator_output_status() const;
+    Telemetry::ServoOutputRaw servo_output_raw() const;
     Telemetry::Odometry odometry() const;
     Telemetry::DistanceSensor distance_sensor() const;
     Telemetry::ScaledPressure scaled_pressure() const;
@@ -127,6 +130,8 @@ public:
     void subscribe_gps_info(Telemetry::GpsInfoCallback& callback);
     void subscribe_raw_gps(Telemetry::RawGpsCallback& callback);
     void subscribe_battery(Telemetry::BatteryCallback& callback);
+    void subscribe_vehicle_status(Telemetry::VehicleStatusCallback& callback);
+    void subscribe_mode_info(Telemetry::ModeInfoCallback& callback);
     void subscribe_flight_mode(Telemetry::FlightModeCallback& callback);
     void subscribe_health(Telemetry::HealthCallback& callback);
     void subscribe_health_all_ok(Telemetry::HealthAllOkCallback& callback);
@@ -135,6 +140,7 @@ public:
     void subscribe_unix_epoch_time(Telemetry::UnixEpochTimeCallback& callback);
     void subscribe_actuator_control_target(Telemetry::ActuatorControlTargetCallback& callback);
     void subscribe_actuator_output_status(Telemetry::ActuatorOutputStatusCallback& callback);
+    void subscribe_servo_output_raw(Telemetry::ServoOutputRawCallback& callback);
     void subscribe_odometry(Telemetry::OdometryCallback& callback);
     void subscribe_distance_sensor(Telemetry::DistanceSensorCallback& callback);
     void subscribe_scaled_pressure(Telemetry::ScaledPressureCallback& callback);
@@ -162,6 +168,7 @@ private:
     void set_gps_info(Telemetry::GpsInfo gps_info);
     void set_raw_gps(Telemetry::RawGps raw_gps);
     void set_battery(Telemetry::Battery battery);
+    void set_vehicle_status(Telemetry::VehicleStatus vehicle_status);
     void set_health_local_position(bool ok);
     void set_health_global_position(bool ok);
     void set_health_home_position(bool ok);
@@ -173,6 +180,7 @@ private:
     void set_unix_epoch_time_us(uint64_t time_us);
     void set_actuator_control_target(uint8_t group, const std::vector<float>& controls);
     void set_actuator_output_status(uint32_t active, const std::vector<float>& actuators);
+    void set_servo_output_raw(const std::array<uint16_t, 16>& servos);
     void set_odometry(Telemetry::Odometry& odometry);
     void set_distance_sensor(Telemetry::DistanceSensor& distance_sensor);
     void set_scaled_pressure(Telemetry::ScaledPressure& scaled_pressure);
@@ -198,6 +206,7 @@ private:
     void process_unix_epoch_time(const mavlink_message_t& message);
     void process_actuator_control_target(const mavlink_message_t& message);
     void process_actuator_output_status(const mavlink_message_t& message);
+    void process_servo_output_raw(const mavlink_message_t& message);
     void process_odometry(const mavlink_message_t& message);
     void process_distance_sensor(const mavlink_message_t& message);
     void process_scaled_pressure(const mavlink_message_t& message);
@@ -280,6 +289,9 @@ private:
     mutable std::mutex _battery_mutex{};
     Telemetry::Battery _battery{};
 
+    mutable std::mutex _vehicle_status_mutex{};
+    Telemetry::VehicleStatus _vehicle_status{};
+
     mutable std::mutex _health_mutex{};
     Telemetry::Health _health{};
 
@@ -297,6 +309,9 @@ private:
 
     mutable std::mutex _actuator_output_status_mutex{};
     Telemetry::ActuatorOutputStatus _actuator_output_status{};
+
+    mutable std::mutex _servo_output_raw_mutex{};
+    Telemetry::ServoOutputRaw _servo_output_raw{};
 
     mutable std::mutex _odometry_mutex{};
     Telemetry::Odometry _odometry{};
@@ -331,6 +346,8 @@ private:
     Telemetry::GpsInfoCallback _gps_info_subscription{nullptr};
     Telemetry::RawGpsCallback _raw_gps_subscription{nullptr};
     Telemetry::BatteryCallback _battery_subscription{nullptr};
+    Telemetry::VehicleStatusCallback _vehicle_status_subscription{nullptr};
+    Telemetry::ModeInfoCallback _mode_info_subscription{nullptr};
     Telemetry::FlightModeCallback _flight_mode_subscription{nullptr};
     Telemetry::HealthCallback _health_subscription{nullptr};
     Telemetry::HealthAllOkCallback _health_all_ok_subscription{nullptr};
@@ -339,6 +356,7 @@ private:
     Telemetry::UnixEpochTimeCallback _unix_epoch_time_subscription{nullptr};
     Telemetry::ActuatorControlTargetCallback _actuator_control_target_subscription{nullptr};
     Telemetry::ActuatorOutputStatusCallback _actuator_output_status_subscription{nullptr};
+    Telemetry::ServoOutputRawCallback _servo_output_raw_subscription{nullptr};
     Telemetry::OdometryCallback _odometry_subscription{nullptr};
     Telemetry::DistanceSensorCallback _distance_sensor_subscription{nullptr};
     Telemetry::ScaledPressureCallback _scaled_pressure_subscription{nullptr};

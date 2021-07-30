@@ -16,11 +16,14 @@ using AngularVelocityBody = Telemetry::AngularVelocityBody;
 using GpsInfo = Telemetry::GpsInfo;
 using RawGps = Telemetry::RawGps;
 using Battery = Telemetry::Battery;
+using VehicleStatus = Telemetry::VehicleStatus;
+using ModeInfo = Telemetry::ModeInfo;
 using Health = Telemetry::Health;
 using RcStatus = Telemetry::RcStatus;
 using StatusText = Telemetry::StatusText;
 using ActuatorControlTarget = Telemetry::ActuatorControlTarget;
 using ActuatorOutputStatus = Telemetry::ActuatorOutputStatus;
+using ServoOutputRaw = Telemetry::ServoOutputRaw;
 using Covariance = Telemetry::Covariance;
 using VelocityBody = Telemetry::VelocityBody;
 using PositionBody = Telemetry::PositionBody;
@@ -189,6 +192,16 @@ Telemetry::Battery Telemetry::battery() const
     return _impl->battery();
 }
 
+void Telemetry::subscribe_vehicle_status(VehicleStatusCallback callback)
+{
+    _impl->subscribe_vehicle_status(callback);
+}
+
+Telemetry::VehicleStatus Telemetry::vehicle_status() const
+{
+    return _impl->vehicle_status();
+}
+
 void Telemetry::subscribe_flight_mode(FlightModeCallback callback)
 {
     _impl->subscribe_flight_mode(callback);
@@ -197,6 +210,16 @@ void Telemetry::subscribe_flight_mode(FlightModeCallback callback)
 Telemetry::FlightMode Telemetry::flight_mode() const
 {
     return _impl->flight_mode();
+}
+
+void Telemetry::subscribe_mode_info(ModeInfoCallback callback)
+{
+    _impl->subscribe_mode_info(callback);
+}
+
+Telemetry::ModeInfo Telemetry::mode_info() const
+{
+    return _impl->mode_info();
 }
 
 void Telemetry::subscribe_health(HealthCallback callback)
@@ -247,6 +270,16 @@ void Telemetry::subscribe_actuator_output_status(ActuatorOutputStatusCallback ca
 Telemetry::ActuatorOutputStatus Telemetry::actuator_output_status() const
 {
     return _impl->actuator_output_status();
+}
+
+void Telemetry::subscribe_servo_output_raw(ServoOutputRawCallback callback)
+{
+    _impl->subscribe_servo_output_raw(callback);
+}
+
+Telemetry::ServoOutputRaw Telemetry::servo_output_raw() const
+{
+    return _impl->servo_output_raw();
 }
 
 void Telemetry::subscribe_odometry(OdometryCallback callback)
@@ -742,6 +775,8 @@ bool operator==(const Telemetry::Battery& lhs, const Telemetry::Battery& rhs)
     return (rhs.id == lhs.id) &&
            ((std::isnan(rhs.voltage_v) && std::isnan(lhs.voltage_v)) ||
             rhs.voltage_v == lhs.voltage_v) &&
+           ((std::isnan(rhs.current_a) && std::isnan(lhs.current_a)) ||
+            rhs.current_a == lhs.current_a) &&
            ((std::isnan(rhs.remaining_percent) && std::isnan(lhs.remaining_percent)) ||
             rhs.remaining_percent == lhs.remaining_percent);
 }
@@ -752,7 +787,46 @@ std::ostream& operator<<(std::ostream& str, Telemetry::Battery const& battery)
     str << "battery:" << '\n' << "{\n";
     str << "    id: " << battery.id << '\n';
     str << "    voltage_v: " << battery.voltage_v << '\n';
+    str << "    current_a: " << battery.current_a << '\n';
     str << "    remaining_percent: " << battery.remaining_percent << '\n';
+    str << '}';
+    return str;
+}
+
+bool operator==(const Telemetry::VehicleStatus& lhs, const Telemetry::VehicleStatus& rhs)
+{
+    return
+        (rhs.manual_control_signal_loss == lhs.manual_control_signal_loss) &&
+        (rhs.data_link_loss == lhs.data_link_loss) &&
+        (rhs.rc_signal_loss == lhs.rc_signal_loss) &&
+        (rhs.manual_contol_data_source == lhs.manual_contol_data_source);
+}
+
+std::ostream& operator<<(std::ostream& str, Telemetry::VehicleStatus const& vehicle_status)
+{
+    str << std::setprecision(15);
+    str << "vehicle_status:" << '\n' << "{\n";
+    str << "    manual_control_signal_loss: " << vehicle_status.manual_control_signal_loss << '\n';
+    str << "    data_link_loss: " << vehicle_status.data_link_loss << '\n';
+    str << "    rc_signal_loss: " << vehicle_status.rc_signal_loss << '\n';
+    str << "    manual_contol_data_source: " << vehicle_status.manual_contol_data_source << '\n';
+    str << '}';
+    return str;
+}
+
+bool operator==(const Telemetry::ModeInfo& lhs, const Telemetry::ModeInfo& rhs)
+{
+    return
+        (rhs.base_mode == lhs.base_mode) &&
+        (rhs.custom_mode == lhs.custom_mode);
+}
+
+std::ostream& operator<<(std::ostream& str, Telemetry::ModeInfo const& mode_info)
+{
+    str << std::setprecision(15);
+    str << "mode_info:" << '\n' << "{\n";
+    str << "    base_mode: " << mode_info.base_mode << '\n';
+    str << "    custom_mode: " << mode_info.custom_mode << '\n';
     str << '}';
     return str;
 }
@@ -864,6 +938,11 @@ operator<<(std::ostream& str, Telemetry::ActuatorOutputStatus const& actuator_ou
     return str;
 }
 
+bool operator==(const Telemetry::ServoOutputRaw& lhs, const Telemetry::ServoOutputRaw& rhs)
+{
+    return (rhs.servo == lhs.servo);
+}
+
 bool operator==(const Telemetry::Covariance& lhs, const Telemetry::Covariance& rhs)
 {
     return (rhs.covariance_matrix == lhs.covariance_matrix);
@@ -924,8 +1003,12 @@ std::ostream& operator<<(std::ostream& str, Telemetry::Odometry::MavFrame const&
     switch (mav_frame) {
         case Telemetry::Odometry::MavFrame::Undef:
             return str << "Undef";
+        case Telemetry::Odometry::MavFrame::LocalNed:
+            return str << "Local Ned";
         case Telemetry::Odometry::MavFrame::BodyNed:
             return str << "Body Ned";
+        case Telemetry::Odometry::MavFrame::BodyFrd:
+            return str << "Body Frd";
         case Telemetry::Odometry::MavFrame::VisionNed:
             return str << "Vision Ned";
         case Telemetry::Odometry::MavFrame::EstimNed:
@@ -1177,6 +1260,10 @@ bool operator==(const Telemetry::Imu& lhs, const Telemetry::Imu& rhs)
     return (rhs.acceleration_frd == lhs.acceleration_frd) &&
            (rhs.angular_velocity_frd == lhs.angular_velocity_frd) &&
            (rhs.magnetic_field_frd == lhs.magnetic_field_frd) &&
+           ((std::isnan(rhs.abs_pressure) && std::isnan(lhs.abs_pressure)) ||
+            rhs.abs_pressure == lhs.abs_pressure) &&
+           ((std::isnan(rhs.pressure_alt) && std::isnan(lhs.pressure_alt)) ||
+            rhs.pressure_alt == lhs.pressure_alt) &&
            ((std::isnan(rhs.temperature_degc) && std::isnan(lhs.temperature_degc)) ||
             rhs.temperature_degc == lhs.temperature_degc) &&
            (rhs.timestamp_us == lhs.timestamp_us);
@@ -1189,6 +1276,8 @@ std::ostream& operator<<(std::ostream& str, Telemetry::Imu const& imu)
     str << "    acceleration_frd: " << imu.acceleration_frd << '\n';
     str << "    angular_velocity_frd: " << imu.angular_velocity_frd << '\n';
     str << "    magnetic_field_frd: " << imu.magnetic_field_frd << '\n';
+    str << "    abs_pressure: " << imu.abs_pressure << '\n';
+    str << "    pressure_alt: " << imu.pressure_alt << '\n';
     str << "    temperature_degc: " << imu.temperature_degc << '\n';
     str << "    timestamp_us: " << imu.timestamp_us << '\n';
     str << '}';
