@@ -330,8 +330,8 @@ public:
 
     grpc::Status RequestOffboard(
         grpc::ServerContext* /* context */,
-        const rpc::offboard::RequestOffboardRequest* /* request */,
-        rpc::offboard::RequestOffboardResponse* response) override
+        const rpc::offboard::StartRequest* /* request */,
+        rpc::offboard::StartResponse* response) override
     {
         if (_lazy_plugin.maybe_plugin() == nullptr) {
             if (response != nullptr) {
@@ -417,8 +417,8 @@ public:
 
     grpc::Status SetAttitudeOnce(
         grpc::ServerContext* /* context */,
-        const rpc::offboard::SetAttitudeOnceRequest* request,
-        rpc::offboard::SetAttitudeOnceResponse* response) override
+        const rpc::offboard::SetAttitudeRequest* request,
+        rpc::offboard::SetAttitudeResponse* response) override
     {
         if (_lazy_plugin.maybe_plugin() == nullptr) {
             if (response != nullptr) {
@@ -474,8 +474,8 @@ public:
 
     grpc::Status SetActuatorControlOnce(
         grpc::ServerContext* /* context */,
-        const rpc::offboard::SetActuatorControlOnceRequest* request,
-        rpc::offboard::SetActuatorControlOnceResponse* response) override
+        const rpc::offboard::SetActuatorControlRequest* request,
+        rpc::offboard::SetActuatorControlResponse* response) override
     {
         if (_lazy_plugin.maybe_plugin() == nullptr) {
             if (response != nullptr) {
@@ -531,8 +531,8 @@ public:
 
     grpc::Status SetAttitudeRateOnce(
         grpc::ServerContext* /* context */,
-        const rpc::offboard::SetAttitudeRateOnceRequest* request,
-        rpc::offboard::SetAttitudeRateOnceResponse* response) override
+        const rpc::offboard::SetAttitudeRateRequest* request,
+        rpc::offboard::SetAttitudeRateResponse* response) override
     {
         if (_lazy_plugin.maybe_plugin() == nullptr) {
             if (response != nullptr) {
@@ -588,8 +588,8 @@ public:
 
     grpc::Status SetPositionNedOnce(
         grpc::ServerContext* /* context */,
-        const rpc::offboard::SetPositionNedOnceRequest* request,
-        rpc::offboard::SetPositionNedOnceResponse* response) override
+        const rpc::offboard::SetPositionNedRequest* request,
+        rpc::offboard::SetPositionNedResponse* response) override
     {
         if (_lazy_plugin.maybe_plugin() == nullptr) {
             if (response != nullptr) {
@@ -645,8 +645,8 @@ public:
 
     grpc::Status SetVelocityBodyOnce(
         grpc::ServerContext* /* context */,
-        const rpc::offboard::SetVelocityBodyOnceRequest* request,
-        rpc::offboard::SetVelocityBodyOnceResponse* response) override
+        const rpc::offboard::SetVelocityBodyRequest* request,
+        rpc::offboard::SetVelocityBodyResponse* response) override
     {
         if (_lazy_plugin.maybe_plugin() == nullptr) {
             if (response != nullptr) {
