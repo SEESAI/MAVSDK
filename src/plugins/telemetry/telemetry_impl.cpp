@@ -1073,6 +1073,23 @@ void TelemetryImpl::process_sys_status(const mavlink_message_t& message)
         auto arg = health_all_ok();
         _parent->call_user_callback([callback, arg]() { callback(arg); });
     }
+
+    Telemetry::VehicleStatus new_vehicle_status;
+    new_vehicle_status.manual_control_signal_loss = sys_status.errors_count1;  // No manual_control setpoint messages arriving (can come from RC or MAV)
+    new_vehicle_status.data_link_loss = sys_status.errors_count2;  // No messages from GCS received
+    new_vehicle_status.rc_signal_loss = sys_status.errors_count3; // No messages from RC TX received
+    new_vehicle_status.manual_contol_data_source = sys_status.errors_count4; // Indicates whether the drone is controlled by RC (1) or MAVLink (2-5)
+
+    set_vehicle_status(new_vehicle_status);
+
+    {
+        std::lock_guard<std::mutex> lock(_subscription_mutex);
+        if (_vehicle_status_subscription) {
+            auto callback = _vehicle_status_subscription;
+            auto arg = vehicle_status();
+            _parent->call_user_callback([callback, arg]() { callback(arg); });
+        }
+    }
 }
 
 void TelemetryImpl::process_battery_status(const mavlink_message_t& message)
