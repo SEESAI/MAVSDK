@@ -495,6 +495,8 @@ public:
 
         rpc_obj->set_remaining_percent(battery.remaining_percent);
 
+        rpc_obj->set_mah_consumed(battery.mah_consumed);
+
         return rpc_obj;
     }
 
@@ -510,6 +512,8 @@ public:
         obj.current_a = battery.current_a();
 
         obj.remaining_percent = battery.remaining_percent();
+
+        obj.mah_consumed = battery.mah_consumed();
 
         return obj;
     }

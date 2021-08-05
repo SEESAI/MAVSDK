@@ -778,7 +778,9 @@ bool operator==(const Telemetry::Battery& lhs, const Telemetry::Battery& rhs)
            ((std::isnan(rhs.current_a) && std::isnan(lhs.current_a)) ||
             rhs.current_a == lhs.current_a) &&
            ((std::isnan(rhs.remaining_percent) && std::isnan(lhs.remaining_percent)) ||
-            rhs.remaining_percent == lhs.remaining_percent);
+            rhs.remaining_percent == lhs.remaining_percent) &&
+           ((std::isnan(rhs.mah_consumed) && std::isnan(lhs.mah_consumed)) ||
+            rhs.mah_consumed == lhs.mah_consumed);
 }
 
 std::ostream& operator<<(std::ostream& str, Telemetry::Battery const& battery)
@@ -789,6 +791,7 @@ std::ostream& operator<<(std::ostream& str, Telemetry::Battery const& battery)
     str << "    voltage_v: " << battery.voltage_v << '\n';
     str << "    current_a: " << battery.current_a << '\n';
     str << "    remaining_percent: " << battery.remaining_percent << '\n';
+    str << "    mah_consumed: " << battery.mah_consumed << '\n';
     str << '}';
     return str;
 }
