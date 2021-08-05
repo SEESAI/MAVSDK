@@ -1049,6 +1049,10 @@ void TelemetryImpl::process_sys_status(const mavlink_message_t& message)
                 _parent->call_user_callback([callback, arg]() { callback(arg); });
             }
         }
+    } else {
+        _battery_sys_status.voltage_v = sys_status.voltage_battery * 1e-3f;
+        _battery_sys_status.current_a = sys_status.current_battery * 1e-2f;
+        _battery_sys_status.remaining_percent = sys_status.battery_remaining *  1e-2f;
     }
 
     const bool rc_ok =
@@ -1101,10 +1105,22 @@ void TelemetryImpl::process_battery_status(const mavlink_message_t& message)
 
     Telemetry::Battery new_battery;
     new_battery.id = bat_status.id;
-    new_battery.voltage_v = bat_status.voltages[0] * 1e-3f;
-    new_battery.current_a = bat_status.current_battery *1e-2f;
+    if (bat_status.voltages[0] == UINT16_MAX) {
+        new_battery.voltage_v = _battery_sys_status.voltage_v;
+    } else {
+        new_battery.voltage_v = bat_status.voltages[0] * 1e-3f;
+    }
+    if (bat_status.current_battery == -1) {
+        new_battery.current_a = _battery_sys_status.current_a;
+    } else {
+        new_battery.current_a = bat_status.current_battery * 1e-2f;
+    }
     // FIXME: it is strange calling it percent when the range goes from 0 to 1.
-    new_battery.remaining_percent = bat_status.battery_remaining * 1e-2f;
+    if (bat_status.battery_remaining == -1) {
+        new_battery.remaining_percent = _battery_sys_status.remaining_percent;
+    } else {
+        new_battery.remaining_percent = bat_status.battery_remaining * 1e-2f;
+    }
     new_battery.mah_consumed = float(bat_status.current_consumed);
 
     set_battery(new_battery);

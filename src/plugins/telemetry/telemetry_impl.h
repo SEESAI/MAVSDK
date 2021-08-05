@@ -373,5 +373,6 @@ private:
     // Battery info can be extracted from SYS_STATUS or from BATTERY_STATUS.
     // If no BATTERY_STATUS messages are received, use info from SYS_STATUS.
     bool _has_bat_status{false};
+    Telemetry::Battery _battery_sys_status{};
 };
 } // namespace mavsdk
