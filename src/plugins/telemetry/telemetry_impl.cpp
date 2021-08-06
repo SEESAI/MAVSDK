@@ -308,6 +308,12 @@ Telemetry::Result TelemetryImpl::set_rate_battery(double rate_hz)
         _parent->set_msg_rate(MAVLINK_MSG_ID_SYS_STATUS, rate_hz));
 }
 
+Telemetry::Result TelemetryImpl::set_rate_battery_status(double rate_hz)
+{
+    return telemetry_result_from_command_result(
+            _parent->set_msg_rate(MAVLINK_MSG_ID_BATTERY_STATUS, rate_hz));
+}
+
 Telemetry::Result TelemetryImpl::set_rate_rc_status(double rate_hz)
 {
     UNUSED(rate_hz);
@@ -473,6 +479,14 @@ void TelemetryImpl::set_rate_battery_async(double rate_hz, Telemetry::ResultCall
 {
     _parent->set_msg_rate_async(
         MAVLINK_MSG_ID_SYS_STATUS,
+        rate_hz,
+        std::bind(&TelemetryImpl::command_result_callback, std::placeholders::_1, callback));
+}
+
+void TelemetryImpl::set_rate_battery_status_async(double rate_hz, Telemetry::ResultCallback callback)
+{
+    _parent->set_msg_rate_async(
+        MAVLINK_MSG_ID_BATTERY_STATUS,
         rate_hz,
         std::bind(&TelemetryImpl::command_result_callback, std::placeholders::_1, callback));
 }
@@ -1033,12 +1047,13 @@ void TelemetryImpl::process_sys_status(const mavlink_message_t& message)
     mavlink_sys_status_t sys_status;
     mavlink_msg_sys_status_decode(&message, &sys_status);
 
-    if (!_has_bat) {
+    if (!_has_bat_status) {
         Telemetry::Battery new_battery;
         new_battery.voltage_v = sys_status.voltage_battery * 1e-3f;
         new_battery.current_a = sys_status.current_battery * 1e-2f;
         // FIXME: it is strange calling it percent when the range goes from 0 to 1.
         new_battery.remaining_percent = sys_status.battery_remaining * 1e-2f;
+        new_battery.mah_consumed = -1.0f;
 
         set_battery(new_battery);
 
@@ -1098,9 +1113,10 @@ void TelemetryImpl::process_battery_status(const mavlink_message_t& message)
     mavlink_battery_status_t bat_status;
     mavlink_msg_battery_status_decode(&message, &bat_status);
 
-    _has_bat_status = true;
+    if (bat_status.current_battery == -1) {
 
-    if (bat_status.current_battery == -1 || _has_bat == true) {
+        _has_bat_status = false;
+
         Telemetry::BatteryStatus new_battery_status;
         new_battery_status.mah_consumed = float(bat_status.current_consumed);
         set_battery_status(new_battery_status);
@@ -1113,18 +1129,34 @@ void TelemetryImpl::process_battery_status(const mavlink_message_t& message)
         }
 
     } else {
+
+        _has_bat_status = true;
+
         Telemetry::Battery new_battery;
         new_battery.id = bat_status.id;
         new_battery.voltage_v = bat_status.voltages[0] * 1e-3f;
         new_battery.current_a = bat_status.current_battery * 1e-2f;
         // FIXME: it is strange calling it percent when the range goes from 0 to 1.
         new_battery.remaining_percent = bat_status.battery_remaining * 1e-2f;
+        new_battery.mah_consumed = float(bat_status.current_consumed);
 
         {
             std::lock_guard<std::mutex> lock(_subscription_mutex);
             if (_battery_subscription) {
                 auto callback = _battery_subscription;
                 auto arg = battery();
+                _parent->call_user_callback([callback, arg]() { callback(arg); });
+            }
+        }
+
+        Telemetry::BatteryStatus new_battery_status;
+        new_battery_status.mah_consumed = float(bat_status.current_consumed);
+
+        {
+            std::lock_guard<std::mutex> lock(_subscription_mutex);
+            if (_battery_status_subscription) {
+                auto callback = _battery_status_subscription;
+                auto arg = battery_status();
                 _parent->call_user_callback([callback, arg]() { callback(arg); });
             }
         }
@@ -1805,7 +1837,11 @@ Telemetry::BatteryStatus TelemetryImpl::battery_status() const
     return _battery_status;
 }
 
-
+void TelemetryImpl::set_battery_status(Telemetry::BatteryStatus battery_status)
+{
+    std::lock_guard<std::mutex> lock(_battery_status_mutex);
+    _battery_status = battery_status;
+}
 
 Telemetry::VehicleStatus TelemetryImpl::vehicle_status() const
 {
@@ -2134,6 +2170,12 @@ void TelemetryImpl::subscribe_battery(Telemetry::BatteryCallback& callback)
 {
     std::lock_guard<std::mutex> lock(_subscription_mutex);
     _battery_subscription = callback;
+}
+
+void TelemetryImpl::subscribe_battery_status(Telemetry::BatteryStatusCallback& callback)
+{
+    std::lock_guard<std::mutex> lock(_subscription_mutex);
+    _battery_status_subscription = callback;
 }
 
 void TelemetryImpl::subscribe_vehicle_status(Telemetry::VehicleStatusCallback& callback)

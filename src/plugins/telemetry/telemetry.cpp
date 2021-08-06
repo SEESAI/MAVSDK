@@ -493,6 +493,16 @@ Telemetry::Result Telemetry::set_rate_battery(double rate_hz) const
     return _impl->set_rate_battery(rate_hz);
 }
 
+void Telemetry::set_rate_battery_status_async(double rate_hz, const ResultCallback callback)
+{
+    _impl->set_rate_battery_status_async(rate_hz, callback);
+}
+
+Telemetry::Result Telemetry::set_rate_battery_status(double rate_hz) const
+{
+    return _impl->set_rate_battery_status(rate_hz);
+}
+
 void Telemetry::set_rate_rc_status_async(double rate_hz, const ResultCallback callback)
 {
     _impl->set_rate_rc_status_async(rate_hz, callback);
@@ -803,6 +813,20 @@ std::ostream& operator<<(std::ostream& str, Telemetry::Battery const& battery)
     str << "    current_a: " << battery.current_a << '\n';
     str << "    remaining_percent: " << battery.remaining_percent << '\n';
     str << "    mah_consumed: " << battery.mah_consumed << '\n';
+    str << '}';
+    return str;
+}
+
+bool operator==(const Telemetry::BatteryStatus& lhs, const Telemetry::BatteryStatus& rhs)
+{
+    return (rhs.mah_consumed == lhs.mah_consumed);
+}
+
+std::ostream& operator<<(std::ostream& str, Telemetry::BatteryStatus const& battery_status)
+{
+    str << std::setprecision(15);
+    str << "battery_status:" << '\n' << "{\n";
+    str << "    mah_consumed: " << battery_status.mah_consumed << '\n';
     str << '}';
     return str;
 }

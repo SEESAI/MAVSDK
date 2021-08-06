@@ -369,7 +369,7 @@ public:
       *
       * @return A reference to the stream.
       */
-     friend std::ostream& operator<<(std::ostream& str, Telemetry::BatteryStatus const& batteryStatus);
+     friend std::ostream& operator<<(std::ostream& str, Telemetry::BatteryStatus const& battery_status);
 
     /**
      * @brief 

@@ -518,6 +518,26 @@ public:
         return obj;
     }
 
+    static std::unique_ptr<rpc::telemetry::BatteryStatus>
+    translateToRpcBatteryStatus(const mavsdk::Telemetry::BatteryStatus& battery_status)
+    {
+        auto rpc_obj = std::make_unique<rpc::telemetry::BatteryStatus>();
+
+        rpc_obj->set_mah_consumed(battery_status.mah_consumed);
+
+        return rpc_obj;
+    }
+
+    static mavsdk::Telemetry::BatteryStatus
+    translateFromRpcBatteryStatus(const rpc::telemetry::BatteryStatus& battery_status)
+    {
+        mavsdk::Telemetry::BatteryStatus obj;
+
+        obj.mah_consumed = battery_status.mah_consumed();
+
+        return obj;
+    }
+
     static std::unique_ptr<rpc::telemetry::VehicleStatus>
     translateToRpcVehicleStatus(const mavsdk::Telemetry::VehicleStatus& vehicle_status)
     {
@@ -1892,6 +1912,46 @@ public:
         return grpc::Status::OK;
     }
 
+    grpc::Status SubscribeBatteryStatus(
+        grpc::ServerContext* /* context */,
+        const mavsdk::rpc::telemetry::SubscribeBatteryStatusRequest* /* request */,
+        grpc::ServerWriter<rpc::telemetry::BatteryStatusResponse>* writer) override
+    {
+        if (_lazy_plugin.maybe_plugin() == nullptr) {
+            return grpc::Status::OK;
+        }
+
+        auto stream_closed_promise = std::make_shared<std::promise<void>>();
+        auto stream_closed_future = stream_closed_promise->get_future();
+        register_stream_stop_promise(stream_closed_promise);
+
+        auto is_finished = std::make_shared<bool>(false);
+        auto subscribe_mutex = std::make_shared<std::mutex>();
+
+        _lazy_plugin.maybe_plugin()->subscribe_battery_status(
+            [this, &writer, &stream_closed_promise, is_finished, subscribe_mutex](
+                const mavsdk::Telemetry::BatteryStatus battery_status) {
+                rpc::telemetry::BatteryStatusResponse rpc_response;
+
+                rpc_response.set_allocated_battery_status(translateToRpcBatteryStatus(battery_status).release());
+
+                std::unique_lock<std::mutex> lock(*subscribe_mutex);
+                if (!*is_finished && !writer->Write(rpc_response)) {
+                    _lazy_plugin.maybe_plugin()->subscribe_battery_status(nullptr);
+
+                    *is_finished = true;
+                    unregister_stream_stop_promise(stream_closed_promise);
+                    stream_closed_promise->set_value();
+                }
+            });
+
+        stream_closed_future.wait();
+        std::unique_lock<std::mutex> lock(*subscribe_mutex);
+        *is_finished = true;
+
+        return grpc::Status::OK;
+    }
+
     grpc::Status SubscribeVehicleStatus(
         grpc::ServerContext* /* context */,
         const mavsdk::rpc::telemetry::SubscribeVehicleStatusRequest* /* request */,
@@ -2946,6 +3006,34 @@ public:
         }
 
         auto result = _lazy_plugin.maybe_plugin()->set_rate_battery(request->rate_hz());
+
+        if (response != nullptr) {
+            fillResponseWithResult(response, result);
+        }
+
+        return grpc::Status::OK;
+    }
+
+    grpc::Status SetRateBatteryStatus(
+        grpc::ServerContext* /* context */,
+        const rpc::telemetry::SetRateBatteryStatusRequest* request,
+        rpc::telemetry::SetRateBatteryStatusResponse* response) override
+    {
+        if (_lazy_plugin.maybe_plugin() == nullptr) {
+            if (response != nullptr) {
+                auto result = mavsdk::Telemetry::Result::NoSystem;
+                fillResponseWithResult(response, result);
+            }
+
+            return grpc::Status::OK;
+        }
+
+        if (request == nullptr) {
+            LogWarn() << "SetRateBatteryStatus sent with a null request! Ignoring...";
+            return grpc::Status::OK;
+        }
+
+        auto result = _lazy_plugin.maybe_plugin()->set_rate_battery_status(request->rate_hz());
 
         if (response != nullptr) {
             fillResponseWithResult(response, result);
