@@ -16,6 +16,7 @@ using AngularVelocityBody = Telemetry::AngularVelocityBody;
 using GpsInfo = Telemetry::GpsInfo;
 using RawGps = Telemetry::RawGps;
 using Battery = Telemetry::Battery;
+using BatteryStatus = Telemetry::BatteryStatus;
 using VehicleStatus = Telemetry::VehicleStatus;
 using ModeInfo = Telemetry::ModeInfo;
 using Health = Telemetry::Health;
@@ -190,6 +191,16 @@ void Telemetry::subscribe_battery(BatteryCallback callback)
 Telemetry::Battery Telemetry::battery() const
 {
     return _impl->battery();
+}
+
+void Telemetry::subscribe_battery_status(BatteryStatusCallback callback)
+{
+    _impl->subscribe_battery_status(callback);
+}
+
+Telemetry::BatteryStatus Telemetry::battery_status() const
+{
+    return _impl->battery_status();
 }
 
 void Telemetry::subscribe_vehicle_status(VehicleStatusCallback callback)

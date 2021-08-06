@@ -353,6 +353,24 @@ public:
      */
     friend std::ostream& operator<<(std::ostream& str, Telemetry::Battery const& battery);
 
+    struct BatteryStatus {
+        float mah_consumed{float(NAN)}; /**< @brief current consumed in mAh */
+    };
+
+    /**
+     * @brief Equal operator to compare two `Telemetry::BatteryStatus` objects.
+     *
+     * @return `true` if items are equal.
+     */
+     friend bool operator==(const Telemetry::BatteryStatus& lhs, const Telemetry::BatteryStatus& rhs);
+
+     /**
+      * @brief Stream operator to print information about a `Telemetry::BatteryStatus`.
+      *
+      * @return A reference to the stream.
+      */
+     friend std::ostream& operator<<(std::ostream& str, Telemetry::BatteryStatus const& batteryStatus);
+
     /**
      * @brief 
      */
@@ -1262,6 +1280,24 @@ public:
     Battery battery() const;
 
     /**
+     * @brief Callback type for subscribe_battery_status.
+     */
+
+    using BatteryStatusCallback = std::function<void(BatteryStatus)>;
+
+    /**
+     * @brief Subscribe to 'battery_status' updates.
+     */
+    void subscribe_battery_status(BatteryStatusCallback callback);
+
+    /**
+     * @brief Poll for 'BatteryStatus' (blocking).
+     *
+     * @return One BatteryStatus update.
+     */
+    BatteryStatus battery_status() const;
+
+    /**
      * @brief Callback type for subscribe_vehicle_status.
      */
 
@@ -1767,6 +1803,22 @@ public:
      * @return Result of request.
      */
     Result set_rate_battery(double rate_hz) const;
+
+    /**
+     * @brief Set rate to 'battery_status' updates.
+     *
+     * This function is non-blocking. See 'set_rate_battery_status' for the blocking counterpart.
+     */
+    void set_rate_battery_status_async(double rate_hz, const ResultCallback callback);
+
+    /**
+     * @brief Set rate to 'battery_status' updates.
+     *
+     * This function is blocking. See 'set_rate_battery_status_async' for the non-blocking counterpart.
+     *
+     * @return Result of request.
+     */
+    Result set_rate_battery_status(double rate_hz) const;
 
     /**
      * @brief Set rate to 'RC status' updates.
