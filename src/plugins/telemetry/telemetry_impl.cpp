@@ -1113,7 +1113,7 @@ void TelemetryImpl::process_battery_status(const mavlink_message_t& message)
     mavlink_battery_status_t bat_status;
     mavlink_msg_battery_status_decode(&message, &bat_status);
 
-    if (bat_status.current_battery == -1) {
+    if (!_has_bat_status) {
 
         _has_bat_status = false;
 
