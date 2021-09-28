@@ -1374,7 +1374,9 @@ void TelemetryImpl::process_servo_output_raw(const mavlink_message_t& message)
     servos[14] = mavlink_msg_servo_output_raw_get_servo15_raw(&message);
     servos[15] = mavlink_msg_servo_output_raw_get_servo16_raw(&message);
 
-    set_servo_output_raw(servos);
+    uint32_t timestamp = mavlink_msg_servo_output_raw_get_time_usec(&message);
+
+    set_servo_output_raw(servos, timestamp);
 
     std::lock_guard<std::mutex> lock(_subscription_mutex);
     if (_servo_output_raw_subscription) {
@@ -2025,10 +2027,12 @@ void TelemetryImpl::set_actuator_output_status(uint32_t active, const std::vecto
     _actuator_output_status.actuator = actuators;
 }
 
-void TelemetryImpl::set_servo_output_raw(const std::array<uint16_t, 16>& servos)
+void TelemetryImpl::set_servo_output_raw(
+    const std::array<uint16_t, 16>& servos, uint64_t timestamp_us)
 {
     std::lock_guard<std::mutex> lock(_servo_output_raw_mutex);
     std::copy(servos.begin(), servos.end(), _servo_output_raw.servo);
+    _servo_output_raw.timestamp_us = timestamp_us;
 }
 
 void TelemetryImpl::set_odometry(Telemetry::Odometry& odometry)

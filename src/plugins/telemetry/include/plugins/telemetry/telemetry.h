@@ -549,6 +549,7 @@ public:
      * @brief 
      */
     struct ServoOutputRaw {
+        uint64_t timestamp_us;
         uint16_t servo[16]; /**< @brief */
     };
 
