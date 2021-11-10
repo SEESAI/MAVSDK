@@ -185,7 +185,7 @@ private:
     void set_unix_epoch_time_us(uint64_t time_us);
     void set_actuator_control_target(uint8_t group, const std::vector<float>& controls);
     void set_actuator_output_status(uint32_t active, const std::vector<float>& actuators);
-    void set_servo_output_raw(const std::array<uint16_t, 16>& servos);
+    void set_servo_output_raw(const std::array<uint16_t, 16>& servos, uint64_t timestamp_us);
     void set_odometry(Telemetry::Odometry& odometry);
     void set_distance_sensor(Telemetry::DistanceSensor& distance_sensor);
     void set_scaled_pressure(Telemetry::ScaledPressure& scaled_pressure);
