@@ -172,14 +172,14 @@ class TelemetryService final {
       return std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::mavsdk::rpc::telemetry::RawGpsResponse>>(PrepareAsyncSubscribeRawGpsRaw(context, request, cq));
     }
     // Subscribe to 'GPS RTCM' updates.
-    std::unique_ptr< ::grpc::ClientReaderInterface< ::mavsdk::rpc::telemetry::RtcmGpsResponse>> SubscribeRtcmGps(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeRtcmGpsRequest& request) {
-      return std::unique_ptr< ::grpc::ClientReaderInterface< ::mavsdk::rpc::telemetry::RtcmGpsResponse>>(SubscribeRtcmGpsRaw(context, request));
+    std::unique_ptr< ::grpc::ClientReaderInterface< ::mavsdk::rpc::telemetry::GpsRtcmDataResponse>> SubscribeGpsRtcmData(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeGpsRtcmDataRequest& request) {
+      return std::unique_ptr< ::grpc::ClientReaderInterface< ::mavsdk::rpc::telemetry::GpsRtcmDataResponse>>(SubscribeGpsRtcmDataRaw(context, request));
     }
-    std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::mavsdk::rpc::telemetry::RtcmGpsResponse>> AsyncSubscribeRtcmGps(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeRtcmGpsRequest& request, ::grpc::CompletionQueue* cq, void* tag) {
-      return std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::mavsdk::rpc::telemetry::RtcmGpsResponse>>(AsyncSubscribeRtcmGpsRaw(context, request, cq, tag));
+    std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::mavsdk::rpc::telemetry::GpsRtcmDataResponse>> AsyncSubscribeGpsRtcmData(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeGpsRtcmDataRequest& request, ::grpc::CompletionQueue* cq, void* tag) {
+      return std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::mavsdk::rpc::telemetry::GpsRtcmDataResponse>>(AsyncSubscribeGpsRtcmDataRaw(context, request, cq, tag));
     }
-    std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::mavsdk::rpc::telemetry::RtcmGpsResponse>> PrepareAsyncSubscribeRtcmGps(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeRtcmGpsRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::mavsdk::rpc::telemetry::RtcmGpsResponse>>(PrepareAsyncSubscribeRtcmGpsRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::mavsdk::rpc::telemetry::GpsRtcmDataResponse>> PrepareAsyncSubscribeGpsRtcmData(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeGpsRtcmDataRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::mavsdk::rpc::telemetry::GpsRtcmDataResponse>>(PrepareAsyncSubscribeGpsRtcmDataRaw(context, request, cq));
     }
     // Subscribe to 'battery' updates.
     std::unique_ptr< ::grpc::ClientReaderInterface< ::mavsdk::rpc::telemetry::BatteryResponse>> SubscribeBattery(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeBatteryRequest& request) {
@@ -668,9 +668,9 @@ class TelemetryService final {
       #endif
       // Subscribe to 'GPS RTCM' updates.
       #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
-      virtual void SubscribeRtcmGps(::grpc::ClientContext* context, ::mavsdk::rpc::telemetry::SubscribeRtcmGpsRequest* request, ::grpc::ClientReadReactor< ::mavsdk::rpc::telemetry::RtcmGpsResponse>* reactor) = 0;
+      virtual void SubscribeGpsRtcmData(::grpc::ClientContext* context, ::mavsdk::rpc::telemetry::SubscribeGpsRtcmDataRequest* request, ::grpc::ClientReadReactor< ::mavsdk::rpc::telemetry::GpsRtcmDataResponse>* reactor) = 0;
       #else
-      virtual void SubscribeRtcmGps(::grpc::ClientContext* context, ::mavsdk::rpc::telemetry::SubscribeRtcmGpsRequest* request, ::grpc::experimental::ClientReadReactor< ::mavsdk::rpc::telemetry::RtcmGpsResponse>* reactor) = 0;
+      virtual void SubscribeGpsRtcmData(::grpc::ClientContext* context, ::mavsdk::rpc::telemetry::SubscribeGpsRtcmDataRequest* request, ::grpc::experimental::ClientReadReactor< ::mavsdk::rpc::telemetry::GpsRtcmDataResponse>* reactor) = 0;
       #endif
       // Subscribe to 'battery' updates.
       #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
@@ -1013,9 +1013,9 @@ class TelemetryService final {
     virtual ::grpc::ClientReaderInterface< ::mavsdk::rpc::telemetry::RawGpsResponse>* SubscribeRawGpsRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeRawGpsRequest& request) = 0;
     virtual ::grpc::ClientAsyncReaderInterface< ::mavsdk::rpc::telemetry::RawGpsResponse>* AsyncSubscribeRawGpsRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeRawGpsRequest& request, ::grpc::CompletionQueue* cq, void* tag) = 0;
     virtual ::grpc::ClientAsyncReaderInterface< ::mavsdk::rpc::telemetry::RawGpsResponse>* PrepareAsyncSubscribeRawGpsRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeRawGpsRequest& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientReaderInterface< ::mavsdk::rpc::telemetry::RtcmGpsResponse>* SubscribeRtcmGpsRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeRtcmGpsRequest& request) = 0;
-    virtual ::grpc::ClientAsyncReaderInterface< ::mavsdk::rpc::telemetry::RtcmGpsResponse>* AsyncSubscribeRtcmGpsRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeRtcmGpsRequest& request, ::grpc::CompletionQueue* cq, void* tag) = 0;
-    virtual ::grpc::ClientAsyncReaderInterface< ::mavsdk::rpc::telemetry::RtcmGpsResponse>* PrepareAsyncSubscribeRtcmGpsRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeRtcmGpsRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientReaderInterface< ::mavsdk::rpc::telemetry::GpsRtcmDataResponse>* SubscribeGpsRtcmDataRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeGpsRtcmDataRequest& request) = 0;
+    virtual ::grpc::ClientAsyncReaderInterface< ::mavsdk::rpc::telemetry::GpsRtcmDataResponse>* AsyncSubscribeGpsRtcmDataRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeGpsRtcmDataRequest& request, ::grpc::CompletionQueue* cq, void* tag) = 0;
+    virtual ::grpc::ClientAsyncReaderInterface< ::mavsdk::rpc::telemetry::GpsRtcmDataResponse>* PrepareAsyncSubscribeGpsRtcmDataRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeGpsRtcmDataRequest& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientReaderInterface< ::mavsdk::rpc::telemetry::BatteryResponse>* SubscribeBatteryRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeBatteryRequest& request) = 0;
     virtual ::grpc::ClientAsyncReaderInterface< ::mavsdk::rpc::telemetry::BatteryResponse>* AsyncSubscribeBatteryRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeBatteryRequest& request, ::grpc::CompletionQueue* cq, void* tag) = 0;
     virtual ::grpc::ClientAsyncReaderInterface< ::mavsdk::rpc::telemetry::BatteryResponse>* PrepareAsyncSubscribeBatteryRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeBatteryRequest& request, ::grpc::CompletionQueue* cq) = 0;
@@ -1249,14 +1249,14 @@ class TelemetryService final {
     std::unique_ptr< ::grpc::ClientAsyncReader< ::mavsdk::rpc::telemetry::RawGpsResponse>> PrepareAsyncSubscribeRawGps(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeRawGpsRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncReader< ::mavsdk::rpc::telemetry::RawGpsResponse>>(PrepareAsyncSubscribeRawGpsRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientReader< ::mavsdk::rpc::telemetry::RtcmGpsResponse>> SubscribeRtcmGps(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeRtcmGpsRequest& request) {
-      return std::unique_ptr< ::grpc::ClientReader< ::mavsdk::rpc::telemetry::RtcmGpsResponse>>(SubscribeRtcmGpsRaw(context, request));
+    std::unique_ptr< ::grpc::ClientReader< ::mavsdk::rpc::telemetry::GpsRtcmDataResponse>> SubscribeGpsRtcmData(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeGpsRtcmDataRequest& request) {
+      return std::unique_ptr< ::grpc::ClientReader< ::mavsdk::rpc::telemetry::GpsRtcmDataResponse>>(SubscribeGpsRtcmDataRaw(context, request));
     }
-    std::unique_ptr< ::grpc::ClientAsyncReader< ::mavsdk::rpc::telemetry::RtcmGpsResponse>> AsyncSubscribeRtcmGps(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeRtcmGpsRequest& request, ::grpc::CompletionQueue* cq, void* tag) {
-      return std::unique_ptr< ::grpc::ClientAsyncReader< ::mavsdk::rpc::telemetry::RtcmGpsResponse>>(AsyncSubscribeRtcmGpsRaw(context, request, cq, tag));
+    std::unique_ptr< ::grpc::ClientAsyncReader< ::mavsdk::rpc::telemetry::GpsRtcmDataResponse>> AsyncSubscribeGpsRtcmData(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeGpsRtcmDataRequest& request, ::grpc::CompletionQueue* cq, void* tag) {
+      return std::unique_ptr< ::grpc::ClientAsyncReader< ::mavsdk::rpc::telemetry::GpsRtcmDataResponse>>(AsyncSubscribeGpsRtcmDataRaw(context, request, cq, tag));
     }
-    std::unique_ptr< ::grpc::ClientAsyncReader< ::mavsdk::rpc::telemetry::RtcmGpsResponse>> PrepareAsyncSubscribeRtcmGps(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeRtcmGpsRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncReader< ::mavsdk::rpc::telemetry::RtcmGpsResponse>>(PrepareAsyncSubscribeRtcmGpsRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncReader< ::mavsdk::rpc::telemetry::GpsRtcmDataResponse>> PrepareAsyncSubscribeGpsRtcmData(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeGpsRtcmDataRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncReader< ::mavsdk::rpc::telemetry::GpsRtcmDataResponse>>(PrepareAsyncSubscribeGpsRtcmDataRaw(context, request, cq));
     }
     std::unique_ptr< ::grpc::ClientReader< ::mavsdk::rpc::telemetry::BatteryResponse>> SubscribeBattery(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeBatteryRequest& request) {
       return std::unique_ptr< ::grpc::ClientReader< ::mavsdk::rpc::telemetry::BatteryResponse>>(SubscribeBatteryRaw(context, request));
@@ -1686,9 +1686,9 @@ class TelemetryService final {
       void SubscribeRawGps(::grpc::ClientContext* context, ::mavsdk::rpc::telemetry::SubscribeRawGpsRequest* request, ::grpc::experimental::ClientReadReactor< ::mavsdk::rpc::telemetry::RawGpsResponse>* reactor) override;
       #endif
       #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
-      void SubscribeRtcmGps(::grpc::ClientContext* context, ::mavsdk::rpc::telemetry::SubscribeRtcmGpsRequest* request, ::grpc::ClientReadReactor< ::mavsdk::rpc::telemetry::RtcmGpsResponse>* reactor) override;
+      void SubscribeGpsRtcmData(::grpc::ClientContext* context, ::mavsdk::rpc::telemetry::SubscribeGpsRtcmDataRequest* request, ::grpc::ClientReadReactor< ::mavsdk::rpc::telemetry::GpsRtcmDataResponse>* reactor) override;
       #else
-      void SubscribeRtcmGps(::grpc::ClientContext* context, ::mavsdk::rpc::telemetry::SubscribeRtcmGpsRequest* request, ::grpc::experimental::ClientReadReactor< ::mavsdk::rpc::telemetry::RtcmGpsResponse>* reactor) override;
+      void SubscribeGpsRtcmData(::grpc::ClientContext* context, ::mavsdk::rpc::telemetry::SubscribeGpsRtcmDataRequest* request, ::grpc::experimental::ClientReadReactor< ::mavsdk::rpc::telemetry::GpsRtcmDataResponse>* reactor) override;
       #endif
       #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
       void SubscribeBattery(::grpc::ClientContext* context, ::mavsdk::rpc::telemetry::SubscribeBatteryRequest* request, ::grpc::ClientReadReactor< ::mavsdk::rpc::telemetry::BatteryResponse>* reactor) override;
@@ -1988,9 +1988,9 @@ class TelemetryService final {
     ::grpc::ClientReader< ::mavsdk::rpc::telemetry::RawGpsResponse>* SubscribeRawGpsRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeRawGpsRequest& request) override;
     ::grpc::ClientAsyncReader< ::mavsdk::rpc::telemetry::RawGpsResponse>* AsyncSubscribeRawGpsRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeRawGpsRequest& request, ::grpc::CompletionQueue* cq, void* tag) override;
     ::grpc::ClientAsyncReader< ::mavsdk::rpc::telemetry::RawGpsResponse>* PrepareAsyncSubscribeRawGpsRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeRawGpsRequest& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientReader< ::mavsdk::rpc::telemetry::RtcmGpsResponse>* SubscribeRtcmGpsRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeRtcmGpsRequest& request) override;
-    ::grpc::ClientAsyncReader< ::mavsdk::rpc::telemetry::RtcmGpsResponse>* AsyncSubscribeRtcmGpsRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeRtcmGpsRequest& request, ::grpc::CompletionQueue* cq, void* tag) override;
-    ::grpc::ClientAsyncReader< ::mavsdk::rpc::telemetry::RtcmGpsResponse>* PrepareAsyncSubscribeRtcmGpsRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeRtcmGpsRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientReader< ::mavsdk::rpc::telemetry::GpsRtcmDataResponse>* SubscribeGpsRtcmDataRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeGpsRtcmDataRequest& request) override;
+    ::grpc::ClientAsyncReader< ::mavsdk::rpc::telemetry::GpsRtcmDataResponse>* AsyncSubscribeGpsRtcmDataRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeGpsRtcmDataRequest& request, ::grpc::CompletionQueue* cq, void* tag) override;
+    ::grpc::ClientAsyncReader< ::mavsdk::rpc::telemetry::GpsRtcmDataResponse>* PrepareAsyncSubscribeGpsRtcmDataRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeGpsRtcmDataRequest& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientReader< ::mavsdk::rpc::telemetry::BatteryResponse>* SubscribeBatteryRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeBatteryRequest& request) override;
     ::grpc::ClientAsyncReader< ::mavsdk::rpc::telemetry::BatteryResponse>* AsyncSubscribeBatteryRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeBatteryRequest& request, ::grpc::CompletionQueue* cq, void* tag) override;
     ::grpc::ClientAsyncReader< ::mavsdk::rpc::telemetry::BatteryResponse>* PrepareAsyncSubscribeBatteryRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeBatteryRequest& request, ::grpc::CompletionQueue* cq) override;
@@ -2116,7 +2116,7 @@ class TelemetryService final {
     const ::grpc::internal::RpcMethod rpcmethod_SubscribeVelocityNed_;
     const ::grpc::internal::RpcMethod rpcmethod_SubscribeGpsInfo_;
     const ::grpc::internal::RpcMethod rpcmethod_SubscribeRawGps_;
-    const ::grpc::internal::RpcMethod rpcmethod_SubscribeRtcmGps_;
+    const ::grpc::internal::RpcMethod rpcmethod_SubscribeGpsRtcmData_;
     const ::grpc::internal::RpcMethod rpcmethod_SubscribeBattery_;
     const ::grpc::internal::RpcMethod rpcmethod_SubscribeBatteryStatus_;
     const ::grpc::internal::RpcMethod rpcmethod_SubscribeVehicleStatus_;
@@ -2196,7 +2196,7 @@ class TelemetryService final {
     // Subscribe to 'Raw GPS' updates.
     virtual ::grpc::Status SubscribeRawGps(::grpc::ServerContext* context, const ::mavsdk::rpc::telemetry::SubscribeRawGpsRequest* request, ::grpc::ServerWriter< ::mavsdk::rpc::telemetry::RawGpsResponse>* writer);
     // Subscribe to 'GPS RTCM' updates.
-    virtual ::grpc::Status SubscribeRtcmGps(::grpc::ServerContext* context, const ::mavsdk::rpc::telemetry::SubscribeRtcmGpsRequest* request, ::grpc::ServerWriter< ::mavsdk::rpc::telemetry::RtcmGpsResponse>* writer);
+    virtual ::grpc::Status SubscribeGpsRtcmData(::grpc::ServerContext* context, const ::mavsdk::rpc::telemetry::SubscribeGpsRtcmDataRequest* request, ::grpc::ServerWriter< ::mavsdk::rpc::telemetry::GpsRtcmDataResponse>* writer);
     // Subscribe to 'battery' updates.
     virtual ::grpc::Status SubscribeBattery(::grpc::ServerContext* context, const ::mavsdk::rpc::telemetry::SubscribeBatteryRequest* request, ::grpc::ServerWriter< ::mavsdk::rpc::telemetry::BatteryResponse>* writer);
     // Subscribe to 'battery_status' updates.
@@ -2549,22 +2549,22 @@ class TelemetryService final {
     }
   };
   template <class BaseClass>
-  class WithAsyncMethod_SubscribeRtcmGps : public BaseClass {
+  class WithAsyncMethod_SubscribeGpsRtcmData : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithAsyncMethod_SubscribeRtcmGps() {
+    WithAsyncMethod_SubscribeGpsRtcmData() {
       ::grpc::Service::MarkMethodAsync(13);
     }
-    ~WithAsyncMethod_SubscribeRtcmGps() override {
+    ~WithAsyncMethod_SubscribeGpsRtcmData() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status SubscribeRtcmGps(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::telemetry::SubscribeRtcmGpsRequest* /*request*/, ::grpc::ServerWriter< ::mavsdk::rpc::telemetry::RtcmGpsResponse>* /*writer*/) override {
+    ::grpc::Status SubscribeGpsRtcmData(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::telemetry::SubscribeGpsRtcmDataRequest* /*request*/, ::grpc::ServerWriter< ::mavsdk::rpc::telemetry::GpsRtcmDataResponse>* /*writer*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void RequestSubscribeRtcmGps(::grpc::ServerContext* context, ::mavsdk::rpc::telemetry::SubscribeRtcmGpsRequest* request, ::grpc::ServerAsyncWriter< ::mavsdk::rpc::telemetry::RtcmGpsResponse>* writer, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+    void RequestSubscribeGpsRtcmData(::grpc::ServerContext* context, ::mavsdk::rpc::telemetry::SubscribeGpsRtcmDataRequest* request, ::grpc::ServerAsyncWriter< ::mavsdk::rpc::telemetry::GpsRtcmDataResponse>* writer, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncServerStreaming(13, context, request, writer, new_call_cq, notification_cq, tag);
     }
   };
@@ -3468,7 +3468,7 @@ class TelemetryService final {
       ::grpc::Service::RequestAsyncUnary(58, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
-  typedef WithAsyncMethod_SubscribePosition<WithAsyncMethod_SubscribeHome<WithAsyncMethod_SubscribeInAir<WithAsyncMethod_SubscribeLandedState<WithAsyncMethod_SubscribeArmed<WithAsyncMethod_SubscribeAttitudeQuaternion<WithAsyncMethod_SubscribeAttitudeEuler<WithAsyncMethod_SubscribeAttitudeAngularVelocityBody<WithAsyncMethod_SubscribeCameraAttitudeQuaternion<WithAsyncMethod_SubscribeCameraAttitudeEuler<WithAsyncMethod_SubscribeVelocityNed<WithAsyncMethod_SubscribeGpsInfo<WithAsyncMethod_SubscribeRawGps<WithAsyncMethod_SubscribeRtcmGps<WithAsyncMethod_SubscribeBattery<WithAsyncMethod_SubscribeBatteryStatus<WithAsyncMethod_SubscribeVehicleStatus<WithAsyncMethod_SubscribeFlightMode<WithAsyncMethod_SubscribeModeInfo<WithAsyncMethod_SubscribeHealth<WithAsyncMethod_SubscribeRcStatus<WithAsyncMethod_SubscribeStatusText<WithAsyncMethod_SubscribeActuatorControlTarget<WithAsyncMethod_SubscribeActuatorOutputStatus<WithAsyncMethod_SubscribeServoOutputRaw<WithAsyncMethod_SubscribeOdometry<WithAsyncMethod_SubscribePositionVelocityNed<WithAsyncMethod_SubscribeGroundTruth<WithAsyncMethod_SubscribeFixedwingMetrics<WithAsyncMethod_SubscribeImu<WithAsyncMethod_SubscribeScaledImu<WithAsyncMethod_SubscribeRawImu<WithAsyncMethod_SubscribeHealthAllOk<WithAsyncMethod_SubscribeUnixEpochTime<WithAsyncMethod_SubscribeDistanceSensor<WithAsyncMethod_SubscribeScaledPressure<WithAsyncMethod_SetRatePosition<WithAsyncMethod_SetRateHome<WithAsyncMethod_SetRateInAir<WithAsyncMethod_SetRateLandedState<WithAsyncMethod_SetRateAttitude<WithAsyncMethod_SetRateCameraAttitude<WithAsyncMethod_SetRateVelocityNed<WithAsyncMethod_SetRateGpsInfo<WithAsyncMethod_SetRateBattery<WithAsyncMethod_SetRateBatteryStatus<WithAsyncMethod_SetRateRcStatus<WithAsyncMethod_SetRateActuatorControlTarget<WithAsyncMethod_SetRateActuatorOutputStatus<WithAsyncMethod_SetRateOdometry<WithAsyncMethod_SetRatePositionVelocityNed<WithAsyncMethod_SetRateGroundTruth<WithAsyncMethod_SetRateFixedwingMetrics<WithAsyncMethod_SetRateImu<WithAsyncMethod_SetRateScaledImu<WithAsyncMethod_SetRateRawImu<WithAsyncMethod_SetRateUnixEpochTime<WithAsyncMethod_SetRateDistanceSensor<WithAsyncMethod_GetGpsGlobalOrigin<Service > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > AsyncService;
+  typedef WithAsyncMethod_SubscribePosition<WithAsyncMethod_SubscribeHome<WithAsyncMethod_SubscribeInAir<WithAsyncMethod_SubscribeLandedState<WithAsyncMethod_SubscribeArmed<WithAsyncMethod_SubscribeAttitudeQuaternion<WithAsyncMethod_SubscribeAttitudeEuler<WithAsyncMethod_SubscribeAttitudeAngularVelocityBody<WithAsyncMethod_SubscribeCameraAttitudeQuaternion<WithAsyncMethod_SubscribeCameraAttitudeEuler<WithAsyncMethod_SubscribeVelocityNed<WithAsyncMethod_SubscribeGpsInfo<WithAsyncMethod_SubscribeRawGps<WithAsyncMethod_SubscribeGpsRtcmData<WithAsyncMethod_SubscribeBattery<WithAsyncMethod_SubscribeBatteryStatus<WithAsyncMethod_SubscribeVehicleStatus<WithAsyncMethod_SubscribeFlightMode<WithAsyncMethod_SubscribeModeInfo<WithAsyncMethod_SubscribeHealth<WithAsyncMethod_SubscribeRcStatus<WithAsyncMethod_SubscribeStatusText<WithAsyncMethod_SubscribeActuatorControlTarget<WithAsyncMethod_SubscribeActuatorOutputStatus<WithAsyncMethod_SubscribeServoOutputRaw<WithAsyncMethod_SubscribeOdometry<WithAsyncMethod_SubscribePositionVelocityNed<WithAsyncMethod_SubscribeGroundTruth<WithAsyncMethod_SubscribeFixedwingMetrics<WithAsyncMethod_SubscribeImu<WithAsyncMethod_SubscribeScaledImu<WithAsyncMethod_SubscribeRawImu<WithAsyncMethod_SubscribeHealthAllOk<WithAsyncMethod_SubscribeUnixEpochTime<WithAsyncMethod_SubscribeDistanceSensor<WithAsyncMethod_SubscribeScaledPressure<WithAsyncMethod_SetRatePosition<WithAsyncMethod_SetRateHome<WithAsyncMethod_SetRateInAir<WithAsyncMethod_SetRateLandedState<WithAsyncMethod_SetRateAttitude<WithAsyncMethod_SetRateCameraAttitude<WithAsyncMethod_SetRateVelocityNed<WithAsyncMethod_SetRateGpsInfo<WithAsyncMethod_SetRateBattery<WithAsyncMethod_SetRateBatteryStatus<WithAsyncMethod_SetRateRcStatus<WithAsyncMethod_SetRateActuatorControlTarget<WithAsyncMethod_SetRateActuatorOutputStatus<WithAsyncMethod_SetRateOdometry<WithAsyncMethod_SetRatePositionVelocityNed<WithAsyncMethod_SetRateGroundTruth<WithAsyncMethod_SetRateFixedwingMetrics<WithAsyncMethod_SetRateImu<WithAsyncMethod_SetRateScaledImu<WithAsyncMethod_SetRateRawImu<WithAsyncMethod_SetRateUnixEpochTime<WithAsyncMethod_SetRateDistanceSensor<WithAsyncMethod_GetGpsGlobalOrigin<Service > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > AsyncService;
   template <class BaseClass>
   class ExperimentalWithCallbackMethod_SubscribePosition : public BaseClass {
    private:
@@ -3964,40 +3964,40 @@ class TelemetryService final {
       { return nullptr; }
   };
   template <class BaseClass>
-  class ExperimentalWithCallbackMethod_SubscribeRtcmGps : public BaseClass {
+  class ExperimentalWithCallbackMethod_SubscribeGpsRtcmData : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    ExperimentalWithCallbackMethod_SubscribeRtcmGps() {
+    ExperimentalWithCallbackMethod_SubscribeGpsRtcmData() {
     #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
       ::grpc::Service::
     #else
       ::grpc::Service::experimental().
     #endif
         MarkMethodCallback(13,
-          new ::grpc::internal::CallbackServerStreamingHandler< ::mavsdk::rpc::telemetry::SubscribeRtcmGpsRequest, ::mavsdk::rpc::telemetry::RtcmGpsResponse>(
+          new ::grpc::internal::CallbackServerStreamingHandler< ::mavsdk::rpc::telemetry::SubscribeGpsRtcmDataRequest, ::mavsdk::rpc::telemetry::GpsRtcmDataResponse>(
             [this](
     #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
                    ::grpc::CallbackServerContext*
     #else
                    ::grpc::experimental::CallbackServerContext*
     #endif
-                     context, const ::mavsdk::rpc::telemetry::SubscribeRtcmGpsRequest* request) { return this->SubscribeRtcmGps(context, request); }));
+                     context, const ::mavsdk::rpc::telemetry::SubscribeGpsRtcmDataRequest* request) { return this->SubscribeGpsRtcmData(context, request); }));
     }
-    ~ExperimentalWithCallbackMethod_SubscribeRtcmGps() override {
+    ~ExperimentalWithCallbackMethod_SubscribeGpsRtcmData() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status SubscribeRtcmGps(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::telemetry::SubscribeRtcmGpsRequest* /*request*/, ::grpc::ServerWriter< ::mavsdk::rpc::telemetry::RtcmGpsResponse>* /*writer*/) override {
+    ::grpc::Status SubscribeGpsRtcmData(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::telemetry::SubscribeGpsRtcmDataRequest* /*request*/, ::grpc::ServerWriter< ::mavsdk::rpc::telemetry::GpsRtcmDataResponse>* /*writer*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
-    virtual ::grpc::ServerWriteReactor< ::mavsdk::rpc::telemetry::RtcmGpsResponse>* SubscribeRtcmGps(
-      ::grpc::CallbackServerContext* /*context*/, const ::mavsdk::rpc::telemetry::SubscribeRtcmGpsRequest* /*request*/)
+    virtual ::grpc::ServerWriteReactor< ::mavsdk::rpc::telemetry::GpsRtcmDataResponse>* SubscribeGpsRtcmData(
+      ::grpc::CallbackServerContext* /*context*/, const ::mavsdk::rpc::telemetry::SubscribeGpsRtcmDataRequest* /*request*/)
     #else
-    virtual ::grpc::experimental::ServerWriteReactor< ::mavsdk::rpc::telemetry::RtcmGpsResponse>* SubscribeRtcmGps(
-      ::grpc::experimental::CallbackServerContext* /*context*/, const ::mavsdk::rpc::telemetry::SubscribeRtcmGpsRequest* /*request*/)
+    virtual ::grpc::experimental::ServerWriteReactor< ::mavsdk::rpc::telemetry::GpsRtcmDataResponse>* SubscribeGpsRtcmData(
+      ::grpc::experimental::CallbackServerContext* /*context*/, const ::mavsdk::rpc::telemetry::SubscribeGpsRtcmDataRequest* /*request*/)
     #endif
       { return nullptr; }
   };
@@ -5919,10 +5919,10 @@ class TelemetryService final {
       { return nullptr; }
   };
   #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
-  typedef ExperimentalWithCallbackMethod_SubscribePosition<ExperimentalWithCallbackMethod_SubscribeHome<ExperimentalWithCallbackMethod_SubscribeInAir<ExperimentalWithCallbackMethod_SubscribeLandedState<ExperimentalWithCallbackMethod_SubscribeArmed<ExperimentalWithCallbackMethod_SubscribeAttitudeQuaternion<ExperimentalWithCallbackMethod_SubscribeAttitudeEuler<ExperimentalWithCallbackMethod_SubscribeAttitudeAngularVelocityBody<ExperimentalWithCallbackMethod_SubscribeCameraAttitudeQuaternion<ExperimentalWithCallbackMethod_SubscribeCameraAttitudeEuler<ExperimentalWithCallbackMethod_SubscribeVelocityNed<ExperimentalWithCallbackMethod_SubscribeGpsInfo<ExperimentalWithCallbackMethod_SubscribeRawGps<ExperimentalWithCallbackMethod_SubscribeRtcmGps<ExperimentalWithCallbackMethod_SubscribeBattery<ExperimentalWithCallbackMethod_SubscribeBatteryStatus<ExperimentalWithCallbackMethod_SubscribeVehicleStatus<ExperimentalWithCallbackMethod_SubscribeFlightMode<ExperimentalWithCallbackMethod_SubscribeModeInfo<ExperimentalWithCallbackMethod_SubscribeHealth<ExperimentalWithCallbackMethod_SubscribeRcStatus<ExperimentalWithCallbackMethod_SubscribeStatusText<ExperimentalWithCallbackMethod_SubscribeActuatorControlTarget<ExperimentalWithCallbackMethod_SubscribeActuatorOutputStatus<ExperimentalWithCallbackMethod_SubscribeServoOutputRaw<ExperimentalWithCallbackMethod_SubscribeOdometry<ExperimentalWithCallbackMethod_SubscribePositionVelocityNed<ExperimentalWithCallbackMethod_SubscribeGroundTruth<ExperimentalWithCallbackMethod_SubscribeFixedwingMetrics<ExperimentalWithCallbackMethod_SubscribeImu<ExperimentalWithCallbackMethod_SubscribeScaledImu<ExperimentalWithCallbackMethod_SubscribeRawImu<ExperimentalWithCallbackMethod_SubscribeHealthAllOk<ExperimentalWithCallbackMethod_SubscribeUnixEpochTime<ExperimentalWithCallbackMethod_SubscribeDistanceSensor<ExperimentalWithCallbackMethod_SubscribeScaledPressure<ExperimentalWithCallbackMethod_SetRatePosition<ExperimentalWithCallbackMethod_SetRateHome<ExperimentalWithCallbackMethod_SetRateInAir<ExperimentalWithCallbackMethod_SetRateLandedState<ExperimentalWithCallbackMethod_SetRateAttitude<ExperimentalWithCallbackMethod_SetRateCameraAttitude<ExperimentalWithCallbackMethod_SetRateVelocityNed<ExperimentalWithCallbackMethod_SetRateGpsInfo<ExperimentalWithCallbackMethod_SetRateBattery<ExperimentalWithCallbackMethod_SetRateBatteryStatus<ExperimentalWithCallbackMethod_SetRateRcStatus<ExperimentalWithCallbackMethod_SetRateActuatorControlTarget<ExperimentalWithCallbackMethod_SetRateActuatorOutputStatus<ExperimentalWithCallbackMethod_SetRateOdometry<ExperimentalWithCallbackMethod_SetRatePositionVelocityNed<ExperimentalWithCallbackMethod_SetRateGroundTruth<ExperimentalWithCallbackMethod_SetRateFixedwingMetrics<ExperimentalWithCallbackMethod_SetRateImu<ExperimentalWithCallbackMethod_SetRateScaledImu<ExperimentalWithCallbackMethod_SetRateRawImu<ExperimentalWithCallbackMethod_SetRateUnixEpochTime<ExperimentalWithCallbackMethod_SetRateDistanceSensor<ExperimentalWithCallbackMethod_GetGpsGlobalOrigin<Service > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > CallbackService;
+  typedef ExperimentalWithCallbackMethod_SubscribePosition<ExperimentalWithCallbackMethod_SubscribeHome<ExperimentalWithCallbackMethod_SubscribeInAir<ExperimentalWithCallbackMethod_SubscribeLandedState<ExperimentalWithCallbackMethod_SubscribeArmed<ExperimentalWithCallbackMethod_SubscribeAttitudeQuaternion<ExperimentalWithCallbackMethod_SubscribeAttitudeEuler<ExperimentalWithCallbackMethod_SubscribeAttitudeAngularVelocityBody<ExperimentalWithCallbackMethod_SubscribeCameraAttitudeQuaternion<ExperimentalWithCallbackMethod_SubscribeCameraAttitudeEuler<ExperimentalWithCallbackMethod_SubscribeVelocityNed<ExperimentalWithCallbackMethod_SubscribeGpsInfo<ExperimentalWithCallbackMethod_SubscribeRawGps<ExperimentalWithCallbackMethod_SubscribeGpsRtcmData<ExperimentalWithCallbackMethod_SubscribeBattery<ExperimentalWithCallbackMethod_SubscribeBatteryStatus<ExperimentalWithCallbackMethod_SubscribeVehicleStatus<ExperimentalWithCallbackMethod_SubscribeFlightMode<ExperimentalWithCallbackMethod_SubscribeModeInfo<ExperimentalWithCallbackMethod_SubscribeHealth<ExperimentalWithCallbackMethod_SubscribeRcStatus<ExperimentalWithCallbackMethod_SubscribeStatusText<ExperimentalWithCallbackMethod_SubscribeActuatorControlTarget<ExperimentalWithCallbackMethod_SubscribeActuatorOutputStatus<ExperimentalWithCallbackMethod_SubscribeServoOutputRaw<ExperimentalWithCallbackMethod_SubscribeOdometry<ExperimentalWithCallbackMethod_SubscribePositionVelocityNed<ExperimentalWithCallbackMethod_SubscribeGroundTruth<ExperimentalWithCallbackMethod_SubscribeFixedwingMetrics<ExperimentalWithCallbackMethod_SubscribeImu<ExperimentalWithCallbackMethod_SubscribeScaledImu<ExperimentalWithCallbackMethod_SubscribeRawImu<ExperimentalWithCallbackMethod_SubscribeHealthAllOk<ExperimentalWithCallbackMethod_SubscribeUnixEpochTime<ExperimentalWithCallbackMethod_SubscribeDistanceSensor<ExperimentalWithCallbackMethod_SubscribeScaledPressure<ExperimentalWithCallbackMethod_SetRatePosition<ExperimentalWithCallbackMethod_SetRateHome<ExperimentalWithCallbackMethod_SetRateInAir<ExperimentalWithCallbackMethod_SetRateLandedState<ExperimentalWithCallbackMethod_SetRateAttitude<ExperimentalWithCallbackMethod_SetRateCameraAttitude<ExperimentalWithCallbackMethod_SetRateVelocityNed<ExperimentalWithCallbackMethod_SetRateGpsInfo<ExperimentalWithCallbackMethod_SetRateBattery<ExperimentalWithCallbackMethod_SetRateBatteryStatus<ExperimentalWithCallbackMethod_SetRateRcStatus<ExperimentalWithCallbackMethod_SetRateActuatorControlTarget<ExperimentalWithCallbackMethod_SetRateActuatorOutputStatus<ExperimentalWithCallbackMethod_SetRateOdometry<ExperimentalWithCallbackMethod_SetRatePositionVelocityNed<ExperimentalWithCallbackMethod_SetRateGroundTruth<ExperimentalWithCallbackMethod_SetRateFixedwingMetrics<ExperimentalWithCallbackMethod_SetRateImu<ExperimentalWithCallbackMethod_SetRateScaledImu<ExperimentalWithCallbackMethod_SetRateRawImu<ExperimentalWithCallbackMethod_SetRateUnixEpochTime<ExperimentalWithCallbackMethod_SetRateDistanceSensor<ExperimentalWithCallbackMethod_GetGpsGlobalOrigin<Service > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > CallbackService;
   #endif
 
-  typedef ExperimentalWithCallbackMethod_SubscribePosition<ExperimentalWithCallbackMethod_SubscribeHome<ExperimentalWithCallbackMethod_SubscribeInAir<ExperimentalWithCallbackMethod_SubscribeLandedState<ExperimentalWithCallbackMethod_SubscribeArmed<ExperimentalWithCallbackMethod_SubscribeAttitudeQuaternion<ExperimentalWithCallbackMethod_SubscribeAttitudeEuler<ExperimentalWithCallbackMethod_SubscribeAttitudeAngularVelocityBody<ExperimentalWithCallbackMethod_SubscribeCameraAttitudeQuaternion<ExperimentalWithCallbackMethod_SubscribeCameraAttitudeEuler<ExperimentalWithCallbackMethod_SubscribeVelocityNed<ExperimentalWithCallbackMethod_SubscribeGpsInfo<ExperimentalWithCallbackMethod_SubscribeRawGps<ExperimentalWithCallbackMethod_SubscribeRtcmGps<ExperimentalWithCallbackMethod_SubscribeBattery<ExperimentalWithCallbackMethod_SubscribeBatteryStatus<ExperimentalWithCallbackMethod_SubscribeVehicleStatus<ExperimentalWithCallbackMethod_SubscribeFlightMode<ExperimentalWithCallbackMethod_SubscribeModeInfo<ExperimentalWithCallbackMethod_SubscribeHealth<ExperimentalWithCallbackMethod_SubscribeRcStatus<ExperimentalWithCallbackMethod_SubscribeStatusText<ExperimentalWithCallbackMethod_SubscribeActuatorControlTarget<ExperimentalWithCallbackMethod_SubscribeActuatorOutputStatus<ExperimentalWithCallbackMethod_SubscribeServoOutputRaw<ExperimentalWithCallbackMethod_SubscribeOdometry<ExperimentalWithCallbackMethod_SubscribePositionVelocityNed<ExperimentalWithCallbackMethod_SubscribeGroundTruth<ExperimentalWithCallbackMethod_SubscribeFixedwingMetrics<ExperimentalWithCallbackMethod_SubscribeImu<ExperimentalWithCallbackMethod_SubscribeScaledImu<ExperimentalWithCallbackMethod_SubscribeRawImu<ExperimentalWithCallbackMethod_SubscribeHealthAllOk<ExperimentalWithCallbackMethod_SubscribeUnixEpochTime<ExperimentalWithCallbackMethod_SubscribeDistanceSensor<ExperimentalWithCallbackMethod_SubscribeScaledPressure<ExperimentalWithCallbackMethod_SetRatePosition<ExperimentalWithCallbackMethod_SetRateHome<ExperimentalWithCallbackMethod_SetRateInAir<ExperimentalWithCallbackMethod_SetRateLandedState<ExperimentalWithCallbackMethod_SetRateAttitude<ExperimentalWithCallbackMethod_SetRateCameraAttitude<ExperimentalWithCallbackMethod_SetRateVelocityNed<ExperimentalWithCallbackMethod_SetRateGpsInfo<ExperimentalWithCallbackMethod_SetRateBattery<ExperimentalWithCallbackMethod_SetRateBatteryStatus<ExperimentalWithCallbackMethod_SetRateRcStatus<ExperimentalWithCallbackMethod_SetRateActuatorControlTarget<ExperimentalWithCallbackMethod_SetRateActuatorOutputStatus<ExperimentalWithCallbackMethod_SetRateOdometry<ExperimentalWithCallbackMethod_SetRatePositionVelocityNed<ExperimentalWithCallbackMethod_SetRateGroundTruth<ExperimentalWithCallbackMethod_SetRateFixedwingMetrics<ExperimentalWithCallbackMethod_SetRateImu<ExperimentalWithCallbackMethod_SetRateScaledImu<ExperimentalWithCallbackMethod_SetRateRawImu<ExperimentalWithCallbackMethod_SetRateUnixEpochTime<ExperimentalWithCallbackMethod_SetRateDistanceSensor<ExperimentalWithCallbackMethod_GetGpsGlobalOrigin<Service > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ExperimentalCallbackService;
+  typedef ExperimentalWithCallbackMethod_SubscribePosition<ExperimentalWithCallbackMethod_SubscribeHome<ExperimentalWithCallbackMethod_SubscribeInAir<ExperimentalWithCallbackMethod_SubscribeLandedState<ExperimentalWithCallbackMethod_SubscribeArmed<ExperimentalWithCallbackMethod_SubscribeAttitudeQuaternion<ExperimentalWithCallbackMethod_SubscribeAttitudeEuler<ExperimentalWithCallbackMethod_SubscribeAttitudeAngularVelocityBody<ExperimentalWithCallbackMethod_SubscribeCameraAttitudeQuaternion<ExperimentalWithCallbackMethod_SubscribeCameraAttitudeEuler<ExperimentalWithCallbackMethod_SubscribeVelocityNed<ExperimentalWithCallbackMethod_SubscribeGpsInfo<ExperimentalWithCallbackMethod_SubscribeRawGps<ExperimentalWithCallbackMethod_SubscribeGpsRtcmData<ExperimentalWithCallbackMethod_SubscribeBattery<ExperimentalWithCallbackMethod_SubscribeBatteryStatus<ExperimentalWithCallbackMethod_SubscribeVehicleStatus<ExperimentalWithCallbackMethod_SubscribeFlightMode<ExperimentalWithCallbackMethod_SubscribeModeInfo<ExperimentalWithCallbackMethod_SubscribeHealth<ExperimentalWithCallbackMethod_SubscribeRcStatus<ExperimentalWithCallbackMethod_SubscribeStatusText<ExperimentalWithCallbackMethod_SubscribeActuatorControlTarget<ExperimentalWithCallbackMethod_SubscribeActuatorOutputStatus<ExperimentalWithCallbackMethod_SubscribeServoOutputRaw<ExperimentalWithCallbackMethod_SubscribeOdometry<ExperimentalWithCallbackMethod_SubscribePositionVelocityNed<ExperimentalWithCallbackMethod_SubscribeGroundTruth<ExperimentalWithCallbackMethod_SubscribeFixedwingMetrics<ExperimentalWithCallbackMethod_SubscribeImu<ExperimentalWithCallbackMethod_SubscribeScaledImu<ExperimentalWithCallbackMethod_SubscribeRawImu<ExperimentalWithCallbackMethod_SubscribeHealthAllOk<ExperimentalWithCallbackMethod_SubscribeUnixEpochTime<ExperimentalWithCallbackMethod_SubscribeDistanceSensor<ExperimentalWithCallbackMethod_SubscribeScaledPressure<ExperimentalWithCallbackMethod_SetRatePosition<ExperimentalWithCallbackMethod_SetRateHome<ExperimentalWithCallbackMethod_SetRateInAir<ExperimentalWithCallbackMethod_SetRateLandedState<ExperimentalWithCallbackMethod_SetRateAttitude<ExperimentalWithCallbackMethod_SetRateCameraAttitude<ExperimentalWithCallbackMethod_SetRateVelocityNed<ExperimentalWithCallbackMethod_SetRateGpsInfo<ExperimentalWithCallbackMethod_SetRateBattery<ExperimentalWithCallbackMethod_SetRateBatteryStatus<ExperimentalWithCallbackMethod_SetRateRcStatus<ExperimentalWithCallbackMethod_SetRateActuatorControlTarget<ExperimentalWithCallbackMethod_SetRateActuatorOutputStatus<ExperimentalWithCallbackMethod_SetRateOdometry<ExperimentalWithCallbackMethod_SetRatePositionVelocityNed<ExperimentalWithCallbackMethod_SetRateGroundTruth<ExperimentalWithCallbackMethod_SetRateFixedwingMetrics<ExperimentalWithCallbackMethod_SetRateImu<ExperimentalWithCallbackMethod_SetRateScaledImu<ExperimentalWithCallbackMethod_SetRateRawImu<ExperimentalWithCallbackMethod_SetRateUnixEpochTime<ExperimentalWithCallbackMethod_SetRateDistanceSensor<ExperimentalWithCallbackMethod_GetGpsGlobalOrigin<Service > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > ExperimentalCallbackService;
   template <class BaseClass>
   class WithGenericMethod_SubscribePosition : public BaseClass {
    private:
@@ -6145,18 +6145,18 @@ class TelemetryService final {
     }
   };
   template <class BaseClass>
-  class WithGenericMethod_SubscribeRtcmGps : public BaseClass {
+  class WithGenericMethod_SubscribeGpsRtcmData : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithGenericMethod_SubscribeRtcmGps() {
+    WithGenericMethod_SubscribeGpsRtcmData() {
       ::grpc::Service::MarkMethodGeneric(13);
     }
-    ~WithGenericMethod_SubscribeRtcmGps() override {
+    ~WithGenericMethod_SubscribeGpsRtcmData() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status SubscribeRtcmGps(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::telemetry::SubscribeRtcmGpsRequest* /*request*/, ::grpc::ServerWriter< ::mavsdk::rpc::telemetry::RtcmGpsResponse>* /*writer*/) override {
+    ::grpc::Status SubscribeGpsRtcmData(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::telemetry::SubscribeGpsRtcmDataRequest* /*request*/, ::grpc::ServerWriter< ::mavsdk::rpc::telemetry::GpsRtcmDataResponse>* /*writer*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -7187,22 +7187,22 @@ class TelemetryService final {
     }
   };
   template <class BaseClass>
-  class WithRawMethod_SubscribeRtcmGps : public BaseClass {
+  class WithRawMethod_SubscribeGpsRtcmData : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithRawMethod_SubscribeRtcmGps() {
+    WithRawMethod_SubscribeGpsRtcmData() {
       ::grpc::Service::MarkMethodRaw(13);
     }
-    ~WithRawMethod_SubscribeRtcmGps() override {
+    ~WithRawMethod_SubscribeGpsRtcmData() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status SubscribeRtcmGps(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::telemetry::SubscribeRtcmGpsRequest* /*request*/, ::grpc::ServerWriter< ::mavsdk::rpc::telemetry::RtcmGpsResponse>* /*writer*/) override {
+    ::grpc::Status SubscribeGpsRtcmData(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::telemetry::SubscribeGpsRtcmDataRequest* /*request*/, ::grpc::ServerWriter< ::mavsdk::rpc::telemetry::GpsRtcmDataResponse>* /*writer*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void RequestSubscribeRtcmGps(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncWriter< ::grpc::ByteBuffer>* writer, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+    void RequestSubscribeGpsRtcmData(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncWriter< ::grpc::ByteBuffer>* writer, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncServerStreaming(13, context, request, writer, new_call_cq, notification_cq, tag);
     }
   };
@@ -8601,11 +8601,11 @@ class TelemetryService final {
       { return nullptr; }
   };
   template <class BaseClass>
-  class ExperimentalWithRawCallbackMethod_SubscribeRtcmGps : public BaseClass {
+  class ExperimentalWithRawCallbackMethod_SubscribeGpsRtcmData : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    ExperimentalWithRawCallbackMethod_SubscribeRtcmGps() {
+    ExperimentalWithRawCallbackMethod_SubscribeGpsRtcmData() {
     #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
       ::grpc::Service::
     #else
@@ -8619,21 +8619,21 @@ class TelemetryService final {
     #else
                    ::grpc::experimental::CallbackServerContext*
     #endif
-                     context, const::grpc::ByteBuffer* request) { return this->SubscribeRtcmGps(context, request); }));
+                     context, const::grpc::ByteBuffer* request) { return this->SubscribeGpsRtcmData(context, request); }));
     }
-    ~ExperimentalWithRawCallbackMethod_SubscribeRtcmGps() override {
+    ~ExperimentalWithRawCallbackMethod_SubscribeGpsRtcmData() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status SubscribeRtcmGps(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::telemetry::SubscribeRtcmGpsRequest* /*request*/, ::grpc::ServerWriter< ::mavsdk::rpc::telemetry::RtcmGpsResponse>* /*writer*/) override {
+    ::grpc::Status SubscribeGpsRtcmData(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::telemetry::SubscribeGpsRtcmDataRequest* /*request*/, ::grpc::ServerWriter< ::mavsdk::rpc::telemetry::GpsRtcmDataResponse>* /*writer*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
-    virtual ::grpc::ServerWriteReactor< ::grpc::ByteBuffer>* SubscribeRtcmGps(
+    virtual ::grpc::ServerWriteReactor< ::grpc::ByteBuffer>* SubscribeGpsRtcmData(
       ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/)
     #else
-    virtual ::grpc::experimental::ServerWriteReactor< ::grpc::ByteBuffer>* SubscribeRtcmGps(
+    virtual ::grpc::experimental::ServerWriteReactor< ::grpc::ByteBuffer>* SubscribeGpsRtcmData(
       ::grpc::experimental::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/)
     #endif
       { return nullptr; }
@@ -11322,31 +11322,31 @@ class TelemetryService final {
     virtual ::grpc::Status StreamedSubscribeRawGps(::grpc::ServerContext* context, ::grpc::ServerSplitStreamer< ::mavsdk::rpc::telemetry::SubscribeRawGpsRequest,::mavsdk::rpc::telemetry::RawGpsResponse>* server_split_streamer) = 0;
   };
   template <class BaseClass>
-  class WithSplitStreamingMethod_SubscribeRtcmGps : public BaseClass {
+  class WithSplitStreamingMethod_SubscribeGpsRtcmData : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithSplitStreamingMethod_SubscribeRtcmGps() {
+    WithSplitStreamingMethod_SubscribeGpsRtcmData() {
       ::grpc::Service::MarkMethodStreamed(13,
         new ::grpc::internal::SplitServerStreamingHandler<
-          ::mavsdk::rpc::telemetry::SubscribeRtcmGpsRequest, ::mavsdk::rpc::telemetry::RtcmGpsResponse>(
+          ::mavsdk::rpc::telemetry::SubscribeGpsRtcmDataRequest, ::mavsdk::rpc::telemetry::GpsRtcmDataResponse>(
             [this](::grpc::ServerContext* context,
                    ::grpc::ServerSplitStreamer<
-                     ::mavsdk::rpc::telemetry::SubscribeRtcmGpsRequest, ::mavsdk::rpc::telemetry::RtcmGpsResponse>* streamer) {
-                       return this->StreamedSubscribeRtcmGps(context,
+                     ::mavsdk::rpc::telemetry::SubscribeGpsRtcmDataRequest, ::mavsdk::rpc::telemetry::GpsRtcmDataResponse>* streamer) {
+                       return this->StreamedSubscribeGpsRtcmData(context,
                          streamer);
                   }));
     }
-    ~WithSplitStreamingMethod_SubscribeRtcmGps() override {
+    ~WithSplitStreamingMethod_SubscribeGpsRtcmData() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable regular version of this method
-    ::grpc::Status SubscribeRtcmGps(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::telemetry::SubscribeRtcmGpsRequest* /*request*/, ::grpc::ServerWriter< ::mavsdk::rpc::telemetry::RtcmGpsResponse>* /*writer*/) override {
+    ::grpc::Status SubscribeGpsRtcmData(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::telemetry::SubscribeGpsRtcmDataRequest* /*request*/, ::grpc::ServerWriter< ::mavsdk::rpc::telemetry::GpsRtcmDataResponse>* /*writer*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     // replace default version of method with split streamed
-    virtual ::grpc::Status StreamedSubscribeRtcmGps(::grpc::ServerContext* context, ::grpc::ServerSplitStreamer< ::mavsdk::rpc::telemetry::SubscribeRtcmGpsRequest,::mavsdk::rpc::telemetry::RtcmGpsResponse>* server_split_streamer) = 0;
+    virtual ::grpc::Status StreamedSubscribeGpsRtcmData(::grpc::ServerContext* context, ::grpc::ServerSplitStreamer< ::mavsdk::rpc::telemetry::SubscribeGpsRtcmDataRequest,::mavsdk::rpc::telemetry::GpsRtcmDataResponse>* server_split_streamer) = 0;
   };
   template <class BaseClass>
   class WithSplitStreamingMethod_SubscribeBattery : public BaseClass {
@@ -11942,8 +11942,8 @@ class TelemetryService final {
     // replace default version of method with split streamed
     virtual ::grpc::Status StreamedSubscribeScaledPressure(::grpc::ServerContext* context, ::grpc::ServerSplitStreamer< ::mavsdk::rpc::telemetry::SubscribeScaledPressureRequest,::mavsdk::rpc::telemetry::ScaledPressureResponse>* server_split_streamer) = 0;
   };
-  typedef WithSplitStreamingMethod_SubscribePosition<WithSplitStreamingMethod_SubscribeHome<WithSplitStreamingMethod_SubscribeInAir<WithSplitStreamingMethod_SubscribeLandedState<WithSplitStreamingMethod_SubscribeArmed<WithSplitStreamingMethod_SubscribeAttitudeQuaternion<WithSplitStreamingMethod_SubscribeAttitudeEuler<WithSplitStreamingMethod_SubscribeAttitudeAngularVelocityBody<WithSplitStreamingMethod_SubscribeCameraAttitudeQuaternion<WithSplitStreamingMethod_SubscribeCameraAttitudeEuler<WithSplitStreamingMethod_SubscribeVelocityNed<WithSplitStreamingMethod_SubscribeGpsInfo<WithSplitStreamingMethod_SubscribeRawGps<WithSplitStreamingMethod_SubscribeRtcmGps<WithSplitStreamingMethod_SubscribeBattery<WithSplitStreamingMethod_SubscribeBatteryStatus<WithSplitStreamingMethod_SubscribeVehicleStatus<WithSplitStreamingMethod_SubscribeFlightMode<WithSplitStreamingMethod_SubscribeModeInfo<WithSplitStreamingMethod_SubscribeHealth<WithSplitStreamingMethod_SubscribeRcStatus<WithSplitStreamingMethod_SubscribeStatusText<WithSplitStreamingMethod_SubscribeActuatorControlTarget<WithSplitStreamingMethod_SubscribeActuatorOutputStatus<WithSplitStreamingMethod_SubscribeServoOutputRaw<WithSplitStreamingMethod_SubscribeOdometry<WithSplitStreamingMethod_SubscribePositionVelocityNed<WithSplitStreamingMethod_SubscribeGroundTruth<WithSplitStreamingMethod_SubscribeFixedwingMetrics<WithSplitStreamingMethod_SubscribeImu<WithSplitStreamingMethod_SubscribeScaledImu<WithSplitStreamingMethod_SubscribeRawImu<WithSplitStreamingMethod_SubscribeHealthAllOk<WithSplitStreamingMethod_SubscribeUnixEpochTime<WithSplitStreamingMethod_SubscribeDistanceSensor<WithSplitStreamingMethod_SubscribeScaledPressure<Service > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > SplitStreamedService;
-  typedef WithSplitStreamingMethod_SubscribePosition<WithSplitStreamingMethod_SubscribeHome<WithSplitStreamingMethod_SubscribeInAir<WithSplitStreamingMethod_SubscribeLandedState<WithSplitStreamingMethod_SubscribeArmed<WithSplitStreamingMethod_SubscribeAttitudeQuaternion<WithSplitStreamingMethod_SubscribeAttitudeEuler<WithSplitStreamingMethod_SubscribeAttitudeAngularVelocityBody<WithSplitStreamingMethod_SubscribeCameraAttitudeQuaternion<WithSplitStreamingMethod_SubscribeCameraAttitudeEuler<WithSplitStreamingMethod_SubscribeVelocityNed<WithSplitStreamingMethod_SubscribeGpsInfo<WithSplitStreamingMethod_SubscribeRawGps<WithSplitStreamingMethod_SubscribeRtcmGps<WithSplitStreamingMethod_SubscribeBattery<WithSplitStreamingMethod_SubscribeBatteryStatus<WithSplitStreamingMethod_SubscribeVehicleStatus<WithSplitStreamingMethod_SubscribeFlightMode<WithSplitStreamingMethod_SubscribeModeInfo<WithSplitStreamingMethod_SubscribeHealth<WithSplitStreamingMethod_SubscribeRcStatus<WithSplitStreamingMethod_SubscribeStatusText<WithSplitStreamingMethod_SubscribeActuatorControlTarget<WithSplitStreamingMethod_SubscribeActuatorOutputStatus<WithSplitStreamingMethod_SubscribeServoOutputRaw<WithSplitStreamingMethod_SubscribeOdometry<WithSplitStreamingMethod_SubscribePositionVelocityNed<WithSplitStreamingMethod_SubscribeGroundTruth<WithSplitStreamingMethod_SubscribeFixedwingMetrics<WithSplitStreamingMethod_SubscribeImu<WithSplitStreamingMethod_SubscribeScaledImu<WithSplitStreamingMethod_SubscribeRawImu<WithSplitStreamingMethod_SubscribeHealthAllOk<WithSplitStreamingMethod_SubscribeUnixEpochTime<WithSplitStreamingMethod_SubscribeDistanceSensor<WithSplitStreamingMethod_SubscribeScaledPressure<WithStreamedUnaryMethod_SetRatePosition<WithStreamedUnaryMethod_SetRateHome<WithStreamedUnaryMethod_SetRateInAir<WithStreamedUnaryMethod_SetRateLandedState<WithStreamedUnaryMethod_SetRateAttitude<WithStreamedUnaryMethod_SetRateCameraAttitude<WithStreamedUnaryMethod_SetRateVelocityNed<WithStreamedUnaryMethod_SetRateGpsInfo<WithStreamedUnaryMethod_SetRateBattery<WithStreamedUnaryMethod_SetRateBatteryStatus<WithStreamedUnaryMethod_SetRateRcStatus<WithStreamedUnaryMethod_SetRateActuatorControlTarget<WithStreamedUnaryMethod_SetRateActuatorOutputStatus<WithStreamedUnaryMethod_SetRateOdometry<WithStreamedUnaryMethod_SetRatePositionVelocityNed<WithStreamedUnaryMethod_SetRateGroundTruth<WithStreamedUnaryMethod_SetRateFixedwingMetrics<WithStreamedUnaryMethod_SetRateImu<WithStreamedUnaryMethod_SetRateScaledImu<WithStreamedUnaryMethod_SetRateRawImu<WithStreamedUnaryMethod_SetRateUnixEpochTime<WithStreamedUnaryMethod_SetRateDistanceSensor<WithStreamedUnaryMethod_GetGpsGlobalOrigin<Service > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > StreamedService;
+  typedef WithSplitStreamingMethod_SubscribePosition<WithSplitStreamingMethod_SubscribeHome<WithSplitStreamingMethod_SubscribeInAir<WithSplitStreamingMethod_SubscribeLandedState<WithSplitStreamingMethod_SubscribeArmed<WithSplitStreamingMethod_SubscribeAttitudeQuaternion<WithSplitStreamingMethod_SubscribeAttitudeEuler<WithSplitStreamingMethod_SubscribeAttitudeAngularVelocityBody<WithSplitStreamingMethod_SubscribeCameraAttitudeQuaternion<WithSplitStreamingMethod_SubscribeCameraAttitudeEuler<WithSplitStreamingMethod_SubscribeVelocityNed<WithSplitStreamingMethod_SubscribeGpsInfo<WithSplitStreamingMethod_SubscribeRawGps<WithSplitStreamingMethod_SubscribeGpsRtcmData<WithSplitStreamingMethod_SubscribeBattery<WithSplitStreamingMethod_SubscribeBatteryStatus<WithSplitStreamingMethod_SubscribeVehicleStatus<WithSplitStreamingMethod_SubscribeFlightMode<WithSplitStreamingMethod_SubscribeModeInfo<WithSplitStreamingMethod_SubscribeHealth<WithSplitStreamingMethod_SubscribeRcStatus<WithSplitStreamingMethod_SubscribeStatusText<WithSplitStreamingMethod_SubscribeActuatorControlTarget<WithSplitStreamingMethod_SubscribeActuatorOutputStatus<WithSplitStreamingMethod_SubscribeServoOutputRaw<WithSplitStreamingMethod_SubscribeOdometry<WithSplitStreamingMethod_SubscribePositionVelocityNed<WithSplitStreamingMethod_SubscribeGroundTruth<WithSplitStreamingMethod_SubscribeFixedwingMetrics<WithSplitStreamingMethod_SubscribeImu<WithSplitStreamingMethod_SubscribeScaledImu<WithSplitStreamingMethod_SubscribeRawImu<WithSplitStreamingMethod_SubscribeHealthAllOk<WithSplitStreamingMethod_SubscribeUnixEpochTime<WithSplitStreamingMethod_SubscribeDistanceSensor<WithSplitStreamingMethod_SubscribeScaledPressure<Service > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > SplitStreamedService;
+  typedef WithSplitStreamingMethod_SubscribePosition<WithSplitStreamingMethod_SubscribeHome<WithSplitStreamingMethod_SubscribeInAir<WithSplitStreamingMethod_SubscribeLandedState<WithSplitStreamingMethod_SubscribeArmed<WithSplitStreamingMethod_SubscribeAttitudeQuaternion<WithSplitStreamingMethod_SubscribeAttitudeEuler<WithSplitStreamingMethod_SubscribeAttitudeAngularVelocityBody<WithSplitStreamingMethod_SubscribeCameraAttitudeQuaternion<WithSplitStreamingMethod_SubscribeCameraAttitudeEuler<WithSplitStreamingMethod_SubscribeVelocityNed<WithSplitStreamingMethod_SubscribeGpsInfo<WithSplitStreamingMethod_SubscribeRawGps<WithSplitStreamingMethod_SubscribeGpsRtcmData<WithSplitStreamingMethod_SubscribeBattery<WithSplitStreamingMethod_SubscribeBatteryStatus<WithSplitStreamingMethod_SubscribeVehicleStatus<WithSplitStreamingMethod_SubscribeFlightMode<WithSplitStreamingMethod_SubscribeModeInfo<WithSplitStreamingMethod_SubscribeHealth<WithSplitStreamingMethod_SubscribeRcStatus<WithSplitStreamingMethod_SubscribeStatusText<WithSplitStreamingMethod_SubscribeActuatorControlTarget<WithSplitStreamingMethod_SubscribeActuatorOutputStatus<WithSplitStreamingMethod_SubscribeServoOutputRaw<WithSplitStreamingMethod_SubscribeOdometry<WithSplitStreamingMethod_SubscribePositionVelocityNed<WithSplitStreamingMethod_SubscribeGroundTruth<WithSplitStreamingMethod_SubscribeFixedwingMetrics<WithSplitStreamingMethod_SubscribeImu<WithSplitStreamingMethod_SubscribeScaledImu<WithSplitStreamingMethod_SubscribeRawImu<WithSplitStreamingMethod_SubscribeHealthAllOk<WithSplitStreamingMethod_SubscribeUnixEpochTime<WithSplitStreamingMethod_SubscribeDistanceSensor<WithSplitStreamingMethod_SubscribeScaledPressure<WithStreamedUnaryMethod_SetRatePosition<WithStreamedUnaryMethod_SetRateHome<WithStreamedUnaryMethod_SetRateInAir<WithStreamedUnaryMethod_SetRateLandedState<WithStreamedUnaryMethod_SetRateAttitude<WithStreamedUnaryMethod_SetRateCameraAttitude<WithStreamedUnaryMethod_SetRateVelocityNed<WithStreamedUnaryMethod_SetRateGpsInfo<WithStreamedUnaryMethod_SetRateBattery<WithStreamedUnaryMethod_SetRateBatteryStatus<WithStreamedUnaryMethod_SetRateRcStatus<WithStreamedUnaryMethod_SetRateActuatorControlTarget<WithStreamedUnaryMethod_SetRateActuatorOutputStatus<WithStreamedUnaryMethod_SetRateOdometry<WithStreamedUnaryMethod_SetRatePositionVelocityNed<WithStreamedUnaryMethod_SetRateGroundTruth<WithStreamedUnaryMethod_SetRateFixedwingMetrics<WithStreamedUnaryMethod_SetRateImu<WithStreamedUnaryMethod_SetRateScaledImu<WithStreamedUnaryMethod_SetRateRawImu<WithStreamedUnaryMethod_SetRateUnixEpochTime<WithStreamedUnaryMethod_SetRateDistanceSensor<WithStreamedUnaryMethod_GetGpsGlobalOrigin<Service > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > > StreamedService;
 };
 
 }  // namespace telemetry

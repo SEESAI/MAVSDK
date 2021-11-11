@@ -330,25 +330,25 @@ public:
     /**
      * @brief 
      */
-    struct RtcmGps {
+    struct GpsRtcmData {
         int32_t flags{0}; /**< @brief Fragment ID of RTCM data */
         int32_t len{0}; /**< @brief RTCM data length */
         std::vector<int32_t> data{}; /**< @brief RTCM message */
     };
 
     /**
-     * @brief Equal operator to compare two `Telemetry::RtcmGps` objects.
+     * @brief Equal operator to compare two `Telemetry::GpsRtcmData` objects.
      *
      * @return `true` if items are equal.
      */
-    friend bool operator==(const Telemetry::RtcmGps& lhs, const Telemetry::RtcmGps& rhs);
+    friend bool operator==(const Telemetry::GpsRtcmData& lhs, const Telemetry::GpsRtcmData& rhs);
 
     /**
-     * @brief Stream operator to print information about a `Telemetry::RtcmGps`.
+     * @brief Stream operator to print information about a `Telemetry::GpsRtcmData`.
      *
      * @return A reference to the stream.
      */
-    friend std::ostream& operator<<(std::ostream& str, Telemetry::RtcmGps const& rtcm_gps);
+    friend std::ostream& operator<<(std::ostream& str, Telemetry::GpsRtcmData const& gps_rtcm_data);
 
     /**
      * @brief Battery type.
@@ -1286,22 +1286,22 @@ public:
     RawGps raw_gps() const;
 
     /**
-    * @brief Callback type for subscribe_rtcm_gps.
+    * @brief Callback type for subscribe_gps_rtcm_data.
     */
         
-    using RtcmGpsCallback = std::function<void(RtcmGps)>;
+    using GpsRtcmDataCallback = std::function<void(GpsRtcmData)>;
 
     /**
      * @brief Subscribe to 'GPS RTCM' updates.
      */
-    void subscribe_rtcm_gps(RtcmGpsCallback callback);
+    void subscribe_gps_rtcm_data(GpsRtcmDataCallback callback);
 
     /**
-     * @brief Poll for 'RtcmGps' (blocking).
+     * @brief Poll for 'GpsRtcmData' (blocking).
      *
-     * @return One RtcmGps update.
+     * @return One GpsRtcmData update.
      */
-    RtcmGps rtcm_gps() const;
+    GpsRtcmData gps_rtcm_data() const;
 
     /**
      * @brief Callback type for subscribe_battery.

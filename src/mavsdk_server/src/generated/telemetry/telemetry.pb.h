@@ -146,6 +146,12 @@ extern GpsInfoDefaultTypeInternal _GpsInfo_default_instance_;
 class GpsInfoResponse;
 struct GpsInfoResponseDefaultTypeInternal;
 extern GpsInfoResponseDefaultTypeInternal _GpsInfoResponse_default_instance_;
+class GpsRtcmData;
+struct GpsRtcmDataDefaultTypeInternal;
+extern GpsRtcmDataDefaultTypeInternal _GpsRtcmData_default_instance_;
+class GpsRtcmDataResponse;
+struct GpsRtcmDataResponseDefaultTypeInternal;
+extern GpsRtcmDataResponseDefaultTypeInternal _GpsRtcmDataResponse_default_instance_;
 class GroundTruth;
 struct GroundTruthDefaultTypeInternal;
 extern GroundTruthDefaultTypeInternal _GroundTruth_default_instance_;
@@ -227,12 +233,6 @@ extern RcStatusDefaultTypeInternal _RcStatus_default_instance_;
 class RcStatusResponse;
 struct RcStatusResponseDefaultTypeInternal;
 extern RcStatusResponseDefaultTypeInternal _RcStatusResponse_default_instance_;
-class RtcmGps;
-struct RtcmGpsDefaultTypeInternal;
-extern RtcmGpsDefaultTypeInternal _RtcmGps_default_instance_;
-class RtcmGpsResponse;
-struct RtcmGpsResponseDefaultTypeInternal;
-extern RtcmGpsResponseDefaultTypeInternal _RtcmGpsResponse_default_instance_;
 class ScaledImuResponse;
 struct ScaledImuResponseDefaultTypeInternal;
 extern ScaledImuResponseDefaultTypeInternal _ScaledImuResponse_default_instance_;
@@ -443,6 +443,9 @@ extern SubscribeFlightModeRequestDefaultTypeInternal _SubscribeFlightModeRequest
 class SubscribeGpsInfoRequest;
 struct SubscribeGpsInfoRequestDefaultTypeInternal;
 extern SubscribeGpsInfoRequestDefaultTypeInternal _SubscribeGpsInfoRequest_default_instance_;
+class SubscribeGpsRtcmDataRequest;
+struct SubscribeGpsRtcmDataRequestDefaultTypeInternal;
+extern SubscribeGpsRtcmDataRequestDefaultTypeInternal _SubscribeGpsRtcmDataRequest_default_instance_;
 class SubscribeGroundTruthRequest;
 struct SubscribeGroundTruthRequestDefaultTypeInternal;
 extern SubscribeGroundTruthRequestDefaultTypeInternal _SubscribeGroundTruthRequest_default_instance_;
@@ -485,9 +488,6 @@ extern SubscribeRawImuRequestDefaultTypeInternal _SubscribeRawImuRequest_default
 class SubscribeRcStatusRequest;
 struct SubscribeRcStatusRequestDefaultTypeInternal;
 extern SubscribeRcStatusRequestDefaultTypeInternal _SubscribeRcStatusRequest_default_instance_;
-class SubscribeRtcmGpsRequest;
-struct SubscribeRtcmGpsRequestDefaultTypeInternal;
-extern SubscribeRtcmGpsRequestDefaultTypeInternal _SubscribeRtcmGpsRequest_default_instance_;
 class SubscribeScaledImuRequest;
 struct SubscribeScaledImuRequestDefaultTypeInternal;
 extern SubscribeScaledImuRequestDefaultTypeInternal _SubscribeScaledImuRequest_default_instance_;
@@ -563,6 +563,8 @@ template<> ::mavsdk::rpc::telemetry::GetGpsGlobalOriginResponse* Arena::CreateMa
 template<> ::mavsdk::rpc::telemetry::GpsGlobalOrigin* Arena::CreateMaybeMessage<::mavsdk::rpc::telemetry::GpsGlobalOrigin>(Arena*);
 template<> ::mavsdk::rpc::telemetry::GpsInfo* Arena::CreateMaybeMessage<::mavsdk::rpc::telemetry::GpsInfo>(Arena*);
 template<> ::mavsdk::rpc::telemetry::GpsInfoResponse* Arena::CreateMaybeMessage<::mavsdk::rpc::telemetry::GpsInfoResponse>(Arena*);
+template<> ::mavsdk::rpc::telemetry::GpsRtcmData* Arena::CreateMaybeMessage<::mavsdk::rpc::telemetry::GpsRtcmData>(Arena*);
+template<> ::mavsdk::rpc::telemetry::GpsRtcmDataResponse* Arena::CreateMaybeMessage<::mavsdk::rpc::telemetry::GpsRtcmDataResponse>(Arena*);
 template<> ::mavsdk::rpc::telemetry::GroundTruth* Arena::CreateMaybeMessage<::mavsdk::rpc::telemetry::GroundTruth>(Arena*);
 template<> ::mavsdk::rpc::telemetry::GroundTruthResponse* Arena::CreateMaybeMessage<::mavsdk::rpc::telemetry::GroundTruthResponse>(Arena*);
 template<> ::mavsdk::rpc::telemetry::Health* Arena::CreateMaybeMessage<::mavsdk::rpc::telemetry::Health>(Arena*);
@@ -590,8 +592,6 @@ template<> ::mavsdk::rpc::telemetry::RawGpsResponse* Arena::CreateMaybeMessage<:
 template<> ::mavsdk::rpc::telemetry::RawImuResponse* Arena::CreateMaybeMessage<::mavsdk::rpc::telemetry::RawImuResponse>(Arena*);
 template<> ::mavsdk::rpc::telemetry::RcStatus* Arena::CreateMaybeMessage<::mavsdk::rpc::telemetry::RcStatus>(Arena*);
 template<> ::mavsdk::rpc::telemetry::RcStatusResponse* Arena::CreateMaybeMessage<::mavsdk::rpc::telemetry::RcStatusResponse>(Arena*);
-template<> ::mavsdk::rpc::telemetry::RtcmGps* Arena::CreateMaybeMessage<::mavsdk::rpc::telemetry::RtcmGps>(Arena*);
-template<> ::mavsdk::rpc::telemetry::RtcmGpsResponse* Arena::CreateMaybeMessage<::mavsdk::rpc::telemetry::RtcmGpsResponse>(Arena*);
 template<> ::mavsdk::rpc::telemetry::ScaledImuResponse* Arena::CreateMaybeMessage<::mavsdk::rpc::telemetry::ScaledImuResponse>(Arena*);
 template<> ::mavsdk::rpc::telemetry::ScaledPressure* Arena::CreateMaybeMessage<::mavsdk::rpc::telemetry::ScaledPressure>(Arena*);
 template<> ::mavsdk::rpc::telemetry::ScaledPressureResponse* Arena::CreateMaybeMessage<::mavsdk::rpc::telemetry::ScaledPressureResponse>(Arena*);
@@ -662,6 +662,7 @@ template<> ::mavsdk::rpc::telemetry::SubscribeDistanceSensorRequest* Arena::Crea
 template<> ::mavsdk::rpc::telemetry::SubscribeFixedwingMetricsRequest* Arena::CreateMaybeMessage<::mavsdk::rpc::telemetry::SubscribeFixedwingMetricsRequest>(Arena*);
 template<> ::mavsdk::rpc::telemetry::SubscribeFlightModeRequest* Arena::CreateMaybeMessage<::mavsdk::rpc::telemetry::SubscribeFlightModeRequest>(Arena*);
 template<> ::mavsdk::rpc::telemetry::SubscribeGpsInfoRequest* Arena::CreateMaybeMessage<::mavsdk::rpc::telemetry::SubscribeGpsInfoRequest>(Arena*);
+template<> ::mavsdk::rpc::telemetry::SubscribeGpsRtcmDataRequest* Arena::CreateMaybeMessage<::mavsdk::rpc::telemetry::SubscribeGpsRtcmDataRequest>(Arena*);
 template<> ::mavsdk::rpc::telemetry::SubscribeGroundTruthRequest* Arena::CreateMaybeMessage<::mavsdk::rpc::telemetry::SubscribeGroundTruthRequest>(Arena*);
 template<> ::mavsdk::rpc::telemetry::SubscribeHealthAllOkRequest* Arena::CreateMaybeMessage<::mavsdk::rpc::telemetry::SubscribeHealthAllOkRequest>(Arena*);
 template<> ::mavsdk::rpc::telemetry::SubscribeHealthRequest* Arena::CreateMaybeMessage<::mavsdk::rpc::telemetry::SubscribeHealthRequest>(Arena*);
@@ -676,7 +677,6 @@ template<> ::mavsdk::rpc::telemetry::SubscribePositionVelocityNedRequest* Arena:
 template<> ::mavsdk::rpc::telemetry::SubscribeRawGpsRequest* Arena::CreateMaybeMessage<::mavsdk::rpc::telemetry::SubscribeRawGpsRequest>(Arena*);
 template<> ::mavsdk::rpc::telemetry::SubscribeRawImuRequest* Arena::CreateMaybeMessage<::mavsdk::rpc::telemetry::SubscribeRawImuRequest>(Arena*);
 template<> ::mavsdk::rpc::telemetry::SubscribeRcStatusRequest* Arena::CreateMaybeMessage<::mavsdk::rpc::telemetry::SubscribeRcStatusRequest>(Arena*);
-template<> ::mavsdk::rpc::telemetry::SubscribeRtcmGpsRequest* Arena::CreateMaybeMessage<::mavsdk::rpc::telemetry::SubscribeRtcmGpsRequest>(Arena*);
 template<> ::mavsdk::rpc::telemetry::SubscribeScaledImuRequest* Arena::CreateMaybeMessage<::mavsdk::rpc::telemetry::SubscribeScaledImuRequest>(Arena*);
 template<> ::mavsdk::rpc::telemetry::SubscribeScaledPressureRequest* Arena::CreateMaybeMessage<::mavsdk::rpc::telemetry::SubscribeScaledPressureRequest>(Arena*);
 template<> ::mavsdk::rpc::telemetry::SubscribeServoOutputRawRequest* Arena::CreateMaybeMessage<::mavsdk::rpc::telemetry::SubscribeServoOutputRawRequest>(Arena*);
@@ -4368,24 +4368,24 @@ class RawGpsResponse PROTOBUF_FINAL :
 };
 // -------------------------------------------------------------------
 
-class SubscribeRtcmGpsRequest PROTOBUF_FINAL :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:mavsdk.rpc.telemetry.SubscribeRtcmGpsRequest) */ {
+class SubscribeGpsRtcmDataRequest PROTOBUF_FINAL :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:mavsdk.rpc.telemetry.SubscribeGpsRtcmDataRequest) */ {
  public:
-  inline SubscribeRtcmGpsRequest() : SubscribeRtcmGpsRequest(nullptr) {}
-  virtual ~SubscribeRtcmGpsRequest();
-  explicit constexpr SubscribeRtcmGpsRequest(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  inline SubscribeGpsRtcmDataRequest() : SubscribeGpsRtcmDataRequest(nullptr) {}
+  virtual ~SubscribeGpsRtcmDataRequest();
+  explicit constexpr SubscribeGpsRtcmDataRequest(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-  SubscribeRtcmGpsRequest(const SubscribeRtcmGpsRequest& from);
-  SubscribeRtcmGpsRequest(SubscribeRtcmGpsRequest&& from) noexcept
-    : SubscribeRtcmGpsRequest() {
+  SubscribeGpsRtcmDataRequest(const SubscribeGpsRtcmDataRequest& from);
+  SubscribeGpsRtcmDataRequest(SubscribeGpsRtcmDataRequest&& from) noexcept
+    : SubscribeGpsRtcmDataRequest() {
     *this = ::std::move(from);
   }
 
-  inline SubscribeRtcmGpsRequest& operator=(const SubscribeRtcmGpsRequest& from) {
+  inline SubscribeGpsRtcmDataRequest& operator=(const SubscribeGpsRtcmDataRequest& from) {
     CopyFrom(from);
     return *this;
   }
-  inline SubscribeRtcmGpsRequest& operator=(SubscribeRtcmGpsRequest&& from) noexcept {
+  inline SubscribeGpsRtcmDataRequest& operator=(SubscribeGpsRtcmDataRequest&& from) noexcept {
     if (GetArena() == from.GetArena()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -4403,20 +4403,20 @@ class SubscribeRtcmGpsRequest PROTOBUF_FINAL :
   static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
     return GetMetadataStatic().reflection;
   }
-  static const SubscribeRtcmGpsRequest& default_instance() {
+  static const SubscribeGpsRtcmDataRequest& default_instance() {
     return *internal_default_instance();
   }
-  static inline const SubscribeRtcmGpsRequest* internal_default_instance() {
-    return reinterpret_cast<const SubscribeRtcmGpsRequest*>(
-               &_SubscribeRtcmGpsRequest_default_instance_);
+  static inline const SubscribeGpsRtcmDataRequest* internal_default_instance() {
+    return reinterpret_cast<const SubscribeGpsRtcmDataRequest*>(
+               &_SubscribeGpsRtcmDataRequest_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     26;
 
-  friend void swap(SubscribeRtcmGpsRequest& a, SubscribeRtcmGpsRequest& b) {
+  friend void swap(SubscribeGpsRtcmDataRequest& a, SubscribeGpsRtcmDataRequest& b) {
     a.Swap(&b);
   }
-  inline void Swap(SubscribeRtcmGpsRequest* other) {
+  inline void Swap(SubscribeGpsRtcmDataRequest* other) {
     if (other == this) return;
     if (GetArena() == other->GetArena()) {
       InternalSwap(other);
@@ -4424,7 +4424,7 @@ class SubscribeRtcmGpsRequest PROTOBUF_FINAL :
       ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(SubscribeRtcmGpsRequest* other) {
+  void UnsafeArenaSwap(SubscribeGpsRtcmDataRequest* other) {
     if (other == this) return;
     GOOGLE_DCHECK(GetArena() == other->GetArena());
     InternalSwap(other);
@@ -4432,17 +4432,17 @@ class SubscribeRtcmGpsRequest PROTOBUF_FINAL :
 
   // implements Message ----------------------------------------------
 
-  inline SubscribeRtcmGpsRequest* New() const final {
-    return CreateMaybeMessage<SubscribeRtcmGpsRequest>(nullptr);
+  inline SubscribeGpsRtcmDataRequest* New() const final {
+    return CreateMaybeMessage<SubscribeGpsRtcmDataRequest>(nullptr);
   }
 
-  SubscribeRtcmGpsRequest* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
-    return CreateMaybeMessage<SubscribeRtcmGpsRequest>(arena);
+  SubscribeGpsRtcmDataRequest* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<SubscribeGpsRtcmDataRequest>(arena);
   }
   void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
   void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
-  void CopyFrom(const SubscribeRtcmGpsRequest& from);
-  void MergeFrom(const SubscribeRtcmGpsRequest& from);
+  void CopyFrom(const SubscribeGpsRtcmDataRequest& from);
+  void MergeFrom(const SubscribeGpsRtcmDataRequest& from);
   PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
   bool IsInitialized() const final;
 
@@ -4456,13 +4456,13 @@ class SubscribeRtcmGpsRequest PROTOBUF_FINAL :
   inline void SharedCtor();
   inline void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(SubscribeRtcmGpsRequest* other);
+  void InternalSwap(SubscribeGpsRtcmDataRequest* other);
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "mavsdk.rpc.telemetry.SubscribeRtcmGpsRequest";
+    return "mavsdk.rpc.telemetry.SubscribeGpsRtcmDataRequest";
   }
   protected:
-  explicit SubscribeRtcmGpsRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  explicit SubscribeGpsRtcmDataRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena);
   private:
   static void ArenaDtor(void* object);
   inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
@@ -4480,7 +4480,7 @@ class SubscribeRtcmGpsRequest PROTOBUF_FINAL :
 
   // accessors -------------------------------------------------------
 
-  // @@protoc_insertion_point(class_scope:mavsdk.rpc.telemetry.SubscribeRtcmGpsRequest)
+  // @@protoc_insertion_point(class_scope:mavsdk.rpc.telemetry.SubscribeGpsRtcmDataRequest)
  private:
   class _Internal;
 
@@ -4492,24 +4492,24 @@ class SubscribeRtcmGpsRequest PROTOBUF_FINAL :
 };
 // -------------------------------------------------------------------
 
-class RtcmGpsResponse PROTOBUF_FINAL :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:mavsdk.rpc.telemetry.RtcmGpsResponse) */ {
+class GpsRtcmDataResponse PROTOBUF_FINAL :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:mavsdk.rpc.telemetry.GpsRtcmDataResponse) */ {
  public:
-  inline RtcmGpsResponse() : RtcmGpsResponse(nullptr) {}
-  virtual ~RtcmGpsResponse();
-  explicit constexpr RtcmGpsResponse(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  inline GpsRtcmDataResponse() : GpsRtcmDataResponse(nullptr) {}
+  virtual ~GpsRtcmDataResponse();
+  explicit constexpr GpsRtcmDataResponse(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-  RtcmGpsResponse(const RtcmGpsResponse& from);
-  RtcmGpsResponse(RtcmGpsResponse&& from) noexcept
-    : RtcmGpsResponse() {
+  GpsRtcmDataResponse(const GpsRtcmDataResponse& from);
+  GpsRtcmDataResponse(GpsRtcmDataResponse&& from) noexcept
+    : GpsRtcmDataResponse() {
     *this = ::std::move(from);
   }
 
-  inline RtcmGpsResponse& operator=(const RtcmGpsResponse& from) {
+  inline GpsRtcmDataResponse& operator=(const GpsRtcmDataResponse& from) {
     CopyFrom(from);
     return *this;
   }
-  inline RtcmGpsResponse& operator=(RtcmGpsResponse&& from) noexcept {
+  inline GpsRtcmDataResponse& operator=(GpsRtcmDataResponse&& from) noexcept {
     if (GetArena() == from.GetArena()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -4527,20 +4527,20 @@ class RtcmGpsResponse PROTOBUF_FINAL :
   static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
     return GetMetadataStatic().reflection;
   }
-  static const RtcmGpsResponse& default_instance() {
+  static const GpsRtcmDataResponse& default_instance() {
     return *internal_default_instance();
   }
-  static inline const RtcmGpsResponse* internal_default_instance() {
-    return reinterpret_cast<const RtcmGpsResponse*>(
-               &_RtcmGpsResponse_default_instance_);
+  static inline const GpsRtcmDataResponse* internal_default_instance() {
+    return reinterpret_cast<const GpsRtcmDataResponse*>(
+               &_GpsRtcmDataResponse_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     27;
 
-  friend void swap(RtcmGpsResponse& a, RtcmGpsResponse& b) {
+  friend void swap(GpsRtcmDataResponse& a, GpsRtcmDataResponse& b) {
     a.Swap(&b);
   }
-  inline void Swap(RtcmGpsResponse* other) {
+  inline void Swap(GpsRtcmDataResponse* other) {
     if (other == this) return;
     if (GetArena() == other->GetArena()) {
       InternalSwap(other);
@@ -4548,7 +4548,7 @@ class RtcmGpsResponse PROTOBUF_FINAL :
       ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(RtcmGpsResponse* other) {
+  void UnsafeArenaSwap(GpsRtcmDataResponse* other) {
     if (other == this) return;
     GOOGLE_DCHECK(GetArena() == other->GetArena());
     InternalSwap(other);
@@ -4556,17 +4556,17 @@ class RtcmGpsResponse PROTOBUF_FINAL :
 
   // implements Message ----------------------------------------------
 
-  inline RtcmGpsResponse* New() const final {
-    return CreateMaybeMessage<RtcmGpsResponse>(nullptr);
+  inline GpsRtcmDataResponse* New() const final {
+    return CreateMaybeMessage<GpsRtcmDataResponse>(nullptr);
   }
 
-  RtcmGpsResponse* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
-    return CreateMaybeMessage<RtcmGpsResponse>(arena);
+  GpsRtcmDataResponse* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<GpsRtcmDataResponse>(arena);
   }
   void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
   void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
-  void CopyFrom(const RtcmGpsResponse& from);
-  void MergeFrom(const RtcmGpsResponse& from);
+  void CopyFrom(const GpsRtcmDataResponse& from);
+  void MergeFrom(const GpsRtcmDataResponse& from);
   PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
   bool IsInitialized() const final;
 
@@ -4580,13 +4580,13 @@ class RtcmGpsResponse PROTOBUF_FINAL :
   inline void SharedCtor();
   inline void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(RtcmGpsResponse* other);
+  void InternalSwap(GpsRtcmDataResponse* other);
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "mavsdk.rpc.telemetry.RtcmGpsResponse";
+    return "mavsdk.rpc.telemetry.GpsRtcmDataResponse";
   }
   protected:
-  explicit RtcmGpsResponse(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  explicit GpsRtcmDataResponse(::PROTOBUF_NAMESPACE_ID::Arena* arena);
   private:
   static void ArenaDtor(void* object);
   inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
@@ -4605,34 +4605,34 @@ class RtcmGpsResponse PROTOBUF_FINAL :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kRtcmGpsFieldNumber = 1,
+    kGpsRtcmDataFieldNumber = 1,
   };
-  // .mavsdk.rpc.telemetry.RtcmGps rtcm_gps = 1;
-  bool has_rtcm_gps() const;
+  // .mavsdk.rpc.telemetry.GpsRtcmData gps_rtcm_data = 1;
+  bool has_gps_rtcm_data() const;
   private:
-  bool _internal_has_rtcm_gps() const;
+  bool _internal_has_gps_rtcm_data() const;
   public:
-  void clear_rtcm_gps();
-  const ::mavsdk::rpc::telemetry::RtcmGps& rtcm_gps() const;
-  ::mavsdk::rpc::telemetry::RtcmGps* release_rtcm_gps();
-  ::mavsdk::rpc::telemetry::RtcmGps* mutable_rtcm_gps();
-  void set_allocated_rtcm_gps(::mavsdk::rpc::telemetry::RtcmGps* rtcm_gps);
+  void clear_gps_rtcm_data();
+  const ::mavsdk::rpc::telemetry::GpsRtcmData& gps_rtcm_data() const;
+  ::mavsdk::rpc::telemetry::GpsRtcmData* release_gps_rtcm_data();
+  ::mavsdk::rpc::telemetry::GpsRtcmData* mutable_gps_rtcm_data();
+  void set_allocated_gps_rtcm_data(::mavsdk::rpc::telemetry::GpsRtcmData* gps_rtcm_data);
   private:
-  const ::mavsdk::rpc::telemetry::RtcmGps& _internal_rtcm_gps() const;
-  ::mavsdk::rpc::telemetry::RtcmGps* _internal_mutable_rtcm_gps();
+  const ::mavsdk::rpc::telemetry::GpsRtcmData& _internal_gps_rtcm_data() const;
+  ::mavsdk::rpc::telemetry::GpsRtcmData* _internal_mutable_gps_rtcm_data();
   public:
-  void unsafe_arena_set_allocated_rtcm_gps(
-      ::mavsdk::rpc::telemetry::RtcmGps* rtcm_gps);
-  ::mavsdk::rpc::telemetry::RtcmGps* unsafe_arena_release_rtcm_gps();
+  void unsafe_arena_set_allocated_gps_rtcm_data(
+      ::mavsdk::rpc::telemetry::GpsRtcmData* gps_rtcm_data);
+  ::mavsdk::rpc::telemetry::GpsRtcmData* unsafe_arena_release_gps_rtcm_data();
 
-  // @@protoc_insertion_point(class_scope:mavsdk.rpc.telemetry.RtcmGpsResponse)
+  // @@protoc_insertion_point(class_scope:mavsdk.rpc.telemetry.GpsRtcmDataResponse)
  private:
   class _Internal;
 
   template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
-  ::mavsdk::rpc::telemetry::RtcmGps* rtcm_gps_;
+  ::mavsdk::rpc::telemetry::GpsRtcmData* gps_rtcm_data_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_telemetry_2ftelemetry_2eproto;
 };
@@ -18878,24 +18878,24 @@ class RawGps PROTOBUF_FINAL :
 };
 // -------------------------------------------------------------------
 
-class RtcmGps PROTOBUF_FINAL :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:mavsdk.rpc.telemetry.RtcmGps) */ {
+class GpsRtcmData PROTOBUF_FINAL :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:mavsdk.rpc.telemetry.GpsRtcmData) */ {
  public:
-  inline RtcmGps() : RtcmGps(nullptr) {}
-  virtual ~RtcmGps();
-  explicit constexpr RtcmGps(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  inline GpsRtcmData() : GpsRtcmData(nullptr) {}
+  virtual ~GpsRtcmData();
+  explicit constexpr GpsRtcmData(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-  RtcmGps(const RtcmGps& from);
-  RtcmGps(RtcmGps&& from) noexcept
-    : RtcmGps() {
+  GpsRtcmData(const GpsRtcmData& from);
+  GpsRtcmData(GpsRtcmData&& from) noexcept
+    : GpsRtcmData() {
     *this = ::std::move(from);
   }
 
-  inline RtcmGps& operator=(const RtcmGps& from) {
+  inline GpsRtcmData& operator=(const GpsRtcmData& from) {
     CopyFrom(from);
     return *this;
   }
-  inline RtcmGps& operator=(RtcmGps&& from) noexcept {
+  inline GpsRtcmData& operator=(GpsRtcmData&& from) noexcept {
     if (GetArena() == from.GetArena()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -18913,20 +18913,20 @@ class RtcmGps PROTOBUF_FINAL :
   static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
     return GetMetadataStatic().reflection;
   }
-  static const RtcmGps& default_instance() {
+  static const GpsRtcmData& default_instance() {
     return *internal_default_instance();
   }
-  static inline const RtcmGps* internal_default_instance() {
-    return reinterpret_cast<const RtcmGps*>(
-               &_RtcmGps_default_instance_);
+  static inline const GpsRtcmData* internal_default_instance() {
+    return reinterpret_cast<const GpsRtcmData*>(
+               &_GpsRtcmData_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     129;
 
-  friend void swap(RtcmGps& a, RtcmGps& b) {
+  friend void swap(GpsRtcmData& a, GpsRtcmData& b) {
     a.Swap(&b);
   }
-  inline void Swap(RtcmGps* other) {
+  inline void Swap(GpsRtcmData* other) {
     if (other == this) return;
     if (GetArena() == other->GetArena()) {
       InternalSwap(other);
@@ -18934,7 +18934,7 @@ class RtcmGps PROTOBUF_FINAL :
       ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(RtcmGps* other) {
+  void UnsafeArenaSwap(GpsRtcmData* other) {
     if (other == this) return;
     GOOGLE_DCHECK(GetArena() == other->GetArena());
     InternalSwap(other);
@@ -18942,17 +18942,17 @@ class RtcmGps PROTOBUF_FINAL :
 
   // implements Message ----------------------------------------------
 
-  inline RtcmGps* New() const final {
-    return CreateMaybeMessage<RtcmGps>(nullptr);
+  inline GpsRtcmData* New() const final {
+    return CreateMaybeMessage<GpsRtcmData>(nullptr);
   }
 
-  RtcmGps* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
-    return CreateMaybeMessage<RtcmGps>(arena);
+  GpsRtcmData* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<GpsRtcmData>(arena);
   }
   void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
   void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
-  void CopyFrom(const RtcmGps& from);
-  void MergeFrom(const RtcmGps& from);
+  void CopyFrom(const GpsRtcmData& from);
+  void MergeFrom(const GpsRtcmData& from);
   PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
   bool IsInitialized() const final;
 
@@ -18966,13 +18966,13 @@ class RtcmGps PROTOBUF_FINAL :
   inline void SharedCtor();
   inline void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(RtcmGps* other);
+  void InternalSwap(GpsRtcmData* other);
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "mavsdk.rpc.telemetry.RtcmGps";
+    return "mavsdk.rpc.telemetry.GpsRtcmData";
   }
   protected:
-  explicit RtcmGps(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  explicit GpsRtcmData(::PROTOBUF_NAMESPACE_ID::Arena* arena);
   private:
   static void ArenaDtor(void* object);
   inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
@@ -19035,7 +19035,7 @@ class RtcmGps PROTOBUF_FINAL :
   void _internal_set_len(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
-  // @@protoc_insertion_point(class_scope:mavsdk.rpc.telemetry.RtcmGps)
+  // @@protoc_insertion_point(class_scope:mavsdk.rpc.telemetry.GpsRtcmData)
  private:
   class _Internal;
 
@@ -24682,93 +24682,93 @@ inline void RawGpsResponse::set_allocated_raw_gps(::mavsdk::rpc::telemetry::RawG
 
 // -------------------------------------------------------------------
 
-// SubscribeRtcmGpsRequest
+// SubscribeGpsRtcmDataRequest
 
 // -------------------------------------------------------------------
 
-// RtcmGpsResponse
+// GpsRtcmDataResponse
 
-// .mavsdk.rpc.telemetry.RtcmGps rtcm_gps = 1;
-inline bool RtcmGpsResponse::_internal_has_rtcm_gps() const {
-  return this != internal_default_instance() && rtcm_gps_ != nullptr;
+// .mavsdk.rpc.telemetry.GpsRtcmData gps_rtcm_data = 1;
+inline bool GpsRtcmDataResponse::_internal_has_gps_rtcm_data() const {
+  return this != internal_default_instance() && gps_rtcm_data_ != nullptr;
 }
-inline bool RtcmGpsResponse::has_rtcm_gps() const {
-  return _internal_has_rtcm_gps();
+inline bool GpsRtcmDataResponse::has_gps_rtcm_data() const {
+  return _internal_has_gps_rtcm_data();
 }
-inline void RtcmGpsResponse::clear_rtcm_gps() {
-  if (GetArena() == nullptr && rtcm_gps_ != nullptr) {
-    delete rtcm_gps_;
+inline void GpsRtcmDataResponse::clear_gps_rtcm_data() {
+  if (GetArena() == nullptr && gps_rtcm_data_ != nullptr) {
+    delete gps_rtcm_data_;
   }
-  rtcm_gps_ = nullptr;
+  gps_rtcm_data_ = nullptr;
 }
-inline const ::mavsdk::rpc::telemetry::RtcmGps& RtcmGpsResponse::_internal_rtcm_gps() const {
-  const ::mavsdk::rpc::telemetry::RtcmGps* p = rtcm_gps_;
-  return p != nullptr ? *p : reinterpret_cast<const ::mavsdk::rpc::telemetry::RtcmGps&>(
-      ::mavsdk::rpc::telemetry::_RtcmGps_default_instance_);
+inline const ::mavsdk::rpc::telemetry::GpsRtcmData& GpsRtcmDataResponse::_internal_gps_rtcm_data() const {
+  const ::mavsdk::rpc::telemetry::GpsRtcmData* p = gps_rtcm_data_;
+  return p != nullptr ? *p : reinterpret_cast<const ::mavsdk::rpc::telemetry::GpsRtcmData&>(
+      ::mavsdk::rpc::telemetry::_GpsRtcmData_default_instance_);
 }
-inline const ::mavsdk::rpc::telemetry::RtcmGps& RtcmGpsResponse::rtcm_gps() const {
-  // @@protoc_insertion_point(field_get:mavsdk.rpc.telemetry.RtcmGpsResponse.rtcm_gps)
-  return _internal_rtcm_gps();
+inline const ::mavsdk::rpc::telemetry::GpsRtcmData& GpsRtcmDataResponse::gps_rtcm_data() const {
+  // @@protoc_insertion_point(field_get:mavsdk.rpc.telemetry.GpsRtcmDataResponse.gps_rtcm_data)
+  return _internal_gps_rtcm_data();
 }
-inline void RtcmGpsResponse::unsafe_arena_set_allocated_rtcm_gps(
-    ::mavsdk::rpc::telemetry::RtcmGps* rtcm_gps) {
+inline void GpsRtcmDataResponse::unsafe_arena_set_allocated_gps_rtcm_data(
+    ::mavsdk::rpc::telemetry::GpsRtcmData* gps_rtcm_data) {
   if (GetArena() == nullptr) {
-    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(rtcm_gps_);
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(gps_rtcm_data_);
   }
-  rtcm_gps_ = rtcm_gps;
-  if (rtcm_gps) {
+  gps_rtcm_data_ = gps_rtcm_data;
+  if (gps_rtcm_data) {
     
   } else {
     
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:mavsdk.rpc.telemetry.RtcmGpsResponse.rtcm_gps)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:mavsdk.rpc.telemetry.GpsRtcmDataResponse.gps_rtcm_data)
 }
-inline ::mavsdk::rpc::telemetry::RtcmGps* RtcmGpsResponse::release_rtcm_gps() {
+inline ::mavsdk::rpc::telemetry::GpsRtcmData* GpsRtcmDataResponse::release_gps_rtcm_data() {
   
-  ::mavsdk::rpc::telemetry::RtcmGps* temp = rtcm_gps_;
-  rtcm_gps_ = nullptr;
+  ::mavsdk::rpc::telemetry::GpsRtcmData* temp = gps_rtcm_data_;
+  gps_rtcm_data_ = nullptr;
   if (GetArena() != nullptr) {
     temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
   }
   return temp;
 }
-inline ::mavsdk::rpc::telemetry::RtcmGps* RtcmGpsResponse::unsafe_arena_release_rtcm_gps() {
-  // @@protoc_insertion_point(field_release:mavsdk.rpc.telemetry.RtcmGpsResponse.rtcm_gps)
+inline ::mavsdk::rpc::telemetry::GpsRtcmData* GpsRtcmDataResponse::unsafe_arena_release_gps_rtcm_data() {
+  // @@protoc_insertion_point(field_release:mavsdk.rpc.telemetry.GpsRtcmDataResponse.gps_rtcm_data)
   
-  ::mavsdk::rpc::telemetry::RtcmGps* temp = rtcm_gps_;
-  rtcm_gps_ = nullptr;
+  ::mavsdk::rpc::telemetry::GpsRtcmData* temp = gps_rtcm_data_;
+  gps_rtcm_data_ = nullptr;
   return temp;
 }
-inline ::mavsdk::rpc::telemetry::RtcmGps* RtcmGpsResponse::_internal_mutable_rtcm_gps() {
+inline ::mavsdk::rpc::telemetry::GpsRtcmData* GpsRtcmDataResponse::_internal_mutable_gps_rtcm_data() {
   
-  if (rtcm_gps_ == nullptr) {
-    auto* p = CreateMaybeMessage<::mavsdk::rpc::telemetry::RtcmGps>(GetArena());
-    rtcm_gps_ = p;
+  if (gps_rtcm_data_ == nullptr) {
+    auto* p = CreateMaybeMessage<::mavsdk::rpc::telemetry::GpsRtcmData>(GetArena());
+    gps_rtcm_data_ = p;
   }
-  return rtcm_gps_;
+  return gps_rtcm_data_;
 }
-inline ::mavsdk::rpc::telemetry::RtcmGps* RtcmGpsResponse::mutable_rtcm_gps() {
-  // @@protoc_insertion_point(field_mutable:mavsdk.rpc.telemetry.RtcmGpsResponse.rtcm_gps)
-  return _internal_mutable_rtcm_gps();
+inline ::mavsdk::rpc::telemetry::GpsRtcmData* GpsRtcmDataResponse::mutable_gps_rtcm_data() {
+  // @@protoc_insertion_point(field_mutable:mavsdk.rpc.telemetry.GpsRtcmDataResponse.gps_rtcm_data)
+  return _internal_mutable_gps_rtcm_data();
 }
-inline void RtcmGpsResponse::set_allocated_rtcm_gps(::mavsdk::rpc::telemetry::RtcmGps* rtcm_gps) {
+inline void GpsRtcmDataResponse::set_allocated_gps_rtcm_data(::mavsdk::rpc::telemetry::GpsRtcmData* gps_rtcm_data) {
   ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArena();
   if (message_arena == nullptr) {
-    delete rtcm_gps_;
+    delete gps_rtcm_data_;
   }
-  if (rtcm_gps) {
+  if (gps_rtcm_data) {
     ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
-      ::PROTOBUF_NAMESPACE_ID::Arena::GetArena(rtcm_gps);
+      ::PROTOBUF_NAMESPACE_ID::Arena::GetArena(gps_rtcm_data);
     if (message_arena != submessage_arena) {
-      rtcm_gps = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
-          message_arena, rtcm_gps, submessage_arena);
+      gps_rtcm_data = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, gps_rtcm_data, submessage_arena);
     }
     
   } else {
     
   }
-  rtcm_gps_ = rtcm_gps;
-  // @@protoc_insertion_point(field_set_allocated:mavsdk.rpc.telemetry.RtcmGpsResponse.rtcm_gps)
+  gps_rtcm_data_ = gps_rtcm_data;
+  // @@protoc_insertion_point(field_set_allocated:mavsdk.rpc.telemetry.GpsRtcmDataResponse.gps_rtcm_data)
 }
 
 // -------------------------------------------------------------------
@@ -30112,92 +30112,92 @@ inline void RawGps::set_yaw_deg(float value) {
 
 // -------------------------------------------------------------------
 
-// RtcmGps
+// GpsRtcmData
 
 // int32 flags = 1 [(.mavsdk.options.default_value) = "0"];
-inline void RtcmGps::clear_flags() {
+inline void GpsRtcmData::clear_flags() {
   flags_ = 0;
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 RtcmGps::_internal_flags() const {
+inline ::PROTOBUF_NAMESPACE_ID::int32 GpsRtcmData::_internal_flags() const {
   return flags_;
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 RtcmGps::flags() const {
-  // @@protoc_insertion_point(field_get:mavsdk.rpc.telemetry.RtcmGps.flags)
+inline ::PROTOBUF_NAMESPACE_ID::int32 GpsRtcmData::flags() const {
+  // @@protoc_insertion_point(field_get:mavsdk.rpc.telemetry.GpsRtcmData.flags)
   return _internal_flags();
 }
-inline void RtcmGps::_internal_set_flags(::PROTOBUF_NAMESPACE_ID::int32 value) {
+inline void GpsRtcmData::_internal_set_flags(::PROTOBUF_NAMESPACE_ID::int32 value) {
   
   flags_ = value;
 }
-inline void RtcmGps::set_flags(::PROTOBUF_NAMESPACE_ID::int32 value) {
+inline void GpsRtcmData::set_flags(::PROTOBUF_NAMESPACE_ID::int32 value) {
   _internal_set_flags(value);
-  // @@protoc_insertion_point(field_set:mavsdk.rpc.telemetry.RtcmGps.flags)
+  // @@protoc_insertion_point(field_set:mavsdk.rpc.telemetry.GpsRtcmData.flags)
 }
 
 // int32 len = 2 [(.mavsdk.options.default_value) = "0"];
-inline void RtcmGps::clear_len() {
+inline void GpsRtcmData::clear_len() {
   len_ = 0;
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 RtcmGps::_internal_len() const {
+inline ::PROTOBUF_NAMESPACE_ID::int32 GpsRtcmData::_internal_len() const {
   return len_;
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 RtcmGps::len() const {
-  // @@protoc_insertion_point(field_get:mavsdk.rpc.telemetry.RtcmGps.len)
+inline ::PROTOBUF_NAMESPACE_ID::int32 GpsRtcmData::len() const {
+  // @@protoc_insertion_point(field_get:mavsdk.rpc.telemetry.GpsRtcmData.len)
   return _internal_len();
 }
-inline void RtcmGps::_internal_set_len(::PROTOBUF_NAMESPACE_ID::int32 value) {
+inline void GpsRtcmData::_internal_set_len(::PROTOBUF_NAMESPACE_ID::int32 value) {
   
   len_ = value;
 }
-inline void RtcmGps::set_len(::PROTOBUF_NAMESPACE_ID::int32 value) {
+inline void GpsRtcmData::set_len(::PROTOBUF_NAMESPACE_ID::int32 value) {
   _internal_set_len(value);
-  // @@protoc_insertion_point(field_set:mavsdk.rpc.telemetry.RtcmGps.len)
+  // @@protoc_insertion_point(field_set:mavsdk.rpc.telemetry.GpsRtcmData.len)
 }
 
 // repeated int32 data = 3;
-inline int RtcmGps::_internal_data_size() const {
+inline int GpsRtcmData::_internal_data_size() const {
   return data_.size();
 }
-inline int RtcmGps::data_size() const {
+inline int GpsRtcmData::data_size() const {
   return _internal_data_size();
 }
-inline void RtcmGps::clear_data() {
+inline void GpsRtcmData::clear_data() {
   data_.Clear();
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 RtcmGps::_internal_data(int index) const {
+inline ::PROTOBUF_NAMESPACE_ID::int32 GpsRtcmData::_internal_data(int index) const {
   return data_.Get(index);
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 RtcmGps::data(int index) const {
-  // @@protoc_insertion_point(field_get:mavsdk.rpc.telemetry.RtcmGps.data)
+inline ::PROTOBUF_NAMESPACE_ID::int32 GpsRtcmData::data(int index) const {
+  // @@protoc_insertion_point(field_get:mavsdk.rpc.telemetry.GpsRtcmData.data)
   return _internal_data(index);
 }
-inline void RtcmGps::set_data(int index, ::PROTOBUF_NAMESPACE_ID::int32 value) {
+inline void GpsRtcmData::set_data(int index, ::PROTOBUF_NAMESPACE_ID::int32 value) {
   data_.Set(index, value);
-  // @@protoc_insertion_point(field_set:mavsdk.rpc.telemetry.RtcmGps.data)
+  // @@protoc_insertion_point(field_set:mavsdk.rpc.telemetry.GpsRtcmData.data)
 }
-inline void RtcmGps::_internal_add_data(::PROTOBUF_NAMESPACE_ID::int32 value) {
+inline void GpsRtcmData::_internal_add_data(::PROTOBUF_NAMESPACE_ID::int32 value) {
   data_.Add(value);
 }
-inline void RtcmGps::add_data(::PROTOBUF_NAMESPACE_ID::int32 value) {
+inline void GpsRtcmData::add_data(::PROTOBUF_NAMESPACE_ID::int32 value) {
   _internal_add_data(value);
-  // @@protoc_insertion_point(field_add:mavsdk.rpc.telemetry.RtcmGps.data)
+  // @@protoc_insertion_point(field_add:mavsdk.rpc.telemetry.GpsRtcmData.data)
 }
 inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 >&
-RtcmGps::_internal_data() const {
+GpsRtcmData::_internal_data() const {
   return data_;
 }
 inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 >&
-RtcmGps::data() const {
-  // @@protoc_insertion_point(field_list:mavsdk.rpc.telemetry.RtcmGps.data)
+GpsRtcmData::data() const {
+  // @@protoc_insertion_point(field_list:mavsdk.rpc.telemetry.GpsRtcmData.data)
   return _internal_data();
 }
 inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 >*
-RtcmGps::_internal_mutable_data() {
+GpsRtcmData::_internal_mutable_data() {
   return &data_;
 }
 inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 >*
-RtcmGps::mutable_data() {
-  // @@protoc_insertion_point(field_mutable_list:mavsdk.rpc.telemetry.RtcmGps.data)
+GpsRtcmData::mutable_data() {
+  // @@protoc_insertion_point(field_mutable_list:mavsdk.rpc.telemetry.GpsRtcmData.data)
   return _internal_mutable_data();
 }
 

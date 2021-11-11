@@ -37,7 +37,7 @@ static const char* TelemetryService_method_names[] = {
   "/mavsdk.rpc.telemetry.TelemetryService/SubscribeVelocityNed",
   "/mavsdk.rpc.telemetry.TelemetryService/SubscribeGpsInfo",
   "/mavsdk.rpc.telemetry.TelemetryService/SubscribeRawGps",
-  "/mavsdk.rpc.telemetry.TelemetryService/SubscribeRtcmGps",
+  "/mavsdk.rpc.telemetry.TelemetryService/SubscribeGpsRtcmData",
   "/mavsdk.rpc.telemetry.TelemetryService/SubscribeBattery",
   "/mavsdk.rpc.telemetry.TelemetryService/SubscribeBatteryStatus",
   "/mavsdk.rpc.telemetry.TelemetryService/SubscribeVehicleStatus",
@@ -105,7 +105,7 @@ TelemetryService::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& c
   , rpcmethod_SubscribeVelocityNed_(TelemetryService_method_names[10], ::grpc::internal::RpcMethod::SERVER_STREAMING, channel)
   , rpcmethod_SubscribeGpsInfo_(TelemetryService_method_names[11], ::grpc::internal::RpcMethod::SERVER_STREAMING, channel)
   , rpcmethod_SubscribeRawGps_(TelemetryService_method_names[12], ::grpc::internal::RpcMethod::SERVER_STREAMING, channel)
-  , rpcmethod_SubscribeRtcmGps_(TelemetryService_method_names[13], ::grpc::internal::RpcMethod::SERVER_STREAMING, channel)
+  , rpcmethod_SubscribeGpsRtcmData_(TelemetryService_method_names[13], ::grpc::internal::RpcMethod::SERVER_STREAMING, channel)
   , rpcmethod_SubscribeBattery_(TelemetryService_method_names[14], ::grpc::internal::RpcMethod::SERVER_STREAMING, channel)
   , rpcmethod_SubscribeBatteryStatus_(TelemetryService_method_names[15], ::grpc::internal::RpcMethod::SERVER_STREAMING, channel)
   , rpcmethod_SubscribeVehicleStatus_(TelemetryService_method_names[16], ::grpc::internal::RpcMethod::SERVER_STREAMING, channel)
@@ -361,20 +361,20 @@ void TelemetryService::Stub::experimental_async::SubscribeRawGps(::grpc::ClientC
   return ::grpc::internal::ClientAsyncReaderFactory< ::mavsdk::rpc::telemetry::RawGpsResponse>::Create(channel_.get(), cq, rpcmethod_SubscribeRawGps_, context, request, false, nullptr);
 }
 
-::grpc::ClientReader< ::mavsdk::rpc::telemetry::RtcmGpsResponse>* TelemetryService::Stub::SubscribeRtcmGpsRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeRtcmGpsRequest& request) {
-  return ::grpc::internal::ClientReaderFactory< ::mavsdk::rpc::telemetry::RtcmGpsResponse>::Create(channel_.get(), rpcmethod_SubscribeRtcmGps_, context, request);
+::grpc::ClientReader< ::mavsdk::rpc::telemetry::GpsRtcmDataResponse>* TelemetryService::Stub::SubscribeGpsRtcmDataRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeGpsRtcmDataRequest& request) {
+  return ::grpc::internal::ClientReaderFactory< ::mavsdk::rpc::telemetry::GpsRtcmDataResponse>::Create(channel_.get(), rpcmethod_SubscribeGpsRtcmData_, context, request);
 }
 
-void TelemetryService::Stub::experimental_async::SubscribeRtcmGps(::grpc::ClientContext* context, ::mavsdk::rpc::telemetry::SubscribeRtcmGpsRequest* request, ::grpc::experimental::ClientReadReactor< ::mavsdk::rpc::telemetry::RtcmGpsResponse>* reactor) {
-  ::grpc::internal::ClientCallbackReaderFactory< ::mavsdk::rpc::telemetry::RtcmGpsResponse>::Create(stub_->channel_.get(), stub_->rpcmethod_SubscribeRtcmGps_, context, request, reactor);
+void TelemetryService::Stub::experimental_async::SubscribeGpsRtcmData(::grpc::ClientContext* context, ::mavsdk::rpc::telemetry::SubscribeGpsRtcmDataRequest* request, ::grpc::experimental::ClientReadReactor< ::mavsdk::rpc::telemetry::GpsRtcmDataResponse>* reactor) {
+  ::grpc::internal::ClientCallbackReaderFactory< ::mavsdk::rpc::telemetry::GpsRtcmDataResponse>::Create(stub_->channel_.get(), stub_->rpcmethod_SubscribeGpsRtcmData_, context, request, reactor);
 }
 
-::grpc::ClientAsyncReader< ::mavsdk::rpc::telemetry::RtcmGpsResponse>* TelemetryService::Stub::AsyncSubscribeRtcmGpsRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeRtcmGpsRequest& request, ::grpc::CompletionQueue* cq, void* tag) {
-  return ::grpc::internal::ClientAsyncReaderFactory< ::mavsdk::rpc::telemetry::RtcmGpsResponse>::Create(channel_.get(), cq, rpcmethod_SubscribeRtcmGps_, context, request, true, tag);
+::grpc::ClientAsyncReader< ::mavsdk::rpc::telemetry::GpsRtcmDataResponse>* TelemetryService::Stub::AsyncSubscribeGpsRtcmDataRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeGpsRtcmDataRequest& request, ::grpc::CompletionQueue* cq, void* tag) {
+  return ::grpc::internal::ClientAsyncReaderFactory< ::mavsdk::rpc::telemetry::GpsRtcmDataResponse>::Create(channel_.get(), cq, rpcmethod_SubscribeGpsRtcmData_, context, request, true, tag);
 }
 
-::grpc::ClientAsyncReader< ::mavsdk::rpc::telemetry::RtcmGpsResponse>* TelemetryService::Stub::PrepareAsyncSubscribeRtcmGpsRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeRtcmGpsRequest& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncReaderFactory< ::mavsdk::rpc::telemetry::RtcmGpsResponse>::Create(channel_.get(), cq, rpcmethod_SubscribeRtcmGps_, context, request, false, nullptr);
+::grpc::ClientAsyncReader< ::mavsdk::rpc::telemetry::GpsRtcmDataResponse>* TelemetryService::Stub::PrepareAsyncSubscribeGpsRtcmDataRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeGpsRtcmDataRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncReaderFactory< ::mavsdk::rpc::telemetry::GpsRtcmDataResponse>::Create(channel_.get(), cq, rpcmethod_SubscribeGpsRtcmData_, context, request, false, nullptr);
 }
 
 ::grpc::ClientReader< ::mavsdk::rpc::telemetry::BatteryResponse>* TelemetryService::Stub::SubscribeBatteryRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::telemetry::SubscribeBatteryRequest& request) {
@@ -1392,12 +1392,12 @@ TelemetryService::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       TelemetryService_method_names[13],
       ::grpc::internal::RpcMethod::SERVER_STREAMING,
-      new ::grpc::internal::ServerStreamingHandler< TelemetryService::Service, ::mavsdk::rpc::telemetry::SubscribeRtcmGpsRequest, ::mavsdk::rpc::telemetry::RtcmGpsResponse>(
+      new ::grpc::internal::ServerStreamingHandler< TelemetryService::Service, ::mavsdk::rpc::telemetry::SubscribeGpsRtcmDataRequest, ::mavsdk::rpc::telemetry::GpsRtcmDataResponse>(
           [](TelemetryService::Service* service,
              ::grpc::ServerContext* ctx,
-             const ::mavsdk::rpc::telemetry::SubscribeRtcmGpsRequest* req,
-             ::grpc::ServerWriter<::mavsdk::rpc::telemetry::RtcmGpsResponse>* writer) {
-               return service->SubscribeRtcmGps(ctx, req, writer);
+             const ::mavsdk::rpc::telemetry::SubscribeGpsRtcmDataRequest* req,
+             ::grpc::ServerWriter<::mavsdk::rpc::telemetry::GpsRtcmDataResponse>* writer) {
+               return service->SubscribeGpsRtcmData(ctx, req, writer);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       TelemetryService_method_names[14],
@@ -1945,7 +1945,7 @@ TelemetryService::Service::~Service() {
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status TelemetryService::Service::SubscribeRtcmGps(::grpc::ServerContext* context, const ::mavsdk::rpc::telemetry::SubscribeRtcmGpsRequest* request, ::grpc::ServerWriter< ::mavsdk::rpc::telemetry::RtcmGpsResponse>* writer) {
+::grpc::Status TelemetryService::Service::SubscribeGpsRtcmData(::grpc::ServerContext* context, const ::mavsdk::rpc::telemetry::SubscribeGpsRtcmDataRequest* request, ::grpc::ServerWriter< ::mavsdk::rpc::telemetry::GpsRtcmDataResponse>* writer) {
   (void) context;
   (void) request;
   (void) writer;
