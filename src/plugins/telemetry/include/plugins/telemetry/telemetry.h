@@ -328,6 +328,29 @@ public:
     friend std::ostream& operator<<(std::ostream& str, Telemetry::RawGps const& raw_gps);
 
     /**
+     * @brief 
+     */
+    struct RtcmGps {
+        int32_t flags{0}; /**< @brief Fragment ID of RTCM data */
+        int32_t len{0}; /**< @brief RTCM data length */
+        std::vector<int32_t> data{}; /**< @brief RTCM message */
+    };
+
+    /**
+     * @brief Equal operator to compare two `Telemetry::RtcmGps` objects.
+     *
+     * @return `true` if items are equal.
+     */
+    friend bool operator==(const Telemetry::RtcmGps& lhs, const Telemetry::RtcmGps& rhs);
+
+    /**
+     * @brief Stream operator to print information about a `Telemetry::RtcmGps`.
+     *
+     * @return A reference to the stream.
+     */
+    friend std::ostream& operator<<(std::ostream& str, Telemetry::RtcmGps const& rtcm_gps);
+
+    /**
      * @brief Battery type.
      */
     struct Battery {
@@ -1261,6 +1284,24 @@ public:
      * @return One RawGps update.
      */
     RawGps raw_gps() const;
+
+    /**
+    * @brief Callback type for subscribe_rtcm_gps.
+    */
+        
+    using RtcmGpsCallback = std::function<void(RtcmGps)>;
+
+    /**
+     * @brief Subscribe to 'GPS RTCM' updates.
+     */
+    void subscribe_rtcm_gps(RtcmGpsCallback callback);
+
+    /**
+     * @brief Poll for 'RtcmGps' (blocking).
+     *
+     * @return One RtcmGps update.
+     */
+    RtcmGps rtcm_gps() const;
 
     /**
      * @brief Callback type for subscribe_battery.
