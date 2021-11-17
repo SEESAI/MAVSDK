@@ -482,6 +482,37 @@ public:
         return obj;
     }
 
+    static std::unique_ptr<rpc::telemetry::GpsRtcmData>
+    translateToRpcGpsRtcmData(const mavsdk::Telemetry::GpsRtcmData &gps_rtcm_data)
+    {
+        auto rpc_obj = std::make_unique<rpc::telemetry::GpsRtcmData>();
+
+        rpc_obj->set_flags(gps_rtcm_data.flags);
+
+        rpc_obj->set_len(gps_rtcm_data.len);
+
+        for (const auto& elem : gps_rtcm_data.data) {
+            rpc_obj->add_data(elem);
+        }
+
+        return rpc_obj;
+    }
+
+    static mavsdk::Telemetry::GpsRtcmData translateFromRpcGpsRtcmData(const rpc::telemetry::GpsRtcmData& gps_rtcm_data)
+    {
+        mavsdk::Telemetry::GpsRtcmData obj;
+
+        obj.flags = gps_rtcm_data.flags();
+
+        obj.len = gps_rtcm_data.len();
+
+        for (const auto& elem : gps_rtcm_data.data()) {
+            obj.data.push_back(elem);
+        }
+
+        return obj;
+    }
+
     static std::unique_ptr<rpc::telemetry::Battery>
     translateToRpcBattery(const mavsdk::Telemetry::Battery& battery)
     {
@@ -1858,6 +1889,46 @@ public:
                 std::unique_lock<std::mutex> lock(*subscribe_mutex);
                 if (!*is_finished && !writer->Write(rpc_response)) {
                     _lazy_plugin.maybe_plugin()->subscribe_raw_gps(nullptr);
+
+                    *is_finished = true;
+                    unregister_stream_stop_promise(stream_closed_promise);
+                    stream_closed_promise->set_value();
+                }
+            });
+
+        stream_closed_future.wait();
+        std::unique_lock<std::mutex> lock(*subscribe_mutex);
+        *is_finished = true;
+
+        return grpc::Status::OK;
+    }
+
+    grpc::Status SubscribeGpsRtcmData(
+        grpc::ServerContext* /* context */,
+        const mavsdk::rpc::telemetry::SubscribeGpsRtcmDataRequest* /* request */,
+        grpc::ServerWriter<rpc::telemetry::GpsRtcmDataResponse>* writer) override
+    {
+        if (_lazy_plugin.maybe_plugin() == nullptr) {
+            return grpc::Status::OK;
+        }
+
+        auto stream_closed_promise = std::make_shared<std::promise<void>>();
+        auto stream_closed_future = stream_closed_promise->get_future();
+        register_stream_stop_promise(stream_closed_promise);
+
+        auto is_finished = std::make_shared<bool>(false);
+        auto subscribe_mutex = std::make_shared<std::mutex>();
+
+        _lazy_plugin.maybe_plugin()->subscribe_gps_rtcm_data(
+            [this, &writer, &stream_closed_promise, is_finished, subscribe_mutex](
+                const mavsdk::Telemetry::GpsRtcmData gps_rtcm_data) {
+                rpc::telemetry::GpsRtcmDataResponse rpc_response;
+
+                rpc_response.set_allocated_gps_rtcm_data(translateToRpcGpsRtcmData(gps_rtcm_data).release());
+
+                std::unique_lock<std::mutex> lock(*subscribe_mutex);
+                if (!*is_finished && !writer->Write(rpc_response)) {
+                    _lazy_plugin.maybe_plugin()->subscribe_gps_rtcm_data(nullptr);
 
                     *is_finished = true;
                     unregister_stream_stop_promise(stream_closed_promise);

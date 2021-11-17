@@ -66,6 +66,9 @@ void TelemetryImpl::init()
         MAVLINK_MSG_ID_GPS_RAW_INT, std::bind(&TelemetryImpl::process_gps_raw_int, this, _1), this);
 
     _parent->register_mavlink_message_handler(
+        MAVLINK_MSG_ID_GPS_RTCM_DATA, std::bind(&TelemetryImpl::process_gps_rtcm_data, this, _1), this);
+
+    _parent->register_mavlink_message_handler(
         MAVLINK_MSG_ID_EXTENDED_SYS_STATE,
         std::bind(&TelemetryImpl::process_extended_sys_state, this, _1),
         this);
@@ -970,6 +973,30 @@ void TelemetryImpl::process_gps_raw_int(const mavlink_message_t& message)
     _parent->refresh_timeout_handler(_gps_raw_timeout_cookie);
 }
 
+void TelemetryImpl::process_gps_rtcm_data(const mavlink_message_t& message)
+{
+    mavlink_gps_rtcm_data_t rtcm_gps_data;
+    mavlink_msg_gps_rtcm_data_decode(&message, &rtcm_gps_data);
+
+    Telemetry::GpsRtcmData new_gps_rtcm_data;
+    new_gps_rtcm_data.flags = rtcm_gps_data.flags;
+    new_gps_rtcm_data.len = rtcm_gps_data.len;
+
+    const unsigned rtcm_data_size = sizeof(rtcm_gps_data.data) / sizeof(rtcm_gps_data.data[0]);
+    for (std::size_t i = 0; i < rtcm_data_size; ++i) {
+        new_gps_rtcm_data.data.push_back(rtcm_gps_data.data[i]);
+    }
+
+    set_gps_rtcm_data(new_gps_rtcm_data);
+
+    std::lock_guard<std::mutex> lock(_subscription_mutex);
+    if (_gps_rtcm_data_subscription) {
+        auto callback = _gps_rtcm_data_subscription;
+        auto arg = gps_rtcm_data();
+        _parent->call_user_callback([callback, arg]() { callback(arg); });
+    }
+}
+
 void TelemetryImpl::process_ground_truth(const mavlink_message_t& message)
 {
     mavlink_hil_state_quaternion_t hil_state_quaternion;
@@ -1821,6 +1848,18 @@ void TelemetryImpl::set_raw_gps(Telemetry::RawGps raw_gps)
     _raw_gps = raw_gps;
 }
 
+Telemetry::GpsRtcmData TelemetryImpl::gps_rtcm_data() const
+{
+    std::lock_guard<std::mutex> lock(_gps_rtcm_data_mutex);
+    return _gps_rtcm_data;
+}
+
+void TelemetryImpl::set_gps_rtcm_data(Telemetry::GpsRtcmData gps_rtcm_data)
+{
+    std::lock_guard<std::mutex> lock(_gps_rtcm_data_mutex);
+    _gps_rtcm_data = gps_rtcm_data;
+}
+
 Telemetry::Battery TelemetryImpl::battery() const
 {
     std::lock_guard<std::mutex> lock(_battery_mutex);
@@ -2168,6 +2207,12 @@ void TelemetryImpl::subscribe_raw_gps(Telemetry::RawGpsCallback& callback)
 {
     std::lock_guard<std::mutex> lock(_subscription_mutex);
     _raw_gps_subscription = callback;
+}
+
+void TelemetryImpl::subscribe_gps_rtcm_data(Telemetry::GpsRtcmDataCallback& callback)
+{
+    std::lock_guard<std::mutex> lock(_subscription_mutex);
+    _gps_rtcm_data_subscription = callback;
 }
 
 void TelemetryImpl::subscribe_battery(Telemetry::BatteryCallback& callback)

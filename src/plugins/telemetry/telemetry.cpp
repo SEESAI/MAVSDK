@@ -15,6 +15,7 @@ using EulerAngle = Telemetry::EulerAngle;
 using AngularVelocityBody = Telemetry::AngularVelocityBody;
 using GpsInfo = Telemetry::GpsInfo;
 using RawGps = Telemetry::RawGps;
+using GpsRtcmData = Telemetry::GpsRtcmData;
 using Battery = Telemetry::Battery;
 using BatteryStatus = Telemetry::BatteryStatus;
 using VehicleStatus = Telemetry::VehicleStatus;
@@ -181,6 +182,16 @@ void Telemetry::subscribe_raw_gps(RawGpsCallback callback)
 Telemetry::RawGps Telemetry::raw_gps() const
 {
     return _impl->raw_gps();
+}
+
+void Telemetry::subscribe_gps_rtcm_data(GpsRtcmDataCallback callback)
+{
+    _impl->subscribe_gps_rtcm_data(callback);
+}
+
+Telemetry::GpsRtcmData Telemetry::gps_rtcm_data() const
+{
+    return _impl->gps_rtcm_data();
 }
 
 void Telemetry::subscribe_battery(BatteryCallback callback)
@@ -787,6 +798,28 @@ std::ostream& operator<<(std::ostream& str, Telemetry::RawGps const& raw_gps)
     str << "    velocity_uncertainty_m_s: " << raw_gps.velocity_uncertainty_m_s << '\n';
     str << "    heading_uncertainty_deg: " << raw_gps.heading_uncertainty_deg << '\n';
     str << "    yaw_deg: " << raw_gps.yaw_deg << '\n';
+    str << '}';
+    return str;
+}
+
+bool operator==(const Telemetry::GpsRtcmData& lhs, const Telemetry::GpsRtcmData& rhs)
+{
+    return (rhs.flags == lhs.flags) && (rhs.len == lhs.len) && (rhs.data == lhs.data);
+}
+
+std::ostream& operator<<(std::ostream& str, Telemetry::GpsRtcmData const& gps_rtcm_data)
+{
+    str << std::setprecision(15);
+    str << "gps_rtcm_data:" << '\n' << "{\n";
+    str << "    flags: " << gps_rtcm_data.flags << '\n';
+    str << "    len: " << gps_rtcm_data.len << '\n';
+    str << "    data: [";
+    for (auto it = gps_rtcm_data.data.begin();
+        it != gps_rtcm_data.data.end();
+        ++it) {
+        str << *it;
+        str << (it + 1 != gps_rtcm_data.data.end() ? ", " : "]\n");
+    }
     str << '}';
     return str;
 }
