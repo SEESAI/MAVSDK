@@ -17,3 +17,7 @@ CMakeLists.txt.user*
 
 tools/docs
 venv/
+
+# clion specifics
+cmake-build-*/
+.idea/
