@@ -268,6 +268,17 @@ public:
     };
 
     /**
+     * @brief Type for acceleration commands in NED (North East Down) coordinates with yaw speed.
+     */
+    struct AccelerationNedYawspeed {
+        float north_m_s2{}; /**< @brief Acceleration North (in metres/second^2) */
+        float east_m_s2{}; /**< @brief Acceleration East (in metres/second^2) */
+        float down_m_s2{}; /**< @brief Acceleration Down (in metres/second^2) */
+        float yaw_deg_s{}; /**< @brief Yaw angular rate (in degrees/second, positive for
+                                   clock-wise looking from above) */
+    };
+
+    /**
      * @brief Equal operator to compare two `Offboard::AccelerationNed` objects.
      *
      * @return `true` if items are equal.
@@ -374,7 +385,8 @@ public:
     bool is_active() const;
 
     /**
-     * @brief Set the attitude in terms of roll, pitch and yaw in degrees with thrust. Only send one request.
+     * @brief Set the attitude in terms of roll, pitch and yaw in degrees with thrust. Only send one
+     * request.
      *
      * This function is blocking.
      *
@@ -416,7 +428,8 @@ public:
     Result set_actuator_control(ActuatorControl actuator_control) const;
 
     /**
-     * @brief Set the attitude rate in terms of pitch, roll and yaw angular rate along with thrust. Only send one request.
+     * @brief Set the attitude rate in terms of pitch, roll and yaw angular rate along with thrust.
+     * Only send one request.
      *
      * This function is blocking.
      *
@@ -499,6 +512,8 @@ public:
      * @return Result of request.
      */
     Result set_acceleration_ned(AccelerationNed acceleration_ned) const;
+
+    Result set_acceleration_ned_yawspeed(AccelerationNedYawspeed acceleration_ned_yawspeed) const;
 
     /**
      * @brief Copy constructor.
