@@ -129,9 +129,9 @@ Offboard::Result Offboard::set_acceleration_ned(AccelerationNed acceleration_ned
 }
 
 Offboard::Result
-Offboard::set_acceleration_ned_yawspeed(AccelerationNedYawspeed acceleration_ned_yaw_speed) const
+Offboard::set_acceleration_body_yawspeed(AccelerationBodyYawspeed acceleration_body_yaw_speed) const
 {
-    return _impl->set_acceleration_ned_yawspeed(acceleration_ned_yaw_speed);
+    return _impl->set_acceleration_body_yawspeed(acceleration_body_yaw_speed);
 }
 
 bool operator==(const Offboard::Attitude& lhs, const Offboard::Attitude& rhs)
@@ -307,6 +307,30 @@ std::ostream& operator<<(std::ostream& str, Offboard::AccelerationNed const& acc
     str << "    north_m_s2: " << acceleration_ned.north_m_s2 << '\n';
     str << "    east_m_s2: " << acceleration_ned.east_m_s2 << '\n';
     str << "    down_m_s2: " << acceleration_ned.down_m_s2 << '\n';
+    str << '}';
+    return str;
+}
+
+bool operator==(const Offboard::AccelerationBodyYawspeed& lhs, const Offboard::AccelerationBodyYawspeed& rhs)
+{
+    return ((std::isnan(rhs.forward_m_s2) && std::isnan(lhs.forward_m_s2)) ||
+            rhs.forward_m_s2 == lhs.forward_m_s2) &&
+           ((std::isnan(rhs.right_m_s2) && std::isnan(lhs.right_m_s2)) ||
+            rhs.right_m_s2 == lhs.right_m_s2) &&
+           ((std::isnan(rhs.down_m_s2) && std::isnan(lhs.down_m_s2)) ||
+            rhs.down_m_s2 == lhs.down_m_s2) &&
+           ((std::isnan(rhs.yaw_deg_s) && std::isnan(lhs.yaw_deg_s)) ||
+            rhs.down_m_s2 == lhs.yaw_deg_s);
+}
+
+std::ostream& operator<<(std::ostream& str, Offboard::AccelerationBodyYawspeed const& acceleration_body)
+{
+    str << std::setprecision(15);
+    str << "acceleration_body_yawspeed:" << '\n' << "{\n";
+    str << "    forward_m_s2: " << acceleration_body.forward_m_s2 << '\n';
+    str << "    right_m_s2: " << acceleration_body.right_m_s2 << '\n';
+    str << "    down_m_s2: " << acceleration_body.down_m_s2 << '\n';
+    str << "    yaw_deg_s: " << acceleration_body.yaw_deg_s << '\n';
     str << '}';
     return str;
 }

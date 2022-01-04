@@ -267,14 +267,14 @@ Offboard::Result OffboardImpl::set_acceleration_ned(Offboard::AccelerationNed ac
     return send_acceleration_ned();
 }
 
-Offboard::Result OffboardImpl::set_acceleration_ned_yawspeed(
-    Offboard::AccelerationNedYawspeed acceleration_ned_yawspeed)
+Offboard::Result OffboardImpl::set_acceleration_body_yawspeed(
+    Offboard::AccelerationBodyYawspeed acceleration_body_yawspeed)
 {
     {
         std::lock_guard<std::mutex> lock(_mutex);
-        _acceleration_ned_yawspeed = acceleration_ned_yawspeed;
+        _acceleration_body_yawspeed = acceleration_body_yawspeed;
 
-        if (_mode != Mode::AccelerationNedYawspeed) {
+        if (_mode != Mode::AccelerationBodyYawspeed) {
             if (_call_every_cookie) {
                 // If we're already sending other setpoints, stop that now.
                 _parent->remove_call_every(_call_every_cookie);
@@ -282,9 +282,9 @@ Offboard::Result OffboardImpl::set_acceleration_ned_yawspeed(
             }
             // We automatically send Ned setpoints from now on.
             _parent->add_call_every(
-                [this]() { send_acceleration_ned_yawspeed(); }, SEND_INTERVAL_S, &_call_every_cookie);
+                [this]() { send_acceleration_body_yawspeed(); }, SEND_INTERVAL_S, &_call_every_cookie);
 
-            _mode = Mode::AccelerationNed;
+            _mode = Mode::AccelerationBodyYawspeed;
         } else {
             // We're already sending these kind of setpoints. Since the setpoint change, let's
             // reschedule the next call, so we don't send setpoints too often.
@@ -293,7 +293,7 @@ Offboard::Result OffboardImpl::set_acceleration_ned_yawspeed(
     }
 
     // also send it right now to reduce latency
-    return send_acceleration_ned_yawspeed();
+    return send_acceleration_body_yawspeed();
 }
 
 Offboard::Result
@@ -636,7 +636,7 @@ Offboard::Result OffboardImpl::send_acceleration_ned()
                                             Offboard::Result::ConnectionError;
 }
 
-Offboard::Result OffboardImpl::send_acceleration_ned_yawspeed()
+Offboard::Result OffboardImpl::send_acceleration_body_yawspeed()
 {
     const static uint16_t IGNORE_X = (1 << 0);
     const static uint16_t IGNORE_Y = (1 << 1);
@@ -646,9 +646,9 @@ Offboard::Result OffboardImpl::send_acceleration_ned_yawspeed()
     const static uint16_t IGNORE_VZ = (1 << 5);
     const static uint16_t IGNORE_YAW = (1 << 10);
 
-    const auto acceleration_ned_yawspeed = [this]() {
+    const auto acceleration_body_yawspeed = [this]() {
         std::lock_guard<std::mutex> lock(_mutex);
-        return _acceleration_ned_yawspeed;
+        return _acceleration_body_yawspeed;
     }();
 
     mavlink_message_t message;
@@ -659,7 +659,7 @@ Offboard::Result OffboardImpl::send_acceleration_ned_yawspeed()
         static_cast<uint32_t>(_parent->get_time().elapsed_s() * 1e3),
         _parent->get_system_id(),
         _parent->get_autopilot_id(),
-        MAV_FRAME_LOCAL_NED,
+        MAV_FRAME_BODY_FRD,
         IGNORE_X | IGNORE_Y | IGNORE_Z | IGNORE_VX | IGNORE_VY | IGNORE_VZ | IGNORE_YAW,
         0.0f, // x,
         0.0f, // y,
@@ -667,11 +667,11 @@ Offboard::Result OffboardImpl::send_acceleration_ned_yawspeed()
         0.0f, // vfx
         0.0f, // vfy
         0.0f, // vfz
-        acceleration_ned_yawspeed.north_m_s2,
-        acceleration_ned_yawspeed.east_m_s2,
-        acceleration_ned_yawspeed.down_m_s2,
+        acceleration_body_yawspeed.forward_m_s2,
+        acceleration_body_yawspeed.right_m_s2,
+        acceleration_body_yawspeed.down_m_s2,
         0.0f, // yaw
-        acceleration_ned_yawspeed.yaw_deg_s); // yaw_rate
+        acceleration_body_yawspeed.yaw_deg_s); // yaw_rate
         return _parent->send_message(message) ? Offboard::Result::Success :
         Offboard::Result::ConnectionError;
 }
