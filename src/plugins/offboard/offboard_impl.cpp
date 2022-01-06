@@ -659,7 +659,7 @@ Offboard::Result OffboardImpl::send_acceleration_body_yawspeed()
         static_cast<uint32_t>(_parent->get_time().elapsed_s() * 1e3),
         _parent->get_system_id(),
         _parent->get_autopilot_id(),
-        MAV_FRAME_BODY_FRD,
+        MAV_FRAME_BODY_NED,
         IGNORE_X | IGNORE_Y | IGNORE_Z | IGNORE_VX | IGNORE_VY | IGNORE_VZ | IGNORE_YAW,
         0.0f, // x,
         0.0f, // y,
