@@ -671,7 +671,7 @@ Offboard::Result OffboardImpl::send_acceleration_body_yawspeed()
         acceleration_body_yawspeed.right_m_s2,
         acceleration_body_yawspeed.down_m_s2,
         0.0f, // yaw
-        acceleration_body_yawspeed.yaw_deg_s); // yaw_rate
+        to_rad_from_deg(acceleration_body_yawspeed.yaw_deg_s)); // yaw_rate
         return _parent->send_message(message) ? Offboard::Result::Success :
         Offboard::Result::ConnectionError;
 }
