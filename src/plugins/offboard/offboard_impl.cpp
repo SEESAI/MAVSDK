@@ -296,6 +296,24 @@ Offboard::Result OffboardImpl::set_acceleration_body_yawspeed(
     return send_acceleration_body_yawspeed();
 }
 
+Offboard::Result OffboardImpl::set_acceleration_body_yawspeed_once(
+    Offboard::AccelerationBodyYawspeed acceleration_body_yawspeed)
+{
+    {
+        std::lock_guard<std::mutex> lock(_mutex);
+        _acceleration_body_yawspeed = acceleration_body_yawspeed;
+
+        if (_call_every_cookie) {
+            // If we're already sending other setpoints, stop that now.
+            _parent->remove_call_every(_call_every_cookie);
+            _call_every_cookie = nullptr;
+        }
+    }
+
+    // also send it right now to reduce latency
+    return send_acceleration_body_yawspeed();
+}
+
 Offboard::Result
 OffboardImpl::set_velocity_body_once(Offboard::VelocityBodyYawspeed velocity_body_yawspeed)
 {
@@ -636,6 +654,7 @@ Offboard::Result OffboardImpl::send_acceleration_ned()
                                             Offboard::Result::ConnectionError;
 }
 
+
 Offboard::Result OffboardImpl::send_acceleration_body_yawspeed()
 {
     const static uint16_t IGNORE_X = (1 << 0);
@@ -675,7 +694,6 @@ Offboard::Result OffboardImpl::send_acceleration_body_yawspeed()
         return _parent->send_message(message) ? Offboard::Result::Success :
         Offboard::Result::ConnectionError;
 }
-
 
 Offboard::Result OffboardImpl::send_velocity_body()
 {
@@ -874,7 +892,6 @@ void OffboardImpl::process_heartbeat(const mavlink_message_t& message)
         }
     }
 }
-
 void OffboardImpl::stop_sending_setpoints()
 {
     // We assume that we already acquired the mutex in this function.
@@ -885,7 +902,6 @@ void OffboardImpl::stop_sending_setpoints()
     }
     _mode = Mode::NotActive;
 }
-
 Offboard::Result
 OffboardImpl::offboard_result_from_command_result(MavlinkCommandSender::Result result)
 {

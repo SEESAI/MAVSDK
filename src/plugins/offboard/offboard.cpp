@@ -134,6 +134,12 @@ Offboard::set_acceleration_body_yawspeed(AccelerationBodyYawspeed acceleration_b
     return _impl->set_acceleration_body_yawspeed(acceleration_body_yaw_speed);
 }
 
+Offboard::Result Offboard::set_acceleration_body_yawspeed_once(
+    Offboard::AccelerationBodyYawspeed acceleration_body_yawspeed) const
+{
+    return _impl->set_acceleration_body_yawspeed_once(acceleration_body_yawspeed);
+}
+
 bool operator==(const Offboard::Attitude& lhs, const Offboard::Attitude& rhs)
 {
     return ((std::isnan(rhs.roll_deg) && std::isnan(lhs.roll_deg)) ||
@@ -334,7 +340,6 @@ std::ostream& operator<<(std::ostream& str, Offboard::AccelerationBodyYawspeed c
     str << '}';
     return str;
 }
-
 std::ostream& operator<<(std::ostream& str, Offboard::Result const& result)
 {
     switch (result) {

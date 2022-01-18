@@ -537,6 +537,8 @@ public:
      */
     Result set_acceleration_body_yawspeed(AccelerationBodyYawspeed acceleration_body_yawspeed) const;
 
+    Result set_acceleration_body_yawspeed_once(AccelerationBodyYawspeed acceleration_body_yawspeed) const;
+
     /**
      * @brief Copy constructor.
      */
