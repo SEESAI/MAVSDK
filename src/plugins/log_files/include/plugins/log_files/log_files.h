@@ -161,6 +161,21 @@ public:
     void download_log_file_async(Entry entry, std::string path, DownloadLogFileCallback callback);
 
     /**
+     * @brief Erase all log files.
+     *
+     * This function is non-blocking. See 'erase_all_log_files' for the blocking counterpart.
+     */
+     void erase_all_log_files_async(const ResultCallback callback);
+
+    /**
+     * @brief Erase all log files.
+     *
+     * This function is blocking. See 'erase_all_log_files' for the non-blocking counterpart.
+     *
+     */
+    LogFiles::Result erase_all_log_files() const;
+
+    /**
      * @brief Copy constructor.
      */
     LogFiles(const LogFiles& other);

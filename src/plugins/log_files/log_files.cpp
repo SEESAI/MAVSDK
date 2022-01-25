@@ -37,6 +37,16 @@ void LogFiles::download_log_file_async(
     _impl->download_log_file_async(entry, path, callback);
 }
 
+void LogFiles::erase_all_log_files_async(const ResultCallback callback)
+{
+    _impl->erase_all_log_files_async(callback);
+}
+
+LogFiles::Result LogFiles::erase_all_log_files() const
+{
+    return _impl->erase_all_log_files();
+}
+
 bool operator==(const LogFiles::ProgressData& lhs, const LogFiles::ProgressData& rhs)
 {
     return ((std::isnan(rhs.progress) && std::isnan(lhs.progress)) || rhs.progress == lhs.progress);

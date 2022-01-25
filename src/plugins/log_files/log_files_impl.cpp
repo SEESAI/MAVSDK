@@ -296,6 +296,31 @@ void LogFilesImpl::download_log_file_async(
     }
 }
 
+LogFiles::Result LogFilesImpl::erase_all_log_files()
+{
+    auto prom = std::promise<LogFiles::Result>();
+    auto fut = prom.get_future();
+
+    erase_all_log_files_async([&prom](LogFiles::Result result) { prom.set_value(result);});
+    return fut.get();
+}
+
+void LogFilesImpl::erase_all_log_files_async(LogFiles::ResultCallback callback)
+{
+    {
+        std::lock_guard<std::mutex> lock(_entries.mutex);
+
+        request_erase_all_logs();
+
+        if (callback) {
+            const auto tmp_callback = callback;
+            _parent->call_user_callback([tmp_callback]() {
+                tmp_callback(LogFiles::Result::Success);
+            });
+        }
+    }
+}
+
 std::size_t LogFilesImpl::determine_part_end()
 {
     // Assumes to have the lock for _data.mutex.
@@ -435,6 +460,19 @@ void LogFilesImpl::request_log_data(unsigned id, unsigned start, unsigned count)
         id,
         start,
         count);
+    _parent->send_message(msg);
+}
+
+void LogFilesImpl::request_erase_all_logs()
+{
+    mavlink_message_t msg;
+    mavlink_msg_log_erase_pack(
+            _parent->get_own_system_id(),
+            _parent->get_own_component_id(),
+            &msg,
+            _parent->get_system_id(),
+            _parent->get_autopilot_id()
+            );
     _parent->send_message(msg);
 }
 
