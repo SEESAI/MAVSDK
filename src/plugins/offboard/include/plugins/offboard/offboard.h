@@ -266,7 +266,6 @@ public:
         float east_m_s2{}; /**< @brief Acceleration East (in metres/second^2) */
         float down_m_s2{}; /**< @brief Acceleration Down (in metres/second^2) */
     };
-
     /**
      * @brief Equal operator to compare two `Offboard::AccelerationNed` objects.
      *
@@ -282,6 +281,33 @@ public:
      */
     friend std::ostream&
     operator<<(std::ostream& str, Offboard::AccelerationNed const& acceleration_ned);
+
+    /**
+     * @brief Type for acceleration commands in NED (North East Down) coordinates with yaw speed.
+     */
+    struct AccelerationBodyYawspeed {
+        float forward_m_s2{}; /**< @brief Acceleration North (in metres/second^2) */
+        float right_m_s2{}; /**< @brief Acceleration East (in metres/second^2) */
+        float down_m_s2{}; /**< @brief Acceleration Down (in metres/second^2) */
+        float yaw_deg_s{}; /**< @brief Yaw angular rate (in degrees/second, positive for
+                                   clock-wise looking from above) */
+    };
+
+    /**
+     * @brief Equal operator to compare two `Offboard::AccelerationNed` objects.
+     *
+     * @return `true` if items are equal.
+     */
+    friend bool
+    operator==(const Offboard::AccelerationBodyYawspeed& lhs, const Offboard::AccelerationBodyYawspeed& rhs);
+
+    /**
+     * @brief Stream operator to print information about a `Offboard::AccelerationNed`.
+     *
+     * @return A reference to the stream.
+     */
+    friend std::ostream&
+    operator<<(std::ostream& str, Offboard::AccelerationBodyYawspeed const& acceleration_body);
 
     /**
      * @brief Possible results returned for offboard requests
@@ -374,7 +400,8 @@ public:
     bool is_active() const;
 
     /**
-     * @brief Set the attitude in terms of roll, pitch and yaw in degrees with thrust. Only send one request.
+     * @brief Set the attitude in terms of roll, pitch and yaw in degrees with thrust. Only send one
+     * request.
      *
      * This function is blocking.
      *
@@ -416,7 +443,8 @@ public:
     Result set_actuator_control(ActuatorControl actuator_control) const;
 
     /**
-     * @brief Set the attitude rate in terms of pitch, roll and yaw angular rate along with thrust. Only send one request.
+     * @brief Set the attitude rate in terms of pitch, roll and yaw angular rate along with thrust.
+     * Only send one request.
      *
      * This function is blocking.
      *
@@ -499,6 +527,17 @@ public:
      * @return Result of request.
      */
     Result set_acceleration_ned(AccelerationNed acceleration_ned) const;
+
+    /**
+     * @brief Set the acceleration in body coordinates.
+     *
+     * This function is blocking.
+     *
+     * @return Result of request.
+     */
+    Result set_acceleration_body_yawspeed(AccelerationBodyYawspeed acceleration_body_yawspeed) const;
+
+    Result set_acceleration_body_yawspeed_once(AccelerationBodyYawspeed acceleration_body_yawspeed) const;
 
     /**
      * @brief Copy constructor.

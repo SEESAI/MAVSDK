@@ -267,6 +267,53 @@ Offboard::Result OffboardImpl::set_acceleration_ned(Offboard::AccelerationNed ac
     return send_acceleration_ned();
 }
 
+Offboard::Result OffboardImpl::set_acceleration_body_yawspeed(
+    Offboard::AccelerationBodyYawspeed acceleration_body_yawspeed)
+{
+    {
+        std::lock_guard<std::mutex> lock(_mutex);
+        _acceleration_body_yawspeed = acceleration_body_yawspeed;
+
+        if (_mode != Mode::AccelerationBodyYawspeed) {
+            if (_call_every_cookie) {
+                // If we're already sending other setpoints, stop that now.
+                _parent->remove_call_every(_call_every_cookie);
+                _call_every_cookie = nullptr;
+            }
+            // We automatically send Ned setpoints from now on.
+            _parent->add_call_every(
+                [this]() { send_acceleration_body_yawspeed(); }, SEND_INTERVAL_S, &_call_every_cookie);
+
+            _mode = Mode::AccelerationBodyYawspeed;
+        } else {
+            // We're already sending these kind of setpoints. Since the setpoint change, let's
+            // reschedule the next call, so we don't send setpoints too often.
+            _parent->reset_call_every(_call_every_cookie);
+        }
+    }
+
+    // also send it right now to reduce latency
+    return send_acceleration_body_yawspeed();
+}
+
+Offboard::Result OffboardImpl::set_acceleration_body_yawspeed_once(
+    Offboard::AccelerationBodyYawspeed acceleration_body_yawspeed)
+{
+    {
+        std::lock_guard<std::mutex> lock(_mutex);
+        _acceleration_body_yawspeed = acceleration_body_yawspeed;
+
+        if (_call_every_cookie) {
+            // If we're already sending other setpoints, stop that now.
+            _parent->remove_call_every(_call_every_cookie);
+            _call_every_cookie = nullptr;
+        }
+    }
+
+    // also send it right now to reduce latency
+    return send_acceleration_body_yawspeed();
+}
+
 Offboard::Result
 OffboardImpl::set_velocity_body_once(Offboard::VelocityBodyYawspeed velocity_body_yawspeed)
 {
@@ -607,6 +654,47 @@ Offboard::Result OffboardImpl::send_acceleration_ned()
                                             Offboard::Result::ConnectionError;
 }
 
+
+Offboard::Result OffboardImpl::send_acceleration_body_yawspeed()
+{
+    const static uint16_t IGNORE_X = (1 << 0);
+    const static uint16_t IGNORE_Y = (1 << 1);
+    const static uint16_t IGNORE_Z = (1 << 2);
+    const static uint16_t IGNORE_VX = (1 << 3);
+    const static uint16_t IGNORE_VY = (1 << 4);
+    const static uint16_t IGNORE_VZ = (1 << 5);
+    const static uint16_t IGNORE_YAW = (1 << 10);
+
+    const auto acceleration_body_yawspeed = [this]() {
+        std::lock_guard<std::mutex> lock(_mutex);
+        return _acceleration_body_yawspeed;
+    }();
+
+    mavlink_message_t message;
+    mavlink_msg_set_position_target_local_ned_pack(
+        _parent->get_own_system_id(),
+        _parent->get_own_component_id(),
+        &message,
+        static_cast<uint32_t>(_parent->get_time().elapsed_s() * 1e3),
+        _parent->get_system_id(),
+        _parent->get_autopilot_id(),
+        MAV_FRAME_BODY_NED,
+        IGNORE_X | IGNORE_Y | IGNORE_Z | IGNORE_VX | IGNORE_VY | IGNORE_VZ | IGNORE_YAW,
+        0.0f, // x,
+        0.0f, // y,
+        0.0f, // z,
+        0.0f, // vfx
+        0.0f, // vfy
+        0.0f, // vfz
+        acceleration_body_yawspeed.forward_m_s2,
+        acceleration_body_yawspeed.right_m_s2,
+        acceleration_body_yawspeed.down_m_s2,
+        0.0f, // yaw
+        to_rad_from_deg(acceleration_body_yawspeed.yaw_deg_s)); // yaw_rate
+        return _parent->send_message(message) ? Offboard::Result::Success :
+        Offboard::Result::ConnectionError;
+}
+
 Offboard::Result OffboardImpl::send_velocity_body()
 {
     const static uint16_t IGNORE_X = (1 << 0);
@@ -804,7 +892,6 @@ void OffboardImpl::process_heartbeat(const mavlink_message_t& message)
         }
     }
 }
-
 void OffboardImpl::stop_sending_setpoints()
 {
     // We assume that we already acquired the mutex in this function.
@@ -815,7 +902,6 @@ void OffboardImpl::stop_sending_setpoints()
     }
     _mode = Mode::NotActive;
 }
-
 Offboard::Result
 OffboardImpl::offboard_result_from_command_result(MavlinkCommandSender::Result result)
 {
