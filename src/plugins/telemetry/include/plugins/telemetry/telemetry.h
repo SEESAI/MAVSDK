@@ -1261,11 +1261,29 @@ public:
     void subscribe_gps_info(GpsInfoCallback callback);
 
     /**
+     * @brief Callback type for subscribe_gps_2_info.
+     */
+
+    using Gps2InfoCallback = std::function<void(GpsInfo)>;
+
+    /**
+     * @brief Subscribe to 'GPS 2 info' updates.
+     */
+     void subscribe_gps_2_info(GpsInfoCallback callback);
+
+    /**
      * @brief Poll for 'GpsInfo' (blocking).
      *
      * @return One GpsInfo update.
      */
     GpsInfo gps_info() const;
+
+    /**
+     * @brief Poll for 'Gps2Info' (blocking).
+     *
+     * @return One Gps2Info update.
+     */
+     GpsInfo gps_2_info() const;
 
     /**
      * @brief Callback type for subscribe_raw_gps.
@@ -1279,11 +1297,29 @@ public:
     void subscribe_raw_gps(RawGpsCallback callback);
 
     /**
+     * @brief Callback type for subscribe_raw_gps_2.
+     */
+
+    using RawGps2Callback = std::function<void(RawGps)>;
+
+    /**
+     * @brief Subscribe to 'Raw GPS 2' updates.
+     */
+     void subscribe_raw_gps_2(RawGpsCallback callback);
+
+    /**
      * @brief Poll for 'RawGps' (blocking).
      *
      * @return One RawGps update.
      */
     RawGps raw_gps() const;
+
+    /**
+     * @brief Poll for 'RawGps2' (blocking).
+     *
+     * @return One RawGps2 update.
+     */
+     RawGps raw_gps_2() const;
 
     /**
     * @brief Callback type for subscribe_gps_rtcm_data.

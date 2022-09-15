@@ -66,6 +66,9 @@ void TelemetryImpl::init()
         MAVLINK_MSG_ID_GPS_RAW_INT, std::bind(&TelemetryImpl::process_gps_raw_int, this, _1), this);
 
     _parent->register_mavlink_message_handler(
+        MAVLINK_MSG_ID_GPS2_RAW, std::bind(&TelemetryImpl::process_gps_2_raw, this, _1), this);
+
+    _parent->register_mavlink_message_handler(
         MAVLINK_MSG_ID_GPS_RTCM_DATA, std::bind(&TelemetryImpl::process_gps_rtcm_data, this, _1), this);
 
     _parent->register_mavlink_message_handler(
@@ -303,6 +306,12 @@ Telemetry::Result TelemetryImpl::set_rate_gps_info(double rate_hz)
 {
     return telemetry_result_from_command_result(
         _parent->set_msg_rate(MAVLINK_MSG_ID_GPS_RAW_INT, rate_hz));
+}
+
+Telemetry::Result TelemetryImpl::set_rate_gps_2_info(double rate_hz)
+{
+    return telemetry_result_from_command_result(
+        _parent->set_msg_rate(MAVLINK_MSG_ID_GPS2_RAW, rate_hz));
 }
 
 Telemetry::Result TelemetryImpl::set_rate_battery(double rate_hz)
@@ -971,6 +980,78 @@ void TelemetryImpl::process_gps_raw_int(const mavlink_message_t& message)
     }
 
     _parent->refresh_timeout_handler(_gps_raw_timeout_cookie);
+}
+
+void TelemetryImpl::process_gps_2_raw(const int& message)
+{
+    mavlink_gps2_raw_t gps_2_raw;
+    mavlink_msg_gps2_raw_decode(&message, &gps_2_raw);
+
+    Telemetry::FixType fix_2_type;
+    switch (gps_2_raw.fix_type) {
+        case 0:
+            fix_2_type = Telemetry::FixType::NoGps;
+            break;
+        case 1:
+            fix_2_type = Telemetry::FixType::NoFix;
+            break;
+        case 2:
+            fix_2_type = Telemetry::FixType::Fix2D;
+            break;
+        case 3:
+            fix_2_type = Telemetry::FixType::Fix3D;
+            break;
+        case 4:
+            fix_2_type = Telemetry::FixType::FixDgps;
+            break;
+        case 5:
+            fix_2_type = Telemetry::FixType::RtkFloat;
+            break;
+        case 6:
+            fix_2_type = Telemetry::FixType::RtkFixed;
+            break;
+
+        default:
+            LogErr() << "Received unknown GPS fix type!";
+            fix_2_type = Telemetry::FixType::NoGps;
+            break;
+    }
+
+    Telemetry::GpsInfo new_gps_2_info;
+    new_gps_2_info.num_satellites = gps_2_raw.satellites_visible;
+    new_gps_2_info.fix_type = fix_2_type;
+    set_gps_2_info(new_gps_2_info);
+
+    Telemetry::RawGps raw_gps_2_info;
+    raw_gps_2_info.timestamp_us = gps_2_raw.time_usec;
+    raw_gps_2_info.latitude_deg = gps_2_raw.lat * 1e-7;
+    raw_gps_2_info.longitude_deg = gps_2_raw.lon * 1e-7;
+    raw_gps_2_info.absolute_altitude_m = gps_2_raw.alt * 1e-3;
+    raw_gps_2_info.hdop = static_cast<float>(gps_2_raw.eph) * 1e-2f;
+    raw_gps_2_info.vdop = static_cast<float>(gps_2_raw.epv) * 1e-2f;
+    raw_gps_2_info.velocity_m_s = static_cast<float>(gps_2_raw.vel) * 1e-2f;
+    raw_gps_2_info.cog_deg = static_cast<float>(gps_2_raw.cog) * 1e-2f;
+    raw_gps_2_info.altitude_ellipsoid_m = static_cast<float>(gps_2_raw.alt_ellipsoid) * 1e-3f;
+    raw_gps_2_info.horizontal_uncertainty_m = static_cast<float>(gps_2_raw.h_acc) * 1e-3f;
+    raw_gps_2_info.vertical_uncertainty_m = static_cast<float>(gps_2_raw.v_acc) * 1e-3f;
+    raw_gps_2_info.velocity_uncertainty_m_s = static_cast<float>(gps_2_raw.vel_acc) * 1e-3f;
+    raw_gps_2_info.heading_uncertainty_deg = static_cast<float>(gps_2_raw.hdg_acc) * 1e-5f;
+    raw_gps_2_info.yaw_deg = static_cast<float>(gps_2_raw.yaw) * 1e-2f;
+    set_raw_gps_2(raw_gps_2_info);
+
+    {
+        std::lock_guard<std::mutex> lock(_subscription_mutex);
+        if (_gps_2_info_subscription) {
+            auto callback = _gps_2_info_subscription;
+            auto arg = gps_2_info();
+            _parent->call_user_callback([callback, arg]() { callback(arg); });
+        }
+        if (_raw_gps_2_subscription) {
+            auto callback = _raw_gps_2_subscription;
+            auto arg = raw_gps_2();
+            _parent->call_user_callback([callback, arg]() { callback(arg); });
+        }
+    }
 }
 
 void TelemetryImpl::process_gps_rtcm_data(const mavlink_message_t& message)
@@ -1830,10 +1911,22 @@ Telemetry::GpsInfo TelemetryImpl::gps_info() const
     return _gps_info;
 }
 
+Telemetry::GpsInfo TelemetryImpl::gps_2_info() const
+{
+    std::lock_guard<std::mutex> lock(_gps_2_info_mutex);
+    return _gps_2_info;
+}
+
 void TelemetryImpl::set_gps_info(Telemetry::GpsInfo gps_info)
 {
     std::lock_guard<std::mutex> lock(_gps_info_mutex);
     _gps_info = gps_info;
+}
+
+void TelemetryImpl::set_gps_2_info(Telemetry::GpsInfo gps_2_info)
+{
+    std::lock_guard<std::mutex> lock(_gps_2_info_mutex);
+    _gps_2_info = gps_2_info;
 }
 
 Telemetry::RawGps TelemetryImpl::raw_gps() const
@@ -1842,10 +1935,22 @@ Telemetry::RawGps TelemetryImpl::raw_gps() const
     return _raw_gps;
 }
 
+Telemetry::RawGps TelemetryImpl::raw_gps_2() const
+{
+    std::lock_guard<std::mutex> lock(_raw_gps_2_mutex);
+    return _raw_gps_2;
+}
+
 void TelemetryImpl::set_raw_gps(Telemetry::RawGps raw_gps)
 {
     std::lock_guard<std::mutex> lock(_raw_gps_mutex);
     _raw_gps = raw_gps;
+}
+
+void TelemetryImpl::set_raw_gps_2(Telemetry::RawGps raw_gps_2)
+{
+    std::lock_guard<std::mutex> lock(_raw_gps_2_mutex);
+    _raw_gps_2 = raw_gps_2;
 }
 
 Telemetry::GpsRtcmData TelemetryImpl::gps_rtcm_data() const
@@ -2203,10 +2308,22 @@ void TelemetryImpl::subscribe_gps_info(Telemetry::GpsInfoCallback& callback)
     _gps_info_subscription = callback;
 }
 
+void TelemetryImpl::subscribe_gps_2_info(Telemetry::Gps2InfoCallback& callback)
+{
+    std::lock_guard<std::mutex> lock(_subscription_mutex);
+    _gps_2_info_subscription = callback;
+}
+
 void TelemetryImpl::subscribe_raw_gps(Telemetry::RawGpsCallback& callback)
 {
     std::lock_guard<std::mutex> lock(_subscription_mutex);
     _raw_gps_subscription = callback;
+}
+
+void TelemetryImpl::subscribe_raw_gps_2(Telemetry::RawGps2Callback& callback)
+{
+    std::lock_guard<std::mutex> lock(_subscription_mutex);
+    _raw_gps_2_subscription = callback;
 }
 
 void TelemetryImpl::subscribe_gps_rtcm_data(Telemetry::GpsRtcmDataCallback& callback)

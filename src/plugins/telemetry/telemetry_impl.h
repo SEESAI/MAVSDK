@@ -39,6 +39,7 @@ public:
     Telemetry::Result set_rate_fixedwing_metrics(double rate_hz);
     Telemetry::Result set_rate_ground_truth(double rate_hz);
     Telemetry::Result set_rate_gps_info(double rate_hz);
+    Telemetry::Result set_rate_gps_2_info(double rate_hz);
     Telemetry::Result set_rate_battery(double rate_hz);
     Telemetry::Result set_rate_battery_status(double rate_hz);
     Telemetry::Result set_rate_rc_status(double rate_hz);
@@ -63,6 +64,7 @@ public:
     void set_rate_fixedwing_metrics_async(double rate_hz, Telemetry::ResultCallback callback);
     void set_rate_ground_truth_async(double rate_hz, Telemetry::ResultCallback callback);
     void set_rate_gps_info_async(double rate_hz, Telemetry::ResultCallback callback);
+    void set_rate_gps_2_info_async(double rate_hz, Telemetry::ResultCallback callback);
     void set_rate_battery_async(double rate_hz, Telemetry::ResultCallback callback);
     void set_rate_battery_status_async(double rate_hz, Telemetry::ResultCallback callback);
     void set_rate_rc_status_async(double rate_hz, Telemetry::ResultCallback callback);
@@ -95,7 +97,9 @@ public:
     Telemetry::Imu scaled_imu() const;
     Telemetry::Imu raw_imu() const;
     Telemetry::GpsInfo gps_info() const;
+    Telemetry::GpsInfo gps_2_info() const;
     Telemetry::RawGps raw_gps() const;
+    Telemetry::RawGps raw_gps_2() const;
     Telemetry::GpsRtcmData gps_rtcm_data() const;
     Telemetry::Battery battery() const;
     Telemetry::BatteryStatus battery_status() const;
@@ -132,7 +136,9 @@ public:
     void subscribe_scaled_imu(Telemetry::ScaledImuCallback& callback);
     void subscribe_raw_imu(Telemetry::RawImuCallback& callback);
     void subscribe_gps_info(Telemetry::GpsInfoCallback& callback);
+    void subscribe_gps_2_info(Telemetry::Gps2InfoCallback& callback);
     void subscribe_raw_gps(Telemetry::RawGpsCallback& callback);
+    void subscribe_raw_gps_2(Telemetry::RawGps2Callback& callback);
     void subscribe_gps_rtcm_data(Telemetry::GpsRtcmDataCallback& callback);
     void subscribe_battery(Telemetry::BatteryCallback& callback);
     void subscribe_battery_status(Telemetry::BatteryStatusCallback& callback);
@@ -172,7 +178,9 @@ private:
     void set_scaled_imu(Telemetry::Imu imu);
     void set_raw_imu(Telemetry::Imu imu);
     void set_gps_info(Telemetry::GpsInfo gps_info);
+    void set_gps_2_info(Telemetry::GpsInfo gps_2_info);
     void set_raw_gps(Telemetry::RawGps raw_gps);
+    void set_raw_gps_2(Telemetry::RawGps raw_gps_2);
     void set_gps_rtcm_data(Telemetry::GpsRtcmData gps_rtcm_data);
     void set_battery(Telemetry::Battery battery);
     void set_battery_status(Telemetry::BatteryStatus battery_status);
@@ -204,6 +212,7 @@ private:
     void process_scaled_imu(const mavlink_message_t& message);
     void process_raw_imu(const mavlink_message_t& message);
     void process_gps_raw_int(const mavlink_message_t& message);
+    void process_gps_2_raw(const mavlink_message_t& message);
     void process_gps_rtcm_data(const mavlink_message_t& message);
     void process_ground_truth(const mavlink_message_t& message);
     void process_extended_sys_state(const mavlink_message_t& message);
@@ -292,8 +301,14 @@ private:
     mutable std::mutex _gps_info_mutex{};
     Telemetry::GpsInfo _gps_info{};
 
+    mutable std::mutex _gps_2_info_mutex{};
+    Telemetry::GpsInfo _gps_2_info{};
+
     mutable std::mutex _raw_gps_mutex{};
     Telemetry::RawGps _raw_gps{};
+
+    mutable std::mutex _raw_gps_2_mutex{};
+    Telemetry::RawGps _raw_gps_2{};
 
     mutable std::mutex _gps_rtcm_data_mutex{};
     Telemetry::GpsRtcmData _gps_rtcm_data{};
@@ -359,7 +374,9 @@ private:
     Telemetry::ScaledImuCallback _scaled_imu_subscription{nullptr};
     Telemetry::RawImuCallback _raw_imu_subscription{nullptr};
     Telemetry::GpsInfoCallback _gps_info_subscription{nullptr};
+    Telemetry::Gps2InfoCallback _gps_2_info_subscription{nullptr};
     Telemetry::RawGpsCallback _raw_gps_subscription{nullptr};
+    Telemetry::RawGps2Callback _raw_gps_2_subscription{nullptr};
     Telemetry::GpsRtcmDataCallback _gps_rtcm_data_subscription{nullptr};
     Telemetry::BatteryCallback _battery_subscription{nullptr};
     Telemetry::BatteryStatusCallback _battery_status_subscription{nullptr};

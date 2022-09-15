@@ -169,9 +169,19 @@ void Telemetry::subscribe_gps_info(GpsInfoCallback callback)
     _impl->subscribe_gps_info(callback);
 }
 
+void Telemetry::subscribe_gps_2_info(Gps2InfoCallback callback)
+{
+    _impl->subscribe_gps_2_info(callback);
+}
+
 Telemetry::GpsInfo Telemetry::gps_info() const
 {
     return _impl->gps_info();
+}
+
+Telemetry::GpsInfo Telemetry::gps_2_info() const
+{
+    return _impl->gps_2_info();
 }
 
 void Telemetry::subscribe_raw_gps(RawGpsCallback callback)
@@ -179,9 +189,19 @@ void Telemetry::subscribe_raw_gps(RawGpsCallback callback)
     _impl->subscribe_raw_gps(callback);
 }
 
+void Telemetry::subscribe_raw_gps_2(RawGps2Callback callback)
+{
+    _impl->subscribe_raw_gps_2(callback);
+}
+
 Telemetry::RawGps Telemetry::raw_gps() const
 {
     return _impl->raw_gps();
+}
+
+Telemetry::RawGps Telemetry::raw_gps_2() const
+{
+    return _impl->raw_gps_2();
 }
 
 void Telemetry::subscribe_gps_rtcm_data(GpsRtcmDataCallback callback)
