@@ -982,7 +982,7 @@ void TelemetryImpl::process_gps_raw_int(const mavlink_message_t& message)
     _parent->refresh_timeout_handler(_gps_raw_timeout_cookie);
 }
 
-void TelemetryImpl::process_gps_2_raw(const int& message)
+void TelemetryImpl::process_gps_2_raw(const mavlink_message_t& message)
 {
     mavlink_gps2_raw_t gps_2_raw;
     mavlink_msg_gps2_raw_decode(&message, &gps_2_raw);
