@@ -1269,7 +1269,7 @@ public:
     /**
      * @brief Subscribe to 'GPS 2 info' updates.
      */
-     void subscribe_gps_2_info(GpsInfoCallback callback);
+     void subscribe_gps_2_info(Gps2InfoCallback callback);
 
     /**
      * @brief Poll for 'GpsInfo' (blocking).
@@ -1305,7 +1305,7 @@ public:
     /**
      * @brief Subscribe to 'Raw GPS 2' updates.
      */
-     void subscribe_raw_gps_2(RawGpsCallback callback);
+     void subscribe_raw_gps_2(RawGps2Callback callback);
 
     /**
      * @brief Poll for 'RawGps' (blocking).
