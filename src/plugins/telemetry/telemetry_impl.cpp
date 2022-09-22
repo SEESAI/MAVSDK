@@ -69,7 +69,9 @@ void TelemetryImpl::init()
         MAVLINK_MSG_ID_GPS2_RAW, std::bind(&TelemetryImpl::process_gps_2_raw, this, _1), this);
 
     _parent->register_mavlink_message_handler(
-        MAVLINK_MSG_ID_GPS_RTCM_DATA, std::bind(&TelemetryImpl::process_gps_rtcm_data, this, _1), this);
+        MAVLINK_MSG_ID_GPS_RTCM_DATA,
+        std::bind(&TelemetryImpl::process_gps_rtcm_data, this, _1),
+        this);
 
     _parent->register_mavlink_message_handler(
         MAVLINK_MSG_ID_EXTENDED_SYS_STATE,
@@ -323,7 +325,7 @@ Telemetry::Result TelemetryImpl::set_rate_battery(double rate_hz)
 Telemetry::Result TelemetryImpl::set_rate_battery_status(double rate_hz)
 {
     return telemetry_result_from_command_result(
-            _parent->set_msg_rate(MAVLINK_MSG_ID_BATTERY_STATUS, rate_hz));
+        _parent->set_msg_rate(MAVLINK_MSG_ID_BATTERY_STATUS, rate_hz));
 }
 
 Telemetry::Result TelemetryImpl::set_rate_rc_status(double rate_hz)
@@ -495,7 +497,8 @@ void TelemetryImpl::set_rate_battery_async(double rate_hz, Telemetry::ResultCall
         std::bind(&TelemetryImpl::command_result_callback, std::placeholders::_1, callback));
 }
 
-void TelemetryImpl::set_rate_battery_status_async(double rate_hz, Telemetry::ResultCallback callback)
+void TelemetryImpl::set_rate_battery_status_async(
+    double rate_hz, Telemetry::ResultCallback callback)
 {
     _parent->set_msg_rate_async(
         MAVLINK_MSG_ID_BATTERY_STATUS,
@@ -1199,10 +1202,14 @@ void TelemetryImpl::process_sys_status(const mavlink_message_t& message)
     }
 
     Telemetry::VehicleStatus new_vehicle_status;
-    new_vehicle_status.manual_control_signal_loss = sys_status.errors_count1;  // No manual_control setpoint messages arriving (can come from RC or MAV)
-    new_vehicle_status.data_link_loss = sys_status.errors_count2;  // No messages from GCS received
+    new_vehicle_status.manual_control_signal_loss =
+        sys_status.errors_count1; // No manual_control setpoint messages arriving (can come from RC
+                                  // or MAV)
+    new_vehicle_status.data_link_loss = sys_status.errors_count2; // No messages from GCS received
     new_vehicle_status.rc_signal_loss = sys_status.errors_count3; // No messages from RC TX received
-    new_vehicle_status.manual_contol_data_source = sys_status.errors_count4; // Indicates whether the drone is controlled by RC (1) or MAVLink (2-5)
+    new_vehicle_status.manual_contol_data_source =
+        sys_status
+            .errors_count4; // Indicates whether the drone is controlled by RC (1) or MAVLink (2-5)
 
     set_vehicle_status(new_vehicle_status);
 
@@ -1222,7 +1229,6 @@ void TelemetryImpl::process_battery_status(const mavlink_message_t& message)
     mavlink_msg_battery_status_decode(&message, &bat_status);
 
     if (!_has_bat_status) {
-
         _has_bat_status = false;
 
         Telemetry::BatteryStatus new_battery_status;
@@ -1237,7 +1243,6 @@ void TelemetryImpl::process_battery_status(const mavlink_message_t& message)
         }
 
     } else {
-
         _has_bat_status = true;
 
         Telemetry::Battery new_battery;
@@ -2406,8 +2411,7 @@ void TelemetryImpl::subscribe_actuator_output_status(
     _actuator_output_status_subscription = callback;
 }
 
-void TelemetryImpl::subscribe_servo_output_raw(
-    Telemetry::ServoOutputRawCallback& callback)
+void TelemetryImpl::subscribe_servo_output_raw(Telemetry::ServoOutputRawCallback& callback)
 {
     std::lock_guard<std::mutex> lock(_subscription_mutex);
     _servo_output_raw_subscription = callback;

@@ -483,7 +483,7 @@ public:
     }
 
     static std::unique_ptr<rpc::telemetry::GpsRtcmData>
-    translateToRpcGpsRtcmData(const mavsdk::Telemetry::GpsRtcmData &gps_rtcm_data)
+    translateToRpcGpsRtcmData(const mavsdk::Telemetry::GpsRtcmData& gps_rtcm_data)
     {
         auto rpc_obj = std::make_unique<rpc::telemetry::GpsRtcmData>();
 
@@ -498,7 +498,8 @@ public:
         return rpc_obj;
     }
 
-    static mavsdk::Telemetry::GpsRtcmData translateFromRpcGpsRtcmData(const rpc::telemetry::GpsRtcmData& gps_rtcm_data)
+    static mavsdk::Telemetry::GpsRtcmData
+    translateFromRpcGpsRtcmData(const rpc::telemetry::GpsRtcmData& gps_rtcm_data)
     {
         mavsdk::Telemetry::GpsRtcmData obj;
 
@@ -608,9 +609,9 @@ public:
 
         auto custom_main_mode = uint8_t((mode_info.custom_mode >> 16U) & 0xffU);
         auto custom_sub_mode = uint8_t((mode_info.custom_mode >> 24U) & 0xffU);
-        
+
         rpc_obj->set_base_mode(mode_info.base_mode);
-    
+
         rpc_obj->set_custom_main_mode(custom_main_mode);
 
         rpc_obj->set_custom_sub_mode(custom_sub_mode);
@@ -1924,7 +1925,8 @@ public:
                 const mavsdk::Telemetry::GpsRtcmData gps_rtcm_data) {
                 rpc::telemetry::GpsRtcmDataResponse rpc_response;
 
-                rpc_response.set_allocated_gps_rtcm_data(translateToRpcGpsRtcmData(gps_rtcm_data).release());
+                rpc_response.set_allocated_gps_rtcm_data(
+                    translateToRpcGpsRtcmData(gps_rtcm_data).release());
 
                 std::unique_lock<std::mutex> lock(*subscribe_mutex);
                 if (!*is_finished && !writer->Write(rpc_response)) {
@@ -2004,7 +2006,8 @@ public:
                 const mavsdk::Telemetry::BatteryStatus battery_status) {
                 rpc::telemetry::BatteryStatusResponse rpc_response;
 
-                rpc_response.set_allocated_battery_status(translateToRpcBatteryStatus(battery_status).release());
+                rpc_response.set_allocated_battery_status(
+                    translateToRpcBatteryStatus(battery_status).release());
 
                 std::unique_lock<std::mutex> lock(*subscribe_mutex);
                 if (!*is_finished && !writer->Write(rpc_response)) {
@@ -2044,11 +2047,11 @@ public:
                 const mavsdk::Telemetry::VehicleStatus vehicle_status) {
                 rpc::telemetry::VehicleStatusResponse rpc_response;
 
-                rpc_response.set_allocated_vehicle_status(translateToRpcVehicleStatus(vehicle_status).release());
+                rpc_response.set_allocated_vehicle_status(
+                    translateToRpcVehicleStatus(vehicle_status).release());
 
                 std::unique_lock<std::mutex> lock(*subscribe_mutex);
                 if (!*is_finished && !writer->Write(rpc_response)) {
-
                     _lazy_plugin.maybe_plugin()->subscribe_vehicle_status(nullptr);
 
                     *is_finished = true;
@@ -2123,20 +2126,19 @@ public:
         _lazy_plugin.maybe_plugin()->subscribe_mode_info(
             [this, &writer, &stream_closed_promise, is_finished, subscribe_mutex](
                 const mavsdk::Telemetry::ModeInfo mode_info) {
-            rpc::telemetry::ModeInfoResponse rpc_response;
+                rpc::telemetry::ModeInfoResponse rpc_response;
 
-            rpc_response.set_allocated_mode_info(translateToRpcModeInfo(mode_info).release());
+                rpc_response.set_allocated_mode_info(translateToRpcModeInfo(mode_info).release());
 
-            std::unique_lock<std::mutex> lock(*subscribe_mutex);
-            if (!*is_finished && !writer->Write(rpc_response)) {
+                std::unique_lock<std::mutex> lock(*subscribe_mutex);
+                if (!*is_finished && !writer->Write(rpc_response)) {
+                    _lazy_plugin.maybe_plugin()->subscribe_mode_info(nullptr);
 
-                _lazy_plugin.maybe_plugin()->subscribe_mode_info(nullptr);
-
-                *is_finished = true;
-                unregister_stream_stop_promise(stream_closed_promise);
-                stream_closed_promise->set_value();
-            }
-        });
+                    *is_finished = true;
+                    unregister_stream_stop_promise(stream_closed_promise);
+                    stream_closed_promise->set_value();
+                }
+            });
 
         stream_closed_future.wait();
         std::unique_lock<std::mutex> lock(*subscribe_mutex);
@@ -2369,7 +2371,8 @@ public:
                 const mavsdk::Telemetry::ServoOutputRaw servo_output_raw) {
                 rpc::telemetry::ServoOutputRawResponse rpc_response;
 
-                rpc_response.set_allocated_servo_output_raw(translateToRpcServoOutputRaw(servo_output_raw).release());
+                rpc_response.set_allocated_servo_output_raw(
+                    translateToRpcServoOutputRaw(servo_output_raw).release());
 
                 std::unique_lock<std::mutex> lock(*subscribe_mutex);
                 if (!*is_finished && !writer->Write(rpc_response)) {

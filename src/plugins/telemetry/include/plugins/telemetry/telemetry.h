@@ -328,7 +328,7 @@ public:
     friend std::ostream& operator<<(std::ostream& str, Telemetry::RawGps const& raw_gps);
 
     /**
-     * @brief 
+     * @brief
      */
     struct GpsRtcmData {
         int32_t flags{0}; /**< @brief Fragment ID of RTCM data */
@@ -385,17 +385,19 @@ public:
      *
      * @return `true` if items are equal.
      */
-     friend bool operator==(const Telemetry::BatteryStatus& lhs, const Telemetry::BatteryStatus& rhs);
-
-     /**
-      * @brief Stream operator to print information about a `Telemetry::BatteryStatus`.
-      *
-      * @return A reference to the stream.
-      */
-     friend std::ostream& operator<<(std::ostream& str, Telemetry::BatteryStatus const& battery_status);
+    friend bool
+    operator==(const Telemetry::BatteryStatus& lhs, const Telemetry::BatteryStatus& rhs);
 
     /**
-     * @brief 
+     * @brief Stream operator to print information about a `Telemetry::BatteryStatus`.
+     *
+     * @return A reference to the stream.
+     */
+    friend std::ostream&
+    operator<<(std::ostream& str, Telemetry::BatteryStatus const& battery_status);
+
+    /**
+     * @brief
      */
     struct VehicleStatus {
         bool manual_control_signal_loss{false}; /**< @brief */
@@ -409,17 +411,19 @@ public:
      *
      * @return `true` if items are equal.
      */
-    friend bool operator==(const Telemetry::VehicleStatus& lhs, const Telemetry::VehicleStatus& rhs);
+    friend bool
+    operator==(const Telemetry::VehicleStatus& lhs, const Telemetry::VehicleStatus& rhs);
 
     /**
      * @brief Stream operator to print information about a `Telemetry::VehicleStatus`.
      *
      * @return A reference to the stream.
      */
-    friend std::ostream& operator<<(std::ostream& str, Telemetry::VehicleStatus const& vehicle_status);
+    friend std::ostream&
+    operator<<(std::ostream& str, Telemetry::VehicleStatus const& vehicle_status);
 
     /**
-     * @brief 
+     * @brief
      */
     struct ModeInfo {
         uint32_t base_mode{0}; /**< @brief */
@@ -569,7 +573,7 @@ public:
     operator<<(std::ostream& str, Telemetry::ActuatorOutputStatus const& actuator_output_status);
 
     /**
-     * @brief 
+     * @brief
      */
     struct ServoOutputRaw {
         uint64_t timestamp_us;
@@ -581,8 +585,8 @@ public:
      *
      * @return `true` if items are equal.
      */
-    friend bool operator==(
-        const Telemetry::ServoOutputRaw& lhs, const Telemetry::ServoOutputRaw& rhs);
+    friend bool
+    operator==(const Telemetry::ServoOutputRaw& lhs, const Telemetry::ServoOutputRaw& rhs);
 
     /**
      * @brief Covariance type.
@@ -665,13 +669,15 @@ public:
         /**
          * @brief Mavlink frame id
          */
-         enum class MavFrame {
+        enum class MavFrame {
             Undef = 0, /**< @brief Frame is undefined.. */
-            LocalNed = 1, /**< @brief Local coordinate frame, Z-down (x: North, y: East, z: Down). */
+            LocalNed =
+                1, /**< @brief Local coordinate frame, Z-down (x: North, y: East, z: Down). */
             BodyNed = 8, /**< @brief Setpoint in body NED frame. This makes sense if all position
                         control is externalized - e.g. useful to command 2 m/s^2 acceleration to the
                         right.. */
-            BodyFrd = 12, /**< @brief Body fixed frame of reference, Z-down (x: forward, y: right, z: down).. */
+            BodyFrd = 12, /**< @brief Body fixed frame of reference, Z-down (x: forward, y: right,
+                             z: down).. */
             VisionNed = 16, /**< @brief Odometry local coordinate frame of data given by a vision
                           estimation system, Z-down (x: north, y: east, z: down).. */
             EstimNed = 18, /**< @brief Odometry local coordinate frame of data given by an estimator
@@ -1269,7 +1275,7 @@ public:
     /**
      * @brief Subscribe to 'GPS 2 info' updates.
      */
-     void subscribe_gps_2_info(Gps2InfoCallback callback);
+    void subscribe_gps_2_info(Gps2InfoCallback callback);
 
     /**
      * @brief Poll for 'GpsInfo' (blocking).
@@ -1283,7 +1289,7 @@ public:
      *
      * @return One Gps2Info update.
      */
-     GpsInfo gps_2_info() const;
+    GpsInfo gps_2_info() const;
 
     /**
      * @brief Callback type for subscribe_raw_gps.
@@ -1305,7 +1311,7 @@ public:
     /**
      * @brief Subscribe to 'Raw GPS 2' updates.
      */
-     void subscribe_raw_gps_2(RawGps2Callback callback);
+    void subscribe_raw_gps_2(RawGps2Callback callback);
 
     /**
      * @brief Poll for 'RawGps' (blocking).
@@ -1319,12 +1325,12 @@ public:
      *
      * @return One RawGps2 update.
      */
-     RawGps raw_gps_2() const;
+    RawGps raw_gps_2() const;
 
     /**
-    * @brief Callback type for subscribe_gps_rtcm_data.
-    */
-        
+     * @brief Callback type for subscribe_gps_rtcm_data.
+     */
+
     using GpsRtcmDataCallback = std::function<void(GpsRtcmData)>;
 
     /**
@@ -1892,7 +1898,8 @@ public:
     /**
      * @brief Set rate to 'battery_status' updates.
      *
-     * This function is blocking. See 'set_rate_battery_status_async' for the non-blocking counterpart.
+     * This function is blocking. See 'set_rate_battery_status_async' for the non-blocking
+     * counterpart.
      *
      * @return Result of request.
      */

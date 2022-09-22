@@ -834,9 +834,7 @@ std::ostream& operator<<(std::ostream& str, Telemetry::GpsRtcmData const& gps_rt
     str << "    flags: " << gps_rtcm_data.flags << '\n';
     str << "    len: " << gps_rtcm_data.len << '\n';
     str << "    data: [";
-    for (auto it = gps_rtcm_data.data.begin();
-        it != gps_rtcm_data.data.end();
-        ++it) {
+    for (auto it = gps_rtcm_data.data.begin(); it != gps_rtcm_data.data.end(); ++it) {
         str << *it;
         str << (it + 1 != gps_rtcm_data.data.end() ? ", " : "]\n");
     }
@@ -886,11 +884,10 @@ std::ostream& operator<<(std::ostream& str, Telemetry::BatteryStatus const& batt
 
 bool operator==(const Telemetry::VehicleStatus& lhs, const Telemetry::VehicleStatus& rhs)
 {
-    return
-        (rhs.manual_control_signal_loss == lhs.manual_control_signal_loss) &&
-        (rhs.data_link_loss == lhs.data_link_loss) &&
-        (rhs.rc_signal_loss == lhs.rc_signal_loss) &&
-        (rhs.manual_contol_data_source == lhs.manual_contol_data_source);
+    return (rhs.manual_control_signal_loss == lhs.manual_control_signal_loss) &&
+           (rhs.data_link_loss == lhs.data_link_loss) &&
+           (rhs.rc_signal_loss == lhs.rc_signal_loss) &&
+           (rhs.manual_contol_data_source == lhs.manual_contol_data_source);
 }
 
 std::ostream& operator<<(std::ostream& str, Telemetry::VehicleStatus const& vehicle_status)
@@ -907,9 +904,7 @@ std::ostream& operator<<(std::ostream& str, Telemetry::VehicleStatus const& vehi
 
 bool operator==(const Telemetry::ModeInfo& lhs, const Telemetry::ModeInfo& rhs)
 {
-    return
-        (rhs.base_mode == lhs.base_mode) &&
-        (rhs.custom_mode == lhs.custom_mode);
+    return (rhs.base_mode == lhs.base_mode) && (rhs.custom_mode == lhs.custom_mode);
 }
 
 std::ostream& operator<<(std::ostream& str, Telemetry::ModeInfo const& mode_info)

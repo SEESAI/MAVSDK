@@ -282,7 +282,9 @@ Offboard::Result OffboardImpl::set_acceleration_body_yawspeed(
             }
             // We automatically send Ned setpoints from now on.
             _parent->add_call_every(
-                [this]() { send_acceleration_body_yawspeed(); }, SEND_INTERVAL_S, &_call_every_cookie);
+                [this]() { send_acceleration_body_yawspeed(); },
+                SEND_INTERVAL_S,
+                &_call_every_cookie);
 
             _mode = Mode::AccelerationBodyYawspeed;
         } else {
@@ -654,7 +656,6 @@ Offboard::Result OffboardImpl::send_acceleration_ned()
                                             Offboard::Result::ConnectionError;
 }
 
-
 Offboard::Result OffboardImpl::send_acceleration_body_yawspeed()
 {
     const static uint16_t IGNORE_X = (1 << 0);
@@ -691,8 +692,8 @@ Offboard::Result OffboardImpl::send_acceleration_body_yawspeed()
         acceleration_body_yawspeed.down_m_s2,
         0.0f, // yaw
         to_rad_from_deg(acceleration_body_yawspeed.yaw_deg_s)); // yaw_rate
-        return _parent->send_message(message) ? Offboard::Result::Success :
-        Offboard::Result::ConnectionError;
+    return _parent->send_message(message) ? Offboard::Result::Success :
+                                            Offboard::Result::ConnectionError;
 }
 
 Offboard::Result OffboardImpl::send_velocity_body()

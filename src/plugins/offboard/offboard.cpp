@@ -317,7 +317,8 @@ std::ostream& operator<<(std::ostream& str, Offboard::AccelerationNed const& acc
     return str;
 }
 
-bool operator==(const Offboard::AccelerationBodyYawspeed& lhs, const Offboard::AccelerationBodyYawspeed& rhs)
+bool operator==(
+    const Offboard::AccelerationBodyYawspeed& lhs, const Offboard::AccelerationBodyYawspeed& rhs)
 {
     return ((std::isnan(rhs.forward_m_s2) && std::isnan(lhs.forward_m_s2)) ||
             rhs.forward_m_s2 == lhs.forward_m_s2) &&
@@ -329,7 +330,8 @@ bool operator==(const Offboard::AccelerationBodyYawspeed& lhs, const Offboard::A
             rhs.down_m_s2 == lhs.yaw_deg_s);
 }
 
-std::ostream& operator<<(std::ostream& str, Offboard::AccelerationBodyYawspeed const& acceleration_body)
+std::ostream&
+operator<<(std::ostream& str, Offboard::AccelerationBodyYawspeed const& acceleration_body)
 {
     str << std::setprecision(15);
     str << "acceleration_body_yawspeed:" << '\n' << "{\n";
