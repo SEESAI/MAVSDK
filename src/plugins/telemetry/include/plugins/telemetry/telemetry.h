@@ -328,7 +328,7 @@ public:
     friend std::ostream& operator<<(std::ostream& str, Telemetry::RawGps const& raw_gps);
 
     /**
-     * @brief
+     * @brief GPS RTCM data type.
      */
     struct GpsRtcmData {
         int32_t flags{0}; /**< @brief Fragment ID of RTCM data */
@@ -376,6 +376,9 @@ public:
      */
     friend std::ostream& operator<<(std::ostream& str, Telemetry::Battery const& battery);
 
+    /**
+     * @brief Battery status current type.
+     */
     struct BatteryStatus {
         float mah_consumed{float(NAN)}; /**< @brief current consumed in mAh */
     };
@@ -397,13 +400,14 @@ public:
     operator<<(std::ostream& str, Telemetry::BatteryStatus const& battery_status);
 
     /**
-     * @brief
+     * @brief Vehicle status type.
      */
     struct VehicleStatus {
-        bool manual_control_signal_loss{false}; /**< @brief */
-        bool data_link_loss{false}; /**< @brief */
-        bool rc_signal_loss{false}; /**< @brief */
-        uint32_t manual_contol_data_source{0}; /**< @brief */
+        bool manual_control_signal_loss{false}; /**< @brief True if manual control signal is loss */
+        bool data_link_loss{false}; /**< @brief True if the data link is loss */
+        bool rc_signal_loss{false}; /**< @brief True if RC signal is loss */
+        uint32_t manual_contol_data_source{
+            0}; /**< @brief Manual control source option, RC or MAVLink */
     };
 
     /**
@@ -423,11 +427,11 @@ public:
     operator<<(std::ostream& str, Telemetry::VehicleStatus const& vehicle_status);
 
     /**
-     * @brief
+     * @brief Mode info type.
      */
     struct ModeInfo {
-        uint32_t base_mode{0}; /**< @brief */
-        uint32_t custom_mode{0}; /**< @brief Custom mode (made up of main & sub mode). */
+        uint32_t base_mode{0}; /**< @brief Base mode flags */
+        uint32_t custom_mode{0}; /**< @brief Custom mode (made up of main & sub mode) */
     };
 
     /**
@@ -573,11 +577,11 @@ public:
     operator<<(std::ostream& str, Telemetry::ActuatorOutputStatus const& actuator_output_status);
 
     /**
-     * @brief
+     * @brief Servo output raw type.
      */
     struct ServoOutputRaw {
-        uint64_t timestamp_us;
-        uint16_t servo[16]; /**< @brief */
+        uint64_t timestamp_us; /**<@brief timestamp nanoseconds */
+        uint16_t servo[16]; /**< @brief servo array */
     };
 
     /**
@@ -986,8 +990,8 @@ public:
         AccelerationFrd acceleration_frd{}; /**< @brief Acceleration */
         AngularVelocityFrd angular_velocity_frd{}; /**< @brief Angular velocity */
         MagneticFieldFrd magnetic_field_frd{}; /**< @brief Magnetic field */
-        float abs_pressure{float(NAN)}; /**< @brief */
-        float pressure_alt{float(NAN)}; /**< @brief */
+        float abs_pressure{float(NAN)}; /**< @brief Absolute pressure */
+        float pressure_alt{float(NAN)}; /**< @brief Altitude pressure*/
         float temperature_degc{float(NAN)}; /**< @brief Temperature */
         uint64_t timestamp_us{}; /**< @brief Timestamp in microseconds */
     };

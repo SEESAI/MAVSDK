@@ -539,6 +539,14 @@ public:
     Result
     set_acceleration_body_yawspeed(AccelerationBodyYawspeed acceleration_body_yawspeed) const;
 
+    /**
+     * @brief Set the acceleration in body coordinates.
+     * Only send one request.
+     *
+     * This function is blocking.
+     *
+     * @return Result of request.
+     */
     Result
     set_acceleration_body_yawspeed_once(AccelerationBodyYawspeed acceleration_body_yawspeed) const;
 
