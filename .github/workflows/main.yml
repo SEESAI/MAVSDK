@@ -98,7 +98,7 @@ jobs:
   ubuntu20-proto-check:
     name: ubuntu-20.04 (proto check)
     runs-on: ubuntu-20.04
-    if: never()  # turning off - not relevant for our use (Dominik/William)
+    if: false  # turning off - not relevant for our use (Dominik/William)
     steps:
       - uses: actions/checkout@v2
         with:
