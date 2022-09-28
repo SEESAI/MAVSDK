@@ -434,7 +434,8 @@ public:
             return grpc::Status::OK;
         }
 
-        auto result = _lazy_plugin.maybe_plugin()->set_attitude_once(translateFromRpcAttitude(request->attitude()));
+        auto result = _lazy_plugin.maybe_plugin()->set_attitude_once(
+            translateFromRpcAttitude(request->attitude()));
 
         if (response != nullptr) {
             fillResponseWithResult(response, result);
@@ -491,7 +492,8 @@ public:
             return grpc::Status::OK;
         }
 
-        auto result = _lazy_plugin.maybe_plugin()->set_actuator_control_once(translateFromRpcActuatorControl(request->actuator_control()));
+        auto result = _lazy_plugin.maybe_plugin()->set_actuator_control_once(
+            translateFromRpcActuatorControl(request->actuator_control()));
 
         if (response != nullptr) {
             fillResponseWithResult(response, result);
@@ -548,7 +550,8 @@ public:
             return grpc::Status::OK;
         }
 
-        auto result = _lazy_plugin.maybe_plugin()->set_attitude_rate_once(translateFromRpcAttitudeRate(request->attitude_rate()));
+        auto result = _lazy_plugin.maybe_plugin()->set_attitude_rate_once(
+            translateFromRpcAttitudeRate(request->attitude_rate()));
 
         if (response != nullptr) {
             fillResponseWithResult(response, result);
@@ -605,7 +608,8 @@ public:
             return grpc::Status::OK;
         }
 
-        auto result = _lazy_plugin.maybe_plugin()->set_position_ned_once(translateFromRpcPositionNedYaw(request->position_ned_yaw()));
+        auto result = _lazy_plugin.maybe_plugin()->set_position_ned_once(
+            translateFromRpcPositionNedYaw(request->position_ned_yaw()));
 
         if (response != nullptr) {
             fillResponseWithResult(response, result);
@@ -662,8 +666,9 @@ public:
             return grpc::Status::OK;
         }
 
-        auto result = _lazy_plugin.maybe_plugin()->set_velocity_body_once(translateFromRpcVelocityBodyYawspeed(request->velocity_body_yawspeed()));
-        
+        auto result = _lazy_plugin.maybe_plugin()->set_velocity_body_once(
+            translateFromRpcVelocityBodyYawspeed(request->velocity_body_yawspeed()));
+
         if (response != nullptr) {
             fillResponseWithResult(response, result);
         }

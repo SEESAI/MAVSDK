@@ -298,8 +298,9 @@ public:
      *
      * @return `true` if items are equal.
      */
-    friend bool
-    operator==(const Offboard::AccelerationBodyYawspeed& lhs, const Offboard::AccelerationBodyYawspeed& rhs);
+    friend bool operator==(
+        const Offboard::AccelerationBodyYawspeed& lhs,
+        const Offboard::AccelerationBodyYawspeed& rhs);
 
     /**
      * @brief Stream operator to print information about a `Offboard::AccelerationNed`.
@@ -535,9 +536,19 @@ public:
      *
      * @return Result of request.
      */
-    Result set_acceleration_body_yawspeed(AccelerationBodyYawspeed acceleration_body_yawspeed) const;
+    Result
+    set_acceleration_body_yawspeed(AccelerationBodyYawspeed acceleration_body_yawspeed) const;
 
-    Result set_acceleration_body_yawspeed_once(AccelerationBodyYawspeed acceleration_body_yawspeed) const;
+    /**
+     * @brief Set the acceleration in body coordinates.
+     * Only send one request.
+     *
+     * This function is blocking.
+     *
+     * @return Result of request.
+     */
+    Result
+    set_acceleration_body_yawspeed_once(AccelerationBodyYawspeed acceleration_body_yawspeed) const;
 
     /**
      * @brief Copy constructor.
