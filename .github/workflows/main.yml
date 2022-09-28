@@ -144,6 +144,7 @@ jobs:
   deb-package:
     name: ${{ matrix.container_name }} (package, non-mavsdk_server)
     runs-on: ubuntu-18.04
+    if: false  # turning off - not relevant for our use (Dominik/William)    
     container: mavsdk/mavsdk-${{ matrix.container_name }}
     strategy:
       matrix:
@@ -172,7 +173,6 @@ jobs:
   debian-packaging:
     name: Ubuntu/Debian packaging (Ubuntu 20.04)
     runs-on: ubuntu-20.04
-    if: false  # turning off - not relevant for our use (Dominik/William)
     steps:
       - uses: actions/checkout@v2
         with:
