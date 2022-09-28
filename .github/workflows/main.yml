@@ -172,6 +172,7 @@ jobs:
   debian-packaging:
     name: Ubuntu/Debian packaging (Ubuntu 20.04)
     runs-on: ubuntu-20.04
+    if: false  # turning off - not relevant for our use (Dominik/William)
     steps:
       - uses: actions/checkout@v2
         with:
@@ -491,6 +492,7 @@ jobs:
   Windows:
     name: Windows
     runs-on: windows-latest
+    if: false  # turning off - not relevant for our use (Dominik/William)    
     steps:
       - uses: actions/checkout@v2
         with:
@@ -538,6 +540,7 @@ jobs:
   px4-sitl-older:
     name: PX4 SITL ${{ matrix.px4_version }} (ubuntu-18.04)
     runs-on: ubuntu-18.04
+    if: false  # turning off - not relevant for our use (Dominik/William)    
     container: mavsdk/mavsdk-ubuntu-18.04-px4-sitl-${{ matrix.px4_version }}
     strategy:
       matrix:
@@ -552,6 +555,7 @@ jobs:
   px4-sitl-newer:
     name: PX4 SITL ${{ matrix.px4_version }} (ubuntu-20.04)
     runs-on: ubuntu-18.04
+    if: false  # turning off - not relevant for our use (Dominik/William)    
     container: mavsdk/mavsdk-ubuntu-20.04-px4-sitl-${{ matrix.px4_version }}
     strategy:
       matrix:
