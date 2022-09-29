@@ -104,6 +104,7 @@ public:
     Telemetry::Battery battery() const;
     Telemetry::BatteryStatus battery_status() const;
     Telemetry::VehicleStatus vehicle_status() const;
+    Telemetry::RadioStatus radio_status() const;
     Telemetry::ModeInfo mode_info() const;
     Telemetry::FlightMode flight_mode() const;
     Telemetry::Health health() const;
@@ -143,6 +144,7 @@ public:
     void subscribe_battery(Telemetry::BatteryCallback& callback);
     void subscribe_battery_status(Telemetry::BatteryStatusCallback& callback);
     void subscribe_vehicle_status(Telemetry::VehicleStatusCallback& callback);
+    void subscribe_radio_status(Telemetry::RadioStatusCallback& callback);
     void subscribe_mode_info(Telemetry::ModeInfoCallback& callback);
     void subscribe_flight_mode(Telemetry::FlightModeCallback& callback);
     void subscribe_health(Telemetry::HealthCallback& callback);
@@ -185,6 +187,7 @@ private:
     void set_battery(Telemetry::Battery battery);
     void set_battery_status(Telemetry::BatteryStatus battery_status);
     void set_vehicle_status(Telemetry::VehicleStatus vehicle_status);
+    void set_radio_status(Telemetry::RadioStatus radio_status);
     void set_health_local_position(bool ok);
     void set_health_global_position(bool ok);
     void set_health_home_position(bool ok);
@@ -322,6 +325,9 @@ private:
     mutable std::mutex _vehicle_status_mutex{};
     Telemetry::VehicleStatus _vehicle_status{};
 
+    mutable std::mutex _radio_status_mutex{};
+    Telemetry::RadioStatus _radio_status{};
+
     mutable std::mutex _health_mutex{};
     Telemetry::Health _health{};
 
@@ -381,6 +387,7 @@ private:
     Telemetry::BatteryCallback _battery_subscription{nullptr};
     Telemetry::BatteryStatusCallback _battery_status_subscription{nullptr};
     Telemetry::VehicleStatusCallback _vehicle_status_subscription{nullptr};
+    Telemetry::RadioStatusCallback _radio_status_subscription{nullptr};
     Telemetry::ModeInfoCallback _mode_info_subscription{nullptr};
     Telemetry::FlightModeCallback _flight_mode_subscription{nullptr};
     Telemetry::HealthCallback _health_subscription{nullptr};

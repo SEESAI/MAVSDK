@@ -427,6 +427,38 @@ public:
     operator<<(std::ostream& str, Telemetry::VehicleStatus const& vehicle_status);
 
     /**
+     * @brief Radio status message type.
+     */
+    struct RadioStatus {
+        uint32_t local_rssi; /**< @brief Local (message sender) received signal strength indication
+                             in device-dependent units/scale. */
+        uint32_t remote_rssi; /**< @brief Remote (message receiver) signal strength indication in
+                              device-dependent units/scale. */
+        float remaining_free_txbuf; /**< @brief Remaining percentage of free transmitter buffer
+                                       space. */
+        uint32_t local_noise; /**< @brief Local background noise level. These are device dependent
+                                 RSSI values. */
+        uint32_t remote_noise; /**< @brief Remote background noise level. These are device dependent
+                                  RSSI values. */
+        uint32_t rxerrors_count; /**< @brief Count of radio packet receive errors (since boot). */
+        uint32_t fixed_count; /**< @brief Count of error corrected radio packets (since boot). */
+    };
+
+    /**
+     * @brief Equal operator to compare two `Telemetry::RadioStatus` objects.
+     *
+     * @return `true` if items are equal.
+     */
+    friend bool operator==(const Telemetry::RadioStatus& lhs, const Telemetry::RadioStatus& rhs);
+
+    /**
+     * @brief Stream operator to print information about a `Telemetry::RadioStatus`.
+     *
+     * @return A reference to the stream.
+     */
+    friend std::ostream& operator<<(std::ostream& str, Telemetry::RadioStatus const& radio_status);
+
+    /**
      * @brief Mode info type.
      */
     struct ModeInfo {
@@ -1402,6 +1434,24 @@ public:
      * @return One VehicleStatus update.
      */
     VehicleStatus vehicle_status() const;
+
+    /**
+     * @brief Callback type for subscribe_radio_status.
+     */
+
+    using RadioStatusCallback = std::function<void(RadioStatus)>;
+
+    /**
+     * @brief Subscribe to radio status updates.
+     */
+    void subscribe_radio_status(RadioStatusCallback callback);
+
+    /**
+     * @brief Poll for 'RadioStatus' (blocking).
+     *
+     * @return One RadioStatus update.
+     */
+    RadioStatus radio_status() const;
 
     /**
      * @brief Callback type for subscribe_flight_mode.

@@ -2006,6 +2006,18 @@ void TelemetryImpl::set_vehicle_status(Telemetry::VehicleStatus vehicle_status)
     _vehicle_status = vehicle_status;
 }
 
+Telemetry::RadioStatus TelemetryImpl::radio_status() const
+{
+    std::lock_guard<std::mutex> lock(_radio_status_mutex);
+    return _radio_status;
+}
+
+void TelemetryImpl::set_radio_status(Telemetry::RadioStatus radio_status)
+{
+    std::lock_guard<std::mutex> lock(_radio_status_mutex);
+    _radio_status = radio_status;
+}
+
 Telemetry::ModeInfo TelemetryImpl::mode_info() const
 {
     Telemetry::ModeInfo mode_info;
