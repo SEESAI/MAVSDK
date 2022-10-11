@@ -1281,7 +1281,8 @@ void TelemetryImpl::process_battery_status(const mavlink_message_t& message)
     }
 }
 
-void TelemetryImpl::process_radio_status(const mavlink_message_t& message) {
+void TelemetryImpl::process_radio_status(const mavlink_message_t& message)
+{
     mavlink_radio_status_t radio_stats;
     mavlink_msg_radio_status_decode(&message, &radio_stats);
 
