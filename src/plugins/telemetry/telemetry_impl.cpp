@@ -87,6 +87,11 @@ void TelemetryImpl::init()
         this);
 
     _parent->register_mavlink_message_handler(
+        MAVLINK_MSG_ID_RADIO_STATUS,
+        std::bind(&TelemetryImpl::process_radio_status, this, _1),
+        this);
+
+    _parent->register_mavlink_message_handler(
         MAVLINK_MSG_ID_HEARTBEAT, std::bind(&TelemetryImpl::process_heartbeat, this, _1), this);
 
     _parent->register_mavlink_message_handler(
@@ -1276,6 +1281,30 @@ void TelemetryImpl::process_battery_status(const mavlink_message_t& message)
     }
 }
 
+void TelemetryImpl::process_radio_status(const mavlink_message_t& message)
+{
+    mavlink_radio_status_t radio_stats;
+    mavlink_msg_radio_status_decode(&message, &radio_stats);
+
+    Telemetry::RadioStatus new_radio_status;
+    new_radio_status.local_rssi = radio_stats.rssi;
+    new_radio_status.remote_rssi = radio_stats.remrssi;
+    new_radio_status.remaining_free_txbuf = float(radio_stats.txbuf);
+    new_radio_status.local_noise = radio_stats.noise;
+    new_radio_status.remote_noise = radio_stats.remnoise;
+    new_radio_status.rxerrors_count = radio_stats.rxerrors;
+    new_radio_status.fixed_count = radio_stats.fixed;
+
+    set_radio_status(new_radio_status);
+
+    std::lock_guard<std::mutex> lock(_subscription_mutex);
+    if (_radio_status_subscription) {
+        auto callback = _radio_status_subscription;
+        auto arg = radio_status();
+        _parent->call_user_callback([callback, arg]() { callback(arg); });
+    }
+}
+
 void TelemetryImpl::process_heartbeat(const mavlink_message_t& message)
 {
     if (message.compid != MAV_COMP_ID_AUTOPILOT1) {
@@ -2006,6 +2035,18 @@ void TelemetryImpl::set_vehicle_status(Telemetry::VehicleStatus vehicle_status)
     _vehicle_status = vehicle_status;
 }
 
+Telemetry::RadioStatus TelemetryImpl::radio_status() const
+{
+    std::lock_guard<std::mutex> lock(_radio_status_mutex);
+    return _radio_status;
+}
+
+void TelemetryImpl::set_radio_status(Telemetry::RadioStatus radio_status)
+{
+    std::lock_guard<std::mutex> lock(_radio_status_mutex);
+    _radio_status = radio_status;
+}
+
 Telemetry::ModeInfo TelemetryImpl::mode_info() const
 {
     Telemetry::ModeInfo mode_info;
@@ -2353,6 +2394,12 @@ void TelemetryImpl::subscribe_vehicle_status(Telemetry::VehicleStatusCallback& c
 {
     std::lock_guard<std::mutex> lock(_subscription_mutex);
     _vehicle_status_subscription = callback;
+}
+
+void TelemetryImpl::subscribe_radio_status(Telemetry::RadioStatusCallback& callback)
+{
+    std::lock_guard<std::mutex> lock(_subscription_mutex);
+    _radio_status_subscription = callback;
 }
 
 void TelemetryImpl::subscribe_mode_info(Telemetry::ModeInfoCallback& callback)

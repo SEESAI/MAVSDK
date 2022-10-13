@@ -244,6 +244,16 @@ Telemetry::VehicleStatus Telemetry::vehicle_status() const
     return _impl->vehicle_status();
 }
 
+void Telemetry::subscribe_radio_status(mavsdk::Telemetry::RadioStatusCallback callback)
+{
+    _impl->subscribe_radio_status(callback);
+}
+
+Telemetry::RadioStatus Telemetry::radio_status() const
+{
+    return _impl->radio_status();
+}
+
 void Telemetry::subscribe_flight_mode(FlightModeCallback callback)
 {
     _impl->subscribe_flight_mode(callback);
