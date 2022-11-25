@@ -1603,6 +1603,11 @@ bool SystemImpl::is_server_armed() const
     return (_parent.get_base_mode() & MAV_MODE_FLAG_SAFETY_ARMED) == MAV_MODE_FLAG_SAFETY_ARMED;
 }
 
+uint8_t SystemImpl::get_base_mode() const
+{
+    return _parent.get_base_mode();
+}
+
 void SystemImpl::set_custom_mode(uint32_t custom_mode)
 {
     _parent.set_custom_mode(custom_mode);
