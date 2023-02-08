@@ -92,6 +92,11 @@ void System::enable_timesync()
     _system_impl->enable_timesync();
 }
 
+uint64_t System::autopilot_time() const
+{
+    return _system_impl->get_autopilot_time().now().time_since_epoch().count();
+}
+
 Autopilot System::autopilot_type() const
 {
     return _system_impl->autopilot();
