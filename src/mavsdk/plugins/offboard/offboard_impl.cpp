@@ -44,6 +44,11 @@ void OffboardImpl::enable() {}
 
 void OffboardImpl::disable() {}
 
+Offboard::Result OffboardImpl::request_offboard()
+{
+    return offboard_result_from_command_result(_system_impl->set_flight_mode(FlightMode::Offboard));
+}
+
 Offboard::Result OffboardImpl::start()
 {
     {
@@ -67,6 +72,14 @@ Offboard::Result OffboardImpl::stop()
     }
 
     return offboard_result_from_command_result(_system_impl->set_flight_mode(FlightMode::Hold));
+}
+
+void OffboardImpl::request_offboard_async(Offboard::ResultCallback callback)
+{
+    _system_impl->set_flight_mode_async(
+        FlightMode::Offboard, [callback, this](MavlinkCommandSender::Result result, float) {
+            receive_command_result(result, callback);
+        });
 }
 
 void OffboardImpl::start_async(Offboard::ResultCallback callback)
@@ -119,6 +132,20 @@ void OffboardImpl::receive_command_result(
         _system_impl->call_user_callback(
             [callback, offboard_result]() { callback(offboard_result); });
     }
+}
+
+Offboard::Result OffboardImpl::set_position_ned_once(Offboard::PositionNedYaw position_ned_yaw)
+{
+    {
+        std::lock_guard<std::mutex> lock(_mutex);
+        _position_ned_yaw = position_ned_yaw;
+
+        // If we're already sending other setpoints, stop that now.
+        _system_impl->remove_call_every(_call_every_cookie);
+    }
+
+    // also send it right now to reduce latency
+    return send_position_ned();
 }
 
 Offboard::Result OffboardImpl::set_position_ned(Offboard::PositionNedYaw position_ned_yaw)
@@ -277,6 +304,62 @@ Offboard::Result OffboardImpl::set_acceleration_ned(Offboard::AccelerationNed ac
     return send_acceleration_ned();
 }
 
+Offboard::Result OffboardImpl::set_acceleration_body_yawspeed_once(
+    Offboard::AccelerationBodyYawspeed acceleration_body_yawspeed)
+{
+    {
+        std::lock_guard<std::mutex> lock(_mutex);
+        _acceleration_body_yawspeed = acceleration_body_yawspeed;
+
+        // If we're already sending other setpoints, stop that now.
+        _system_impl->remove_call_every(_call_every_cookie);
+    }
+
+    // also send it right now to reduce latency
+    return send_acceleration_body_yawspeed();
+}
+
+Offboard::Result OffboardImpl::set_acceleration_body_yawspeed(
+    Offboard::AccelerationBodyYawspeed acceleration_body_yawspeed)
+{
+    {
+        std::lock_guard<std::mutex> lock(_mutex);
+        _acceleration_body_yawspeed = acceleration_body_yawspeed;
+
+        if (_mode != Mode::AccelerationBodyYawspeed) {
+            // If we're already sending other setpoints, stop that now.
+            _system_impl->remove_call_every(_call_every_cookie);
+            // We automatically send body setpoints from now on.
+            _call_every_cookie = _system_impl->add_call_every(
+                [this]() { send_acceleration_body_yawspeed(); }, SEND_INTERVAL_S);
+
+            _mode = Mode::AccelerationBodyYawspeed;
+        } else {
+            // We're already sending these kind of setpoints. Since the setpoint change, let's
+            // reschedule the next call, so we don't send setpoints too often.
+            _system_impl->reset_call_every(_call_every_cookie);
+        }
+    }
+
+    // also send it right now to reduce latency
+    return send_acceleration_body_yawspeed();
+}
+
+Offboard::Result
+OffboardImpl::set_velocity_body_once(Offboard::VelocityBodyYawspeed velocity_body_yawspeed)
+{
+    {
+        std::lock_guard<std::mutex> lock(_mutex);
+        _velocity_body_yawspeed = velocity_body_yawspeed;
+
+        // If we're already sending other setpoints, stop that now.
+        _system_impl->remove_call_every(_call_every_cookie);
+    }
+
+    // also send it right now to reduce latency
+    return send_velocity_body();
+}
+
 Offboard::Result
 OffboardImpl::set_velocity_body(Offboard::VelocityBodyYawspeed velocity_body_yawspeed)
 {
@@ -301,6 +384,20 @@ OffboardImpl::set_velocity_body(Offboard::VelocityBodyYawspeed velocity_body_yaw
 
     // also send it right now to reduce latency
     return send_velocity_body();
+}
+
+Offboard::Result OffboardImpl::set_attitude_once(Offboard::Attitude attitude)
+{
+    {
+        std::lock_guard<std::mutex> lock(_mutex);
+        _attitude = attitude;
+
+        // If we're already sending other setpoints, stop that now.
+        _system_impl->remove_call_every(_call_every_cookie);
+    }
+
+    // also send it right now to reduce latency
+    return send_attitude();
 }
 
 Offboard::Result OffboardImpl::set_attitude(Offboard::Attitude attitude)
@@ -328,6 +425,20 @@ Offboard::Result OffboardImpl::set_attitude(Offboard::Attitude attitude)
     return send_attitude();
 }
 
+Offboard::Result OffboardImpl::set_attitude_rate_once(Offboard::AttitudeRate attitude_rate)
+{
+    {
+        std::lock_guard<std::mutex> lock(_mutex);
+        _attitude_rate = attitude_rate;
+
+        // If we're already sending other setpoints, stop that now.
+        _system_impl->remove_call_every(_call_every_cookie);
+    }
+
+    // also send it right now to reduce latency
+    return send_attitude_rate();
+}
+
 Offboard::Result OffboardImpl::set_attitude_rate(Offboard::AttitudeRate attitude_rate)
 {
     {
@@ -351,6 +462,20 @@ Offboard::Result OffboardImpl::set_attitude_rate(Offboard::AttitudeRate attitude
 
     // also send it right now to reduce latency
     return send_attitude_rate();
+}
+
+Offboard::Result OffboardImpl::set_actuator_control_once(Offboard::ActuatorControl actuator_control)
+{
+    {
+        std::lock_guard<std::mutex> lock(_mutex);
+        _actuator_control = actuator_control;
+
+        // If we're already sending other setpoints, stop that now.
+        _system_impl->remove_call_every(_call_every_cookie);
+    }
+
+    // also send it right now to reduce latency
+    return send_actuator_control();
 }
 
 Offboard::Result OffboardImpl::set_actuator_control(Offboard::ActuatorControl actuator_control)
@@ -644,6 +769,46 @@ Offboard::Result OffboardImpl::send_acceleration_ned()
     }) ?
                Offboard::Result::Success :
                Offboard::Result::ConnectionError;
+}
+
+Offboard::Result OffboardImpl::send_acceleration_body_yawspeed()
+{
+    const static uint16_t IGNORE_X = (1 << 0);
+    const static uint16_t IGNORE_Y = (1 << 1);
+    const static uint16_t IGNORE_Z = (1 << 2);
+    const static uint16_t IGNORE_VX = (1 << 3);
+    const static uint16_t IGNORE_VY = (1 << 4);
+    const static uint16_t IGNORE_VZ = (1 << 5);
+    const static uint16_t IGNORE_YAW = (1 << 10);
+
+    const auto acceleration_body_yawspeed = [this]() {
+        std::lock_guard<std::mutex> lock(_mutex);
+        return _acceleration_body_yawspeed;
+    }();
+
+    mavlink_message_t message;
+    mavlink_msg_set_position_target_local_ned_pack(
+        _system_impl->get_own_system_id(),
+        _system_impl->get_own_component_id(),
+        &message,
+        static_cast<uint32_t>(_system_impl->get_time().elapsed_ms()),
+        _system_impl->get_system_id(),
+        _system_impl->get_autopilot_id(),
+        MAV_FRAME_BODY_NED,
+        IGNORE_X | IGNORE_Y | IGNORE_Z | IGNORE_VX | IGNORE_VY | IGNORE_VZ | IGNORE_YAW,
+        0.0f, // x,
+        0.0f, // y,
+        0.0f, // z,
+        0.0f, // vfx
+        0.0f, // vfy
+        0.0f, // vfz
+        acceleration_body_yawspeed.forward_m_s2,
+        acceleration_body_yawspeed.right_m_s2,
+        acceleration_body_yawspeed.down_m_s2,
+        0.0f, // yaw
+        to_rad_from_deg(acceleration_body_yawspeed.yawspeed_deg_s));
+    return _system_impl->send_message(message) ? Offboard::Result::Success :
+                                                 Offboard::Result::ConnectionError;
 }
 
 Offboard::Result OffboardImpl::send_velocity_body()
