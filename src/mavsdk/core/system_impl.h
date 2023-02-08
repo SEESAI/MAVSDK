@@ -382,6 +382,7 @@ public:
     bool is_server_armed() const;
     void set_custom_mode(uint32_t custom_mode);
     uint32_t get_custom_mode() const;
+    uint8_t get_base_mode() const;
 
 private:
     static bool is_autopilot(uint8_t comp_id);

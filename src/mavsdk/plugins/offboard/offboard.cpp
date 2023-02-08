@@ -28,6 +28,16 @@ Offboard::Offboard(std::shared_ptr<System> system) :
 
 Offboard::~Offboard() {}
 
+void Offboard::request_offboard_async(const ResultCallback callback)
+{
+    _impl->request_offboard_async(callback);
+}
+
+Offboard::Result Offboard::request_offboard() const
+{
+    return _impl->request_offboard();
+}
+
 void Offboard::start_async(const ResultCallback callback)
 {
     _impl->start_async(callback);
@@ -53,9 +63,19 @@ bool Offboard::is_active() const
     return _impl->is_active();
 }
 
+Offboard::Result Offboard::set_attitude_once(Attitude attitude) const
+{
+    return _impl->set_attitude_once(attitude);
+}
+
 Offboard::Result Offboard::set_attitude(Attitude attitude) const
 {
     return _impl->set_attitude(attitude);
+}
+
+Offboard::Result Offboard::set_actuator_control_once(ActuatorControl actuator_control) const
+{
+    return _impl->set_actuator_control_once(actuator_control);
 }
 
 Offboard::Result Offboard::set_actuator_control(ActuatorControl actuator_control) const
@@ -63,9 +83,19 @@ Offboard::Result Offboard::set_actuator_control(ActuatorControl actuator_control
     return _impl->set_actuator_control(actuator_control);
 }
 
+Offboard::Result Offboard::set_attitude_rate_once(AttitudeRate attitude_rate) const
+{
+    return _impl->set_attitude_rate_once(attitude_rate);
+}
+
 Offboard::Result Offboard::set_attitude_rate(AttitudeRate attitude_rate) const
 {
     return _impl->set_attitude_rate(attitude_rate);
+}
+
+Offboard::Result Offboard::set_position_ned_once(PositionNedYaw position_ned_yaw) const
+{
+    return _impl->set_position_ned_once(position_ned_yaw);
 }
 
 Offboard::Result Offboard::set_position_ned(PositionNedYaw position_ned_yaw) const
@@ -76,6 +106,11 @@ Offboard::Result Offboard::set_position_ned(PositionNedYaw position_ned_yaw) con
 Offboard::Result Offboard::set_position_global(PositionGlobalYaw position_global_yaw) const
 {
     return _impl->set_position_global(position_global_yaw);
+}
+
+Offboard::Result Offboard::set_velocity_body_once(VelocityBodyYawspeed velocity_body_yawspeed) const
+{
+    return _impl->set_velocity_body_once(velocity_body_yawspeed);
 }
 
 Offboard::Result Offboard::set_velocity_body(VelocityBodyYawspeed velocity_body_yawspeed) const
@@ -97,6 +132,16 @@ Offboard::Result Offboard::set_position_velocity_ned(
 Offboard::Result Offboard::set_acceleration_ned(AccelerationNed acceleration_ned) const
 {
     return _impl->set_acceleration_ned(acceleration_ned);
+}
+
+Offboard::Result Offboard::set_acceleration_body_yawspeed_once(AccelerationBodyYawspeed acceleration_body_yawspeed) const
+{
+    return _impl->set_acceleration_body_yawspeed_once(acceleration_body_yawspeed);
+}
+
+Offboard::Result Offboard::set_acceleration_body_yawspeed(AccelerationBodyYawspeed acceleration_body_yawspeed) const
+{
+    return _impl->set_acceleration_body_yawspeed(acceleration_body_yawspeed);
 }
 
 bool operator==(const Offboard::Attitude& lhs, const Offboard::Attitude& rhs)
@@ -308,6 +353,30 @@ std::ostream& operator<<(std::ostream& str, Offboard::AccelerationNed const& acc
     str << "    north_m_s2: " << acceleration_ned.north_m_s2 << '\n';
     str << "    east_m_s2: " << acceleration_ned.east_m_s2 << '\n';
     str << "    down_m_s2: " << acceleration_ned.down_m_s2 << '\n';
+    str << '}';
+    return str;
+}
+
+bool operator==(const Offboard::AccelerationBodyYawspeed& lhs, const Offboard::AccelerationBodyYawspeed& rhs)
+{
+    return ((std::isnan(rhs.forward_m_s2) && std::isnan(lhs.forward_m_s2)) || 
+            rhs.forward_m_s2 == lhs.forward_m_s2) &&
+           ((std::isnan(rhs.right_m_s2) && std::isnan(lhs.right_m_s2)) ||
+            rhs.right_m_s2 == lhs.right_m_s2) &&
+           ((std::isnan(rhs.down_m_s2) && std::isnan(lhs.down_m_s2)) ||
+            rhs.down_m_s2 == lhs.down_m_s2) &&
+           ((std::isnan(rhs.yawspeed_deg_s) && std::isnan(lhs.yawspeed_deg_s)) || 
+            rhs.yawspeed_deg_s == lhs.yawspeed_deg_s);
+}
+
+std::ostream& operator<<(std::ostream& str, Offboard::AccelerationBodyYawspeed const& acceleration_body_yawspeed)
+{
+    str << std::setprecision(15);
+    str << "acceleration_body_yawspeed: " << '\n' << "{\n";
+    str << "    forward_m_s2: " << acceleration_body_yawspeed.forward_m_s2 << '\n';
+    str << "    right_m_s2: " << acceleration_body_yawspeed.right_m_s2 << '\n';
+    str << "    down_m_s2: " << acceleration_body_yawspeed.down_m_s2 << '\n';
+    str << "    yawspeed_deg_s: " << acceleration_body_yawspeed.yawspeed_deg_s << '\n';
     str << '}';
     return str;
 }

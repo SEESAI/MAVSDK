@@ -1613,4 +1613,9 @@ uint32_t SystemImpl::get_custom_mode() const
     return _parent.get_custom_mode();
 }
 
+uint8_t SystemImpl::get_base_mode() const
+{
+    return _parent.get_base_mode();
+}
+
 } // namespace mavsdk
