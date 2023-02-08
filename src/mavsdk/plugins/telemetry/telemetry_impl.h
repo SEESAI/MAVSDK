@@ -101,14 +101,21 @@ public:
     Telemetry::Imu scaled_imu() const;
     Telemetry::Imu raw_imu() const;
     Telemetry::GpsInfo gps_info() const;
+    Telemetry::GpsInfo gps_2_info() const;
     Telemetry::RawGps raw_gps() const;
+    Telemetry::RawGps raw_gps_2() const;
+    Telemetry::GpsRtcmData gps_rtcm_data() const;
     Telemetry::Battery battery() const;
+    Telemetry::VehicleStatus vehicle_status() const;
+    Telemetry::RadioStatus radio_status() const;
+    Telemetry::ModeInfo mode_info() const;
     Telemetry::FlightMode flight_mode() const;
     Telemetry::Health health() const;
     bool health_all_ok() const;
     Telemetry::RcStatus rc_status() const;
     Telemetry::ActuatorControlTarget actuator_control_target() const;
     Telemetry::ActuatorOutputStatus actuator_output_status() const;
+    Telemetry::ServoOutputRaw servo_output_raw() const;
     Telemetry::Odometry odometry() const;
     Telemetry::DistanceSensor distance_sensor() const;
     Telemetry::ScaledPressure scaled_pressure() const;
@@ -163,10 +170,25 @@ public:
     void unsubscribe_raw_imu(Telemetry::RawImuHandle handle);
     Telemetry::GpsInfoHandle subscribe_gps_info(const Telemetry::GpsInfoCallback& callback);
     void unsubscribe_gps_info(Telemetry::GpsInfoHandle handle);
+    Telemetry::Gps2InfoHandle subscribe_gps_2_info(const Telemetry::Gps2InfoCallback& callback);
+    void unsubscribe_gps_2_info(Telemetry::Gps2InfoHandle handle);
     Telemetry::RawGpsHandle subscribe_raw_gps(const Telemetry::RawGpsCallback& callback);
     void unsubscribe_raw_gps(Telemetry::RawGpsHandle handle);
+    Telemetry::RawGps2Handle subscribe_raw_gps_2(const Telemetry::RawGps2Callback& callback);
+    void unsubscribe_raw_gps_2(Telemetry::RawGps2Handle handle);
+    Telemetry::GpsRtcmDataHandle
+    subscribe_gps_rtcm_data(const Telemetry::GpsRtcmDataCallback& callback);
+    void unsubscribe_gps_rtcm_data(Telemetry::GpsRtcmDataHandle handle);
     Telemetry::BatteryHandle subscribe_battery(const Telemetry::BatteryCallback& callback);
     void unsubscribe_battery(Telemetry::BatteryHandle handle);
+    Telemetry::VehicleStatusHandle
+    subscribe_vehicle_status(const Telemetry::VehicleStatusCallback& callback);
+    void unsubscribe_vehicle_status(Telemetry::VehicleStatusHandle handle);
+    Telemetry::RadioStatusHandle
+    subscribe_radio_status(const Telemetry::RadioStatusCallback& callback);
+    void unsubscribe_radio_status(Telemetry::RadioStatusHandle) handle;
+    Telemetry::ModeInfoHandle subscribe_mode_info(const Telemetry::ModeInfoCallback& callback);
+    void unsubscribe_mode_info(Telemetry::ModeInfoHandle handle);
     Telemetry::FlightModeHandle
     subscribe_flight_mode(const Telemetry::FlightModeCallback& callback);
     void unsubscribe_flight_mode(Telemetry::FlightModeHandle handle);
@@ -191,6 +213,9 @@ public:
     Telemetry::ActuatorOutputStatusHandle
     subscribe_actuator_output_status(const Telemetry::ActuatorOutputStatusCallback& callback);
     void unsubscribe_actuator_output_status(Telemetry::ActuatorOutputStatusHandle handle);
+    Telemetry::ServoOutputRawHandle
+    subscribe_servo_output_raw(const Telemetry::ServoOutputRawCallback& callback);
+    void unsubscribe_servo_output_raw(Telemetry::ServoOutputRawHandle handle);
     Telemetry::OdometryHandle subscribe_odometry(const Telemetry::OdometryCallback& callback);
     void unsubscribe_odometry(Telemetry::OdometryHandle handle);
     Telemetry::DistanceSensorHandle
@@ -227,8 +252,13 @@ private:
     void set_scaled_imu(Telemetry::Imu imu);
     void set_raw_imu(Telemetry::Imu imu);
     void set_gps_info(Telemetry::GpsInfo gps_info);
+    void set_gps_2_info(Telemetry::GpsInfo gps_2_info);
     void set_raw_gps(Telemetry::RawGps raw_gps);
+    void set_raw_gps_2(Telemetry::RawGps raw_gps_2);
+    void set_gps_rtcm_data(Telemetry::GpsRtcmData gps_rtcm_data);
     void set_battery(Telemetry::Battery battery);
+    void set_vehicle_status(Telemetry::VehicleStatus vehicle_status);
+    void set_radio_status(Telemetry::RadioStatus radio_status);
     void set_health_local_position(bool ok);
     void set_health_global_position(bool ok);
     void set_health_home_position(bool ok);
@@ -240,6 +270,7 @@ private:
     void set_unix_epoch_time_us(uint64_t time_us);
     void set_actuator_control_target(uint8_t group, const std::vector<float>& controls);
     void set_actuator_output_status(uint32_t active, const std::vector<float>& actuators);
+    void set_servo_output_raw(uint64_t timestamp_us, const std::array<uint16_t, 16>& servos);
     void set_odometry(Telemetry::Odometry& odometry);
     void set_distance_sensor(Telemetry::DistanceSensor& distance_sensor);
     void set_scaled_pressure(Telemetry::ScaledPressure& scaled_pressure);
@@ -257,16 +288,20 @@ private:
     void process_scaled_imu(const mavlink_message_t& message);
     void process_raw_imu(const mavlink_message_t& message);
     void process_gps_raw_int(const mavlink_message_t& message);
+    void process_gps_2_raw(const mavlink_message_t& message);
+    void process_gps_rtcm_data(const mavlink_message_t& message);
     void process_ground_truth(const mavlink_message_t& message);
     void process_extended_sys_state(const mavlink_message_t& message);
     void process_fixedwing_metrics(const mavlink_message_t& message);
     void process_sys_status(const mavlink_message_t& message);
     void process_battery_status(const mavlink_message_t& message);
+    void process_radio_status(const mavlink_message_t& message);
     void process_heartbeat(const mavlink_message_t& message);
     void process_rc_channels(const mavlink_message_t& message);
     void process_unix_epoch_time(const mavlink_message_t& message);
     void process_actuator_control_target(const mavlink_message_t& message);
     void process_actuator_output_status(const mavlink_message_t& message);
+    void process_servo_output_raw(const mavlink_message_t& message);
     void process_odometry(const mavlink_message_t& message);
     void process_distance_sensor(const mavlink_message_t& message);
     void process_scaled_pressure(const mavlink_message_t& message);
@@ -368,11 +403,26 @@ private:
     mutable std::mutex _gps_info_mutex{};
     Telemetry::GpsInfo _gps_info{};
 
+    mutable std::mutex _gps_2_info_mutex{};
+    Telemetry::GpsInfo _gps_2_info{};
+
     mutable std::mutex _raw_gps_mutex{};
     Telemetry::RawGps _raw_gps{};
 
+    mutable std::mutex _raw_gps_2_mutex{};
+    Telemetry::RawGps _raw_gps_2{};
+
+    mutable std::mutex _gps_rtcm_data_mutex{};
+    Telemetry::GpsRtcmData _gps_rtcm_data{};
+
     mutable std::mutex _battery_mutex{};
     Telemetry::Battery _battery{};
+
+    mutable std::mutex _vehicle_status_mutex{};
+    Telemetry::VehicleStatus _vehicle_status{};
+
+    mutable std::mutex _radio_status_mutex{};
+    Telemetry::RadioStatus _radio_status{};
 
     mutable std::mutex _health_mutex{};
     Telemetry::Health _health{};
@@ -394,6 +444,9 @@ private:
 
     mutable std::mutex _actuator_output_status_mutex{};
     Telemetry::ActuatorOutputStatus _actuator_output_status{};
+
+    mutable std::mutex _servo_output_raw_mutex{};
+    Telemetry::ServoOutputRaw _servo_output_raw{};
 
     mutable std::mutex _odometry_mutex{};
     Telemetry::Odometry _odometry{};
@@ -430,8 +483,14 @@ private:
     CallbackList<Telemetry::Imu> _scaled_imu_subscriptions{};
     CallbackList<Telemetry::Imu> _raw_imu_subscriptions{};
     CallbackList<Telemetry::GpsInfo> _gps_info_subscriptions{};
+    CallbackList<Telemetry::Gps2Info> _gps_2_info_subscriptions{};
     CallbackList<Telemetry::RawGps> _raw_gps_subscriptions{};
+    CallbackList<Telemetry::RawGps2> _raw_gps_2_subscriptions{};
+    CallbackList<Telemetry::GpsRtcmData> _gps_rtcm_data_subscriptions{};
     CallbackList<Telemetry::Battery> _battery_subscriptions{};
+    CallbackList<Telemetry::VehicleStatus> _vehicle_status_subscriptions{};
+    CallbackList<Telemetry::RadioStatus> _radio_status_subscriptions{};
+    CallbackList<Telemetry::ModeInfo> _mode_info_subscriptions{};
     CallbackList<Telemetry::FlightMode> _flight_mode_subscriptions{};
     CallbackList<Telemetry::Health> _health_subscriptions{};
     CallbackList<bool> _health_all_ok_subscriptions{};
@@ -441,6 +500,7 @@ private:
     CallbackList<uint64_t> _unix_epoch_time_subscriptions{};
     CallbackList<Telemetry::ActuatorControlTarget> _actuator_control_target_subscriptions{};
     CallbackList<Telemetry::ActuatorOutputStatus> _actuator_output_status_subscriptions{};
+    CallbackList<Telemetry::ServoOutputRaw> _servo_output_raw_subscriptions{};
     CallbackList<Telemetry::Odometry> _odometry_subscriptions{};
     CallbackList<Telemetry::DistanceSensor> _distance_sensor_subscriptions{};
     CallbackList<Telemetry::ScaledPressure> _scaled_pressure_subscriptions{};

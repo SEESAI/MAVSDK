@@ -1301,4 +1301,9 @@ MavlinkParameterClient* SystemImpl::param_sender(uint8_t component_id, bool exte
     return _mavlink_parameter_clients.back().parameter_client.get();
 }
 
+uint8_t SystemImpl::get_base_mode() const
+{
+    return _parent.get_base_mode();
+}
+
 } // namespace mavsdk

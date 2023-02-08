@@ -190,6 +190,13 @@ public:
     Autopilot autopilot_type() const;
 
     /**
+     * @brief Computes time now on connected autopilot. Needs timesync enabled to work correctly.
+     *
+     * @return time since epoch on autopilot.
+     */
+    uint64_t autopilot_time() const;
+
+    /**
      * @brief Copy constructor (object is not copyable).
      */
     System(const System&) = delete;

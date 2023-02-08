@@ -151,7 +151,7 @@ private:
 
     CallbackList<> _new_system_callbacks{};
 
-    Mavsdk::Configuration _configuration{Mavsdk::ComponentType::GroundStation};
+    Mavsdk::Configuration _configuration{Mavsdk::ComponentType::CompanionComputer};
 
     struct UserCallback {
         UserCallback() = default;
