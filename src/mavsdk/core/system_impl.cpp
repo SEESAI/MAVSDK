@@ -1310,17 +1310,17 @@ void SystemImpl::set_heartbeat_base_mode(uint8_t base_mode)
     _heartbeat_base_mode = base_mode;
 }
 
-uint32_t SystemImpl::get_heartbeat_base_mode() const
+uint8_t SystemImpl::get_heartbeat_base_mode() const
 {
     return _heartbeat_base_mode;
 }
 
-void SystemImpl::get_heartbeat_custom_mode(uint32_t custom_mode)
+void SystemImpl::set_heartbeat_custom_mode(uint32_t custom_mode)
 {
     _heartbeat_custom_mode = custom_mode;
 }
 
-uint8_t SystemImpl::get_heartbeat_custom_mode() const
+uint32_t SystemImpl::get_heartbeat_custom_mode() const
 {
     return _heartbeat_custom_mode;
 }
