@@ -384,6 +384,9 @@ public:
     uint32_t get_custom_mode() const;
     uint8_t get_base_mode() const;
 
+    uint8_t get_heartbeat_base_mode() const;
+    uint32_t get_heartbeat_custom_mode() const;
+
 private:
     static bool is_autopilot(uint8_t comp_id);
     static bool is_camera(uint8_t comp_id);
@@ -501,6 +504,9 @@ private:
     MAV_TYPE _vehicle_type{MAV_TYPE::MAV_TYPE_GENERIC};
 
     std::atomic<FlightMode> _flight_mode{FlightMode::Unknown};
+    
+    std::atomic<uint8_t> _heartbeat_base_mode{0};
+    std::atomic<uint32_t> _heartbeat_custom_mode{0};
 
     std::mutex _autopilot_version_mutex{};
     System::AutopilotVersion _autopilot_version{

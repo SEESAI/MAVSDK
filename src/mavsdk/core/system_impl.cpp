@@ -232,6 +232,10 @@ void SystemImpl::process_heartbeat(const mavlink_message_t& message)
         _armed = (heartbeat.base_mode & MAV_MODE_FLAG_SAFETY_ARMED) != 0;
         _hitl_enabled = (heartbeat.base_mode & MAV_MODE_FLAG_HIL_ENABLED) != 0;
     }
+
+    _heartbeat_base_mode = heartbeat.base_mode;
+    _heartbeat_custom_mode = heartbeat.custom_mode;
+
     if (heartbeat.base_mode & MAV_MODE_FLAG_CUSTOM_MODE_ENABLED) {
         _flight_mode = to_flight_mode_from_custom_mode(heartbeat.custom_mode);
     }
@@ -1616,6 +1620,16 @@ uint32_t SystemImpl::get_custom_mode() const
 uint8_t SystemImpl::get_base_mode() const
 {
     return _parent.get_base_mode();
+}
+
+uint32_t SystemImpl::get_heartbeat_base_mode() const
+{
+    return _heartbeat_base_mode;
+}
+
+uint8_t SystemImpl::get_heartbeat_custom_mode() const
+{
+    return _heartbeat_custom_mode;
 }
 
 } // namespace mavsdk

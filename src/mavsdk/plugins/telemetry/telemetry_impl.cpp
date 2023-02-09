@@ -2229,8 +2229,8 @@ void TelemetryImpl::set_radio_status(Telemetry::RadioStatus radio_status)
 Telemetry::ModeInfo TelemetryImpl::mode_info() const
 {
     Telemetry::ModeInfo mode_info;
-    mode_info.base_mode = _parent->get_base_mode();
-    mode_info.custom_mode = _parent->get_custom_mode();
+    mode_info.base_mode = _parent->get_heartbeat_base_mode();
+    mode_info.custom_mode = _parent->get_heartbeat_custom_mode();
     return mode_info;
 }
     
