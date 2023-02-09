@@ -1622,12 +1622,12 @@ uint8_t SystemImpl::get_base_mode() const
     return _parent.get_base_mode();
 }
 
-uint32_t SystemImpl::get_heartbeat_base_mode() const
+uint8_t SystemImpl::get_heartbeat_base_mode() const
 {
     return _heartbeat_base_mode;
 }
 
-uint8_t SystemImpl::get_heartbeat_custom_mode() const
+uint32_t SystemImpl::get_heartbeat_custom_mode() const
 {
     return _heartbeat_custom_mode;
 }
