@@ -295,6 +295,11 @@ public:
 
     double timeout_s() const;
 
+    void set_heartbeat_base_mode(uint8_t base_mode);
+    [[nodiscard]] uint8_t get_heartbeat_base_mode() const;
+    void set_heartbeat_custom_mode(uint32_t custom_mode);
+    [[nodiscard]] uint32_t get_heartbeat_custom_mode() const;
+
 private:
     static bool is_autopilot(uint8_t comp_id);
     static bool is_camera(uint8_t comp_id);
@@ -409,6 +414,9 @@ private:
     MAV_TYPE _vehicle_type{MAV_TYPE::MAV_TYPE_GENERIC};
 
     std::atomic<FlightMode> _flight_mode{FlightMode::Unknown};
+
+    std::atomic<uint8_t> _heartbeat_base_mode{0};
+    std::atomic<uint32_t> _heartbeat_custom_mode{0};
 
     std::mutex _mavlink_ftp_files_mutex{};
     std::unordered_map<std::string, std::string> _mavlink_ftp_files{};
