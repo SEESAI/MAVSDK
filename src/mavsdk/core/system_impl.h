@@ -44,6 +44,7 @@ public:
         Mission,
         ReturnToLaunch,
         Land,
+        PrecisionLand,
         Offboard,
         FollowMe,
         Manual,
