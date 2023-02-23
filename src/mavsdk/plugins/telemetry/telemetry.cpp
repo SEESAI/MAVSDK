@@ -31,6 +31,7 @@ using Covariance = Telemetry::Covariance;
 using VelocityBody = Telemetry::VelocityBody;
 using PositionBody = Telemetry::PositionBody;
 using Odometry = Telemetry::Odometry;
+using LandingTargetPosition = Telemetry::LandingTargetPosition;
 using DistanceSensor = Telemetry::DistanceSensor;
 using ScaledPressure = Telemetry::ScaledPressure;
 using PositionNed = Telemetry::PositionNed;
@@ -343,6 +344,16 @@ void Telemetry::subscribe_odometry(OdometryCallback callback)
 Telemetry::Odometry Telemetry::odometry() const
 {
     return _impl->odometry();
+}
+
+void Telemetry::subscribe_landing_target_position(LandingTargetPositionCallback callback)
+{
+    _impl->subscribe_landing_target_position(callback);
+}
+
+Telemetry::LandingTargetPosition Telemetry::landing_target_position() const
+{
+    return _impl->landing_target_position();
 }
 
 void Telemetry::subscribe_position_velocity_ned(PositionVelocityNedCallback callback)
@@ -1171,6 +1182,38 @@ std::ostream& operator<<(std::ostream& str, Telemetry::Odometry const& odometry)
     str << "    angular_velocity_body: " << odometry.angular_velocity_body << '\n';
     str << "    pose_covariance: " << odometry.pose_covariance << '\n';
     str << "    velocity_covariance: " << odometry.velocity_covariance << '\n';
+    str << '}';
+    return str;
+}
+
+std::ostream& operator<<(std::ostream& str, Telemetry::LandingTargetPosition::MavFrame const& mav_frame)
+{
+    switch (mav_frame) {
+        case Telemetry::LandingTargetPosition::MavFrame::Undef:
+            return str << "Undef";
+        case Telemetry::LandingTargetPosition::MavFrame::LocalNed:
+            return str << "Local Ned";
+        default:
+            return str << "Unknown";
+    }
+}
+bool operator==(const Telemetry::LandingTargetPosition& lhs, const Telemetry::LandingTargetPosition& rhs)
+{
+    return (rhs.time_usec == lhs.time_usec) && (rhs.id == lhs.id) &&
+           (rhs.frame_id == lhs.frame_id) && (rhs.position == lhs.position) && 
+           (rhs.q == lhs.q) && (rhs.is_available == lhs.is_available);
+}
+
+std::ostream& operator<<(std::ostream& str, Telemetry::LandingTargetPosition const& landing_target_position)
+{
+    str << std::setprecision(15);
+    str << "landing_target_position:" << '\n' << "{\n";
+    str << "    time_usec: " << landing_target_position.time_usec << '\n';
+    str << "    id: " << landing_target_position.id << '\n';
+    str << "    frame_id: " << landing_target_position.frame_id << '\n';
+    str << "    position: " << landing_target_position.position << '\n';
+    str << "    q: " << landing_target_position.q << '\n';
+    str << "    is_available: " << landing_target_position.is_available << '\n';
     str << '}';
     return str;
 }

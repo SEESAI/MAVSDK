@@ -112,6 +112,7 @@ public:
     Telemetry::ActuatorOutputStatus actuator_output_status() const;
     Telemetry::ServoOutputRaw servo_output_raw() const;
     Telemetry::Odometry odometry() const;
+    Telemetry::LandingTargetPosition landing_target_position() const;
     Telemetry::DistanceSensor distance_sensor() const;
     Telemetry::ScaledPressure scaled_pressure() const;
     uint64_t unix_epoch_time() const;
@@ -155,6 +156,7 @@ public:
     void subscribe_actuator_output_status(Telemetry::ActuatorOutputStatusCallback& callback);
     void subscribe_servo_output_raw(Telemetry::ServoOutputRawCallback& callback);
     void subscribe_odometry(Telemetry::OdometryCallback& callback);
+    void subscribe_landing_target_position(Telemetry::LandingTargetPositionCallback& callback);
     void subscribe_distance_sensor(Telemetry::DistanceSensorCallback& callback);
     void subscribe_scaled_pressure(Telemetry::ScaledPressureCallback& callback);
     void subscribe_heading(Telemetry::HeadingCallback& callback);
@@ -201,6 +203,7 @@ private:
     void set_actuator_output_status(uint32_t active, const std::vector<float>& actuators);
     void set_servo_output_raw(uint64_t timestamp_us, const std::array<uint16_t, 16>& servos);
     void set_odometry(Telemetry::Odometry& odometry);
+    void set_landing_target_position(Telemetry::LandingTargetPosition& landing_target_position);
     void set_distance_sensor(Telemetry::DistanceSensor& distance_sensor);
     void set_scaled_pressure(Telemetry::ScaledPressure& scaled_pressure);
     void set_heading(Telemetry::Heading heading);
@@ -231,6 +234,7 @@ private:
     void process_actuator_output_status(const mavlink_message_t& message);
     void process_servo_output_raw(const mavlink_message_t& message);
     void process_odometry(const mavlink_message_t& message);
+    void process_landing_target_position(const mavlink_message_t& message);
     void process_distance_sensor(const mavlink_message_t& message);
     void process_scaled_pressure(const mavlink_message_t& message);
     void receive_param_cal_gyro(MAVLinkParameters::Result result, int value);
@@ -372,6 +376,9 @@ private:
     mutable std::mutex _odometry_mutex{};
     Telemetry::Odometry _odometry{};
 
+    mutable std::mutex _landing_target_position_mutex{};
+    Telemetry::LandingTargetPosition _landing_target_position{};
+
     mutable std::mutex _distance_sensor_mutex{};
     Telemetry::DistanceSensor _distance_sensor{};
 
@@ -419,6 +426,7 @@ private:
     Telemetry::ActuatorOutputStatusCallback _actuator_output_status_subscription{nullptr};
     Telemetry::ServoOutputRawCallback _servo_output_raw_subscription{nullptr};
     Telemetry::OdometryCallback _odometry_subscription{nullptr};
+    Telemetry::LandingTargetPositionCallback _landing_target_position_subscription{nullptr};
     Telemetry::DistanceSensorCallback _distance_sensor_subscription{nullptr};
     Telemetry::ScaledPressureCallback _scaled_pressure_subscription{nullptr};
     Telemetry::HeadingCallback _heading_subscription{nullptr};

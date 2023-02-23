@@ -131,6 +131,11 @@ void TelemetryImpl::init()
         this);
 
     _parent->register_mavlink_message_handler(
+        MAVLINK_MSG_ID_LANDING_TARGET,
+        [this](const mavlink_message_t& message) { process_landing_target_position(message); },
+        this);
+
+    _parent->register_mavlink_message_handler(
         MAVLINK_MSG_ID_DISTANCE_SENSOR,
         [this](const mavlink_message_t& message) { process_distance_sensor(message); },
         this);
@@ -1614,6 +1619,38 @@ void TelemetryImpl::process_odometry(const mavlink_message_t& message)
     }
 }
 
+void TelemetryImpl::process_landing_target_position(const mavlink_message_t& message)
+{
+    mavlink_landing_target_t landing_target_position_msg;
+    mavlink_msg_landing_target_decode(&message, &landing_target_position_msg);
+
+    Telemetry::LandingTargetPosition landing_target_position_struct{};
+
+    landing_target_position_struct.time_usec = landing_target_position_msg.time_usec;
+    landing_target_position_struct.id = landing_target_position_msg.target_num;
+    landing_target_position_struct.frame_id = static_cast<Telemetry::LandingTargetPosition::MavFrame>(landing_target_position_msg.frame);
+
+    landing_target_position_struct.position.x_m = landing_target_position_msg.x;
+    landing_target_position_struct.position.y_m = landing_target_position_msg.y;
+    landing_target_position_struct.position.z_m = landing_target_position_msg.z;
+
+    landing_target_position_struct.q.w = landing_target_position_msg.q[0];
+    landing_target_position_struct.q.x = landing_target_position_msg.q[1];
+    landing_target_position_struct.q.y = landing_target_position_msg.q[2];
+    landing_target_position_struct.q.z = landing_target_position_msg.q[3];
+
+    landing_target_position_struct.is_available = landing_target_position_msg.position_valid;
+
+    set_landing_target_position(landing_target_position_struct);
+
+    std::lock_guard<std::mutex> lock(_subscription_mutex);
+    if (_landing_target_position_subscription) {
+        auto callback = _landing_target_position_subscription;
+        auto arg = landing_target_position();
+        _parent->call_user_callback([callback, arg]() { callback(arg); });
+    }
+}
+
 void TelemetryImpl::process_distance_sensor(const mavlink_message_t& message)
 {
     mavlink_distance_sensor_t distance_sensor_msg;
@@ -2294,6 +2331,12 @@ Telemetry::Odometry TelemetryImpl::odometry() const
     return _odometry;
 }
 
+Telemetry::LandingTargetPosition TelemetryImpl::landing_target_position() const
+{
+    std::lock_guard<std::mutex> lock(_landing_target_position_mutex);
+    return _landing_target_position;
+}
+
 Telemetry::DistanceSensor TelemetryImpl::distance_sensor() const
 {
     std::lock_guard<std::mutex> lock(_distance_sensor_mutex);
@@ -2426,6 +2469,12 @@ void TelemetryImpl::set_odometry(Telemetry::Odometry& odometry)
 {
     std::lock_guard<std::mutex> lock(_odometry_mutex);
     _odometry = odometry;
+}
+
+void TelemetryImpl::set_landing_target_position(Telemetry::LandingTargetPosition& landing_target_position)
+{
+    std::lock_guard<std::mutex> lock(_landing_target_position_mutex);
+    _landing_target_position = landing_target_position;
 }
 
 void TelemetryImpl::set_distance_sensor(Telemetry::DistanceSensor& distance_sensor)
@@ -2666,6 +2715,12 @@ void TelemetryImpl::subscribe_odometry(Telemetry::OdometryCallback& callback)
 {
     std::lock_guard<std::mutex> lock(_subscription_mutex);
     _odometry_subscription = callback;
+}
+
+void TelemetryImpl::subscribe_landing_target_position(Telemetry::LandingTargetPositionCallback& callback)
+{
+    std::lock_guard<std::mutex> lock(_subscription_mutex);
+    _landing_target_position_subscription = callback;
 }
 
 void TelemetryImpl::subscribe_distance_sensor(Telemetry::DistanceSensorCallback& callback)

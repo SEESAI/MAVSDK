@@ -1073,6 +1073,9 @@ SystemImpl::make_command_px4_mode(FlightMode flight_mode, uint8_t component_id)
         case FlightMode::Land:
             custom_sub_mode = px4::PX4_CUSTOM_SUB_MODE_AUTO_LAND;
             break;
+        case FlightMode::PrecisionLand:
+            custom_sub_mode = px4::PX4_CUSTOM_SUB_MODE_AUTO_PRECLAND;
+            break;
         case FlightMode::Mission:
             custom_sub_mode = px4::PX4_CUSTOM_SUB_MODE_AUTO_MISSION;
             break;
@@ -1210,6 +1213,8 @@ SystemImpl::FlightMode SystemImpl::to_flight_mode_from_px4_mode(uint32_t custom_
                     return FlightMode::ReturnToLaunch;
                 case px4::PX4_CUSTOM_SUB_MODE_AUTO_LAND:
                     return FlightMode::Land;
+                case px4::PX4_CUSTOM_SUB_MODE_AUTO_PRECLAND:
+                    return FlightMode::PrecisionLand;
                 case px4::PX4_CUSTOM_SUB_MODE_AUTO_FOLLOW_TARGET:
                     return FlightMode::FollowMe;
                 default:
