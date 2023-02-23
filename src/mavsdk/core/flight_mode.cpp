@@ -140,6 +140,8 @@ FlightMode to_flight_mode_from_px4_mode(uint32_t custom_mode)
                     return FlightMode::ReturnToLaunch;
                 case px4::PX4_CUSTOM_SUB_MODE_AUTO_LAND:
                     return FlightMode::Land;
+                case px4::PX4_CUSTOM_SUB_MODE_AUTO_PRECLAND:
+                    return FlightMode::PrecisionLand;
                 case px4::PX4_CUSTOM_SUB_MODE_AUTO_FOLLOW_TARGET:
                     return FlightMode::FollowMe;
                 default:

@@ -371,6 +371,8 @@ std::string EventsImpl::mode_name_from_custom_mode(uint32_t custom_mode) const
             return "RTL";
         case FlightMode::Land:
             return "Land";
+        case FlightMode::PrecisionLand:
+            return "PrecisionLand";
         case FlightMode::Offboard:
             return "Offboard";
         case FlightMode::FollowMe:
