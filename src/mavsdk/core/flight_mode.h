@@ -17,6 +17,7 @@ enum class FlightMode {
     Mission,
     ReturnToLaunch,
     Land,
+    PrecisionLand,
     Offboard,
     FollowMe,
     Manual,

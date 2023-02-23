@@ -229,6 +229,25 @@ public:
     Result land() const;
 
     /**
+     * @brief Send command to precision land at target position.
+     *
+     * This switches the drone to 'Precision Land' flight mode.
+     *
+     * This function is non-blocking. See 'precision_land' for the blocking counterpart.
+     */
+    void precision_land_async(const ResultCallback callback);
+
+    /**
+     * @brief Send command to precision land at target position. 
+     * This switches the drone to 'Precision Land' flight mode.
+     *
+     * This function is blocking. See 'precision_land_async' for the non-blocking counterpart.
+     *
+     * @return Result of request.
+     */
+    Result precision_land() const;
+
+    /**
      * @brief Send command to reboot the drone components.
      *
      * This will reboot the autopilot, companion computer, camera and gimbal.
