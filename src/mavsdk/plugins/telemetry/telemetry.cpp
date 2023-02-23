@@ -1191,8 +1191,8 @@ std::ostream& operator<<(std::ostream& str, Telemetry::LandingTargetPosition::Ma
     switch (mav_frame) {
         case Telemetry::LandingTargetPosition::MavFrame::Undef:
             return str << "Undef";
-        case Telemetry::LandingTargetPosition::MavFrame::BodyNed:
-            return str << "Body Ned";
+        case Telemetry::LandingTargetPosition::MavFrame::LocalNed:
+            return str << "Local Ned";
         default:
             return str << "Unknown";
     }
@@ -1200,7 +1200,7 @@ std::ostream& operator<<(std::ostream& str, Telemetry::LandingTargetPosition::Ma
 bool operator==(const Telemetry::LandingTargetPosition& lhs, const Telemetry::LandingTargetPosition& rhs)
 {
     return (rhs.time_usec == lhs.time_usec) && (rhs.id == lhs.id) &&
-           (rhs.frame_id == lhs.frame_id) && (rhs.position_body == lhs.position_body) && 
+           (rhs.frame_id == lhs.frame_id) && (rhs.position == lhs.position) && 
            (rhs.q == lhs.q) && (rhs.is_available == lhs.is_available);
 }
 
@@ -1211,7 +1211,7 @@ std::ostream& operator<<(std::ostream& str, Telemetry::LandingTargetPosition con
     str << "    time_usec: " << landing_target_position.time_usec << '\n';
     str << "    id: " << landing_target_position.id << '\n';
     str << "    frame_id: " << landing_target_position.frame_id << '\n';
-    str << "    position_body: " << landing_target_position.position_body << '\n';
+    str << "    position: " << landing_target_position.position << '\n';
     str << "    q: " << landing_target_position.q << '\n';
     str << "    is_available: " << landing_target_position.is_available << '\n';
     str << '}';

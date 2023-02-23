@@ -1630,9 +1630,9 @@ void TelemetryImpl::process_landing_target_position(const mavlink_message_t& mes
     landing_target_position_struct.id = landing_target_position_msg.target_num;
     landing_target_position_struct.frame_id = static_cast<Telemetry::LandingTargetPosition::MavFrame>(landing_target_position_msg.frame);
 
-    landing_target_position_struct.position_body.x_m = landing_target_position_msg.x;
-    landing_target_position_struct.position_body.y_m = landing_target_position_msg.y;
-    landing_target_position_struct.position_body.z_m = landing_target_position_msg.z;
+    landing_target_position_struct.position.x_m = landing_target_position_msg.x;
+    landing_target_position_struct.position.y_m = landing_target_position_msg.y;
+    landing_target_position_struct.position.z_m = landing_target_position_msg.z;
 
     landing_target_position_struct.q.w = landing_target_position_msg.q[0];
     landing_target_position_struct.q.x = landing_target_position_msg.q[1];

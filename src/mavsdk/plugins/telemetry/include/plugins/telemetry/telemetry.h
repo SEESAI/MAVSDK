@@ -768,8 +768,7 @@ public:
          */
         enum class MavFrame {
             Undef, /**< @brief Frame is undefined.. */
-            BodyNed, /**< @brief Setpoint in body NED frame. This makes sense if all position
-                        control is externalized.. */
+            LocalNed, /**< @brief Setpint in local NED frame.*/
         };
 
         /**
@@ -783,7 +782,7 @@ public:
         uint64_t time_usec{}; /**< @brief Timestamp */
         uint32_t id{}; /** Target ID */
         MavFrame frame_id{}; /**< @brief Coordinate frame of reference for the pose data. */
-        PositionBody position_body{}; /**< @brief Position. */
+        PositionBody position{}; /**< @brief Position. */
         Quaternion
             q{}; /**< @brief Quaternion components, w, x, y, z (1 0 0 0 is the null-rotation). */
         bool is_available{false}; /**< @brief True if */
