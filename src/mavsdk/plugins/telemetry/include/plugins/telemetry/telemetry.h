@@ -776,6 +776,49 @@ public:
     friend std::ostream& operator<<(std::ostream& str, Telemetry::Odometry const& odometry);
 
     /**
+     * @brief Location of landing target
+     */
+    struct LandingTargetPosition {
+        /**
+         * @brief Mavlink frame id
+         */
+        enum class MavFrame {
+            Undef, /**< @brief Frame is undefined.. */
+            LocalNed, /**< @brief Setpint in local NED frame.*/
+        };
+
+        /**
+         * @brief Stream operator to print information about a `Telemetry::MavFrame`.
+         *
+         * @return A reference to the stream
+         */
+        friend std::ostream&
+        operator<<(std::ostream& str, Telemetry::LandingTargetPosition::MavFrame const& mav_frame);
+
+        uint64_t time_usec{}; /**< @brief Timestamp */
+        uint32_t id{}; /** Target ID */
+        MavFrame frame_id{}; /**< @brief Coordinate frame of reference for the pose data. */
+        PositionBody position{}; /**< @brief Position. */
+        Quaternion
+            q{}; /**< @brief Quaternion components, w, x, y, z (1 0 0 0 is the null-rotation). */
+        bool is_available{false}; /**< @brief True if */
+    };
+
+    /**
+     * @brief Equal operator to compare two `Telemetry::LandingTargetPosition` objects.
+     *
+     * @return `true` if items are equal.
+     */
+    friend bool operator==(const Telemetry::LandingTargetPosition& lhs, const Telemetry::LandingTargetPosition& rhs);
+
+    /**
+     * @brief Stream operator to print information about a `Telemetry::LandingTargetPosition`.
+     * 
+     * @return A reference to the stream.
+     */
+    friend std::ostream& operator<<(std::ostream& str, Telemetry::LandingTargetPosition const& landing_target_position);
+
+    /**
      * @brief DistanceSensor message type.
      */
     struct DistanceSensor {
@@ -1897,6 +1940,23 @@ public:
      * @return One Odometry update.
      */
     Odometry odometry() const;
+
+    /**
+     * @brief Callback type for subscribe_landing_target_position.
+     */
+    using LandingTargetPositionCallback = std::function<void(LandingTargetPosition)>;
+
+    /**
+     * @brief Subscribe to 'landing_target_position' updates.
+     */
+    void subscribe_landing_target_position(LandingTargetPositionCallback callback);
+
+    /**
+     * @brief Poll for 'LandingTargetPosition' (blocking).
+     *
+     * @return One LandingTargetPosition update.
+     */
+    LandingTargetPosition landing_target_position() const;
 
     /**
      * @brief Callback type for subscribe_position_velocity_ned.

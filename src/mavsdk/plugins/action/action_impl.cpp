@@ -142,6 +142,16 @@ Action::Result ActionImpl::land() const
     return fut.get();
 }
 
+Action::Result ActionImpl::precision_land() const
+{
+    auto prom = std::promise<Action::Result>();
+    auto fut = prom.get_future();
+
+    precision_land_async([&prom](Action::Result result) { prom.set_value(result); });
+
+    return fut.get();
+}
+
 Action::Result ActionImpl::return_to_launch() const
 {
     auto prom = std::promise<Action::Result>();
@@ -451,6 +461,15 @@ void ActionImpl::land_async(const Action::ResultCallback& callback) const
 
     _system_impl->send_command_async(
         command, [this, callback](MavlinkCommandSender::Result result, float) {
+            command_result_callback(result, callback);
+        });
+}
+
+void ActionImpl::precision_land_async(const Action::ResultCallback& callback) const
+{
+    _parent->set_flight_mode_async(
+        SystemImpl::FlightMode::PrecisionLand,
+        [this, callback](MavlinkCommandSender::Result result, float) {
             command_result_callback(result, callback);
         });
 }
