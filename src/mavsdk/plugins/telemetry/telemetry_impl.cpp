@@ -69,12 +69,12 @@ void TelemetryImpl::init()
         MAVLINK_MSG_ID_GPS_RAW_INT,
         [this](const mavlink_message_t& message) { process_gps_raw_int(message); },
         this);
-    
+
     _parent->register_mavlink_message_handler(
         MAVLINK_MSG_ID_GPS2_RAW,
         [this](const mavlink_message_t& message) { process_gps_2_raw(message); },
         this);
-        
+
     _parent->register_mavlink_message_handler(
         MAVLINK_MSG_ID_GPS_RTCM_DATA,
         [this](const mavlink_message_t& message) { process_gps_rtcm_data(message); },
@@ -94,7 +94,7 @@ void TelemetryImpl::init()
         MAVLINK_MSG_ID_BATTERY_STATUS,
         [this](const mavlink_message_t& message) { process_battery_status(message); },
         this);
-        
+
     _parent->register_mavlink_message_handler(
         MAVLINK_MSG_ID_RADIO_STATUS,
         [this](const mavlink_message_t& message) { process_radio_status(message); },
@@ -119,7 +119,7 @@ void TelemetryImpl::init()
         MAVLINK_MSG_ID_ACTUATOR_OUTPUT_STATUS,
         [this](const mavlink_message_t& message) { process_actuator_output_status(message); },
         this);
-    
+
     _parent->register_mavlink_message_handler(
         MAVLINK_MSG_ID_SERVO_OUTPUT_RAW,
         [this](const mavlink_message_t& message) { process_servo_output_raw(message); },
@@ -578,7 +578,8 @@ void TelemetryImpl::set_rate_odometry_async(double rate_hz, Telemetry::ResultCal
         });
 }
 
-void TelemetryImpl::set_rate_landing_target_position_async(double rate_hz, Telemetry::ResultCallback callback)
+void TelemetryImpl::set_rate_landing_target_position_async(
+    double rate_hz, Telemetry::ResultCallback callback)
 {
     _parent->set_msg_rate_async(
         MAVLINK_MSG_ID_LANDING_TARGET,
@@ -1047,41 +1048,41 @@ void TelemetryImpl::process_gps_2_raw(const mavlink_message_t& message)
 {
     mavlink_gps2_raw_t gps_2_raw;
     mavlink_msg_gps2_raw_decode(&message, &gps_2_raw);
-    
+
     Telemetry::FixType fix_2_type;
     switch (gps_2_raw.fix_type) {
-    case 0:
-        fix_2_type = Telemetry::FixType::NoGps;
-        break;
-    case 1:
-        fix_2_type = Telemetry::FixType::NoFix;
-        break;
-    case 2:
-        fix_2_type = Telemetry::FixType::Fix2D;
-        break;
-    case 3:
-        fix_2_type = Telemetry::FixType::Fix3D;
-        break;
-    case 4:
-        fix_2_type = Telemetry::FixType::FixDgps;
-        break;
-    case 5:
-        fix_2_type = Telemetry::FixType::RtkFloat;
-        break;
-    case 6:
-        fix_2_type = Telemetry::FixType::RtkFixed;
-        break;
-    default:
-        LogErr() << "Received unknown GPS 2 fix type!";
-        fix_2_type = Telemetry::FixType::NoGps;
-        break;
+        case 0:
+            fix_2_type = Telemetry::FixType::NoGps;
+            break;
+        case 1:
+            fix_2_type = Telemetry::FixType::NoFix;
+            break;
+        case 2:
+            fix_2_type = Telemetry::FixType::Fix2D;
+            break;
+        case 3:
+            fix_2_type = Telemetry::FixType::Fix3D;
+            break;
+        case 4:
+            fix_2_type = Telemetry::FixType::FixDgps;
+            break;
+        case 5:
+            fix_2_type = Telemetry::FixType::RtkFloat;
+            break;
+        case 6:
+            fix_2_type = Telemetry::FixType::RtkFixed;
+            break;
+        default:
+            LogErr() << "Received unknown GPS 2 fix type!";
+            fix_2_type = Telemetry::FixType::NoGps;
+            break;
     }
-    
+
     Telemetry::GpsInfo new_gps_2_info;
     new_gps_2_info.num_satellites = gps_2_raw.satellites_visible;
     new_gps_2_info.fix_type = fix_2_type;
     set_gps_2_info(new_gps_2_info);
-    
+
     Telemetry::RawGps raw_gps_2_info;
     raw_gps_2_info.timestamp_us = gps_2_raw.time_usec;
     raw_gps_2_info.latitude_deg = gps_2_raw.lat * 1e-7;
@@ -1098,7 +1099,7 @@ void TelemetryImpl::process_gps_2_raw(const mavlink_message_t& message)
     raw_gps_2_info.heading_uncertainty_deg = static_cast<float>(gps_2_raw.hdg_acc) * 1e-5f;
     raw_gps_2_info.yaw_deg = static_cast<float>(gps_2_raw.yaw) * 1e-2f;
     set_raw_gps_2(raw_gps_2_info);
-    
+
     {
         std::lock_guard<std::mutex> lock(_subscription_mutex);
         if (_gps_2_info_subscription) {
@@ -1118,18 +1119,18 @@ void TelemetryImpl::process_gps_rtcm_data(const mavlink_message_t& message)
 {
     mavlink_gps_rtcm_data_t rtcm_data;
     mavlink_msg_gps_rtcm_data_decode(&message, &rtcm_data);
-    
+
     Telemetry::GpsRtcmData new_gps_rtcm_data;
     new_gps_rtcm_data.flags = rtcm_data.flags;
     new_gps_rtcm_data.len = rtcm_data.len;
-    
+
     const unsigned rtcm_data_size = sizeof(rtcm_data.data) / sizeof(rtcm_data.data[0]);
     for (std::size_t i = 0; i < rtcm_data_size; ++i) {
         new_gps_rtcm_data.data.push_back(rtcm_data.data[i]);
     }
-    
+
     set_gps_rtcm_data(new_gps_rtcm_data);
-    
+
     std::lock_guard<std::mutex> lock(_subscription_mutex);
     if (_gps_rtcm_data_subscription) {
         auto callback = _gps_rtcm_data_subscription;
@@ -1243,15 +1244,19 @@ void TelemetryImpl::process_sys_status(const mavlink_message_t& message)
             }
         }
     }
-    
-        Telemetry::VehicleStatus new_vehicle_status;
-    new_vehicle_status.manual_control_signal_loss = sys_status.errors_count1; // No manual control setpoint messages arriving (can come from RC or MAV)
+
+    Telemetry::VehicleStatus new_vehicle_status;
+    new_vehicle_status.manual_control_signal_loss =
+        sys_status.errors_count1; // No manual control setpoint messages arriving (can come from RC
+                                  // or MAV)
     new_vehicle_status.data_link_loss = sys_status.errors_count2; // No messages from GCS received
     new_vehicle_status.rc_signal_loss = sys_status.errors_count3; // No messages from RC TX received
-    new_vehicle_status.manual_control_data_source = sys_status.errors_count4; // Indicates whether the drone is controlled by RC (1) or MAVLink (2-5)
-    
+    new_vehicle_status.manual_control_data_source =
+        sys_status
+            .errors_count4; // Indicates whether the drone is controlled by RC (1) or MAVLink (2-5)
+
     set_vehicle_status(new_vehicle_status);
-    
+
     {
         std::lock_guard<std::mutex> lock(_subscription_mutex);
         if (_vehicle_status_subscription) {
@@ -1339,7 +1344,7 @@ void TelemetryImpl::process_radio_status(const mavlink_message_t& message)
 {
     mavlink_radio_status_t radio_status_reading;
     mavlink_msg_radio_status_decode(&message, &radio_status_reading);
-    
+
     Telemetry::RadioStatus new_radio_status;
     new_radio_status.local_rssi = radio_status_reading.rssi;
     new_radio_status.remote_rssi = radio_status_reading.remrssi;
@@ -1348,9 +1353,9 @@ void TelemetryImpl::process_radio_status(const mavlink_message_t& message)
     new_radio_status.remote_noise = radio_status_reading.remnoise;
     new_radio_status.rxerrors_count = radio_status_reading.rxerrors;
     new_radio_status.fixed_count = radio_status_reading.fixed;
-    
+
     set_radio_status(new_radio_status);
-    
+
     std::lock_guard<std::mutex> lock(_subscription_mutex);
     if (_radio_status_subscription) {
         auto callback = _radio_status_subscription;
@@ -1376,7 +1381,7 @@ void TelemetryImpl::process_heartbeat(const mavlink_message_t& message)
         auto arg = armed();
         _parent->call_user_callback([callback, arg]() { callback(arg); });
     }
-    
+
     if (_mode_info_subscription) {
         auto callback = _mode_info_subscription;
         auto arg = mode_info();
@@ -1545,13 +1550,13 @@ void TelemetryImpl::process_actuator_output_status(const mavlink_message_t& mess
 void TelemetryImpl::process_servo_output_raw(const mavlink_message_t& message)
 {
     std::array<uint16_t, 16> servos;
-    
+
     uint8_t port = mavlink_msg_servo_output_raw_get_port(&message);
-    
+
     if (port != 0) {
         return;
     }
-    
+
     servos[0] = mavlink_msg_servo_output_raw_get_servo1_raw(&message);
     servos[1] = mavlink_msg_servo_output_raw_get_servo2_raw(&message);
     servos[2] = mavlink_msg_servo_output_raw_get_servo3_raw(&message);
@@ -1568,11 +1573,11 @@ void TelemetryImpl::process_servo_output_raw(const mavlink_message_t& message)
     servos[13] = mavlink_msg_servo_output_raw_get_servo14_raw(&message);
     servos[14] = mavlink_msg_servo_output_raw_get_servo15_raw(&message);
     servos[15] = mavlink_msg_servo_output_raw_get_servo16_raw(&message);
-    
+
     uint32_t timestamp = mavlink_msg_servo_output_raw_get_time_usec(&message);
-    
+
     set_servo_output_raw(timestamp, servos);
-    
+
     std::lock_guard<std::mutex> lock(_subscription_mutex);
     if (_servo_output_raw_subscription) {
         auto callback = _servo_output_raw_subscription;
@@ -1580,7 +1585,6 @@ void TelemetryImpl::process_servo_output_raw(const mavlink_message_t& message)
         _parent->call_user_callback([callback, arg]() { callback(arg); });
     }
 }
-    
 
 void TelemetryImpl::process_odometry(const mavlink_message_t& message)
 {
@@ -1644,7 +1648,8 @@ void TelemetryImpl::process_landing_target_position(const mavlink_message_t& mes
 
     landing_target_position_struct.time_usec = landing_target_position_msg.time_usec;
     landing_target_position_struct.id = landing_target_position_msg.target_num;
-    landing_target_position_struct.frame_id = static_cast<Telemetry::LandingTargetPosition::MavFrame>(landing_target_position_msg.frame);
+    landing_target_position_struct.frame_id =
+        static_cast<Telemetry::LandingTargetPosition::MavFrame>(landing_target_position_msg.frame);
 
     landing_target_position_struct.position.x_m = landing_target_position_msg.x;
     landing_target_position_struct.position.y_m = landing_target_position_msg.y;
@@ -2288,7 +2293,6 @@ Telemetry::ModeInfo TelemetryImpl::mode_info() const
     mode_info.custom_mode = _parent->get_heartbeat_custom_mode();
     return mode_info;
 }
-    
 
 Telemetry::FlightMode TelemetryImpl::flight_mode() const
 {
@@ -2476,7 +2480,8 @@ void TelemetryImpl::set_actuator_output_status(uint32_t active, const std::vecto
     _actuator_output_status.actuator = actuators;
 }
 
-void TelemetryImpl::set_servo_output_raw(uint64_t timestamp_us, const std::array<uint16_t, 16>& servos)
+void TelemetryImpl::set_servo_output_raw(
+    uint64_t timestamp_us, const std::array<uint16_t, 16>& servos)
 {
     std::lock_guard<std::mutex> lock(_servo_output_raw_mutex);
     _servo_output_raw.timestamp_us = timestamp_us;
@@ -2489,7 +2494,8 @@ void TelemetryImpl::set_odometry(Telemetry::Odometry& odometry)
     _odometry = odometry;
 }
 
-void TelemetryImpl::set_landing_target_position(Telemetry::LandingTargetPosition& landing_target_position)
+void TelemetryImpl::set_landing_target_position(
+    Telemetry::LandingTargetPosition& landing_target_position)
 {
     std::lock_guard<std::mutex> lock(_landing_target_position_mutex);
     _landing_target_position = landing_target_position;
@@ -2722,8 +2728,7 @@ void TelemetryImpl::subscribe_actuator_output_status(
     _actuator_output_status_subscription = callback;
 }
 
-void TelemetryImpl::subscribe_servo_output_raw(
-    Telemetry::ServoOutputRawCallback& callback)
+void TelemetryImpl::subscribe_servo_output_raw(Telemetry::ServoOutputRawCallback& callback)
 {
     std::lock_guard<std::mutex> lock(_subscription_mutex);
     _servo_output_raw_subscription = callback;
@@ -2735,7 +2740,8 @@ void TelemetryImpl::subscribe_odometry(Telemetry::OdometryCallback& callback)
     _odometry_subscription = callback;
 }
 
-void TelemetryImpl::subscribe_landing_target_position(Telemetry::LandingTargetPositionCallback& callback)
+void TelemetryImpl::subscribe_landing_target_position(
+    Telemetry::LandingTargetPositionCallback& callback)
 {
     std::lock_guard<std::mutex> lock(_subscription_mutex);
     _landing_target_position_subscription = callback;

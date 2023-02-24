@@ -178,10 +178,10 @@ public:
 
     /**
      * @brief Computes time now on connected autopilot. Needs timesync enabled to work correctly.
-     * 
+     *
      * @return time since epoch on autopilot.
-    */
-   uint64_t auto_pilot_time() const;
+     */
+    uint64_t auto_pilot_time() const;
 
     /**
      * @brief Copy constructor (object is not copyable).

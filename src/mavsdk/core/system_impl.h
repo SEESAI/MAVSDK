@@ -505,7 +505,7 @@ private:
     MAV_TYPE _vehicle_type{MAV_TYPE::MAV_TYPE_GENERIC};
 
     std::atomic<FlightMode> _flight_mode{FlightMode::Unknown};
-    
+
     std::atomic<uint8_t> _heartbeat_base_mode{0};
     std::atomic<uint32_t> _heartbeat_custom_mode{0};
 

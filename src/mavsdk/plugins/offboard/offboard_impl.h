@@ -38,8 +38,10 @@ public:
     Offboard::Result set_position_velocity_ned(
         Offboard::PositionNedYaw position_ned_yaw, Offboard::VelocityNedYaw velocity_ned_yaw);
     Offboard::Result set_acceleration_ned(Offboard::AccelerationNed acceleration_ned);
-    Offboard::Result set_acceleration_body_yawspeed_once(Offboard::AccelerationBodyYawspeed acceleration_body_yawspeed);
-    Offboard::Result set_acceleration_body_yawspeed(Offboard::AccelerationBodyYawspeed acceleration_body_yawspeed);
+    Offboard::Result set_acceleration_body_yawspeed_once(
+        Offboard::AccelerationBodyYawspeed acceleration_body_yawspeed);
+    Offboard::Result
+    set_acceleration_body_yawspeed(Offboard::AccelerationBodyYawspeed acceleration_body_yawspeed);
     Offboard::Result set_velocity_body_once(Offboard::VelocityBodyYawspeed velocity_body_yawspeed);
     Offboard::Result set_velocity_body(Offboard::VelocityBodyYawspeed velocity_body_yawspeed);
     Offboard::Result set_attitude_once(Offboard::Attitude attitude);

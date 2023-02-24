@@ -245,7 +245,8 @@ Action::Result Action::set_maximum_speed(float speed) const
     return _impl->set_maximum_speed(speed);
 }
 
-void Action::get_precision_land_target_yaw_deg_async(const GetPrecisionLandTargetYawCallback callback)
+void Action::get_precision_land_target_yaw_deg_async(
+    const GetPrecisionLandTargetYawCallback callback)
 {
     _impl->get_precision_land_target_yaw_deg_async(callback);
 }

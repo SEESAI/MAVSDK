@@ -295,7 +295,8 @@ Offboard::Result OffboardImpl::set_acceleration_ned(Offboard::AccelerationNed ac
     return send_acceleration_ned();
 }
 
-Offboard::Result OffboardImpl::set_acceleration_body_yawspeed_once(Offboard::AccelerationBodyYawspeed acceleration_body_yawspeed)
+Offboard::Result OffboardImpl::set_acceleration_body_yawspeed_once(
+    Offboard::AccelerationBodyYawspeed acceleration_body_yawspeed)
 {
     {
         std::lock_guard<std::mutex> lock(_mutex);
@@ -312,7 +313,8 @@ Offboard::Result OffboardImpl::set_acceleration_body_yawspeed_once(Offboard::Acc
     return send_acceleration_body_yawspeed();
 }
 
-Offboard::Result OffboardImpl::set_acceleration_body_yawspeed(Offboard::AccelerationBodyYawspeed acceleration_body_yawspeed)
+Offboard::Result OffboardImpl::set_acceleration_body_yawspeed(
+    Offboard::AccelerationBodyYawspeed acceleration_body_yawspeed)
 {
     {
         std::lock_guard<std::mutex> lock(_mutex);
@@ -326,8 +328,10 @@ Offboard::Result OffboardImpl::set_acceleration_body_yawspeed(Offboard::Accelera
             }
             // We automatically send body setpoints from now on.
             _parent->add_call_every(
-                [this]() { send_acceleration_body_yawspeed(); }, SEND_INTERVAL_S, &_call_every_cookie);
-            
+                [this]() { send_acceleration_body_yawspeed(); },
+                SEND_INTERVAL_S,
+                &_call_every_cookie);
+
             _mode = Mode::AccelerationBodyYawspeed;
         } else {
             // We're already sending these kind of setpoints. Since the setpoint change, let's

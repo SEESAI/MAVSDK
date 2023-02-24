@@ -375,14 +375,14 @@ public:
         int32_t len{0}; /**< @brief RTCM data length */
         std::vector<int32_t> data{}; /**< @brief RTCM message */
     };
-    
+
     /**
      * @brief Equal operator to compare two `Telemetry::GpsRtcmData` objects.
      *
      * @return `true` if items are equal.
      */
     friend bool operator==(const Telemetry::GpsRtcmData& lhs, const Telemetry::GpsRtcmData& rhs);
-    
+
     /**
      * @brief Stream operator to print information about a `Telemetry::GpsRtcmData`
      *
@@ -415,7 +415,7 @@ public:
      * @return A reference to the stream.
      */
     friend std::ostream& operator<<(std::ostream& str, Telemetry::Battery const& battery);
-    
+
     /**
      * @brief Vehicle status type.
      */
@@ -423,50 +423,59 @@ public:
         bool manual_control_signal_loss{false}; /**< @brief True if manual control signal is loss */
         bool data_link_loss{false}; /**< @brief True if the data link is loss */
         bool rc_signal_loss{false}; /**< @brief True if RC signal is loss */
-        uint32_t manual_control_data_source{0}; /**< @brief Manual control source option, RC or MAVLink */
+        uint32_t manual_control_data_source{
+            0}; /**< @brief Manual control source option, RC or MAVLink */
     };
-    
+
     /**
      * @brief Equal operator to compare two `Telemetry::VehicleStatus` objects.
      *
      * @return `true` if items are equal.
      */
-    friend bool operator==(const Telemetry::VehicleStatus& lhs, const Telemetry::VehicleStatus& rhs);
-    
+    friend bool
+    operator==(const Telemetry::VehicleStatus& lhs, const Telemetry::VehicleStatus& rhs);
+
     /**
      * @brief Stream operator to print information about a `Telemetry::VehicleStatus`.
      *
      * @return A reference to the stream.
      */
-    friend std::ostream& operator<<(std::ostream& str, Telemetry::VehicleStatus const& vehicle_status);
-    
+    friend std::ostream&
+    operator<<(std::ostream& str, Telemetry::VehicleStatus const& vehicle_status);
+
     /**
      * @brief Radio status type.
      */
     struct RadioStatus {
-        uint32_t local_rssi{0}; /**< @brief Local (message sender) received signal strength indication in device-dependent units/scale. */
-        uint32_t remote_rssi{0}; /**< @brief Remote (message receiver) signal strength in device-dependent units/scale. */
-        float remaining_free_txbuf{float(NAN)}; /**< @brief Remaining percentage of free transmitter buffer space. */
-        uint32_t local_noise{0}; /**< @brief Local background noise level. These are device dependent RSSI values. */
-        uint32_t remote_noise{0}; /**< @brief Remote background noise level. These are device dependent RSSI values. */
-        uint32_t rxerrors_count{0}; /**< @brief Count of radio packet receive errors (since boot). */
+        uint32_t local_rssi{0}; /**< @brief Local (message sender) received signal strength
+                                   indication in device-dependent units/scale. */
+        uint32_t remote_rssi{0}; /**< @brief Remote (message receiver) signal strength in
+                                    device-dependent units/scale. */
+        float remaining_free_txbuf{
+            float(NAN)}; /**< @brief Remaining percentage of free transmitter buffer space. */
+        uint32_t local_noise{
+            0}; /**< @brief Local background noise level. These are device dependent RSSI values. */
+        uint32_t remote_noise{0}; /**< @brief Remote background noise level. These are device
+                                     dependent RSSI values. */
+        uint32_t rxerrors_count{
+            0}; /**< @brief Count of radio packet receive errors (since boot). */
         uint32_t fixed_count{0}; /**<@ brief Count of error corrected radio packets (since boot). */
     };
-    
+
     /**
      * @brief Equal operator to compare two `Telemetry::RadioStatus` objects.
      *
      * @return `true` if items are equal.
      */
     friend bool operator==(const Telemetry::RadioStatus& lhs, const Telemetry::RadioStatus& rhs);
-    
+
     /**
      * @brief Stream operator to print information about a `Telemetry::RadioStatus`.
      *
      * @return A reference to the stream.
      */
     friend std::ostream& operator<<(std::ostream& str, Telemetry::RadioStatus const& radio_status);
-    
+
     /**
      * @brief Mode info type.
      */
@@ -474,14 +483,14 @@ public:
         uint32_t base_mode{0}; /**< @brief Base mode flags */
         uint32_t custom_mode{0}; /**< @brief Custom mode (made up of main & sub mode) */
     };
-    
+
     /**
      * @brief Equal operator to compare two `Telemetry::ModeInfo` objects.
      *
      * @return `true` if items are equal.
      */
     friend bool operator==(const Telemetry::ModeInfo& lhs, const Telemetry::ModeInfo& rhs);
-    
+
     /**
      * @brief Stream operator to print information about a `Telemetry::ModeInfo`.
      *
@@ -616,7 +625,7 @@ public:
      */
     friend std::ostream&
     operator<<(std::ostream& str, Telemetry::ActuatorOutputStatus const& actuator_output_status);
-    
+
     /**
      * @brief Servo output raw type.
      */
@@ -624,14 +633,14 @@ public:
         uint64_t timestamp_us; /**< @brief timestamp microseconds */
         uint16_t servo[16]; /**< @brief servo array */
     };
-    
+
     /**
      * @brief Equal operator to compare two `Telemetry::ServoOutputRaw` objects.
      *
      * @return `true` if items are equal.
      */
-    friend bool operator==(
-        const Telemetry::ServoOutputRaw& lhs, const Telemetry::ServoOutputRaw& rhs);
+    friend bool
+    operator==(const Telemetry::ServoOutputRaw& lhs, const Telemetry::ServoOutputRaw& rhs);
 
     /**
      * @brief Covariance type.
@@ -794,14 +803,16 @@ public:
      *
      * @return `true` if items are equal.
      */
-    friend bool operator==(const Telemetry::LandingTargetPosition& lhs, const Telemetry::LandingTargetPosition& rhs);
+    friend bool operator==(
+        const Telemetry::LandingTargetPosition& lhs, const Telemetry::LandingTargetPosition& rhs);
 
     /**
      * @brief Stream operator to print information about a `Telemetry::LandingTargetPosition`.
-     * 
+     *
      * @return A reference to the stream.
      */
-    friend std::ostream& operator<<(std::ostream& str, Telemetry::LandingTargetPosition const& landing_target_position);
+    friend std::ostream&
+    operator<<(std::ostream& str, Telemetry::LandingTargetPosition const& landing_target_position);
 
     /**
      * @brief DistanceSensor message type.
@@ -1367,13 +1378,13 @@ public:
      * @brief Subscribe to 'GPS info' updates.
      */
     void subscribe_gps_info(GpsInfoCallback callback);
-    
+
     /**
      * @brief Callback type for subscribe_gps_2_info.
      */
-    
+
     using Gps2InfoCallback = std::function<void(GpsInfo)>;
-    
+
     /**
      * @brief Subscribe to 'GPS 2 info' updates.
      */
@@ -1385,7 +1396,7 @@ public:
      * @return One GpsInfo update.
      */
     GpsInfo gps_info() const;
-    
+
     /**
      * @brief Poll for 'Gps2Info' (blocking).
      *
@@ -1403,13 +1414,13 @@ public:
      * @brief Subscribe to 'Raw GPS' updates.
      */
     void subscribe_raw_gps(RawGpsCallback callback);
-    
+
     /**
      * @brief Callback type for subscribe_raw_gps_2.
      */
-    
+
     using RawGps2Callback = std::function<void(RawGps)>;
-    
+
     /**
      * @brief Subscribe to 'Raw GPS 2' updates.
      */
@@ -1421,25 +1432,25 @@ public:
      * @return One RawGps update.
      */
     RawGps raw_gps() const;
-    
+
     /**
      * @brief Poll for 'RawGps2' (blocking).
      *
      * @return One RawGps2 update.
      */
     RawGps raw_gps_2() const;
-    
+
     /**
      * @brief Callback type for subscribe_gps_rtcm_data.
      */
-    
+
     using GpsRtcmDataCallback = std::function<void(GpsRtcmData)>;
-    
+
     /**
      * @brief Subscribe to 'GPS RTCM' updates.
      */
     void subscribe_gps_rtcm_data(GpsRtcmDataCallback callback);
-    
+
     /**
      * @brief Poll for 'GpsRtcmData' (blocking).
      *
@@ -1464,36 +1475,36 @@ public:
      * @return One Battery update.
      */
     Battery battery() const;
-    
+
     /**
      * @brief Callback type for subscribe_vehicle_status.
      */
-    
+
     using VehicleStatusCallback = std::function<void(VehicleStatus)>;
-    
+
     /**
      * @brief Subscribe to 'Vehicle Status' updates.
      */
     void subscribe_vehicle_status(VehicleStatusCallback callback);
-    
+
     /**
      * @brief Poll for 'VehicleStatus' (blocking).
      *
      * @return One VehicleStatus update.
      */
     VehicleStatus vehicle_status() const;
-    
+
     /**
      * @brief Callback type for subscribe_radio_status.
      */
-    
+
     using RadioStatusCallback = std::function<void(RadioStatus)>;
-    
+
     /**
      * @brief Subscribe to 'radio status' updates.
      */
     void subscribe_radio_status(RadioStatusCallback callback);
-    
+
     /**
      * @brief Poll for 'RadioStatus' (blocking).
      *
@@ -1518,18 +1529,18 @@ public:
      * @return One FlightMode update.
      */
     FlightMode flight_mode() const;
-    
+
     /**
      * @brief Callback type for subscribe_mode_info.
      */
-    
+
     using ModeInfoCallback = std::function<void(ModeInfo)>;
-    
+
     /**
      * @brief Subscribe to 'mode info' updates.
      */
     void subscribe_mode_info(ModeInfoCallback callback);
-    
+
     /**
      * @brief Poll for 'ModeInfo' (blocking).
      *
@@ -1626,18 +1637,18 @@ public:
      * @return One ActuatorOutputStatus update.
      */
     ActuatorOutputStatus actuator_output_status() const;
-    
+
     /**
      * @brief Callback type for subscribe_servo_output_raw.
      */
-    
+
     using ServoOutputRawCallback = std::function<void(ServoOutputRaw)>;
-    
+
     /**
      * @brief Subscribe to 'servo output raw' updates.
      */
     void subscribe_servo_output_raw(ServoOutputRawCallback callback);
-    
+
     /**
      * @brief Poll for 'ServoOutputRaw' (blocking).
      *
@@ -1666,7 +1677,7 @@ public:
     /**
      * @brief Callback type for subscribe_landing_target_position.
      */
-    
+
     using LandingTargetPositionCallback = std::function<void(LandingTargetPosition)>;
 
     /**
@@ -2113,14 +2124,16 @@ public:
     /**
      * @brief Set rate to 'landing_target_position' updates.
      *
-     * This function is non-blocking. See 'set_rate_landing_target_position' for the blocking counterpart.
+     * This function is non-blocking. See 'set_rate_landing_target_position' for the blocking
+     * counterpart.
      */
     void set_rate_landing_target_position_async(double rate_hz, const ResultCallback callback);
 
     /**
      * @brief Set rate to 'landing target position' updates.
      *
-     * This function is blocking. See 'set_rate_landing_target_position_async' for the non-blocking counterpart.
+     * This function is blocking. See 'set_rate_landing_target_position_async' for the non-blocking
+     * counterpart.
      *
      * @return Result of request.
      */

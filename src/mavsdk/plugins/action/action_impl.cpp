@@ -684,7 +684,7 @@ void ActionImpl::set_precision_land_target_yaw_deg_async(
 
 Action::Result ActionImpl::set_precision_land_target_yaw_deg(const float target_yaw_deg) const
 {
-    const MAVLinkParameters::Result result = 
+    const MAVLinkParameters::Result result =
         _parent->set_param_float(PRECLAND_TARGET_YAW_PARAM, target_yaw_deg);
     return (result == MAVLinkParameters::Result::Success) ? Action::Result::Success :
                                                             Action::Result::ParameterError;
@@ -701,7 +701,7 @@ std::pair<Action::Result, float> ActionImpl::get_precision_land_target_yaw_deg()
 {
     auto result = _parent->get_param_float(PRECLAND_TARGET_YAW_PARAM);
     return std::make_pair<>(
-        (result.first == MAVLinkParameters::Result::Success) ? Action::Result::Success : 
+        (result.first == MAVLinkParameters::Result::Success) ? Action::Result::Success :
                                                                Action::Result::ParameterError,
         result.second);
 }

@@ -134,12 +134,14 @@ Offboard::Result Offboard::set_acceleration_ned(AccelerationNed acceleration_ned
     return _impl->set_acceleration_ned(acceleration_ned);
 }
 
-Offboard::Result Offboard::set_acceleration_body_yawspeed_once(AccelerationBodyYawspeed acceleration_body_yawspeed) const
+Offboard::Result Offboard::set_acceleration_body_yawspeed_once(
+    AccelerationBodyYawspeed acceleration_body_yawspeed) const
 {
     return _impl->set_acceleration_body_yawspeed_once(acceleration_body_yawspeed);
 }
 
-Offboard::Result Offboard::set_acceleration_body_yawspeed(AccelerationBodyYawspeed acceleration_body_yawspeed) const
+Offboard::Result
+Offboard::set_acceleration_body_yawspeed(AccelerationBodyYawspeed acceleration_body_yawspeed) const
 {
     return _impl->set_acceleration_body_yawspeed(acceleration_body_yawspeed);
 }
@@ -357,19 +359,21 @@ std::ostream& operator<<(std::ostream& str, Offboard::AccelerationNed const& acc
     return str;
 }
 
-bool operator==(const Offboard::AccelerationBodyYawspeed& lhs, const Offboard::AccelerationBodyYawspeed& rhs)
+bool operator==(
+    const Offboard::AccelerationBodyYawspeed& lhs, const Offboard::AccelerationBodyYawspeed& rhs)
 {
-    return ((std::isnan(rhs.forward_m_s2) && std::isnan(lhs.forward_m_s2)) || 
+    return ((std::isnan(rhs.forward_m_s2) && std::isnan(lhs.forward_m_s2)) ||
             rhs.forward_m_s2 == lhs.forward_m_s2) &&
            ((std::isnan(rhs.right_m_s2) && std::isnan(lhs.right_m_s2)) ||
             rhs.right_m_s2 == lhs.right_m_s2) &&
            ((std::isnan(rhs.down_m_s2) && std::isnan(lhs.down_m_s2)) ||
             rhs.down_m_s2 == lhs.down_m_s2) &&
-           ((std::isnan(rhs.yawspeed_deg_s) && std::isnan(lhs.yawspeed_deg_s)) || 
+           ((std::isnan(rhs.yawspeed_deg_s) && std::isnan(lhs.yawspeed_deg_s)) ||
             rhs.yawspeed_deg_s == lhs.yawspeed_deg_s);
 }
 
-std::ostream& operator<<(std::ostream& str, Offboard::AccelerationBodyYawspeed const& acceleration_body_yawspeed)
+std::ostream&
+operator<<(std::ostream& str, Offboard::AccelerationBodyYawspeed const& acceleration_body_yawspeed)
 {
     str << std::setprecision(15);
     str << "acceleration_body_yawspeed: " << '\n' << "{\n";

@@ -145,7 +145,7 @@ public:
     void subscribe_gps_rtcm_data(Telemetry::GpsRtcmDataCallback& callback);
     void subscribe_battery(Telemetry::BatteryCallback& callback);
     void subscribe_vehicle_status(Telemetry::VehicleStatusCallback& callback);
-    void subscribe_radio_status(Telemetry::RadioStatusCallback& callback); 
+    void subscribe_radio_status(Telemetry::RadioStatusCallback& callback);
     void subscribe_mode_info(Telemetry::ModeInfoCallback& callback);
     void subscribe_flight_mode(Telemetry::FlightModeCallback& callback);
     void subscribe_health(Telemetry::HealthCallback& callback);
@@ -335,19 +335,19 @@ private:
 
     mutable std::mutex _raw_gps_mutex{};
     Telemetry::RawGps _raw_gps{};
-    
+
     mutable std::mutex _raw_gps_2_mutex{};
     Telemetry::RawGps _raw_gps_2{};
-    
+
     mutable std::mutex _gps_rtcm_data_mutex{};
     Telemetry::GpsRtcmData _gps_rtcm_data{};
 
     mutable std::mutex _battery_mutex{};
     Telemetry::Battery _battery{};
-    
+
     mutable std::mutex _vehicle_status_mutex{};
     Telemetry::VehicleStatus _vehicle_status{};
-    
+
     mutable std::mutex _radio_status_mutex{};
     Telemetry::RadioStatus _radio_status{};
 
@@ -371,7 +371,7 @@ private:
 
     mutable std::mutex _actuator_output_status_mutex{};
     Telemetry::ActuatorOutputStatus _actuator_output_status{};
-    
+
     mutable std::mutex _servo_output_raw_mutex{};
     Telemetry::ServoOutputRaw _servo_output_raw{};
 

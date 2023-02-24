@@ -208,7 +208,7 @@ public:
     void precision_land_async(const ResultCallback callback);
 
     /**
-     * @brief Send command to precision land at target position. 
+     * @brief Send command to precision land at target position.
      * This switches the drone to 'Precision Land' flight mode.
      *
      * This function is blocking. See 'precision_land_async' for the non-blocking counterpart.

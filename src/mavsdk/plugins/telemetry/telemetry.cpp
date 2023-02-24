@@ -607,7 +607,8 @@ Telemetry::Result Telemetry::set_rate_odometry(double rate_hz) const
     return _impl->set_rate_odometry(rate_hz);
 }
 
-void Telemetry::set_rate_landing_target_position_async(double rate_hz, const ResultCallback callback)
+void Telemetry::set_rate_landing_target_position_async(
+    double rate_hz, const ResultCallback callback)
 {
     _impl->set_rate_landing_target_position_async(rate_hz, callback);
 }
@@ -892,9 +893,7 @@ std::ostream& operator<<(std::ostream& str, Telemetry::GpsRtcmData const& gps_rt
     str << "    flags: " << gps_rtcm_data.flags << '\n';
     str << "    len: " << gps_rtcm_data.len << '\n';
     str << "    data: [";
-    for (auto it = gps_rtcm_data.data.begin();
-         it != gps_rtcm_data.data.end();
-         ++it) {
+    for (auto it = gps_rtcm_data.data.begin(); it != gps_rtcm_data.data.end(); ++it) {
         str << *it;
         str << (it + 1 != gps_rtcm_data.data.end() ? ", " : "]\n");
     }
@@ -928,7 +927,7 @@ bool operator==(const Telemetry::VehicleStatus& lhs, const Telemetry::VehicleSta
 {
     return (rhs.manual_control_signal_loss == lhs.manual_control_signal_loss) &&
            (rhs.data_link_loss == lhs.data_link_loss) &&
-           (rhs.rc_signal_loss == lhs.rc_signal_loss) && 
+           (rhs.rc_signal_loss == lhs.rc_signal_loss) &&
            (rhs.manual_control_data_source == lhs.manual_control_data_source);
 }
 
@@ -946,14 +945,11 @@ std::ostream& operator<<(std::ostream& str, Telemetry::VehicleStatus const& vehi
 
 bool operator==(const Telemetry::RadioStatus& lhs, const Telemetry::RadioStatus& rhs)
 {
-    return (rhs.local_rssi == lhs.local_rssi) &&
-           (rhs.remote_rssi == lhs.local_rssi) && 
+    return (rhs.local_rssi == lhs.local_rssi) && (rhs.remote_rssi == lhs.local_rssi) &&
            ((std::isnan(rhs.remaining_free_txbuf) && std::isnan(lhs.remaining_free_txbuf)) ||
             rhs.remaining_free_txbuf == lhs.remaining_free_txbuf) &&
-           (rhs.local_noise == lhs.local_noise) && 
-           (rhs.remote_noise == lhs.remote_noise) &&
-           (rhs.rxerrors_count == lhs.rxerrors_count) && 
-           (rhs.fixed_count == lhs.fixed_count);
+           (rhs.local_noise == lhs.local_noise) && (rhs.remote_noise == lhs.remote_noise) &&
+           (rhs.rxerrors_count == lhs.rxerrors_count) && (rhs.fixed_count == lhs.fixed_count);
 }
 
 std::ostream& operator<<(std::ostream& str, Telemetry::RadioStatus const& radio_status)
@@ -1093,8 +1089,7 @@ operator<<(std::ostream& str, Telemetry::ActuatorOutputStatus const& actuator_ou
     return str;
 }
 
-bool operator==(
-    const Telemetry::ServoOutputRaw& lhs, const Telemetry::ServoOutputRaw& rhs)
+bool operator==(const Telemetry::ServoOutputRaw& lhs, const Telemetry::ServoOutputRaw& rhs)
 {
     return (rhs.servo == lhs.servo);
 }
@@ -1196,7 +1191,8 @@ std::ostream& operator<<(std::ostream& str, Telemetry::Odometry const& odometry)
     return str;
 }
 
-std::ostream& operator<<(std::ostream& str, Telemetry::LandingTargetPosition::MavFrame const& mav_frame)
+std::ostream&
+operator<<(std::ostream& str, Telemetry::LandingTargetPosition::MavFrame const& mav_frame)
 {
     switch (mav_frame) {
         case Telemetry::LandingTargetPosition::MavFrame::Undef:
@@ -1207,14 +1203,16 @@ std::ostream& operator<<(std::ostream& str, Telemetry::LandingTargetPosition::Ma
             return str << "Unknown";
     }
 }
-bool operator==(const Telemetry::LandingTargetPosition& lhs, const Telemetry::LandingTargetPosition& rhs)
+bool operator==(
+    const Telemetry::LandingTargetPosition& lhs, const Telemetry::LandingTargetPosition& rhs)
 {
     return (rhs.time_usec == lhs.time_usec) && (rhs.id == lhs.id) &&
-           (rhs.frame_id == lhs.frame_id) && (rhs.position == lhs.position) && 
-           (rhs.q == lhs.q) && (rhs.is_available == lhs.is_available);
+           (rhs.frame_id == lhs.frame_id) && (rhs.position == lhs.position) && (rhs.q == lhs.q) &&
+           (rhs.is_available == lhs.is_available);
 }
 
-std::ostream& operator<<(std::ostream& str, Telemetry::LandingTargetPosition const& landing_target_position)
+std::ostream&
+operator<<(std::ostream& str, Telemetry::LandingTargetPosition const& landing_target_position)
 {
     str << std::setprecision(15);
     str << "landing_target_position:" << '\n' << "{\n";

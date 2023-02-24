@@ -336,25 +336,26 @@ public:
         float forward_m_s2{}; /**< @brief Acceleration Forward (in metres/second^2) */
         float right_m_s2{}; /**< @brief Acceleration Right (in metres/second^2) */
         float down_m_s2{}; /**< @brief Acceleration Down (in metres/second^2) */
-        float yawspeed_deg_s{}; /**< @brief Yaw angular rate (in degrees/second, positive for 
+        float yawspeed_deg_s{}; /**< @brief Yaw angular rate (in degrees/second, positive for
                               clock-wise looking from above) */
     };
 
     /**
      * @brief Equal operator to compare two `Offboard::AccelerationBodyYawspeed` objects.
-     * 
+     *
      * @return `true` if items are equal.
      */
-    friend bool
-    operator==(const Offboard::AccelerationBodyYawspeed& lhs, const Offboard::AccelerationBodyYawspeed& rhs);
+    friend bool operator==(
+        const Offboard::AccelerationBodyYawspeed& lhs,
+        const Offboard::AccelerationBodyYawspeed& rhs);
 
     /**
      * @brief Stream operator to print information about a `Offboard::AccelerationBodyYawspeed`.
-     * 
+     *
      * @return A reference to the stream.
      */
-    friend std::ostream&
-    operator<<(std::ostream& str, Offboard::AccelerationBodyYawspeed const& acceleration_body_yawspeed);
+    friend std::ostream& operator<<(
+        std::ostream& str, Offboard::AccelerationBodyYawspeed const& acceleration_body_yawspeed);
 
     /**
      * @brief Possible results returned for offboard requests
@@ -384,14 +385,14 @@ public:
 
     /**
      * @brief Request offboard mode only (don't send repeated setpoints)
-     * 
+     *
      * This function is non-blocking. See 'request_offboard' for the blocking counterpart.
      */
     void request_offboard_async(const ResultCallback callback);
 
     /**
      * @brief Request offboard mode only (don't send repeated setpoints)
-     * 
+     *
      * This function is blocking. See 'request_offboard_async' for the non-blocking counterpart.
      *
      * @return Result of request.
@@ -451,7 +452,7 @@ public:
      * request.
      *
      * This function is blocking.
-     * 
+     *
      * @return Result of request.
      */
     Result set_attitude_once(Attitude attitude) const;
@@ -492,9 +493,9 @@ public:
     /**
      * @brief Set the attitude rate in terms of pitch, roll and yaw angular rate along with thrust.
      * Only send one request.
-     * 
+     *
      * This function is blocking.
-     * 
+     *
      * @return Result of request.
      */
     Result set_attitude_rate_once(AttitudeRate attitude_rate) const;
@@ -510,9 +511,9 @@ public:
 
     /**
      * @brief Set the position in NED coordinates and yaw. Only send one request.
-     * 
+     *
      * This function is blocking.
-     * 
+     *
      * @return Result of request.
      */
     Result set_position_ned_once(PositionNedYaw position_ned_yaw) const;
@@ -539,9 +540,9 @@ public:
      * @brief Set the velocity in body coordinates and yaw angular rate. Not available for
      * fixed-wing aircraft.
      * Only send one request.
-     * 
+     *
      * This function is blocking.
-     * 
+     *
      * @return Result of request.
      */
     Result set_velocity_body_once(VelocityBodyYawspeed velocity_body_yawspeed) const;
@@ -587,21 +588,23 @@ public:
     /**
      * @brief Set the acceleration in body coordinates and yaw angular rate.
      * Only send one request.
-     * 
+     *
      * This function is blocking.
-     * 
+     *
      * @return Result of request.
      */
-    Result set_acceleration_body_yawspeed_once(AccelerationBodyYawspeed acceleration_body_yawspeed) const;
+    Result
+    set_acceleration_body_yawspeed_once(AccelerationBodyYawspeed acceleration_body_yawspeed) const;
 
     /**
      * @brief Set the acceleration in body coordinates.
-     * 
+     *
      * This function is blocking.
-     * 
+     *
      * @return Result of request.
      */
-    Result set_acceleration_body_yawspeed(AccelerationBodyYawspeed set_acceleration_body_yawspeed) const;
+    Result
+    set_acceleration_body_yawspeed(AccelerationBodyYawspeed set_acceleration_body_yawspeed) const;
 
     /**
      * @brief Copy constructor.
