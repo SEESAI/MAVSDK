@@ -245,6 +245,27 @@ Action::Result Action::set_maximum_speed(float speed) const
     return _impl->set_maximum_speed(speed);
 }
 
+void Action::get_precision_land_target_yaw_deg_async(const GetPrecisionLandTargetYawCallback callback)
+{
+    _impl->get_precision_land_target_yaw_deg_async(callback);
+}
+
+std::pair<Action::Result, float> Action::get_precision_land_target_yaw_deg() const
+{
+    return _impl->get_precision_land_target_yaw_deg();
+}
+
+void Action::set_precision_land_target_yaw_deg_async(
+    float target_yaw_deg, const ResultCallback callback)
+{
+    _impl->set_precision_land_target_yaw_deg_async(target_yaw_deg, callback);
+}
+
+Action::Result Action::set_precision_land_target_yaw_deg(float target_yaw_deg) const
+{
+    return _impl->set_precision_land_target_yaw_deg(target_yaw_deg);
+}
+
 void Action::get_return_to_launch_altitude_async(const GetReturnToLaunchAltitudeCallback callback)
 {
     _impl->get_return_to_launch_altitude_async(callback);

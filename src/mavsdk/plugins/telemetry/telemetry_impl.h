@@ -45,6 +45,7 @@ public:
     Telemetry::Result set_rate_actuator_control_target(double rate_hz);
     Telemetry::Result set_rate_actuator_output_status(double rate_hz);
     Telemetry::Result set_rate_odometry(double rate_hz);
+    Telemetry::Result set_rate_landing_target_position(double rate_hz);
     Telemetry::Result set_rate_distance_sensor(double rate_hz);
     Telemetry::Result set_rate_scaled_pressure(double rate_hz);
     Telemetry::Result set_rate_unix_epoch_time(double rate_hz);
@@ -69,6 +70,7 @@ public:
     void set_rate_actuator_control_target_async(double rate_hz, Telemetry::ResultCallback callback);
     void set_rate_actuator_output_status_async(double rate_hz, Telemetry::ResultCallback callback);
     void set_rate_odometry_async(double rate_hz, Telemetry::ResultCallback callback);
+    void set_rate_landing_target_position_async(double rate_hz, Telemetry::ResultCallback callback);
     void set_rate_distance_sensor_async(double rate_hz, Telemetry::ResultCallback callback);
     void set_rate_scaled_pressure_async(double rate_hz, Telemetry::ResultCallback callback);
     void set_rate_unix_epoch_time_async(double rate_hz, Telemetry::ResultCallback callback);

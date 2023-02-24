@@ -345,6 +345,12 @@ Telemetry::Result TelemetryImpl::set_rate_odometry(double rate_hz)
         _parent->set_msg_rate(MAVLINK_MSG_ID_ODOMETRY, rate_hz));
 }
 
+Telemetry::Result TelemetryImpl::set_rate_landing_target_position(double rate_hz)
+{
+    return telemetry_result_from_command_result(
+        _parent->set_msg_rate(MAVLINK_MSG_ID_LANDING_TARGET, rate_hz));
+}
+
 Telemetry::Result TelemetryImpl::set_rate_distance_sensor(double rate_hz)
 {
     return telemetry_result_from_command_result(
@@ -566,6 +572,16 @@ void TelemetryImpl::set_rate_odometry_async(double rate_hz, Telemetry::ResultCal
 {
     _parent->set_msg_rate_async(
         MAVLINK_MSG_ID_ODOMETRY,
+        rate_hz,
+        [callback](MavlinkCommandSender::Result command_result, float) {
+            command_result_callback(command_result, callback);
+        });
+}
+
+void TelemetryImpl::set_rate_landing_target_position_async(double rate_hz, Telemetry::ResultCallback callback)
+{
+    _parent->set_msg_rate_async(
+        MAVLINK_MSG_ID_LANDING_TARGET,
         rate_hz,
         [callback](MavlinkCommandSender::Result command_result, float) {
             command_result_callback(command_result, callback);
@@ -1639,7 +1655,7 @@ void TelemetryImpl::process_landing_target_position(const mavlink_message_t& mes
     landing_target_position_struct.q.y = landing_target_position_msg.q[2];
     landing_target_position_struct.q.z = landing_target_position_msg.q[3];
 
-    landing_target_position_struct.is_available = landing_target_position_msg.position_valid;
+    landing_target_position_struct.is_available = (landing_target_position_msg.position_valid != 0);
 
     set_landing_target_position(landing_target_position_struct);
 
@@ -1750,6 +1766,8 @@ TelemetryImpl::telemetry_flight_mode_from_flight_mode(SystemImpl::FlightMode fli
             return Telemetry::FlightMode::ReturnToLaunch;
         case SystemImpl::FlightMode::Land:
             return Telemetry::FlightMode::Land;
+        case SystemImpl::FlightMode::PrecisionLand:
+            return Telemetry::FlightMode::PrecisionLand;
         case SystemImpl::FlightMode::Offboard:
             return Telemetry::FlightMode::Offboard;
         case SystemImpl::FlightMode::FollowMe:

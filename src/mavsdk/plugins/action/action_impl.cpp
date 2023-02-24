@@ -676,6 +676,36 @@ std::pair<Action::Result, float> ActionImpl::get_maximum_speed() const
         result.second);
 }
 
+void ActionImpl::set_precision_land_target_yaw_deg_async(
+    const float target_yaw_deg, const Action::ResultCallback& callback) const
+{
+    callback(set_precision_land_target_yaw_deg(target_yaw_deg));
+}
+
+Action::Result ActionImpl::set_precision_land_target_yaw_deg(const float target_yaw_deg) const
+{
+    const MAVLinkParameters::Result result = 
+        _parent->set_param_float(PRECLAND_TARGET_YAW_PARAM, target_yaw_deg);
+    return (result == MAVLinkParameters::Result::Success) ? Action::Result::Success :
+                                                            Action::Result::ParameterError;
+}
+
+void ActionImpl::get_precision_land_target_yaw_deg_async(
+    const Action::GetPrecisionLandTargetYawCallback& callback) const
+{
+    const auto get_result = get_precision_land_target_yaw_deg();
+    callback(get_result.first, get_result.second);
+}
+
+std::pair<Action::Result, float> ActionImpl::get_precision_land_target_yaw_deg() const
+{
+    auto result = _parent->get_param_float(PRECLAND_TARGET_YAW_PARAM);
+    return std::make_pair<>(
+        (result.first == MAVLinkParameters::Result::Success) ? Action::Result::Success : 
+                                                               Action::Result::ParameterError,
+        result.second);
+}
+
 void ActionImpl::set_return_to_launch_altitude_async(
     const float relative_altitude_m, const Action::ResultCallback& callback) const
 {

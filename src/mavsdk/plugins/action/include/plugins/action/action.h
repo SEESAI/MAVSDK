@@ -565,6 +565,48 @@ public:
     Result set_maximum_speed(float speed) const;
 
     /**
+     * @brief Callback type for get_precision_land_target_yaw_deg_async.
+     */
+    using GetPrecisionLandTargetYawCallback = std::function<void(Result, float)>;
+
+    /**
+     * @brief Get the precision land target yaw (in degrees).
+     *
+     * This function is non-blocking. Sees 'get_precision_land_target_yaw_deg' for the blocking
+     * counterpart.
+     */
+    void get_precision_land_target_yaw_deg_async(const GetPrecisionLandTargetYawCallback callback);
+
+    /**
+     * @brief Get the precision land target yaw (in degrees).
+     *
+     * This function is blocking. See 'get_precision_land_target_yaw_deg_async' for the non-blocking
+     * counterpart.
+     *
+     * @return Result of request.
+     */
+    std::pair<Result, float> get_precision_land_target_yaw_deg() const;
+
+    /**
+     * @brief Set the precision land target yaw (in degrees).
+     *
+     * This function is non-blocking. See 'set_precision_land_target_yaw_deg' for the blocking
+     * counterpart.
+     */
+    void
+    set_precision_land_target_yaw_deg_async(float target_yaw_deg, const ResultCallback callback);
+
+    /**
+     * @brief Set the precision land target yaw (in degrees).
+     *
+     * This function is blocking. See 'set_precision_land_target_yaw_deg_async' for the non-blocking
+     * counterpart.
+     *
+     * @return Result of request.
+     */
+    Result set_precision_land_target_yaw_deg(float target_yaw_deg) const;
+
+    /**
      * @brief Callback type for get_return_to_launch_altitude_async.
      */
     using GetReturnToLaunchAltitudeCallback = std::function<void(Result, float)>;

@@ -91,6 +91,7 @@ public:
         Mission, /**< @brief In mission. */
         ReturnToLaunch, /**< @brief Returning to launch position (then landing). */
         Land, /**< @brief Landing. */
+        PrecisionLand, /**< @brief Precision landing. */
         Offboard, /**< @brief In 'offboard' mode. */
         FollowMe, /**< @brief In 'follow-me' mode. */
         Manual, /**< @brief In 'Manual' mode. */
@@ -780,12 +781,12 @@ public:
         operator<<(std::ostream& str, Telemetry::LandingTargetPosition::MavFrame const& mav_frame);
 
         uint64_t time_usec{}; /**< @brief Timestamp */
-        uint32_t id{}; /** Target ID */
+        uint32_t id{0}; /** Target ID */
         MavFrame frame_id{}; /**< @brief Coordinate frame of reference for the pose data. */
         PositionBody position{}; /**< @brief Position. */
         Quaternion
             q{}; /**< @brief Quaternion components, w, x, y, z (1 0 0 0 is the null-rotation). */
-        bool is_available{false}; /**< @brief True if */
+        bool is_available{false}; /**< @brief True if position information is valid. */
     };
 
     /**
@@ -1665,6 +1666,7 @@ public:
     /**
      * @brief Callback type for subscribe_landing_target_position.
      */
+    
     using LandingTargetPositionCallback = std::function<void(LandingTargetPosition)>;
 
     /**
@@ -2107,6 +2109,22 @@ public:
      * @return Result of request.
      */
     Result set_rate_odometry(double rate_hz) const;
+
+    /**
+     * @brief Set rate to 'landing_target_position' updates.
+     *
+     * This function is non-blocking. See 'set_rate_landing_target_position' for the blocking counterpart.
+     */
+    void set_rate_landing_target_position_async(double rate_hz, const ResultCallback callback);
+
+    /**
+     * @brief Set rate to 'landing target position' updates.
+     *
+     * This function is blocking. See 'set_rate_landing_target_position_async' for the non-blocking counterpart.
+     *
+     * @return Result of request.
+     */
+    Result set_rate_landing_target_position(double rate_hz) const;
 
     /**
      * @brief Set rate to 'position velocity' updates.

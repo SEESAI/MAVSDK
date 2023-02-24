@@ -607,6 +607,16 @@ Telemetry::Result Telemetry::set_rate_odometry(double rate_hz) const
     return _impl->set_rate_odometry(rate_hz);
 }
 
+void Telemetry::set_rate_landing_target_position_async(double rate_hz, const ResultCallback callback)
+{
+    _impl->set_rate_landing_target_position_async(rate_hz, callback);
+}
+
+Telemetry::Result Telemetry::set_rate_landing_target_position(double rate_hz) const
+{
+    return _impl->set_rate_landing_target_position(rate_hz);
+}
+
 void Telemetry::set_rate_position_velocity_ned_async(double rate_hz, const ResultCallback callback)
 {
     _impl->set_rate_position_velocity_ned_async(rate_hz, callback);
@@ -1542,6 +1552,8 @@ std::ostream& operator<<(std::ostream& str, Telemetry::FlightMode const& flight_
             return str << "Return To Launch";
         case Telemetry::FlightMode::Land:
             return str << "Land";
+        case Telemetry::FlightMode::PrecisionLand:
+            return str << "Precision Land";
         case Telemetry::FlightMode::Offboard:
             return str << "Offboard";
         case Telemetry::FlightMode::FollowMe:

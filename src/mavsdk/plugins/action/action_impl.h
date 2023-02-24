@@ -91,6 +91,11 @@ public:
     Action::Result set_maximum_speed(float speed_m_s) const;
     std::pair<Action::Result, float> get_maximum_speed() const;
 
+    void set_precision_land_target_yaw_deg_async(
+        const float target_yaw_deg, const Action::ResultCallback& callback) const;
+    void get_precision_land_target_yaw_deg_async(
+        const Action::GetPrecisionLandTargetYawCallback& callback) const;
+
     void set_return_to_launch_altitude_async(
         const float relative_altitude_m, const Action::ResultCallback& callback) const;
     void get_return_to_launch_altitude_async(
@@ -98,6 +103,9 @@ public:
 
     void set_current_speed_async(float speed_m_s, const Action::ResultCallback& callback);
     Action::Result set_current_speed(float speed_m_s);
+
+    Action::Result set_precision_land_target_yaw_deg(const float target_yaw_deg) const;
+    std::pair<Action::Result, float> get_precision_land_target_yaw_deg() const;
 
     Action::Result set_return_to_launch_altitude(const float relative_altitude_m) const;
     std::pair<Action::Result, float> get_return_to_launch_altitude() const;
@@ -124,6 +132,7 @@ private:
     static constexpr uint8_t VEHICLE_MODE_FLAG_CUSTOM_MODE_ENABLED = 1;
     static constexpr auto TAKEOFF_ALT_PARAM = "MIS_TAKEOFF_ALT";
     static constexpr auto MAX_SPEED_PARAM = "MPC_XY_CRUISE";
+    static constexpr auto PRECLAND_TARGET_YAW_PARAM = "PLD_TARGET_YAW";
     static constexpr auto RTL_RETURN_ALTITUDE_PARAM = "RTL_RETURN_ALT";
 };
 
