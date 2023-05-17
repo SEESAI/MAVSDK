@@ -16,6 +16,7 @@ using EulerAngle = Telemetry::EulerAngle;
 using AngularVelocityBody = Telemetry::AngularVelocityBody;
 using GpsInfo = Telemetry::GpsInfo;
 using RawGps = Telemetry::RawGps;
+using GpsInput = Telemetry::GpsInput;
 using GpsRtcmData = Telemetry::GpsRtcmData;
 using Battery = Telemetry::Battery;
 using VehicleStatus = Telemetry::VehicleStatus;
@@ -214,6 +215,16 @@ Telemetry::RawGps Telemetry::raw_gps() const
 Telemetry::RawGps Telemetry::raw_gps_2() const
 {
     return _impl->raw_gps_2();
+}
+
+Telemetry::GpsInput Telemetry::gps_input() const
+{
+    return _impl->gps_input();
+}
+
+void Telemetry::subscribe_gps_input(GpsInputCallback callback)
+{
+    return _impl->subscribe_gps_input(callback);
 }
 
 void Telemetry::subscribe_gps_rtcm_data(GpsRtcmDataCallback callback)

@@ -367,6 +367,41 @@ public:
     friend std::ostream& operator<<(std::ostream& str, Telemetry::RawGps const& raw_gps);
 
     /**
+     * @brief GPS input type.
+     */
+    struct GpsInput {
+        uint64_t timestamp_us{}; /**< @brief Timestamp in microseconds (UNIX Epoch time or time
+                                    since system boot, to be inferred) */
+        uint32_t id{}; /**< @brief GPS ID, for systems with multiple GPS */                            
+        FixType fix_type{}; /**< @brief Fix type */
+        double latitude_deg{}; /**< @brief Latitude in degrees (WGS84, EGM96 ellipsoid) */
+        double longitude_deg{}; /**< @brief Longitude in degrees (WGS84, EGM96 ellipsoid) */
+        float absolute_altitude_m{}; /**< @brief Altitude AMSL (above mean sea level) in metres */
+        float hdop{}; /**< @brief GPS HDOP horizontal dilution of position (unitless). If unknown, 
+                         set to NaN */
+        float vdop{}; /**< @brief GPS VDOP vertical dilution of position (unitless). If unknown, set
+                         to NaN */
+        float velocity_n_m_s{}; /**< @brief GPS Velocity along north direction in metres per second */
+        float velocity_e_m_s{}; /**< @brief GPS Velocity along east direction in metres per second */
+        float velocity_d_m_s{}; /**< @brief GPS Velocity along down direction in metres per second */
+        float yaw_deg{}; /**< @brief Yaw in earth frame from north. */
+    };
+
+    /**
+     * @brief Equal operator to compare two `Telemetry::GpsInput` objects.
+     *
+     * @return `true` if items are equal.
+     */
+    friend bool operator==(const Telemetry::GpsInput& lhs, const Telemetry::GpsInput& rhs);
+
+    /**
+     * @brief Stream operator to print information about a `Telemetry::GpsInput`.
+     *
+     * @return A reference to the stream
+     */
+    friend std::ostream& operator<<(std::ostream& str, Telemetry::GpsInput const& gps_input);
+
+    /**
      * @brief GPS RTCM data type.
      */
     struct GpsRtcmData {
@@ -1427,6 +1462,24 @@ public:
      * @return One RawGps2 update.
      */
     RawGps raw_gps_2() const;
+
+    /**
+     * @brief Callback type for subscribe_gps_input.
+     */
+    
+    using GpsInputCallback = std::function<void(GpsInput)>;
+
+    /**
+     * @brief Subscribe to 'GPS Input' updates.
+     */
+    void subscribe_gps_input(GpsInputCallback callback);
+
+    /**
+     * @brief Poll for 'GpsInput' (blocking).
+     *
+     * @return One GpsInput update.
+     */
+    GpsInput gps_input() const;
     
     /**
      * @brief Callback type for subscribe_gps_rtcm_data.
