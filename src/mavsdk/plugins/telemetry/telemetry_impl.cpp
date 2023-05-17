@@ -1105,11 +1105,11 @@ void TelemetryImpl::process_gps_2_raw(const mavlink_message_t& message)
 
 void TelemetryImpl::process_gps_input(const mavlink_message_t& message)
 {
-    mavlink_gps_input_t gps_input;
-    mavlink_msg_gps_input_decode(&message, &gps_input);
+    mavlink_gps_input_t input_gps;
+    mavlink_msg_gps_input_decode(&message, &input_gps);
 
     Telemetry::FixType fix_type;
-    switch (gps_input.fix_type) {
+    switch (input_gps.fix_type) {
     case 0:
         fix_type = Telemetry::FixType::NoGps;
         break;
@@ -1138,18 +1138,18 @@ void TelemetryImpl::process_gps_input(const mavlink_message_t& message)
     }
 
     Telemetry::GpsInput new_gps_input;
-    new_gps_input.timestamp_us = gps_input.time_usec;
-    new_gps_input.id = gps_input.gps_id;
+    new_gps_input.timestamp_us = input_gps.time_usec;
+    new_gps_input.id = input_gps.gps_id;
     new_gps_input.fix_type = fix_type;
-    new_gps_input.latitude_deg = gps_input.lat * 1e-7;
-    new_gps_input.longitude_deg = gps_input.lon * 1e-7;
-    new_gps_input.absolute_altitude_m = gps_input.alt;
-    new_gps_input.hdop = gps_input.hdop;
-    new_gps_input.vdop = gps_input.vdop;
-    new_gps_input.velocity_n_m_s = gps_input.vn;
-    new_gps_input.velocity_e_m_s = gps_input.ve;
-    new_gps_input.velocity_d_m_s = gps_input.vd;
-    new_gps_input.yaw_deg = static_cast<float>(gps_input.yaw) * 1e-2f;
+    new_gps_input.latitude_deg = input_gps.lat * 1e-7;
+    new_gps_input.longitude_deg = input_gps.lon * 1e-7;
+    new_gps_input.absolute_altitude_m = input_gps.alt;
+    new_gps_input.hdop = input_gps.hdop;
+    new_gps_input.vdop = input_gps.vdop;
+    new_gps_input.velocity_n_m_s = input_gps.vn;
+    new_gps_input.velocity_e_m_s = input_gps.ve;
+    new_gps_input.velocity_d_m_s = input_gps.vd;
+    new_gps_input.yaw_deg = static_cast<float>(input_gps.yaw) * 1e-2f;
     
     set_gps_input(new_gps_input);
 
