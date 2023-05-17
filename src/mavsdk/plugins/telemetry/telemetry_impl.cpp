@@ -1155,7 +1155,7 @@ void TelemetryImpl::process_gps_input(const mavlink_message_t& message)
 
     std::lock_guard<std::mutex> lock(_subscription_mutex);
     if (_gps_input_subscription) {
-        auto callback = _gps_info_subscription;
+        auto callback = _gps_input_subscription;
         auto arg = gps_input();
         _parent->call_user_callback([callback, arg]() { callback(arg); });
     }
