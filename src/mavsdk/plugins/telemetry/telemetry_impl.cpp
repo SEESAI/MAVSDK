@@ -2693,6 +2693,12 @@ void TelemetryImpl::subscribe_raw_gps_2(Telemetry::RawGps2Callback& callback)
     _raw_gps_2_subscription = callback;
 }
 
+void TelemetryImpl::subscribe_gps_input(Telemetry::GpsInputCallback& callback)
+{
+    std::lock_guard<std::mutex> lock(_subscription_mutex);
+    _gps_input_subscription = callback;
+}
+
 void TelemetryImpl::subscribe_gps_rtcm_data(Telemetry::GpsRtcmDataCallback& callback)
 {
     std::lock_guard<std::mutex> lock(_subscription_mutex);
