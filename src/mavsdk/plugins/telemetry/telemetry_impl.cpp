@@ -1150,6 +1150,8 @@ void TelemetryImpl::process_gps_input(const mavlink_message_t& message)
     new_gps_input.velocity_n_m_s = input_gps.vn;
     new_gps_input.velocity_e_m_s = input_gps.ve;
     new_gps_input.velocity_d_m_s = input_gps.vd;
+    new_gps_input.horizontal_uncertainty_m = input_gps.horiz_accuracy;
+    new_gps_input.vertical_uncertainty_m = input_gps.vert_accuracy;
     new_gps_input.yaw_deg = static_cast<float>(input_gps.yaw) * 1e-2f;
     
     set_gps_input(new_gps_input);
