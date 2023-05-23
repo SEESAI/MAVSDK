@@ -372,6 +372,7 @@ public:
     struct GpsInput {
         uint64_t timestamp_us{}; /**< @brief Timestamp in microseconds (UNIX Epoch time or time
                                     since system boot, to be inferred) */
+        uint64_t timestamp_utc_us{}; /**< @brief UTC Timestamp in microseconds (UNIX Epoch time) */
         uint32_t id{}; /**< @brief GPS ID, for systems with multiple GPS */                            
         FixType fix_type{}; /**< @brief Fix type */
         double latitude_deg{}; /**< @brief Latitude in degrees (WGS84, EGM96 ellipsoid) */

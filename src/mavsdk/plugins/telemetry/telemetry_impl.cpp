@@ -1139,6 +1139,7 @@ void TelemetryImpl::process_gps_input(const mavlink_message_t& message)
 
     Telemetry::GpsInput new_gps_input;
     new_gps_input.timestamp_us = input_gps.time_usec;
+    new_gps_input.timestamp_utc_us = input_gps.time_utc_usec;
     new_gps_input.id = input_gps.gps_id;
     new_gps_input.fix_type = fix_type;
     new_gps_input.latitude_deg = input_gps.lat * 1e-7;
