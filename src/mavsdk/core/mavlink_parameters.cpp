@@ -681,7 +681,15 @@ void MAVLinkParameters::do_work()
     char param_id[PARAM_ID_LEN + 1] = {};
     strncpy(param_id, work->param_name.c_str(), sizeof(param_id) - 1);
 
-    uint8_t component_id = [&]() {
+    uint8_t current_component_id = [&]() {
+        if (work->maybe_component_id) {
+            return work->maybe_component_id.value();
+        } else {
+            return _parent.get_own_component_id();
+        }
+    }();
+
+    uint8_t target_component_id = [&]() {
         if (work->maybe_component_id) {
             return work->maybe_component_id.value();
         } else {
@@ -719,10 +727,10 @@ void MAVLinkParameters::do_work()
                 // FIXME: extended currently always go to the camera component
                 mavlink_msg_param_ext_set_pack(
                     _parent.get_own_system_id(),
-                    _parent.get_own_component_id(),
+                    current_component_id,
                     &work->mavlink_message,
                     _parent.get_system_id(),
-                    component_id,
+                    target_component_id,
                     param_id,
                     param_value_buf.data(),
                     work->param_value.get_mav_param_ext_type());
@@ -733,10 +741,10 @@ void MAVLinkParameters::do_work()
 
                 mavlink_msg_param_set_pack(
                     _parent.get_own_system_id(),
-                    _parent.get_own_component_id(),
+                    current_component_id,
                     &work->mavlink_message,
                     _parent.get_system_id(),
-                    component_id,
+                    target_component_id,
                     param_id,
                     value_set,
                     work->param_value.get_mav_param_type());
@@ -768,10 +776,10 @@ void MAVLinkParameters::do_work()
             if (work->extended) {
                 mavlink_msg_param_ext_request_read_pack(
                     _parent.get_own_system_id(),
-                    _parent.get_own_component_id(),
+                    current_component_id,
                     &work->mavlink_message,
                     _parent.get_system_id(),
-                    component_id,
+                    target_component_id,
                     param_id,
                     -1);
 
@@ -785,10 +793,10 @@ void MAVLinkParameters::do_work()
 
                 mavlink_msg_param_request_read_pack(
                     _parent.get_own_system_id(),
-                    _parent.get_own_component_id(),
+                    current_component_id,
                     &work->mavlink_message,
                     _parent.get_system_id(),
-                    component_id,
+                    target_component_id,
                     param_id,
                     -1);
             }
@@ -828,7 +836,7 @@ void MAVLinkParameters::do_work()
                 auto buf = work->param_value.get_128_bytes();
                 mavlink_msg_param_ext_value_pack(
                     _parent.get_own_system_id(),
-                    _parent.get_own_component_id(),
+                    current_component_id,
                     &work->mavlink_message,
                     param_id,
                     buf.data(),
@@ -844,7 +852,7 @@ void MAVLinkParameters::do_work()
                 }
                 mavlink_msg_param_value_pack(
                     _parent.get_own_system_id(),
-                    _parent.get_own_component_id(),
+                    current_component_id,
                     &work->mavlink_message,
                     param_id,
                     param_value,
@@ -868,7 +876,7 @@ void MAVLinkParameters::do_work()
                 auto buf = work->param_value.get_128_bytes();
                 mavlink_msg_param_ext_ack_pack(
                     _parent.get_own_system_id(),
-                    _parent.get_own_component_id(),
+                    current_component_id,
                     &work->mavlink_message,
                     param_id,
                     buf.data(),
