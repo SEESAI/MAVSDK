@@ -795,14 +795,14 @@ std::map<std::string, MAVLinkParameters::ParamValue> SystemImpl::retrieve_all_se
     return _params.retrieve_all_server_params();
 }
 
-std::pair<MAVLinkParameters::Result, float> SystemImpl::get_param_float(const std::string& name)
+std::pair<MAVLinkParameters::Result, float> SystemImpl::get_param_float(const std::string& name, std::optional<uint8_t> maybe_component_id)
 {
-    return _params.get_param_float(name, {}, false);
+    return _params.get_param_float(name, maybe_component_id, false);
 }
 
-std::pair<MAVLinkParameters::Result, int> SystemImpl::get_param_int(const std::string& name)
+std::pair<MAVLinkParameters::Result, int> SystemImpl::get_param_int(const std::string& name, std::optional<uint8_t> maybe_component_id)
 {
-    return _params.get_param_int(name, {}, false);
+    return _params.get_param_int(name, maybe_component_id, false);
 }
 
 std::pair<MAVLinkParameters::Result, std::string>

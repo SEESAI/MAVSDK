@@ -23,9 +23,9 @@ Param::Param(std::shared_ptr<System> system) :
 
 Param::~Param() {}
 
-std::pair<Param::Result, int32_t> Param::get_param_int(std::string name) const
+std::pair<Param::Result, int32_t> Param::get_param_int(std::string name, std::optional<uint8_t> maybe_component_id) const
 {
-    return _impl->get_param_int(name);
+    return _impl->get_param_int(name, maybe_component_id);
 }
 
 Param::Result Param::set_param_int(std::string name, int32_t value) const
@@ -33,9 +33,9 @@ Param::Result Param::set_param_int(std::string name, int32_t value) const
     return _impl->set_param_int(name, value);
 }
 
-std::pair<Param::Result, float> Param::get_param_float(std::string name) const
+std::pair<Param::Result, float> Param::get_param_float(std::string name, std::optional<uint8_t> maybe_component_id) const
 {
-    return _impl->get_param_float(name);
+    return _impl->get_param_float(name, maybe_component_id);
 }
 
 Param::Result Param::set_param_float(std::string name, float value) const

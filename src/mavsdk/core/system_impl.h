@@ -268,8 +268,8 @@ public:
     std::pair<MAVLinkParameters::Result, std::string>
     retrieve_server_param_custom(const std::string& name);
 
-    std::pair<MAVLinkParameters::Result, float> get_param_float(const std::string& name);
-    std::pair<MAVLinkParameters::Result, int> get_param_int(const std::string& name);
+    std::pair<MAVLinkParameters::Result, float> get_param_float(const std::string& name, std::optional<uint8_t> maybe_component_id = {});
+    std::pair<MAVLinkParameters::Result, int> get_param_int(const std::string& name, std::optional<uint8_t> maybe_component_id = {});
     std::pair<MAVLinkParameters::Result, float> get_param_ext_float(const std::string& name);
     std::pair<MAVLinkParameters::Result, int> get_param_ext_int(const std::string& name);
     std::pair<MAVLinkParameters::Result, std::string> get_param_custom(const std::string& name);
