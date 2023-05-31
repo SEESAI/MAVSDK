@@ -9,6 +9,7 @@
 #include <functional>
 #include <limits>
 #include <memory>
+#include <optional>
 #include <string>
 #include <utility>
 #include <vector>
@@ -183,7 +184,7 @@ public:
      *
      * @return Result of request.
      */
-    std::pair<Result, int32_t> get_param_int(std::string name) const;
+    std::pair<Result, int32_t> get_param_int(std::string name, std::optional<uint8_t> maybe_component_id = {}) const;
 
     /**
      * @brief Set an int parameter.
@@ -205,7 +206,7 @@ public:
      *
      * @return Result of request.
      */
-    std::pair<Result, float> get_param_float(std::string name) const;
+    std::pair<Result, float> get_param_float(std::string name, std::optional<uint8_t> maybe_component_id = {}) const;
 
     /**
      * @brief Set a float parameter.
