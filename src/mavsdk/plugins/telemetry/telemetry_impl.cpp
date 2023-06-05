@@ -105,6 +105,11 @@ void TelemetryImpl::init()
         [this](const mavlink_message_t& message) { process_gps_2_raw(message); },
         this);
 
+    _system_impl->register_mavlink_message_handler(
+        MAVLINK_MSG_ID_GPS_INPUT,
+        [this](const mavlink_message_t& message) { process_gps_input(message); },
+        this);
+
     _parent->register_mavlink_message_handler(
         MAVLINK_MSG_ID_GPS_RTCM_DATA,
         [this](const mavlink_message_t& message) { process_gps_rtcm_data(message); },
@@ -1154,6 +1159,67 @@ void TelemetryImpl::process_gps_2_raw(const mavlink_message_t& message)
             auto arg = raw_gps_2();
             _parent->call_user_callback([callback, arg]() { callback(arg); });
         }
+    }
+}
+
+void TelemetryImpl::process_gps_input(const mavlink_message_t& message)
+{
+    mavlink_gps_input_t input_gps;
+    mavlink_msg_gps_input_decode(&message, &input_gps);
+
+    Telemetry::FixType fix_type;
+    switch (input_gps.fix_type) {
+        case 0:
+            fix_type = Telemetry::FixType::NoGps;
+            break;
+        case 1:
+            fix_type = Telemetry::FixType::NoFix;
+            break;
+        case 2:
+            fix_type = Telemetry::FixType::Fix2D;
+            break;
+        case 3:
+            fix_type = Telemetry::FixType::Fix3D;
+            break;
+        case 4:
+            fix_type = Telemetry::FixType::FixDgps;
+            break;
+        case 5:
+            fix_type = Telemetry::FixType::RtkFloat;
+            break;
+        case 6:
+            fix_type = Telemetry::FixType::RtkFixed;
+            break;
+        default:
+            LogErr() << "Received unknown GPS input fix type!";
+            fix_type = Telemetry::FixType::NoGps;
+            break;
+    }
+
+    Telemetry::GpsInput new_gps_input;
+    new_gps_input.timestamp_us = input_gps.time_usec;
+    new_gps_input.timestamp_utc_us = input_gps.time_utc_usec;
+    new_gps_input.id = input_gps.gps_id;
+    new_gps_input.fix_type = fix_type;
+    new_gps_input.latitude_deg = input_gps.lat * 1e-7;
+    new_gps_input.longitude_deg = input_gps.lon * 1e-7;
+    new_gps_input.absolute_altitude_m = input_gps.alt;
+    new_gps_input.hdop = input_gps.hdop;
+    new_gps_input.vdop = input_gps.vdop;
+    new_gps_input.velocity_n_m_s = input_gps.vn;
+    new_gps_input.velocity_e_m_s = input_gps.ve;
+    new_gps_input.velocity_d_m_s = input_gps.vd;
+    new_gps_input.horizontal_uncertainty_m = input_gps.horiz_accuracy;
+    new_gps_input.vertical_uncertainty_m = input_gps.vert_accuracy;
+    new_gps_input.yaw_deg = static_cast<float>(input_gps.yaw) * 1e-2f;
+
+    set_gps_input(new_gps_input);
+
+    std::lock_guard<std::mutex> lock(_subscription_mutex);
+    if (_gps_input_subscription) {
+        auto callback = _gps_input_subscription;
+        auto arg = gps_input();
+        _parent->call_user_callback([callback, arg]() { callback(arg); });
     }
 }
 
@@ -2511,6 +2577,18 @@ void TelemetryImpl::set_raw_gps_2(Telemetry::RawGps raw_gps_2)
     _raw_gps_2 = raw_gps_2;
 }
 
+Telemetry::GpsInput TelemetryImpl::gps_input() const
+{
+    std::lock_guard<std::mutex> lock(_gps_input_mutex);
+    return _gps_input;
+}
+
+void TelemetryImpl::set_gps_input(Telemetry::GpsInput gps_input)
+{
+    std::lock_guard<std::mutex> lock(_gps_input_mutex);
+    _gps_input = gps_input;
+}
+
 Telemetry::GpsRtcmData TelemetryImpl::gps_rtcm_data() const
 {
     std::lock_guard<std::mutex> lock(_gps_rtcm_data_mutex);
@@ -3054,6 +3132,19 @@ void TelemetryImpl::unsubscribe_raw_gps_2(Telemetry::RawGps2Handle handle)
 {
     std::lock_guard<std::mutex> lock(_subscription_mutex);
     _raw_gps_2_subscriptions.unsubscribe(handle);
+}
+
+Telemetry::GpsInputHandle
+TelemetryImpl::subscribe_gps_input(const Telemetry::GpsInputCallback& callback)
+{
+    std::lock_guard<std::mutex> lock(_subscription_mutex);
+    _gps_input_subscriptions.subscribe(callback);
+}
+
+void TelemetryImpl::unsubscribe_gps_input(Telemetry::GpsInputHandle handle)
+{
+    std::lock_guard<std::mutex> lock(_subscription_mutex);
+    _gps_input_subscriptions.unsubscribe(handle);
 }
 
 Telemetry::GpsRtcmDataHandle
