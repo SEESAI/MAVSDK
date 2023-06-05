@@ -99,6 +99,7 @@ public:
     Telemetry::GpsInfo gps_2_info() const;
     Telemetry::RawGps raw_gps() const;
     Telemetry::RawGps raw_gps_2() const;
+    Telemetry::GpsInput gps_input() const;
     Telemetry::GpsRtcmData gps_rtcm_data() const;
     Telemetry::Battery battery() const;
     Telemetry::VehicleStatus vehicle_status() const;
@@ -140,6 +141,7 @@ public:
     void subscribe_gps_2_info(Telemetry::Gps2InfoCallback& callback);
     void subscribe_raw_gps(Telemetry::RawGpsCallback& callback);
     void subscribe_raw_gps_2(Telemetry::RawGps2Callback& callback);
+    void subscribe_gps_input(Telemetry::GpsInputCallback& callback);
     void subscribe_gps_rtcm_data(Telemetry::GpsRtcmDataCallback& callback);
     void subscribe_battery(Telemetry::BatteryCallback& callback);
     void subscribe_vehicle_status(Telemetry::VehicleStatusCallback& callback);
@@ -186,6 +188,7 @@ private:
     void set_gps_2_info(Telemetry::GpsInfo gps_2_info);
     void set_raw_gps(Telemetry::RawGps raw_gps);
     void set_raw_gps_2(Telemetry::RawGps raw_gps_2);
+    void set_gps_input(Telemetry::GpsInput gps_input);
     void set_gps_rtcm_data(Telemetry::GpsRtcmData gps_rtcm_data);
     void set_battery(Telemetry::Battery battery);
     void set_vehicle_status(Telemetry::VehicleStatus vehicle_status);
@@ -220,6 +223,7 @@ private:
     void process_raw_imu(const mavlink_message_t& message);
     void process_gps_raw_int(const mavlink_message_t& message);
     void process_gps_2_raw(const mavlink_message_t& message);
+    void process_gps_input(const mavlink_message_t& message);
     void process_gps_rtcm_data(const mavlink_message_t& message);
     void process_ground_truth(const mavlink_message_t& message);
     void process_extended_sys_state(const mavlink_message_t& message);
@@ -336,6 +340,9 @@ private:
     
     mutable std::mutex _raw_gps_2_mutex{};
     Telemetry::RawGps _raw_gps_2{};
+
+    mutable std::mutex _gps_input_mutex{};
+    Telemetry::GpsInput _gps_input{};
     
     mutable std::mutex _gps_rtcm_data_mutex{};
     Telemetry::GpsRtcmData _gps_rtcm_data{};
@@ -410,6 +417,7 @@ private:
     Telemetry::Gps2InfoCallback _gps_2_info_subscription{nullptr};
     Telemetry::RawGpsCallback _raw_gps_subscription{nullptr};
     Telemetry::RawGps2Callback _raw_gps_2_subscription{nullptr};
+    Telemetry::GpsInputCallback _gps_input_subscription{nullptr};
     Telemetry::GpsRtcmDataCallback _gps_rtcm_data_subscription{nullptr};
     Telemetry::BatteryCallback _battery_subscription{nullptr};
     Telemetry::VehicleStatusCallback _vehicle_status_subscription{nullptr};
