@@ -885,6 +885,7 @@ void TelemetryImpl::process_imu_reading_ned(const mavlink_message_t& message)
     new_imu.abs_pressure = highres_imu.abs_pressure;
     new_imu.pressure_alt = highres_imu.pressure_alt;
     new_imu.temperature_degc = highres_imu.temperature;
+    new_imu.fields_updated = highres_imu.fields_updated;
     new_imu.timestamp_us = highres_imu.time_usec;
 
     set_imu_reading_ned(new_imu);
