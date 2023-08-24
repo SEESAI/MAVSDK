@@ -1105,21 +1105,21 @@ public:
      */
     struct Imu {
         enum class ImuFlags {
-            None = 0;
-            AccelerometerX = 1;
-            AccelerometerY = 2;
-            AccelerometerZ = 4;
-            GyrometerX = 8;
-            GyrometerY = 16;
-            GyrometerZ = 32;
-            MagnetometerX = 64;
-            MagnetometerY = 128;
-            MagnetometerZ = 256;
-            AbsolutePressure = 512;
-            DifferentialPressure = 1024;
-            PressureAltitude = 2048;
-            Temperature = 4096;
-            All = 65535;
+            None = 0,
+            AccelerometerX = 1,
+            AccelerometerY = 2,
+            AccelerometerZ = 4,
+            GyrometerX = 8,
+            GyrometerY = 16,
+            GyrometerZ = 32,
+            MagnetometerX = 64,
+            MagnetometerY = 128,
+            MagnetometerZ = 256,
+            AbsolutePressure = 512,
+            DifferentialPressure = 1024,
+            PressureAltitude = 2048,
+            Temperature = 4096,
+            All = 65535
         };
 
         AccelerationFrd acceleration_frd{}; /**< @brief Acceleration */
