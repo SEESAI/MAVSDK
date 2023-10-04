@@ -46,6 +46,11 @@ Rtk::Result RtkImpl::send_rtcm_data(Rtk::RtcmData rtcm_data)
             mavlink_rtcm_data.flags, 
             mavlink_rtcm_data.len, 
             mavlink_rtcm_data.data);
+
+        if (!_parent->send_message(message)) {
+            ++_sequence;
+            return Rtk::Result::ConnectionError;
+        }
     } else {
         uint8_t fragment_id = 0;
         int start = 0;
@@ -64,6 +69,10 @@ Rtk::Result RtkImpl::send_rtcm_data(Rtk::RtcmData rtcm_data)
             mavlink_rtcm_data.flags, 
             mavlink_rtcm_data.len, 
             mavlink_rtcm_data.data);
+            if (!_parent->send_message(message)) {
+                ++_sequence;
+                return Rtk::Result::ConnectionError;
+            }
             start += length;
         }
     }
