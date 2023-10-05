@@ -1763,6 +1763,7 @@ bool operator==(const Telemetry::Imu& lhs, const Telemetry::Imu& rhs)
             rhs.pressure_alt == lhs.pressure_alt) &&
            ((std::isnan(rhs.temperature_degc) && std::isnan(lhs.temperature_degc)) ||
             rhs.temperature_degc == lhs.temperature_degc) &&
+           (rhs.fields_updated == lhs.fields_updated) &&  
            (rhs.timestamp_us == lhs.timestamp_us);
 }
 
@@ -1776,6 +1777,7 @@ std::ostream& operator<<(std::ostream& str, Telemetry::Imu const& imu)
     str << "    abs_pressure: " << imu.abs_pressure << '\n';
     str << "    pressure_alt: " << imu.pressure_alt << '\n';
     str << "    temperature_degc: " << imu.temperature_degc << '\n';
+    str << "    fields_updated: " << imu.fields_updated << '\n';
     str << "    timestamp_us: " << imu.timestamp_us << '\n';
     str << '}';
     return str;
