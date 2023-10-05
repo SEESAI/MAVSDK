@@ -1104,12 +1104,31 @@ public:
      * @brief Imu message type.
      */
     struct Imu {
+        enum class ImuFlags {
+            None = 0,
+            AccelX = 1,
+            AccelY = 2,
+            AccelZ = 4,
+            GyroX = 8,
+            GyroY = 16,
+            GyroZ = 32,
+            MagX = 64,
+            MagY = 128,
+            MagZ = 256,
+            AbsPressure = 512,
+            DiffPressure = 1024,
+            PressureAlt = 2048,
+            Temperature = 4096,
+            All = 65535
+        };
+
         AccelerationFrd acceleration_frd{}; /**< @brief Acceleration */
         AngularVelocityFrd angular_velocity_frd{}; /**< @brief Angular velocity */
         MagneticFieldFrd magnetic_field_frd{}; /**< @brief Magnetic field */
         float abs_pressure{float(NAN)}; /**< @brief Absolute pressure */
         float pressure_alt{float(NAN)}; /**< @brief Altitude calculated from pressure */
         float temperature_degc{float(NAN)}; /**< @brief Temperature */
+        uint16_t fields_updated{0}; /**< @brief Flags indicate which fields have updated */
         uint64_t timestamp_us{}; /**< @brief Timestamp in microseconds */
     };
 
