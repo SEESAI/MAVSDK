@@ -42,7 +42,7 @@ public:
 
     void setMavlinkIds(uint8_t system_id, uint8_t component_id)
     {
-        _mavsdk.set_configuration(mavsdk::Mavsdk::Configuration{system_id, component_id, false});
+        _mavsdk.set_configuration(mavsdk::Mavsdk::Configuration{system_id, component_id, true});
     }
 
 private:
