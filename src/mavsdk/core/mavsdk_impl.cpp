@@ -343,6 +343,15 @@ ConnectionResult MavsdkImpl::add_udp_connection(
     if (ret == ConnectionResult::Success) {
         add_connection(new_conn);
     }
+
+    auto new_configuration = get_configuration();
+
+    // PX4 starting with v1.13 does not send heartbeats by default, so we need
+    // to initiate the MAVLink connection by sending heartbeats.
+    // Therefore, we override the default here and enable sending heartbeats.
+    new_configuration.set_always_send_heartbeats(true);
+    set_configuration(new_configuration);
+
     return ret;
 }
 
@@ -366,6 +375,15 @@ ConnectionResult MavsdkImpl::setup_udp_remote(
         std::lock_guard<std::recursive_mutex> lock(_systems_mutex);
         make_system_with_component(0, 0, true);
     }
+
+    auto new_configuration = get_configuration();
+
+    // PX4 starting with v1.13 does not send heartbeats by default, so we need
+    // to initiate the MAVLink connection by sending heartbeats.
+    // Therefore, we override the default here and enable sending heartbeats.
+    new_configuration.set_always_send_heartbeats(true);
+    set_configuration(new_configuration);
+
     return ret;
 }
 
@@ -386,6 +404,15 @@ ConnectionResult MavsdkImpl::add_tcp_connection(
     if (ret == ConnectionResult::Success) {
         add_connection(new_conn);
     }
+
+    auto new_configuration = get_configuration();
+
+    // PX4 starting with v1.13 does not send heartbeats by default, so we need
+    // to initiate the MAVLink connection by sending heartbeats.
+    // Therefore, we override the default here and enable sending heartbeats.
+    new_configuration.set_always_send_heartbeats(true);
+    set_configuration(new_configuration);
+
     return ret;
 }
 
@@ -437,6 +464,7 @@ void MavsdkImpl::set_configuration(Mavsdk::Configuration new_configuration)
 {
     if (new_configuration.get_always_send_heartbeats() &&
         !_configuration.get_always_send_heartbeats()) {
+        LogInfo() << "Sending heartbeats";
         start_sending_heartbeats();
     } else if (
         !new_configuration.get_always_send_heartbeats() &&
