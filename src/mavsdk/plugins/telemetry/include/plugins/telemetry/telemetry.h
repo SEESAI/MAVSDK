@@ -458,9 +458,9 @@ public:
      */
     struct VehicleStatus {
         bool manual_control_signal_loss{false}; /**< @brief True if manual control signal is loss */
-        bool data_link_loss{false}; /**< @brief True if the data link is loss */
+        uint32_t mavlink_count{false}; /**< @brief Number of Mavlink connections providing setpoints (implying joystick connected). Should be < 2.*/
         bool rc_signal_loss{false}; /**< @brief True if RC signal is loss */
-        uint32_t manual_control_data_source{0}; /**< @brief Manual control source option, RC or MAVLink */
+        uint32_t sees_desired_control_source{0}; /**< @brief Desired type of manual control source, RC (1) or Mav (2)  */
     };
     
     /**
