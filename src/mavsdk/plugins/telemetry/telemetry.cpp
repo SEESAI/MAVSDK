@@ -1239,9 +1239,8 @@ std::ostream& operator<<(std::ostream& str, Telemetry::Battery const& battery)
 bool operator==(const Telemetry::VehicleStatus& lhs, const Telemetry::VehicleStatus& rhs)
 {
     return (rhs.manual_control_signal_loss == lhs.manual_control_signal_loss) &&
-           (rhs.data_link_loss == lhs.data_link_loss) &&
-           (rhs.rc_signal_loss == lhs.rc_signal_loss) &&
-           (rhs.manual_control_data_source == lhs.manual_control_data_source);
+           (rhs.mavlink_count == lhs.mavlink_count) && (rhs.rc_signal_loss == lhs.rc_signal_loss) &&
+           (rhs.sees_desired_control_source == lhs.sees_desired_control_source);
 }
 
 std::ostream& operator<<(std::ostream& str, Telemetry::VehicleStatus const& vehicle_status)
@@ -1249,9 +1248,10 @@ std::ostream& operator<<(std::ostream& str, Telemetry::VehicleStatus const& vehi
     str << std::setprecision(15);
     str << "vehicle_status:" << '\n' << "{\n";
     str << "    manual_control_signal_loss: " << vehicle_status.manual_control_signal_loss << '\n';
-    str << "    data_link_loss: " << vehicle_status.data_link_loss << '\n';
+    str << "    mavlink_count: " << vehicle_status.mavlink_count << '\n';
     str << "    rc_signal_loss: " << vehicle_status.rc_signal_loss << '\n';
-    str << "    manual_control_data_source: " << vehicle_status.manual_control_data_source << '\n';
+    str << "    sees_desired_control_source: " << vehicle_status.sees_desired_control_source
+        << '\n';
     str << '}';
     return str;
 }
@@ -1763,8 +1763,7 @@ bool operator==(const Telemetry::Imu& lhs, const Telemetry::Imu& rhs)
             rhs.pressure_alt == lhs.pressure_alt) &&
            ((std::isnan(rhs.temperature_degc) && std::isnan(lhs.temperature_degc)) ||
             rhs.temperature_degc == lhs.temperature_degc) &&
-           (rhs.fields_updated == lhs.fields_updated) &&  
-           (rhs.timestamp_us == lhs.timestamp_us);
+           (rhs.fields_updated == lhs.fields_updated) && (rhs.timestamp_us == lhs.timestamp_us);
 }
 
 std::ostream& operator<<(std::ostream& str, Telemetry::Imu const& imu)
