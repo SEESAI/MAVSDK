@@ -1239,7 +1239,7 @@ std::ostream& operator<<(std::ostream& str, Telemetry::Battery const& battery)
 bool operator==(const Telemetry::VehicleStatus& lhs, const Telemetry::VehicleStatus& rhs)
 {
     return (rhs.manual_control_signal_loss == lhs.manual_control_signal_loss) &&
-           (rhs.mavlink_count == lhs.mavlink_count) && (rhs.rc_signal_loss == lhs.rc_signal_loss) &&
+           (rhs.mavlink_count == lhs.mavlink_count) && (rhs.rc_count == lhs.rc_count) &&
            (rhs.sees_desired_control_source == lhs.sees_desired_control_source);
 }
 
@@ -1249,7 +1249,7 @@ std::ostream& operator<<(std::ostream& str, Telemetry::VehicleStatus const& vehi
     str << "vehicle_status:" << '\n' << "{\n";
     str << "    manual_control_signal_loss: " << vehicle_status.manual_control_signal_loss << '\n';
     str << "    mavlink_count: " << vehicle_status.mavlink_count << '\n';
-    str << "    rc_signal_loss: " << vehicle_status.rc_signal_loss << '\n';
+    str << "    rc_count: " << vehicle_status.rc_count << '\n';
     str << "    sees_desired_control_source: " << vehicle_status.sees_desired_control_source
         << '\n';
     str << '}';

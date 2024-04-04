@@ -1342,7 +1342,8 @@ void TelemetryImpl::process_sys_status(const mavlink_message_t& message)
             .errors_count1; // No manual control setpoint messages arriving from the desired source
     new_vehicle_status.mavlink_count =
         sys_status.errors_count2; // Number of (live) Mavlink Joysticks connected
-    new_vehicle_status.rc_signal_loss = sys_status.errors_count3; // No messages from RC TX received
+    new_vehicle_status.rc_count =
+        sys_status.errors_count3; // Number of (live) RC Controllers connected
     new_vehicle_status.sees_desired_control_source =
         sys_status.errors_count4; // Indicates desired manual control source, RC (1) or MAVLink (2)
 
