@@ -68,9 +68,13 @@ private:
     {
         auto systems = _mavsdk.systems();
 
-        for (auto system : systems) {
+        // System at index 0 is always the flight controller.
+        const bool is_connected = systems.size() >= 1 ? systems[0]->is_connected() : false;
+
+        // Send just a single message instead of iterating over all systems.
+        {
             const auto rpc_connection_state_response =
-                createRpcConnectionStateResponse(system->is_connected());
+                createRpcConnectionStateResponse(is_connected);
 
             std::lock_guard<std::mutex> lock(connection_state_mutex);
             writer->Write(rpc_connection_state_response);
