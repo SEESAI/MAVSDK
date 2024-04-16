@@ -590,9 +590,6 @@ void SystemImpl::set_connected()
                 _parent.notify_on_discover();
             }
 
-            // Send a heartbeat back immediately.
-            _parent.start_sending_heartbeats();
-
             if (!_always_connected) {
                 register_timeout_handler(
                     [this] { heartbeats_timed_out(); },
@@ -640,8 +637,6 @@ void SystemImpl::set_disconnected()
             _parent.call_user_callback([temp_callback]() { temp_callback(false); });
         }
     }
-
-    _parent.stop_sending_heartbeats();
 
     {
         std::lock_guard<std::mutex> lock(_plugin_impls_mutex);
