@@ -68,11 +68,12 @@ private:
     {
         auto systems = _mavsdk.systems();
 
-        // System at index 0 is always the flight controller.
-        const bool is_connected = systems.size() >= 1 ? systems[0]->is_connected() : false;
+        // Don't publish anything until we have at least one system.
+        if (systems.size() >= 1) {
+            // System at index 0 is always the flight controller.
+            const bool is_connected = systems[0]->is_connected();
 
-        // Send just a single message instead of iterating over all systems.
-        {
+            // Send just a single message instead of iterating over all systems.
             const auto rpc_connection_state_response =
                 createRpcConnectionStateResponse(is_connected);
 
