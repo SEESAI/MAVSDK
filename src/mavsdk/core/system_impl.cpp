@@ -565,8 +565,6 @@ void SystemImpl::set_disconnected()
     }
     _mavsdk_impl.notify_on_timeout();
 
-    _mavsdk_impl.stop_sending_heartbeats();
-
     {
         std::lock_guard<std::mutex> lock(_plugin_impls_mutex);
         for (auto plugin_impl : _plugin_impls) {

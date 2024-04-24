@@ -762,12 +762,20 @@ void MavsdkImpl::notify_on_discover()
 {
     std::lock_guard<std::recursive_mutex> lock(_systems_mutex);
     _new_system_callbacks.queue([this](const auto& func) { call_user_callback(func); });
+
+    // Start sending heartbeats now that it's certain there are other systems to receive them.
+    start_sending_heartbeats();
 }
 
 void MavsdkImpl::notify_on_timeout()
 {
     std::lock_guard<std::recursive_mutex> lock(_systems_mutex);
     _new_system_callbacks.queue([this](const auto& func) { call_user_callback(func); });
+
+    // Only stop sending heartbeats if **all** systems have timed out.
+    if (!is_any_system_connected()) {
+        stop_sending_heartbeats();
+    }
 }
 
 Mavsdk::NewSystemHandle
