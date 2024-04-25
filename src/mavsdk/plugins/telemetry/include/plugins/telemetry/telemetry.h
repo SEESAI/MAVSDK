@@ -387,8 +387,8 @@ public:
         float velocity_d_m_s{}; /**< @brief GPS Velocity along down direction in metres per second */
         float horizontal_uncertainty_m{}; /**< @brief Position uncertainty in metres */
         float vertical_uncertainty_m{}; /**< @brief Altitude uncertainty in metres */
-        float speed_uncertainty_m_s{};
-        float heading_uncertainty_rad{};
+        float speed_uncertainty_m_s{}; /**< @brief Speed standard deviation in metres per second */
+        float heading_uncertainty_rad{}; /**< @brief Heading standard deviation in radians */
         float yaw_deg{}; /**< @brief Yaw in earth frame from north. */
     };
 
