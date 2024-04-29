@@ -907,6 +907,8 @@ bool operator==(const Telemetry::GpsInput& lhs, const Telemetry::GpsInput& rhs)
             rhs.vertical_uncertainty_m == lhs.vertical_uncertainty_m) &&
            ((std::isnan(rhs.speed_uncertainty_m_s) && std::isnan(lhs.speed_uncertainty_m_s)) ||
             rhs.speed_uncertainty_m_s == lhs.speed_uncertainty_m_s) &&
+           ((std::isnan(rhs.course_uncertainty_rad) && std::isnan(lhs.course_uncertainty_rad)) ||
+            rhs.course_uncertainty_rad == lhs.course_uncertainty_rad) &&
            ((std::isnan(rhs.heading_uncertainty_rad) && std::isnan(lhs.heading_uncertainty_rad)) ||
             rhs.heading_uncertainty_rad == lhs.heading_uncertainty_rad) &&
            ((std::isnan(rhs.yaw_deg) && std::isnan(lhs.yaw_deg)) || rhs.yaw_deg == lhs.yaw_deg);
@@ -931,6 +933,7 @@ std::ostream& operator<<(std::ostream& str, Telemetry::GpsInput const& gps_input
     str << "    horizontal_uncertainty_m: " << gps_input.horizontal_uncertainty_m << '\n';
     str << "    vertical_uncertainty_m: " << gps_input.vertical_uncertainty_m << '\n';
     str << "    speed_uncertainty_m_s: " << gps_input.speed_uncertainty_m_s << '\n';
+    str << "    course_uncertainty_rad: " << gps_input.course_uncertainty_rad << '\n';
     str << "    heading_uncertainty_rad: " << gps_input.heading_uncertainty_rad << '\n';
     str << "    yaw_deg: " << gps_input.yaw_deg << '\n';
     str << '}';
