@@ -1,0 +1,51 @@
+name: Build Sees Release
+
+on:
+  push:
+    branches:
+    - 'main'
+    tags:
+    - 'v*'
+  pull_request:
+    branches:
+    - '*'
+
+jobs:
+  ubuntu22-superbuild:
+    name: ubuntu-22.04 (mavsdk_server, superbuild)
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: recursive
+      - uses: actions/cache@v2
+        id: cache
+        with:
+          path: ./build/release/third_party/install
+          key: ${{ github.job }}-${{ hashFiles('./third_party/**') }}
+      - name: disable superbuild on cache hit
+        if: steps.cache.outputs.cache-hit == 'true'
+        run: echo "superbuild=-DSUPERBUILD=OFF" >> $GITHUB_ENV && echo "cmake_prefix_path=-DCMAKE_PREFIX_PATH=$(pwd)/build/release/third_party/install" >> $GITHUB_ENV
+      - name: install pymavlink dependencies
+        run: sudo apt-get update && sudo apt-get install -y python3-future build-essential cmake
+      - name: configure
+        run: cmake $superbuild $cmake_prefix_path -DCMAKE_BUILD_TYPE=Release -DBUILD_MAVSDK_SERVER=ON -DBUILD_SHARED_LIBS=OFF -DBUILD_STATIC_MAVSDK_SERVER=ON -DCMAKE_INSTALL_PREFIX=build/install -DWERROR=OFF -Bbuild/release -H.
+      - name: build
+        run: cmake --build build/release --target install -- -j2
+      - name: test
+        run: ./build/release/src/unit_tests_runner
+      - name: test (mavsdk_server)
+        run: ./build/release/src/mavsdk_server/test/unit_tests_mavsdk_server
+      - name: test FTP server
+        run: ./build/release/src/integration_tests/integration_tests_runner --gtest_filter="FtpTest.TestServer"
+      - name: Upload release binaries
+        uses: actions/upload-artifact@v3
+        with:
+          name: mavsdk_server_sees_x86_64
+          path: ./build/install/bin/mavsdk_server
+      - name: Create Release
+        if: ${{ startsWith(github.ref, 'refs/tags/v') }}
+        run: gh release create --verify-tag --draft --generate-notes $TAG build/install/bin/mavsdk_server
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG:          ${{ github.ref_name }}

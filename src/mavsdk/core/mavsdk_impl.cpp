@@ -539,6 +539,9 @@ void MavsdkImpl::notify_on_discover()
         auto temp_callback = _new_system_callback;
         call_user_callback([temp_callback]() { temp_callback(); });
     }
+
+    // Start sending heartbeats now that it's certain there are other systems to receive them.
+    start_sending_heartbeats();
 }
 
 void MavsdkImpl::notify_on_timeout()
@@ -547,6 +550,11 @@ void MavsdkImpl::notify_on_timeout()
     if (_new_system_callback) {
         auto temp_callback = _new_system_callback;
         call_user_callback([temp_callback]() { temp_callback(); });
+    }
+
+    // Only stop sending heartbeats if **all** systems have timed out.
+    if (!is_any_system_connected()) {
+        stop_sending_heartbeats();
     }
 }
 
