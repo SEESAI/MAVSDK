@@ -884,36 +884,40 @@ std::ostream& operator<<(std::ostream& str, Telemetry::RawGps const& raw_gps)
 bool operator==(const Telemetry::GpsInput& lhs, const Telemetry::GpsInput& rhs)
 {
     return (rhs.timestamp_us == lhs.timestamp_us) &&
-           (rhs.timestamp_utc_us == lhs.timestamp_utc_us) && 
-           (rhs.id == lhs.id) && 
-           (rhs.fix_type == lhs.fix_type) && 
-           ((std::isnan(rhs.latitude_deg) && std::isnan(lhs.latitude_deg)) || 
-            rhs.latitude_deg == lhs.latitude_deg) && 
-           ((std::isnan(rhs.longitude_deg) && std::isnan(lhs.longitude_deg)) || 
+           (rhs.timestamp_utc_us == lhs.timestamp_utc_us) && (rhs.id == lhs.id) &&
+           (rhs.fix_type == lhs.fix_type) &&
+           ((std::isnan(rhs.latitude_deg) && std::isnan(lhs.latitude_deg)) ||
+            rhs.latitude_deg == lhs.latitude_deg) &&
+           ((std::isnan(rhs.longitude_deg) && std::isnan(lhs.longitude_deg)) ||
             rhs.longitude_deg == lhs.longitude_deg) &&
-           ((std::isnan(rhs.absolute_altitude_m) && std::isnan(lhs.absolute_altitude_m)) || 
-            rhs.absolute_altitude_m == lhs.absolute_altitude_m) && 
-           ((std::isnan(rhs.hdop) && std::isnan(lhs.hdop)) || 
-            rhs.hdop == lhs.hdop) &&
-           ((std::isnan(rhs.vdop) && std::isnan(lhs.vdop)) ||
-            rhs.vdop == lhs.vdop) &&
-           ((std::isnan(rhs.velocity_n_m_s) && std::isnan(lhs.velocity_n_m_s)) || 
+           ((std::isnan(rhs.absolute_altitude_m) && std::isnan(lhs.absolute_altitude_m)) ||
+            rhs.absolute_altitude_m == lhs.absolute_altitude_m) &&
+           ((std::isnan(rhs.hdop) && std::isnan(lhs.hdop)) || rhs.hdop == lhs.hdop) &&
+           ((std::isnan(rhs.vdop) && std::isnan(lhs.vdop)) || rhs.vdop == lhs.vdop) &&
+           ((std::isnan(rhs.velocity_n_m_s) && std::isnan(lhs.velocity_n_m_s)) ||
             rhs.velocity_n_m_s == lhs.velocity_n_m_s) &&
-           ((std::isnan(rhs.velocity_e_m_s) && std::isnan(lhs.velocity_e_m_s)) || 
+           ((std::isnan(rhs.velocity_e_m_s) && std::isnan(lhs.velocity_e_m_s)) ||
             rhs.velocity_e_m_s == lhs.velocity_e_m_s) &&
-           ((std::isnan(rhs.velocity_d_m_s) && std::isnan(lhs.velocity_d_m_s)) || 
+           ((std::isnan(rhs.velocity_d_m_s) && std::isnan(lhs.velocity_d_m_s)) ||
             rhs.velocity_d_m_s == lhs.velocity_d_m_s) &&
-           ((std::isnan(rhs.horizontal_uncertainty_m) && std::isnan(lhs.horizontal_uncertainty_m)) ||
+           ((std::isnan(rhs.horizontal_uncertainty_m) &&
+             std::isnan(lhs.horizontal_uncertainty_m)) ||
             rhs.horizontal_uncertainty_m == lhs.horizontal_uncertainty_m) &&
            ((std::isnan(rhs.vertical_uncertainty_m) && std::isnan(lhs.vertical_uncertainty_m)) ||
             rhs.vertical_uncertainty_m == lhs.vertical_uncertainty_m) &&
-           ((std::isnan(rhs.yaw_deg) && std::isnan(lhs.yaw_deg)) || rhs.yaw_deg == lhs.yaw_deg);   
+           ((std::isnan(rhs.speed_uncertainty_m_s) && std::isnan(lhs.speed_uncertainty_m_s)) ||
+            rhs.speed_uncertainty_m_s == lhs.speed_uncertainty_m_s) &&
+           ((std::isnan(rhs.course_uncertainty_rad) && std::isnan(lhs.course_uncertainty_rad)) ||
+            rhs.course_uncertainty_rad == lhs.course_uncertainty_rad) &&
+           ((std::isnan(rhs.heading_uncertainty_rad) && std::isnan(lhs.heading_uncertainty_rad)) ||
+            rhs.heading_uncertainty_rad == lhs.heading_uncertainty_rad) &&
+           ((std::isnan(rhs.yaw_deg) && std::isnan(lhs.yaw_deg)) || rhs.yaw_deg == lhs.yaw_deg);
 }
 
 std::ostream& operator<<(std::ostream& str, Telemetry::GpsInput const& gps_input)
 {
     str << std::setprecision(15);
-    str << "gps_input: " << '\n'  << "{\n";
+    str << "gps_input: " << '\n' << "{\n";
     str << "    timestamp_us: " << gps_input.timestamp_us << '\n';
     str << "    timestamp_utc_us: " << gps_input.timestamp_utc_us << '\n';
     str << "    id: " << gps_input.id << '\n';
@@ -928,6 +932,9 @@ std::ostream& operator<<(std::ostream& str, Telemetry::GpsInput const& gps_input
     str << "    velocity_d_m_s: " << gps_input.velocity_d_m_s << '\n';
     str << "    horizontal_uncertainty_m: " << gps_input.horizontal_uncertainty_m << '\n';
     str << "    vertical_uncertainty_m: " << gps_input.vertical_uncertainty_m << '\n';
+    str << "    speed_uncertainty_m_s: " << gps_input.speed_uncertainty_m_s << '\n';
+    str << "    course_uncertainty_rad: " << gps_input.course_uncertainty_rad << '\n';
+    str << "    heading_uncertainty_rad: " << gps_input.heading_uncertainty_rad << '\n';
     str << "    yaw_deg: " << gps_input.yaw_deg << '\n';
     str << '}';
     return str;
@@ -945,9 +952,7 @@ std::ostream& operator<<(std::ostream& str, Telemetry::GpsRtcmData const& gps_rt
     str << "    flags: " << gps_rtcm_data.flags << '\n';
     str << "    len: " << gps_rtcm_data.len << '\n';
     str << "    data: [";
-    for (auto it = gps_rtcm_data.data.begin();
-         it != gps_rtcm_data.data.end();
-         ++it) {
+    for (auto it = gps_rtcm_data.data.begin(); it != gps_rtcm_data.data.end(); ++it) {
         str << *it;
         str << (it + 1 != gps_rtcm_data.data.end() ? ", " : "]\n");
     }
@@ -980,8 +985,7 @@ std::ostream& operator<<(std::ostream& str, Telemetry::Battery const& battery)
 bool operator==(const Telemetry::VehicleStatus& lhs, const Telemetry::VehicleStatus& rhs)
 {
     return (rhs.manual_control_signal_loss == lhs.manual_control_signal_loss) &&
-           (rhs.mavlink_count == lhs.mavlink_count) &&
-           (rhs.rc_count == lhs.rc_count) && 
+           (rhs.mavlink_count == lhs.mavlink_count) && (rhs.rc_count == lhs.rc_count) &&
            (rhs.sees_desired_control_source == lhs.sees_desired_control_source);
 }
 
@@ -992,21 +996,19 @@ std::ostream& operator<<(std::ostream& str, Telemetry::VehicleStatus const& vehi
     str << "    manual_control_signal_loss: " << vehicle_status.manual_control_signal_loss << '\n';
     str << "    mavlink_count: " << vehicle_status.mavlink_count << '\n';
     str << "    rc_count: " << vehicle_status.rc_count << '\n';
-    str << "    sees_desired_control_source: " << vehicle_status.sees_desired_control_source << '\n';
+    str << "    sees_desired_control_source: " << vehicle_status.sees_desired_control_source
+        << '\n';
     str << '}';
     return str;
 }
 
 bool operator==(const Telemetry::RadioStatus& lhs, const Telemetry::RadioStatus& rhs)
 {
-    return (rhs.local_rssi == lhs.local_rssi) &&
-           (rhs.remote_rssi == lhs.local_rssi) && 
+    return (rhs.local_rssi == lhs.local_rssi) && (rhs.remote_rssi == lhs.local_rssi) &&
            ((std::isnan(rhs.remaining_free_txbuf) && std::isnan(lhs.remaining_free_txbuf)) ||
             rhs.remaining_free_txbuf == lhs.remaining_free_txbuf) &&
-           (rhs.local_noise == lhs.local_noise) && 
-           (rhs.remote_noise == lhs.remote_noise) &&
-           (rhs.rxerrors_count == lhs.rxerrors_count) && 
-           (rhs.fixed_count == lhs.fixed_count);
+           (rhs.local_noise == lhs.local_noise) && (rhs.remote_noise == lhs.remote_noise) &&
+           (rhs.rxerrors_count == lhs.rxerrors_count) && (rhs.fixed_count == lhs.fixed_count);
 }
 
 std::ostream& operator<<(std::ostream& str, Telemetry::RadioStatus const& radio_status)
@@ -1146,8 +1148,7 @@ operator<<(std::ostream& str, Telemetry::ActuatorOutputStatus const& actuator_ou
     return str;
 }
 
-bool operator==(
-    const Telemetry::ServoOutputRaw& lhs, const Telemetry::ServoOutputRaw& rhs)
+bool operator==(const Telemetry::ServoOutputRaw& lhs, const Telemetry::ServoOutputRaw& rhs)
 {
     return (rhs.servo == lhs.servo);
 }
@@ -1249,7 +1250,8 @@ std::ostream& operator<<(std::ostream& str, Telemetry::Odometry const& odometry)
     return str;
 }
 
-std::ostream& operator<<(std::ostream& str, Telemetry::LandingTargetPosition::MavFrame const& mav_frame)
+std::ostream&
+operator<<(std::ostream& str, Telemetry::LandingTargetPosition::MavFrame const& mav_frame)
 {
     switch (mav_frame) {
         case Telemetry::LandingTargetPosition::MavFrame::Undef:
@@ -1260,14 +1262,16 @@ std::ostream& operator<<(std::ostream& str, Telemetry::LandingTargetPosition::Ma
             return str << "Unknown";
     }
 }
-bool operator==(const Telemetry::LandingTargetPosition& lhs, const Telemetry::LandingTargetPosition& rhs)
+bool operator==(
+    const Telemetry::LandingTargetPosition& lhs, const Telemetry::LandingTargetPosition& rhs)
 {
     return (rhs.time_usec == lhs.time_usec) && (rhs.id == lhs.id) &&
-           (rhs.frame_id == lhs.frame_id) && (rhs.position == lhs.position) && 
-           (rhs.q == lhs.q) && (rhs.is_available == lhs.is_available);
+           (rhs.frame_id == lhs.frame_id) && (rhs.position == lhs.position) && (rhs.q == lhs.q) &&
+           (rhs.is_available == lhs.is_available);
 }
 
-std::ostream& operator<<(std::ostream& str, Telemetry::LandingTargetPosition const& landing_target_position)
+std::ostream&
+operator<<(std::ostream& str, Telemetry::LandingTargetPosition const& landing_target_position)
 {
     str << std::setprecision(15);
     str << "landing_target_position:" << '\n' << "{\n";
@@ -1503,8 +1507,7 @@ bool operator==(const Telemetry::Imu& lhs, const Telemetry::Imu& rhs)
             rhs.pressure_alt == lhs.pressure_alt) &&
            ((std::isnan(rhs.temperature_degc) && std::isnan(lhs.temperature_degc)) ||
             rhs.temperature_degc == lhs.temperature_degc) &&
-           (rhs.fields_updated == lhs.fields_updated) &&  
-           (rhs.timestamp_us == lhs.timestamp_us);
+           (rhs.fields_updated == lhs.fields_updated) && (rhs.timestamp_us == lhs.timestamp_us);
 }
 
 std::ostream& operator<<(std::ostream& str, Telemetry::Imu const& imu)
