@@ -19,7 +19,7 @@ find_package(Python3 COMPONENTS Interpreter REQUIRED)
 ExternalProject_add(
     mavlink
     GIT_REPOSITORY https://github.com/SEESAI/mavlink
-    GIT_TAG dbcc94c05a40120d485f7f32a71b01dbf2f74403
+    GIT_TAG 7693cbecce7a935c5c96a0e05a699a8ffed9d625
     PREFIX mavlink
     CONFIGURE_COMMAND Python3::Interpreter
         -m pymavlink.tools.mavgen
