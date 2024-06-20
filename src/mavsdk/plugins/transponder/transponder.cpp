@@ -66,7 +66,7 @@ bool operator==(const Transponder::AdsbVehicle& lhs, const Transponder::AdsbVehi
            ((std::isnan(rhs.vertical_velocity_m_s) && std::isnan(lhs.vertical_velocity_m_s)) ||
             rhs.vertical_velocity_m_s == lhs.vertical_velocity_m_s) &&
            (rhs.callsign == lhs.callsign) && (rhs.emitter_type == lhs.emitter_type) &&
-           (rhs.squawk == lhs.squawk) && (rhs.tslc_s == lhs.tslc_s);
+           (rhs.squawk == lhs.squawk) && (rhs.tslc_s == lhs.tslc_s) && (rhs.flags == lhs.flags);
 }
 
 std::ostream& operator<<(std::ostream& str, Transponder::AdsbVehicle const& adsb_vehicle)
@@ -85,6 +85,7 @@ std::ostream& operator<<(std::ostream& str, Transponder::AdsbVehicle const& adsb
     str << "    emitter_type: " << adsb_vehicle.emitter_type << '\n';
     str << "    squawk: " << adsb_vehicle.squawk << '\n';
     str << "    tslc_s: " << adsb_vehicle.tslc_s << '\n';
+    str << "    flags: " << adsb_vehicle.flags << '\n';
     str << '}';
     return str;
 }
