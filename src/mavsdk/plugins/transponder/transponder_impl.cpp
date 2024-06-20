@@ -100,6 +100,7 @@ void TransponderImpl::process_transponder(const mavlink_message_t& message)
         local_adsb_vehicle.altitude_type == ADSB_ALTITUDE_TYPE_PRESSURE_QNH ?
             Transponder::AdsbAltitudeType::PressureQnh :
             Transponder::AdsbAltitudeType::Geometric;
+    adsbVehicle.flags = local_adsb_vehicle.flags;
 
     set_transponder(adsbVehicle);
 
