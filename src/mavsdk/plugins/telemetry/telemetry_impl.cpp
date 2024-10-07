@@ -100,7 +100,7 @@ void TelemetryImpl::init()
         [this](const mavlink_message_t& message) { process_gps_raw_int(message); },
         this);
 
-    _parent->register_mavlink_message_handler(
+    _system_impl->register_mavlink_message_handler(
         MAVLINK_MSG_ID_GPS2_RAW,
         [this](const mavlink_message_t& message) { process_gps_2_raw(message); },
         this);
@@ -110,7 +110,7 @@ void TelemetryImpl::init()
         [this](const mavlink_message_t& message) { process_gps_input(message); },
         this);
 
-    _parent->register_mavlink_message_handler(
+    _system_impl->register_mavlink_message_handler(
         MAVLINK_MSG_ID_GPS_RTCM_DATA,
         [this](const mavlink_message_t& message) { process_gps_rtcm_data(message); },
         this);
@@ -130,7 +130,7 @@ void TelemetryImpl::init()
         [this](const mavlink_message_t& message) { process_battery_status(message); },
         this);
 
-    _parent->register_mavlink_message_handler(
+    _system_impl->register_mavlink_message_handler(
         MAVLINK_MSG_ID_RADIO_STATUS,
         [this](const mavlink_message_t& message) { process_radio_status(message); },
         this);
@@ -155,7 +155,7 @@ void TelemetryImpl::init()
         [this](const mavlink_message_t& message) { process_actuator_output_status(message); },
         this);
 
-    _parent->register_mavlink_message_handler(
+    _system_impl->register_mavlink_message_handler(
         MAVLINK_MSG_ID_SERVO_OUTPUT_RAW,
         [this](const mavlink_message_t& message) { process_servo_output_raw(message); },
         this);
@@ -170,7 +170,7 @@ void TelemetryImpl::init()
         [this](const mavlink_message_t& message) { process_landing_target_position(message); },
         this);
 
-    _parent->register_mavlink_message_handler(
+    _system_impl->register_mavlink_message_handler(
         MAVLINK_MSG_ID_DISTANCE_SENSOR,
         [this](const mavlink_message_t& message) { process_distance_sensor(message); },
         this);
