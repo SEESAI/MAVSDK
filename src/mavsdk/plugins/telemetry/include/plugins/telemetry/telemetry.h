@@ -1675,7 +1675,7 @@ public:
     /**
      * @brief Unsubscribe from subscribe_raw_gps_2
      */
-    void unsubscribe_raw_gps(RawGps2Handle handle);
+    void unsubscribe_raw_gps_2(RawGps2Handle handle);
 
     /**
      * @brief Poll for 'RawGps' (blocking).
@@ -1776,13 +1776,22 @@ public:
     /**
      * @brief Callback type for subscribe_vehicle_status.
      */
-
     using VehicleStatusCallback = std::function<void(VehicleStatus)>;
+
+    /**
+     * @brief Handle type for subscribe_vehicle_status.
+     */
+    using VehicleStatusHandle = Handle<VehicleStatus>;
 
     /**
      * @brief Subscribe to 'Vehicle Status' updates.
      */
-    void subscribe_vehicle_status(VehicleStatusCallback callback);
+    VehicleStatusHandle subscribe_vehicle_status(const VehicleStatusCallback& callback);
+
+    /**
+     * @brief Unsubscribe from subscribe_vehicle_status
+     */
+    void unsubscribe_vehicle_status(VehicleStatusHandle handle);
 
     /**
      * @brief Poll for 'VehicleStatus' (blocking).
@@ -1794,13 +1803,22 @@ public:
     /**
      * @brief Callback type for subscribe_radio_status.
      */
-
     using RadioStatusCallback = std::function<void(RadioStatus)>;
+
+    /**
+     * @brief Handle type for subscribe_radio_status.
+     */
+    using RadioStatusHandle = Handle<RadioStatus>;
 
     /**
      * @brief Subscribe to 'radio status' updates.
      */
-    void subscribe_radio_status(RadioStatusCallback callback);
+    RadioStatusHandle subscribe_radio_status(const RadioStatusCallback& callback);
+
+    /**
+     * @brief Unsubscribe from subscribe_radio_status
+     */
+    void unsubscribe_radio_status(RadioStatusHandle handle);
 
     /**
      * @brief Poll for 'RadioStatus' (blocking).
@@ -1843,9 +1861,19 @@ public:
     using ModeInfoCallback = std::function<void(ModeInfo)>;
 
     /**
+     * @brief Handle type for subscribe_mode_info.
+     */
+    using ModeInfoHandle = Handle<ModeInfo>;
+
+    /**
      * @brief Subscribe to 'mode info' updates.
      */
-    void subscribe_mode_info(ModeInfoCallback callback);
+    ModeInfoHandle subscribe_mode_info(const ModeInfoCallback& callback);
+
+    /**
+     * @brief Unsubscribe from subscribe_mode_info
+     */
+    void unsubscribe_mode_info(ModeInfoHandle handle);
 
     /**
      * @brief Poll for 'ModeInfo' (blocking).
@@ -1994,13 +2022,22 @@ public:
     /**
      * @brief Callback type for subscribe_servo_output_raw.
      */
-
     using ServoOutputRawCallback = std::function<void(ServoOutputRaw)>;
+
+    /**
+     * @brief Handle type for subscribe_mode_info.
+     */
+    using ServoOutputRawHandle = Handle<ServoOutputRaw>;
 
     /**
      * @brief Subscribe to 'servo output raw' updates.
      */
-    void subscribe_servo_output_raw(ServoOutputRawCallback callback);
+    ServoOutputRawHandle subscribe_servo_output_raw(const ServoOutputRawCallback& callback);
+
+    /**
+     * @brief Unsubscribe from subscribe_servo_output_raw
+     */
+    void unsubscribe_servo_output_raw(ServoOutputRawHandle handle);
 
     /**
      * @brief Poll for 'ServoOutputRaw' (blocking).
@@ -2042,9 +2079,20 @@ public:
     using LandingTargetPositionCallback = std::function<void(LandingTargetPosition)>;
 
     /**
+     * @brief Handle type for subscribe_landing_target_position.
+     */
+    using LandingTargetPositionHandle = Handle<LandingTargetPosition>;
+
+    /**
      * @brief Subscribe to 'landing_target_position' updates.
      */
-    void subscribe_landing_target_position(LandingTargetPositionCallback callback);
+    LandingTargetPositionHandle
+    subscribe_landing_target_position(const LandingTargetPositionCallback& callback);
+
+    /**
+     * @brief Unsubscribe from subscribe_landing_target_position
+     */
+    void unsubscribe_landing_target_position(LandingTargetPositionHandle handle);
 
     /**
      * @brief Poll for 'LandingTargetPosition' (blocking).

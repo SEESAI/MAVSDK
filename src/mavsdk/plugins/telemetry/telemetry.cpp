@@ -252,9 +252,9 @@ void Telemetry::unsubscribe_gps_info(GpsInfoHandle handle)
     _impl->unsubscribe_gps_info(handle);
 }
 
-void Telemetry::subscribe_gps_2_info(Gps2InfoCallback callback)
+Telemetry::Gps2InfoHandle Telemetry::subscribe_gps_2_info(const Gps2InfoCallback& callback)
 {
-    _impl->subscribe_gps_2_info(callback);
+    return _impl->subscribe_gps_2_info(callback);
 }
 
 Telemetry::GpsInfo Telemetry::gps_info() const
@@ -282,7 +282,7 @@ Telemetry::RawGpsHandle Telemetry::subscribe_raw_gps_2(const RawGps2Callback& ca
     return _impl->subscribe_raw_gps_2(callback);
 }
 
-void Telemetry::unsubscribe_raw_gps_2(RawGpsHandle handle)
+void Telemetry::unsubscribe_raw_gps_2(RawGps2Handle handle)
 {
     _impl->unsubscribe_raw_gps_2(handle);
 }
@@ -363,7 +363,7 @@ Telemetry::RadioStatusHandle Telemetry::subscribe_radio_status(const RadioStatus
     _impl->subscribe_radio_status(callback);
 }
 
-void Telemetry::subscribe_radio_status(RadioStatusHandle handle)
+void Telemetry::unsubscribe_radio_status(RadioStatusHandle handle)
 {
     _impl->unsubscribe_radio_status(handle);
 }
@@ -1240,7 +1240,6 @@ std::ostream& operator<<(std::ostream& str, Telemetry::Battery const& battery)
     str << "    current_battery_a: " << battery.current_battery_a << '\n';
     str << "    capacity_consumed_ah: " << battery.capacity_consumed_ah << '\n';
     str << "    remaining_percent: " << battery.remaining_percent << '\n';
-    str << "    mah_consumed: " << battery.mah_consumed << '\n';
     str << '}';
     return str;
 }
