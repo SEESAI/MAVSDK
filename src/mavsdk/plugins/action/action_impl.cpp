@@ -467,9 +467,8 @@ void ActionImpl::land_async(const Action::ResultCallback& callback) const
 
 void ActionImpl::precision_land_async(const Action::ResultCallback& callback) const
 {
-    _parent->set_flight_mode_async(
-        SystemImpl::FlightMode::PrecisionLand,
-        [this, callback](MavlinkCommandSender::Result result, float) {
+    _system_impl->set_flight_mode_async(
+        FlightMode::PrecisionLand, [this, callback](MavlinkCommandSender::Result result, float) {
             command_result_callback(result, callback);
         });
 }
