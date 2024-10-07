@@ -314,7 +314,7 @@ Telemetry::GpsInput Telemetry::gps_input() const
 
 Telemetry::GpsRtcmDataHandle Telemetry::subscribe_gps_rtcm_data(const GpsRtcmDataCallback& callback)
 {
-    _impl->subscribe_gps_rtcm_data(callback);
+    return _impl->subscribe_gps_rtcm_data(callback);
 }
 
 void Telemetry::unsubscribe_gps_rtcm_data(GpsRtcmDataHandle handle)
@@ -345,7 +345,7 @@ Telemetry::Battery Telemetry::battery() const
 Telemetry::VehicleStatusHandle
 Telemetry::subscribe_vehicle_status(const VehicleStatusCallback& callback)
 {
-    _impl->subscribe_vehicle_status(callback);
+    return _impl->subscribe_vehicle_status(callback);
 }
 
 void Telemetry::unsubscribe_vehicle_status(VehicleStatusHandle handle)
@@ -360,7 +360,7 @@ Telemetry::VehicleStatus Telemetry::vehicle_status() const
 
 Telemetry::RadioStatusHandle Telemetry::subscribe_radio_status(const RadioStatusCallback& callback)
 {
-    _impl->subscribe_radio_status(callback);
+    return _impl->subscribe_radio_status(callback);
 }
 
 void Telemetry::unsubscribe_radio_status(RadioStatusHandle handle)
@@ -390,7 +390,7 @@ Telemetry::FlightMode Telemetry::flight_mode() const
 
 Telemetry::ModeInfoHandle Telemetry::subscribe_mode_info(const ModeInfoCallback& callback)
 {
-    _impl->subscribe_mode_info(callback);
+    return _impl->subscribe_mode_info(callback);
 }
 
 void Telemetry::unsubscribe_mode_info(ModeInfoHandle handle)
@@ -483,7 +483,7 @@ Telemetry::ActuatorOutputStatus Telemetry::actuator_output_status() const
 Telemetry::ServoOutputRawHandle
 Telemetry::subscribe_servo_output_raw(const ServoOutputRawCallback& callback)
 {
-    _impl->subscribe_servo_output_raw(callback);
+    return _impl->subscribe_servo_output_raw(callback);
 }
 
 void Telemetry::unsubscribe_servo_output_raw(ServoOutputRawHandle handle)
@@ -514,7 +514,7 @@ Telemetry::Odometry Telemetry::odometry() const
 Telemetry::LandingTargetPositionHandle
 Telemetry::subscribe_landing_target_position(const LandingTargetPositionCallback& callback)
 {
-    _impl->subscribe_landing_target_position(callback);
+    return _impl->subscribe_landing_target_position(callback);
 }
 
 void Telemetry::unsubscribe_landing_target_position(LandingTargetPositionHandle handle)

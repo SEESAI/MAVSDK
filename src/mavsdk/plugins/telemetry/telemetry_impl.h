@@ -190,7 +190,7 @@ public:
     void unsubscribe_vehicle_status(Telemetry::VehicleStatusHandle handle);
     Telemetry::RadioStatusHandle
     subscribe_radio_status(const Telemetry::RadioStatusCallback& callback);
-    void unsubscribe_radio_status(Telemetry::RadioStatusHandle) handle;
+    void unsubscribe_radio_status(Telemetry::RadioStatusHandle handle);
     Telemetry::ModeInfoHandle subscribe_mode_info(const Telemetry::ModeInfoCallback& callback);
     void unsubscribe_mode_info(Telemetry::ModeInfoHandle handle);
     Telemetry::FlightModeHandle
