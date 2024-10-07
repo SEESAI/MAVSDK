@@ -1150,15 +1150,19 @@ void TelemetryImpl::process_gps_2_raw(const mavlink_message_t& message)
 
     {
         std::lock_guard<std::mutex> lock(_subscription_mutex);
+        _gps_2_input_subscriptions.queue(
+            gps_2_info(), [this](const auto& func) { _system_impl->call_user_callback(func); });
+        _raw_gps_2_input_subscriptions.queue(
+            raw_gps_2(), [this](const auto& func) { _system_impl->call_user_callback(func); });
         if (_gps_2_info_subscription) {
             auto callback = _gps_2_info_subscription;
             auto arg = gps_2_info();
-            _parent->call_user_callback([callback, arg]() { callback(arg); });
+            _system_impl->call_user_callback([callback, arg]() { callback(arg); });
         }
         if (_raw_gps_2_subscription) {
             auto callback = _raw_gps_2_subscription;
             auto arg = raw_gps_2();
-            _parent->call_user_callback([callback, arg]() { callback(arg); });
+            _system_impl->call_user_callback([callback, arg]() { callback(arg); });
         }
     }
 }
@@ -1220,11 +1224,8 @@ void TelemetryImpl::process_gps_input(const mavlink_message_t& message)
     set_gps_input(new_gps_input);
 
     std::lock_guard<std::mutex> lock(_subscription_mutex);
-    if (_gps_input_subscription) {
-        auto callback = _gps_input_subscription;
-        auto arg = gps_input();
-        _parent->call_user_callback([callback, arg]() { callback(arg); });
-    }
+    _gps_input_subscriptions.queue(
+        gps_input(), [this](const auto& func) { _system_impl->call_user_callback(func); });
 }
 
 void TelemetryImpl::process_gps_rtcm_data(const mavlink_message_t& message)
@@ -1244,11 +1245,8 @@ void TelemetryImpl::process_gps_rtcm_data(const mavlink_message_t& message)
     set_gps_rtcm_data(new_gps_rtcm_data);
 
     std::lock_guard<std::mutex> lock(_subscription_mutex);
-    if (_gps_rtcm_data_subscription) {
-        auto callback = _gps_rtcm_data_subscription;
-        auto arg = gps_rtcm_data();
-        _parent->call_user_callback([callback, arg]() { callback(arg); });
-    }
+    _gps_rtcm_data_subscriptions.queue(
+        gps_rtcm_data(), [this](const auto& func) { _system_impl->call_user_callback(func); });
 }
 
 void TelemetryImpl::process_ground_truth(const mavlink_message_t& message)

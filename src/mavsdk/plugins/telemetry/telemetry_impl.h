@@ -500,9 +500,9 @@ private:
     CallbackList<Telemetry::Imu> _scaled_imu_subscriptions{};
     CallbackList<Telemetry::Imu> _raw_imu_subscriptions{};
     CallbackList<Telemetry::GpsInfo> _gps_info_subscriptions{};
-    CallbackList<Telemetry::Gps2Info> _gps_2_info_subscriptions{};
+    CallbackList<Telemetry::GpsInfo> _gps_2_info_subscriptions{};
     CallbackList<Telemetry::RawGps> _raw_gps_subscriptions{};
-    CallbackList<Telemetry::RawGps2> _raw_gps_2_subscriptions{};
+    CallbackList<Telemetry::RawGps> _raw_gps_2_subscriptions{};
     CallbackList<Telemetry::GpsInput> _gps_input_subscriptions{};
     CallbackList<Telemetry::GpsRtcmData> _gps_rtcm_data_subscriptions{};
     CallbackList<Telemetry::Battery> _battery_subscriptions{};
