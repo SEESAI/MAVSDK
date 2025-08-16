@@ -4,6 +4,7 @@ option(HUNTER_ENABLED "Enable Hunter package manager support" OFF)
 option(SUPERBUILD "Build dependencies" ON)
 option(BUILD_MAVSDK_SERVER "Build mavsdk_server" OFF)
 option(BUILD_SHARED_LIBS "Build core as shared libraries instead of static ones" ON)
+option(INSTALL_MAVLINK_HEADERS "duplicate mavlink headers to this library's include" ON)
 
 if(SUPERBUILD AND HUNTER_ENABLED)
     message(FATAL_ERROR "Cannot SUPERBUILD while HUNTER_ENABLED. Set -DSUPERBUILD=OFF when using Hunter")

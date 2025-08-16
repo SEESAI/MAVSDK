@@ -16,7 +16,9 @@ install(FILES
     DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/mavsdk/plugins/mavlink_passthrough
 )
 
-install(DIRECTORY
-    ${MAVLINK_HEADERS}/mavlink
-    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/mavsdk/plugins/mavlink_passthrough
-)
+if (INSTALL_MAVLINK_HEADERS)
+    install(DIRECTORY
+        ${MAVLINK_HEADERS}/mavlink
+        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/mavsdk/plugins/mavlink_passthrough
+    )
+endif ()
