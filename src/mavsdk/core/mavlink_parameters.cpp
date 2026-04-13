@@ -1267,6 +1267,7 @@ void MAVLinkParameters::receive_timeout()
         // first check if we are waiting for param list response
         if (_all_params_callback) {
             _all_params_callback({});
+            _all_params_callback = nullptr;
             return;
         }
     }
