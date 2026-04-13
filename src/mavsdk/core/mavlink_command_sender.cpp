@@ -295,8 +295,6 @@ void MavlinkCommandSender::receive_timeout(const CommandIdentification& identifi
                          << ").";
                 temp_callback = work->callback;
                 temp_result = {Result::ConnectionError, NAN};
-                _work_queue.erase(it);
-                break;
             }
             --work->retries_to_do;
             _parent.register_timeout_handler(

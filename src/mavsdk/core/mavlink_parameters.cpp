@@ -575,9 +575,7 @@ void MAVLinkParameters::get_all_params_async(const GetAllParamsCallback& callbac
 
     if (!_parent.send_message(msg)) {
         LogErr() << "Failed to send param list request!";
-        _all_params_callback = nullptr;
         callback(std::map<std::string, ParamValue>{});
-        return;
     }
 
     _parent.register_timeout_handler(
