@@ -15,10 +15,10 @@ jobs:
     name: ubuntu-22.04 (mavsdk_server, superbuild)
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         with:
           submodules: recursive
-      - uses: actions/cache@v2
+      - uses: actions/cache@v4
         id: cache
         with:
           path: ./build/release/third_party/install
@@ -39,7 +39,7 @@ jobs:
       - name: test FTP server
         run: ./build/release/src/integration_tests/integration_tests_runner --gtest_filter="FtpTest.TestServer"
       - name: Upload release binaries
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: mavsdk_server_sees_x86_64
           path: ./build/install/bin/mavsdk_server
