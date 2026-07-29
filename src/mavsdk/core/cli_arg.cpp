@@ -1,6 +1,7 @@
 #include "cli_arg.h"
 #include "log.h"
 #include <cctype>
+#include <cstdint>
 #include <algorithm>
 #include <limits>
 
