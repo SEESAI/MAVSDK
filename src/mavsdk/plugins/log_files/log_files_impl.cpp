@@ -94,7 +94,7 @@ void LogFilesImpl::get_entries_async(LogFiles::GetEntriesCallback callback)
     }
 
     _parent->register_timeout_handler(
-        [this]() { list_timeout(); }, LIST_TIMEOUT_S, &_entries.cookie);
+        [this]() { list_timeout(); }, _parent->timeout_s() * 10.0, &_entries.cookie);
 
     request_list_entry(-1);
 }
@@ -134,6 +134,7 @@ void LogFilesImpl::process_log_entry(const mavlink_message_t& message)
         _parent->unregister_timeout_handler(_entries.cookie);
         if (_entries.callback) {
             const auto tmp_callback = _entries.callback;
+            _entries.callback = nullptr;
             std::vector<LogFiles::Entry> empty_list{};
             _parent->call_user_callback([tmp_callback, empty_list]() {
                 tmp_callback(LogFiles::Result::NoLogfiles, empty_list);
@@ -157,49 +158,53 @@ void LogFilesImpl::process_log_entry(const mavlink_message_t& message)
         _entries.entry_map[new_entry.id] = new_entry;
         _entries.max_list_id = log_entry.num_logs;
         _parent->refresh_timeout_handler(_entries.cookie);
+
+        if (_entries.entry_map.size() == _entries.max_list_id) {
+            _parent->unregister_timeout_handler(_entries.cookie);
+            LogDebug() << "Received all entries";
+            // Copy map entries into list to return;
+            std::vector<LogFiles::Entry> entry_list{};
+            for (unsigned i = 0; i < _entries.max_list_id; ++i) {
+                entry_list.push_back(_entries.entry_map[i]);
+            }
+            if (_entries.callback) {
+                const auto tmp_callback = _entries.callback;
+                _entries.callback = nullptr;
+                _parent->call_user_callback([tmp_callback, entry_list]() {
+                    tmp_callback(LogFiles::Result::Success, entry_list);
+                });
+            }
+        }
     }
 }
 
 void LogFilesImpl::list_timeout()
 {
     std::lock_guard<std::mutex> lock(_entries.mutex);
-    if (_entries.entry_map.size() == 0) {
-        LogWarn() << "No entries received";
-    } else if (_entries.entry_map.size() == _entries.max_list_id) {
-        LogDebug() << "Received all entries";
-        // Copy map entries into list to return;
-        std::vector<LogFiles::Entry> entry_list{};
+
+    constexpr unsigned MAX_RETRIES = 5;
+    if (_entries.retries < MAX_RETRIES) {
         for (unsigned i = 0; i < _entries.max_list_id; ++i) {
-            entry_list.push_back(_entries.entry_map[i]);
-        }
-        if (_entries.callback) {
-            const auto tmp_callback = _entries.callback;
-            _parent->call_user_callback([tmp_callback, entry_list]() {
-                tmp_callback(LogFiles::Result::Success, entry_list);
-            });
-        }
-    } else {
-        if (_entries.retries > 3) {
-            LogWarn() << "Too many log entry retries, giving up.";
-            if (_entries.callback) {
-                const auto tmp_callback = _entries.callback;
-                _parent->call_user_callback([tmp_callback]() {
-                    std::vector<LogFiles::Entry> empty_vector{};
-                    tmp_callback(LogFiles::Result::Timeout, empty_vector);
-                });
+            auto it = _entries.entry_map.find(i);
+            if (it == _entries.entry_map.end()) {
+                LogDebug() << "Requesting log entry " << i << " again";
+                request_list_entry(int(i));
             }
-        } else {
-            for (unsigned i = 0; i < _entries.max_list_id; ++i) {
-                auto it = _entries.entry_map.find(i);
-                if (it == _entries.entry_map.end()) {
-                    LogDebug() << "Requesting log entry " << i << " again";
-                    request_list_entry(int(i));
-                }
-            }
-            _parent->register_timeout_handler(
-                [this]() { list_timeout(); }, LIST_TIMEOUT_S, &_entries.cookie);
-            _entries.retries++;
         }
+        _entries.retries++;
+        _parent->register_timeout_handler(
+            [this]() { list_timeout(); }, _parent->timeout_s(), &_entries.cookie);
+        return;
+    }
+
+    LogWarn() << "Too many log entry retries, giving up.";
+    if (_entries.callback) {
+        const auto tmp_callback = _entries.callback;
+        _entries.callback = nullptr;
+        _parent->call_user_callback([tmp_callback]() {
+            std::vector<LogFiles::Entry> empty_vector{};
+            tmp_callback(LogFiles::Result::Timeout, empty_vector);
+        });
     }
 }
 
