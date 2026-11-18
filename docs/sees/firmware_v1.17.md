@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| **Status** | Branches created on 2026-11-18, local only, not yet pushed. No Sees changes ported yet. Work starts after the Firmware `SEES_GPS_RAW` changes are merged. |
+| **Status** | Branches created and pushed on 2026-11-18. No Sees changes ported yet. Work starts after the Firmware `SEES_GPS_RAW` changes are merged. |
 | **Plan** | [`docs/sees/sees_gps_raw.md`](https://github.com/SEESAI/Firmware/blob/vilas/v1.17.0/mavlink/docs/sees/sees_gps_raw.md) in SEESAI/Firmware, section *Rollout plan across repos*, Step 3. That doc is the source of truth; this note only records what is happening in this repo. |
 | **Paired branches** | Firmware `v1.17.0-dev`, SeesInterface2 `vilas/feat/firmware_v1.17` |
 
@@ -33,11 +33,12 @@ Don't force-push `vilas/feat/firmware_v1.17` once SeesInterface2 pins one of its
 
 ## To do
 
-1. Push both branches to SEESAI/MAVSDK.
-2. Audit the 20 Sees commits (`git log --no-merges v1.4.11..origin/v1.4.11_dev`). Decide **drop**, **SI2** (reimplement in SeesInterface2 with `MavlinkDirect`) or **port** for each. The Firmware doc has the table with the expected decision for each commit. `michael/v3.2.0-dev` shows how 15 of them were resolved against v3.2.0.
-3. Port the commits marked "port" onto `vilas/feat/firmware_v1.17`, one commit each.
-4. Choose how `SEES_GPS_RAW` reaches SeesInterface2 (Firmware doc, Step 3c). With the recommended Option A, SeesInterface2 receives it through `MavlinkDirect`, this repo needs no GPS change, and the old `GPS_INPUT` additions (#15, #20) are dropped. Option B ports those additions and decodes `SEES_GPS_RAW` here instead.
-5. Update the status row above as work progresses.
+1. Audit the 20 Sees commits (`git log --no-merges v1.4.11..origin/v1.4.11_dev`). Decide **drop**, **SI2** (reimplement in SeesInterface2 with `MavlinkDirect`) or **port** for each. The Firmware doc has the table with the expected decision for each commit. `michael/v3.2.0-dev` shows how 15 of them were resolved against v3.2.0.
+   - Don't drop the `Telemetry::GpsRtcmData` part of the umbrella commit `c95c11ba3`. SeesInterface2 uses it to monitor RTCM arrival. Move it to SeesInterface2 with `MavlinkDirect`, or port it (Firmware doc, *RTCM monitoring*).
+   - Check whether anything still uses the unmerged branch `ws_rtcm_length_update` (Rtk plugin changes, 2023).
+2. Port the commits marked "port" onto `vilas/feat/firmware_v1.17`, one commit each.
+3. Choose how `SEES_GPS_RAW` reaches SeesInterface2 (Firmware doc, Step 3c). With the recommended Option A, SeesInterface2 receives it through `MavlinkDirect`, this repo needs no GPS change, and the old `GPS_INPUT` additions (#15, #20) are dropped. Option B ports those additions and decodes `SEES_GPS_RAW` here instead.
+4. Update the status row above as work progresses.
 
 ## Notes
 
