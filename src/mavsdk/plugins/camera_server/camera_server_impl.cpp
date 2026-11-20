@@ -2096,7 +2096,9 @@ void CameraServerImpl::send_tracking_status_with_interval(uint32_t interval_us)
                         &message,
                         CAMERA_TRACKING_STATUS_FLAGS_IDLE,
                         CAMERA_TRACKING_MODE_NONE,
-                        CAMERA_TRACKING_TARGET_DATA_NONE,
+                        // SEES: CAMERA_TRACKING_TARGET_DATA_NONE (0) isn't in PX4 v1.17's
+                        // mavlink (33af200d), which dropped 0 entries from bitmask enums.
+                        0,
                         0.0f,
                         0.0f,
                         0.0f,
