@@ -14,7 +14,7 @@ list(APPEND CMAKE_ARGS
 # Upstream's mavlink.patch applies unchanged.
 # See docs/sees/firmware_v1.17.md.
 set(MAVLINK_GIT_URL https://github.com/SEESAI/mavlink)
-set(MAVLINK_GIT_HASH edb8130bd40e7fe81930084ba02590593da7a991)
+set(MAVLINK_GIT_HASH 49679600b9a584f56c5d4790747c5256b9921bd3)
 
 if(IOS)
     ExternalProject_add(
