@@ -27,6 +27,8 @@ public:
     MOCK_CONST_METHOD1(unsubscribe_gps_info, void(Telemetry::GpsInfoHandle)){};
     MOCK_CONST_METHOD1(subscribe_raw_gps, Telemetry::RawGpsHandle(Telemetry::RawGpsCallback)){};
     MOCK_CONST_METHOD1(unsubscribe_raw_gps, void(Telemetry::RawGpsHandle)){};
+    MOCK_CONST_METHOD1(subscribe_gps_input, Telemetry::GpsInputHandle(Telemetry::GpsInputCallback)){}; // SEES
+    MOCK_CONST_METHOD1(unsubscribe_gps_input, void(Telemetry::GpsInputHandle)){}; // SEES
     MOCK_CONST_METHOD1(subscribe_battery, Telemetry::BatteryHandle(Telemetry::BatteryCallback)){};
     MOCK_CONST_METHOD1(unsubscribe_battery, void(Telemetry::BatteryHandle)){};
     MOCK_CONST_METHOD1(

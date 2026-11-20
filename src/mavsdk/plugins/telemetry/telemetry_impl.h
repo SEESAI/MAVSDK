@@ -100,6 +100,7 @@ public:
     Telemetry::Imu raw_imu() const;
     Telemetry::GpsInfo gps_info() const;
     Telemetry::RawGps raw_gps() const;
+    Telemetry::GpsInput gps_input() const; // SEES
     Telemetry::Battery battery() const;
     Telemetry::FlightMode flight_mode() const;
     Telemetry::Health health() const;
@@ -158,6 +159,9 @@ public:
     void unsubscribe_gps_info(Telemetry::GpsInfoHandle handle);
     Telemetry::RawGpsHandle subscribe_raw_gps(const Telemetry::RawGpsCallback& callback);
     void unsubscribe_raw_gps(Telemetry::RawGpsHandle handle);
+    // SEES
+    Telemetry::GpsInputHandle subscribe_gps_input(const Telemetry::GpsInputCallback& callback);
+    void unsubscribe_gps_input(Telemetry::GpsInputHandle handle);
     Telemetry::BatteryHandle subscribe_battery(const Telemetry::BatteryCallback& callback);
     void unsubscribe_battery(Telemetry::BatteryHandle handle);
     Telemetry::FlightModeHandle
@@ -222,6 +226,7 @@ private:
     void set_raw_imu(Telemetry::Imu imu);
     void set_gps_info(Telemetry::GpsInfo gps_info);
     void set_raw_gps(Telemetry::RawGps raw_gps);
+    void set_gps_input(Telemetry::GpsInput gps_input); // SEES
     void set_battery(Telemetry::Battery battery);
     void set_health_local_position(bool ok);
     void set_health_global_position(bool ok);
@@ -250,6 +255,7 @@ private:
     void process_scaled_imu(const mavlink_message_t& message);
     void process_raw_imu(const mavlink_message_t& message);
     void process_gps_raw_int(const mavlink_message_t& message);
+    void process_sees_gps_raw(const mavlink_message_t& message); // SEES
     void process_ground_truth(const mavlink_message_t& message);
     void process_extended_sys_state(const mavlink_message_t& message);
     void process_fixedwing_metrics(const mavlink_message_t& message);
@@ -339,6 +345,10 @@ private:
     mutable std::mutex _raw_gps_mutex{};
     Telemetry::RawGps _raw_gps{};
 
+    // SEES
+    mutable std::mutex _gps_input_mutex{};
+    Telemetry::GpsInput _gps_input{};
+
     mutable std::mutex _battery_mutex{};
     Telemetry::Battery _battery{};
 
@@ -396,6 +406,7 @@ private:
     CallbackList<Telemetry::Imu> _raw_imu_subscriptions{};
     CallbackList<Telemetry::GpsInfo> _gps_info_subscriptions{};
     CallbackList<Telemetry::RawGps> _raw_gps_subscriptions{};
+    CallbackList<Telemetry::GpsInput> _gps_input_subscriptions{}; // SEES
     CallbackList<Telemetry::Battery> _battery_subscriptions{};
     CallbackList<Telemetry::FlightMode> _flight_mode_subscriptions{};
     CallbackList<Telemetry::Health> _health_subscriptions{};
