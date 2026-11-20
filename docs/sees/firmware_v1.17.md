@@ -2,8 +2,8 @@
 
 | | |
 |---|---|
-| **Status** | Builds against PX4 v1.17's mavlink with the `sees` dialect, and decodes `SEES_GPS_RAW` into `Telemetry::GpsInput`, checked against PX4 v1.17 SITL (2026-11-20). The other Sees commits aren't ported yet (To do 1–2). |
-| **Plan** | [`docs/sees/sees_gps_raw.md`](https://github.com/SEESAI/Firmware/blob/vilas/v1.17.0/mavlink/docs/sees/sees_gps_raw.md) in SEESAI/Firmware, section *Rollout across repos*. That doc is the source of truth; this note only records what is happening in this repo. |
+| **Status** | Builds against PX4 v1.17's mavlink with the `sees` dialect, and decodes `SEES_GPS_RAW` into `Telemetry::GpsInput`, checked against PX4 v1.17 SITL (2026-11-20). The other Sees features SeesInterface2 uses aren't ported yet (To do 2). |
+| **Plan** | [`docs/sees/sees_gps_raw.md`](https://github.com/SEESAI/Firmware/blob/vilas/v1.17.0/mavlink/docs/sees/sees_gps_raw.md) in SEESAI/Firmware, section *Rollout across repos*. This note has the MAVSDK details. |
 | **Paired branches** | Firmware `vilas/v1.17.0/mavlink`, mavlink `33af200_dev`, SeesInterface2 `vilas/feat/firmware_v1.17` |
 
 ## What and why
@@ -89,10 +89,48 @@ Checked against PX4 v1.17 SITL (SIH), Onboard link on UDP 14540: `subscribe_gps_
 
 ## To do
 
-1. **Port the Sees features SeesInterface2 uses** (phase 2 of the plan, after the mavlink and Firmware PRs; Firmware doc, section 2.2). SeesInterface2 can't build against this branch until then: it uses `GpsRtcmData`, `ModeInfo`, `ServoOutputRaw`, `VehicleStatus`, `LandingTargetPosition`, `Imu::ImuFlags`, `subscribe_gps_2_info()`, `subscribe_radio_status()`, `precision_land_async()`, `request_offboard_async()` and `Offboard::AccelerationBodyYawspeed`, which only exist in the Sees v1.4.11 fork. `michael/v3.2.0-dev` already has these on the v3 API; the Firmware doc lists which of its commits to cherry-pick (11) and which to skip.
-2. Check whether v3.7.0 already fixes the later `v1.4.11_dev` fixes (`d541498c3`, `4bf781596` double callback; `d14379ddb` `log_files`), and port them if not. Also check whether anything still uses the unmerged branch `ws_rtcm_length_update` (Rtk plugin changes, 2023).
-3. ~~Decode `SEES_GPS_RAW` here.~~ Done, see [`SEES_GPS_RAW`: `Telemetry::GpsInput`](#sees_gps_raw-telemetrygpsinput). With it, #15 (`c2bdd20c9`) and #20 (`a2923762d`) are ported.
+1. **Re-pin mavlink to `33af200_dev`.** SEESAI/mavlink#3 was squash-merged, so `MAVLINK_GIT_HASH` still points at the pre-merge commit, which is no longer on a branch. Set it to the commit Firmware pins on `33af200_dev`; the definitions are identical.
+2. **Port the Sees features SeesInterface2 uses** (see [Porting the Sees features](#porting-the-sees-features)). SeesInterface2 can't build against this branch until then.
+3. **Check the later `v1.4.11_dev` fixes** (`d541498c3`, `4bf781596`: double callback; `d14379ddb`: `log_files`), and port any that v3.7.0 doesn't already fix.
 4. Update the status row above as work progresses.
+
+## Porting the Sees features
+
+SeesInterface2 uses MAVSDK APIs that only exist in the Sees v1.4.11 fork:
+
+| SeesInterface2 uses | Added on `v1.4.11_dev` by |
+|---|---|
+| `Telemetry::GpsRtcmData` (see [RTCM monitoring](#rtcm-monitoring)), `ModeInfo`, `ServoOutputRaw`, `VehicleStatus`, `subscribe_gps_2_info()`, `subscribe_radio_status()`, `Action::request_offboard_async()`, `Offboard::AccelerationBodyYawspeed` | `c95c11ba3` (umbrella commit) |
+| `Telemetry::LandingTargetPosition`, `Action::precision_land_async()` | `d9730e59d` (#13) |
+| `Telemetry::Imu::ImuFlags` | `b1ccd3e1f` (#16) |
+| `Telemetry::GpsInput`, `subscribe_gps_input()` | #15, #20: **done**, see above |
+
+`michael/v3.2.0-dev` (April 2025) already has the Sees commits on the v3 API, and v3.2.0 is close to v3.7.0. Cherry-pick them in this order, one commit each, resolving conflicts against v3.7.0, and rebuild after each:
+
+| `michael/v3.2.0-dev` | `v1.4.11_dev` | Subject |
+|---|---|---|
+| `daadcf40f` | `c95c11ba3` | Sees modifications (umbrella) |
+| `c27a318e3` | `21295aa67`, `86fe744e8` | Base mode and custom mode |
+| `baa632c81` | `d9730e59d` | PX4 precision land (#13) |
+| `685117434` | `cf996d5ce` | PX4 component ID parameter (#14). Empty on `michael/v3.2.0-dev`: check what `cf996d5ce` changes |
+| `6356c6958` | `b1ccd3e1f` | HIGHRES_IMU flags (#16) |
+| `fee44d400`, `f0338b704`, `527979b18` | `3e0e01264`, `8753e48dc`, `2b8957025` | PX4 manual control telemetry |
+| `f5064c677` | `315cd76a4` | RC connected status indicator (#18) |
+| `f52d37db3` | `aaabffbc2` | Connection status only false on FC disconnect (#19) |
+| `d9480b3e4` | `b9c459f64` | Transponder ADSB flags (#22) |
+
+Don't cherry-pick:
+
+- `d0956e835`, `ec3ab602b` (#15, #20): `GpsInput`, already done for `SEES_GPS_RAW`;
+- `a09c5d269` (#21, mavlink commit id): replaced by the `MAVLINK_GIT_HASH` pin;
+- `32dca0741` (mavsdk_server workflow): SeesInterface2 doesn't build `mavsdk_server`;
+- `3982f0542` (GitHub Actions update).
+
+These are hand-maintained additions to the generated plugin files, like `GpsInput`; keep them out of `proto/` for now. Later, some features could move into SeesInterface2 (e.g. with `MavlinkPassthrough`; v3.7.0 has no `MavlinkDirect`), so fewer patches are carried on future MAVSDK upgrades.
+
+Also check whether anything still uses the unmerged branch `ws_rtcm_length_update` (2023, Rtk plugin changes). SeesInterface2 doesn't use that plugin.
+
+<a id="rtcm-monitoring"></a>**RTCM monitoring.** PX4 sends the RTK corrections it receives from QGroundControl on to the companion as `GPS_RTCM_DATA` (Firmware migration item #37, ported in #104). `c95c11ba3` adds `Telemetry::GpsRtcmData` to decode it. SeesInterface2's `FlightControllerPX4.cpp` publishes it to the `GPSRTCMData` buffer and the `GPSRTCMDataFlag`/`GPSRTCMDataLength` state channels, with a 5 s timeout (`RTCMMessageUpdateTimeoutS`). It must keep working. `GPS_RTCM_DATA` is in `common.xml`, which `sees` includes.
 
 ## Notes
 
