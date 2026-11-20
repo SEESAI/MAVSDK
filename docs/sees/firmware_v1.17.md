@@ -1,46 +1,69 @@
-# MAVSDK v4.2.1 for Firmware v1.17
+# MAVSDK v3.7.0 for Firmware v1.17
 
 | | |
 |---|---|
-| **Status** | Branches created and pushed on 2026-11-18. No Sees changes ported yet. Work starts after the Firmware `SEES_GPS_RAW` changes are merged. |
-| **Plan** | [`docs/sees/sees_gps_raw.md`](https://github.com/SEESAI/Firmware/blob/vilas/v1.17.0/mavlink/docs/sees/sees_gps_raw.md) in SEESAI/Firmware, section *Rollout plan across repos*, Step 3. That doc is the source of truth; this note only records what is happening in this repo. |
-| **Paired branches** | Firmware `v1.17.0-dev`, SeesInterface2 `vilas/feat/firmware_v1.17` |
+| **Status** | Builds against PX4 v1.17's mavlink with the `sees` dialect (2026-11-20). No Sees features ported yet; `SEES_GPS_RAW` isn't decoded yet (To do 3). |
+| **Plan** | [`docs/sees/sees_gps_raw.md`](https://github.com/SEESAI/Firmware/blob/vilas/v1.17.0/mavlink/docs/sees/sees_gps_raw.md) in SEESAI/Firmware, section *Rollout plan across repos*. That doc is the source of truth; this note only records what is happening in this repo. |
+| **Paired branches** | Firmware `vilas/v1.17.0/mavlink`, mavlink `vilas/fix/33af200/sees_gps_input`, SeesInterface2 `vilas/feat/firmware_v1.17` |
 
 ## What and why
 
-SeesInterface2 currently uses this fork's `v1.4.11_dev` branch: upstream v1.4.11 plus 20 Sees commits. Firmware v1.17 stops sending the patched `GPS_INPUT` and sends the new `SEES_GPS_RAW` message instead. Receiving it needs the `MavlinkDirect` plugin, which only exists in MAVSDK v4.
+SeesInterface2 currently uses this fork's `v1.4.11_dev` branch: upstream v1.4.11 plus 20 Sees commits. Firmware v1.17 stops sending the patched `GPS_INPUT` and sends the new `SEES_GPS_RAW` message instead, defined in the Sees MAVLink dialect in [SEESAI/mavlink](https://github.com/SEESAI/mavlink).
 
-So this fork moves to upstream **v4.2.1**, the latest release (2026-11-18). v4.2.1 is v4.2.0 plus two bug fixes:
+Firmware v1.17 is the reference, so this fork moves to upstream **v3.7.0**, the MAVSDK release PX4 v1.17 itself tests against (`test/mavsdk_tests/MAVSDK_VERSION` in Firmware, used by PX4's SITL integration tests in CI).
 
-- `action`: don't arm after a failed switch to Hold (#3221)
-- `info`: fix binary-to-hex string truncation and trailing null (#3220)
+- v3.7.0 was released against upstream mavlink `5e3a42b8` (December 2024), which is older than PX4 v1.17's `33af200d`. It builds against PX4 v1.17's mavlink with one small source change (see below).
+- The latest release, v4.2.1, was tried first. It was released against much newer mavlink and needed a newer pymavlink generator plus source patches in five plugins to build against PX4 v1.17's mavlink. That combination isn't tested by PX4. The attempt is kept only as a local backup branch, `backup/firmware_v1.17-on-v4.2.1`.
 
-MAVSDK changed its API in v2, v3 and v4, so the Sees commits are re-applied on top of v4.2.1 rather than merged.
+MAVSDK changed its API in v2 and v3, so the Sees commits are re-applied on top of v3.7.0 rather than merged.
 
-The MAVSDK and SeesInterface2 changes are done together, because SeesInterface2 can't build against v4 without its own API migration, and the MAVSDK audit decides which Sees features move into SeesInterface2.
+The MAVSDK and SeesInterface2 changes are done together, because SeesInterface2 can't build against v3 without its own API migration, and the MAVSDK audit decides which Sees features move into SeesInterface2.
 
 ## Branches
 
 | Branch | Based on | Purpose |
 |---|---|---|
-| `v4.2.1_dev` | upstream tag `v4.2.1` (`417d1ccd3`), unchanged | Long-lived base, the successor of `v1.4.11_dev`. Receives the feature branch once v1.17 is released. |
-| `vilas/feat/firmware_v1.17` | `v4.2.1_dev` | Work branch. Sees commits are ported here. Same name as the SeesInterface2 branch, so the pair is easy to find. |
+| `v3.7.0_dev` | upstream tag `v3.7.0` (`6c112e71f`), unchanged | Long-lived base, the successor of `v1.4.11_dev`. Receives the feature branch once v1.17 is released. |
+| `vilas/feat/firmware_v1.17` | `v3.7.0_dev` | Work branch. Sees commits are ported here. Same name as the SeesInterface2 branch, so the pair is easy to find. |
 | `v1.4.11_dev` | upstream v1.4.11 | Unchanged. Stays in use by SeesInterface2 `master` for the v1.13 fleet. |
 
-While the work is in progress, SeesInterface2's vcpkg port (`REF` in `BuildTools/vcpkg/ports/mavsdk/portfile.cmake`) points at commits on `vilas/feat/firmware_v1.17`. At release, the feature branch is merged into `v4.2.1_dev`, tagged (e.g. `v4.2.1-sees.1`), and SeesInterface2 re-pins to the tag.
+While the work is in progress, SeesInterface2's vcpkg port (`REF` in `BuildTools/vcpkg/ports/mavsdk/portfile.cmake`) points at commits on `vilas/feat/firmware_v1.17`. At release, the feature branch is merged into `v3.7.0_dev`, tagged (e.g. `v3.7.0-sees.1`), and SeesInterface2 re-pins to the tag.
 
-Don't force-push `vilas/feat/firmware_v1.17` once SeesInterface2 pins one of its commits, or fresh clones of SeesInterface2 won't be able to fetch it.
+Don't force-push `vilas/feat/firmware_v1.17` once SeesInterface2 pins one of its commits, or fresh clones of SeesInterface2 won't be able to fetch it. (It was force-pushed once, on 2026-11-20, to move it from v4.2.1 to v3.7.0, before anything pinned it.)
+
+## MAVLink: the same mavlink as PX4 v1.17
+
+This fork is built against the mavlink PX4 v1.17 uses, SEESAI/mavlink (upstream `33af200d` + `sees.xml`), with the same `sees` dialect. It therefore has `SEES_GPS_RAW` and every message PX4 v1.17 sends, generated by the same pymavlink (`fcaa2c7d`) from the same definitions as PX4.
+
+| Setting | Upstream v3.7.0 | This fork | File |
+|---|---|---|---|
+| mavlink repository | `https://github.com/mavlink/mavlink` | `https://github.com/SEESAI/mavlink` (`MAVLINK_GIT_URL`) | `third_party/mavlink/CMakeLists.txt` |
+| `MAVLINK_GIT_HASH` | `5e3a42b8` | `edb8130b`, head of `vilas/fix/33af200/sees_gps_input` | `third_party/mavlink/CMakeLists.txt` |
+| `MAVLINK_DIALECT` default | `common` | `sees` | `CMakeLists.txt` |
+
+Upstream's `third_party/mavlink/mavlink.patch` applies unchanged: it was written against the same mavlink `CMakeLists.txt` that `33af200d` has.
+
+The mavlink settings only apply to superbuilds (`SUPERBUILD=ON`, the default). With `SUPERBUILD=OFF`, as in SeesInterface2's vcpkg port, the consumer must supply MAVLink headers generated the same way: `sees.xml` from the same SEESAI/mavlink commit.
+
+When `sees.xml` changes, update `MAVLINK_GIT_HASH` to the commit Firmware pins.
+
+### Source change
+
+| Plugin | v3.7.0 uses | PX4 v1.17's mavlink | Change |
+|---|---|---|---|
+| camera_server | `CAMERA_TRACKING_TARGET_DATA_NONE` | removed: upstream mavlink dropped the `0` entries from bitmask enums (#2212) | pass `0`, the same value |
+
+Checked: a superbuild (`cmake -S . -B build -DBUILD_TESTING=OFF`) of this branch builds with no errors. GCC 16 reports one `-Warray-bounds` warning inside `std::mutex` while compiling `camera_server_impl.cpp`; it comes from the compiler's standard library, not from the change. Tests (`BUILD_TESTING=ON`) haven't been built against this setup yet.
 
 ## To do
 
-1. Audit the 20 Sees commits (`git log --no-merges v1.4.11..origin/v1.4.11_dev`). Decide **drop**, **SI2** (reimplement in SeesInterface2 with `MavlinkDirect`) or **port** for each. The Firmware doc has the table with the expected decision for each commit. `michael/v3.2.0-dev` shows how 15 of them were resolved against v3.2.0.
-   - Don't drop the `Telemetry::GpsRtcmData` part of the umbrella commit `c95c11ba3`. SeesInterface2 uses it to monitor RTCM arrival. Move it to SeesInterface2 with `MavlinkDirect`, or port it (Firmware doc, *RTCM monitoring*).
+1. Audit the 20 Sees commits (`git log --no-merges v1.4.11..origin/v1.4.11_dev`). Decide **drop**, **SI2** (reimplement in SeesInterface2, e.g. with `MavlinkPassthrough`; v3.7.0 has no `MavlinkDirect`) or **port** for each. The Firmware doc has the table with the expected decision for each commit. `michael/v3.2.0-dev` shows how 15 of them were resolved against v3.2.0, which is close to v3.7.0.
+   - Don't drop the `Telemetry::GpsRtcmData` part of the umbrella commit `c95c11ba3`. SeesInterface2 uses it to monitor RTCM arrival. Move it to SeesInterface2, or port it (Firmware doc, *RTCM monitoring*).
    - Check whether anything still uses the unmerged branch `ws_rtcm_length_update` (Rtk plugin changes, 2023).
 2. Port the commits marked "port" onto `vilas/feat/firmware_v1.17`, one commit each.
-3. Choose how `SEES_GPS_RAW` reaches SeesInterface2 (Firmware doc, Step 3c). With the recommended Option A, SeesInterface2 receives it through `MavlinkDirect`, this repo needs no GPS change, and the old `GPS_INPUT` additions (#15, #20) are dropped. Option B ports those additions and decodes `SEES_GPS_RAW` here instead.
+3. Decode `SEES_GPS_RAW` here (Option B). Port the Sees `Telemetry::GpsInput` / `subscribe_gps_input()` additions (#15, #20), and decode `SEES_GPS_RAW` instead of `GPS_INPUT` in `process_gps_input()`: the field names are unchanged, so only the message ID, struct type and decode function change. The plugin's public header is generated from `proto/`, so decide whether `GpsInput` goes into the proto submodule (a SEESAI fork of MAVSDK-Proto) or stays a hand-maintained addition to the generated files.
 4. Update the status row above as work progresses.
 
 ## Notes
 
 - `docs/sees/mavsdk-v4-migration-plan.md` is an earlier draft (2026-09-29) that targeted v4.0.1 and kept the patched `GPS_INPUT`. This note and the Firmware doc replace it.
-- Switching from `v1.4.11_dev` leaves the old `src/third_party/gtest` submodule checkout behind as an untracked `src/` directory. v4 keeps its sources under `cpp/`, so it's safe to delete.
