@@ -38,7 +38,7 @@ This fork is built against the mavlink PX4 v1.17 uses, SEESAI/mavlink (upstream 
 | Setting | Upstream v3.7.0 | This fork | File |
 |---|---|---|---|
 | mavlink repository | `https://github.com/mavlink/mavlink` | `https://github.com/SEESAI/mavlink` (`MAVLINK_GIT_URL`) | `third_party/mavlink/CMakeLists.txt` |
-| `MAVLINK_GIT_HASH` | `5e3a42b8` | `49679600` on `vilas/fix/33af200/sees_gps_input`, the same commit Firmware pins | `third_party/mavlink/CMakeLists.txt` |
+| `MAVLINK_GIT_HASH` | `5e3a42b8` | a commit on `vilas/fix/33af200/sees_gps_input`, the same commit Firmware pins (the hash is only in the file) | `third_party/mavlink/CMakeLists.txt` |
 | `MAVLINK_DIALECT` default | `common` | `sees` | `CMakeLists.txt` |
 
 Upstream's `third_party/mavlink/mavlink.patch` applies unchanged: it was written against the same mavlink `CMakeLists.txt` that `33af200d` has.
