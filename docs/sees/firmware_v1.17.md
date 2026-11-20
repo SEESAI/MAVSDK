@@ -89,10 +89,8 @@ Checked against PX4 v1.17 SITL (SIH), Onboard link on UDP 14540: `subscribe_gps_
 
 ## To do
 
-1. Audit the 20 Sees commits (`git log --no-merges v1.4.11..origin/v1.4.11_dev`). Decide **drop**, **SI2** (reimplement in SeesInterface2, e.g. with `MavlinkPassthrough`; v3.7.0 has no `MavlinkDirect`) or **port** for each. The Firmware doc has the table with the expected decision for each commit. `michael/v3.2.0-dev` shows how 15 of them were resolved against v3.2.0, which is close to v3.7.0.
-   - Don't drop the `Telemetry::GpsRtcmData` part of the umbrella commit `c95c11ba3`. SeesInterface2 uses it to monitor RTCM arrival. Move it to SeesInterface2, or port it (Firmware doc, *RTCM monitoring*).
-   - Check whether anything still uses the unmerged branch `ws_rtcm_length_update` (Rtk plugin changes, 2023).
-2. Port the commits marked "port" onto `vilas/feat/firmware_v1.17`, one commit each.
+1. **Port the Sees features SeesInterface2 uses** (phase 2 of the plan, after the mavlink and Firmware PRs; Firmware doc, section 2.2). SeesInterface2 can't build against this branch until then: it uses `GpsRtcmData`, `ModeInfo`, `ServoOutputRaw`, `VehicleStatus`, `LandingTargetPosition`, `Imu::ImuFlags`, `subscribe_gps_2_info()`, `subscribe_radio_status()`, `precision_land_async()`, `request_offboard_async()` and `Offboard::AccelerationBodyYawspeed`, which only exist in the Sees v1.4.11 fork. `michael/v3.2.0-dev` already has these on the v3 API; the Firmware doc lists which of its commits to cherry-pick (11) and which to skip.
+2. Check whether v3.7.0 already fixes the later `v1.4.11_dev` fixes (`d541498c3`, `4bf781596` double callback; `d14379ddb` `log_files`), and port them if not. Also check whether anything still uses the unmerged branch `ws_rtcm_length_update` (Rtk plugin changes, 2023).
 3. ~~Decode `SEES_GPS_RAW` here.~~ Done, see [`SEES_GPS_RAW`: `Telemetry::GpsInput`](#sees_gps_raw-telemetrygpsinput). With it, #15 (`c2bdd20c9`) and #20 (`a2923762d`) are ported.
 4. Update the status row above as work progresses.
 
