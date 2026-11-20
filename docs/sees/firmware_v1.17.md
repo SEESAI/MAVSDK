@@ -4,7 +4,7 @@
 |---|---|
 | **Status** | Builds against PX4 v1.17's mavlink with the `sees` dialect, and decodes `SEES_GPS_RAW` into `Telemetry::GpsInput`, checked against PX4 v1.17 SITL (2026-11-20). The other Sees commits aren't ported yet (To do 1–2). |
 | **Plan** | [`docs/sees/sees_gps_raw.md`](https://github.com/SEESAI/Firmware/blob/vilas/v1.17.0/mavlink/docs/sees/sees_gps_raw.md) in SEESAI/Firmware, section *Rollout across repos*. That doc is the source of truth; this note only records what is happening in this repo. |
-| **Paired branches** | Firmware `vilas/v1.17.0/mavlink`, mavlink `vilas/fix/33af200/sees_gps_input`, SeesInterface2 `vilas/feat/firmware_v1.17` |
+| **Paired branches** | Firmware `vilas/v1.17.0/mavlink`, mavlink `33af200_dev`, SeesInterface2 `vilas/feat/firmware_v1.17` |
 
 ## What and why
 
@@ -38,7 +38,7 @@ This fork is built against the mavlink PX4 v1.17 uses, SEESAI/mavlink (upstream 
 | Setting | Upstream v3.7.0 | This fork | File |
 |---|---|---|---|
 | mavlink repository | `https://github.com/mavlink/mavlink` | `https://github.com/SEESAI/mavlink` (`MAVLINK_GIT_URL`) | `third_party/mavlink/CMakeLists.txt` |
-| `MAVLINK_GIT_HASH` | `5e3a42b8` | a commit on `vilas/fix/33af200/sees_gps_input`, the same commit Firmware pins (the hash is only in the file) | `third_party/mavlink/CMakeLists.txt` |
+| `MAVLINK_GIT_HASH` | `5e3a42b8` | a commit on `33af200_dev`, the same commit Firmware pins (the hash is only in the file). Currently still the pre-merge commit of SEESAI/mavlink#3, which was squash-merged; re-pin to `33af200_dev` (identical definitions) | `third_party/mavlink/CMakeLists.txt` |
 | `MAVLINK_DIALECT` default | `common` | `sees` | `CMakeLists.txt` |
 
 Upstream's `third_party/mavlink/mavlink.patch` applies unchanged: it was written against the same mavlink `CMakeLists.txt` that `33af200d` has.
