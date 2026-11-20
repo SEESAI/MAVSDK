@@ -10,7 +10,8 @@ list(APPEND CMAKE_ARGS
     )
 
 # SEES: SEESAI/mavlink, the same mavlink as PX4 v1.17 (upstream 33af200d + sees.xml),
-# branch vilas/fix/33af200/sees_gps_input. Upstream's mavlink.patch applies unchanged.
+# on branch vilas/fix/33af200/sees_gps_input, the same commit Firmware pins.
+# Upstream's mavlink.patch applies unchanged.
 # See docs/sees/firmware_v1.17.md.
 set(MAVLINK_GIT_URL https://github.com/SEESAI/mavlink)
 set(MAVLINK_GIT_HASH edb8130bd40e7fe81930084ba02590593da7a991)

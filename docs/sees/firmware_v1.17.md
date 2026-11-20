@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | **Status** | Builds against PX4 v1.17's mavlink with the `sees` dialect (2026-11-20). No Sees features ported yet; `SEES_GPS_RAW` isn't decoded yet (To do 3). |
-| **Plan** | [`docs/sees/sees_gps_raw.md`](https://github.com/SEESAI/Firmware/blob/vilas/v1.17.0/mavlink/docs/sees/sees_gps_raw.md) in SEESAI/Firmware, section *Rollout plan across repos*. That doc is the source of truth; this note only records what is happening in this repo. |
+| **Plan** | [`docs/sees/sees_gps_raw.md`](https://github.com/SEESAI/Firmware/blob/vilas/v1.17.0/mavlink/docs/sees/sees_gps_raw.md) in SEESAI/Firmware, section *Rollout across repos*. That doc is the source of truth; this note only records what is happening in this repo. |
 | **Paired branches** | Firmware `vilas/v1.17.0/mavlink`, mavlink `vilas/fix/33af200/sees_gps_input`, SeesInterface2 `vilas/feat/firmware_v1.17` |
 
 ## What and why
@@ -38,14 +38,14 @@ This fork is built against the mavlink PX4 v1.17 uses, SEESAI/mavlink (upstream 
 | Setting | Upstream v3.7.0 | This fork | File |
 |---|---|---|---|
 | mavlink repository | `https://github.com/mavlink/mavlink` | `https://github.com/SEESAI/mavlink` (`MAVLINK_GIT_URL`) | `third_party/mavlink/CMakeLists.txt` |
-| `MAVLINK_GIT_HASH` | `5e3a42b8` | `edb8130b`, head of `vilas/fix/33af200/sees_gps_input` | `third_party/mavlink/CMakeLists.txt` |
+| `MAVLINK_GIT_HASH` | `5e3a42b8` | `edb8130b` on `vilas/fix/33af200/sees_gps_input`, the same commit Firmware pins | `third_party/mavlink/CMakeLists.txt` |
 | `MAVLINK_DIALECT` default | `common` | `sees` | `CMakeLists.txt` |
 
 Upstream's `third_party/mavlink/mavlink.patch` applies unchanged: it was written against the same mavlink `CMakeLists.txt` that `33af200d` has.
 
 The mavlink settings only apply to superbuilds (`SUPERBUILD=ON`, the default). With `SUPERBUILD=OFF`, as in SeesInterface2's vcpkg port, the consumer must supply MAVLink headers generated the same way: `sees.xml` from the same SEESAI/mavlink commit.
 
-When `sees.xml` changes, update `MAVLINK_GIT_HASH` to the commit Firmware pins.
+When `sees.xml` changes, update `MAVLINK_GIT_HASH` to the commit Firmware pins. A mavlink commit that doesn't change `sees.xml`, such as a doc change, needs no re-pin.
 
 ### Source change
 
