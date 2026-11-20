@@ -5,7 +5,9 @@ option(SUPERBUILD "Build dependencies" ON)
 option(BUILD_MAVSDK_SERVER "Build mavsdk_server" OFF)
 option(BUILD_WITH_PROTO_REFLECTION "Build mavsdk_server with proto reflection" OFF)
 option(BUILD_SHARED_LIBS "Build core as shared libraries instead of static ones" ON)
-option(MAVLINK_DIALECT "MAVLink dialect. Default: common" "common")
+# SEES: default to the Sees dialect on SEESAI/mavlink, the same as PX4 v1.17 builds,
+# so SEES_GPS_RAW is available. See docs/sees/firmware_v1.17.md.
+option(MAVLINK_DIALECT "MAVLink dialect. Default: sees" "sees")
 option(BUILD_TESTING "Build tests" ON)
 option(BUILD_WITHOUT_CURL "Build without CURL" OFF)
 
@@ -16,7 +18,7 @@ if (SUPERBUILD AND HUNTER_ENABLED)
 endif()
 
 if (NOT MAVLINK_DIALECT)
-    set(MAVLINK_DIALECT "common")
+    set(MAVLINK_DIALECT "sees")
 endif()
 
 execute_process(

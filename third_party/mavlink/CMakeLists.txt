@@ -9,12 +9,16 @@ list(APPEND CMAKE_ARGS
     "-DMAVLINK_DIALECT=${MAVLINK_DIALECT}"
     )
 
-set(MAVLINK_GIT_HASH 5e3a42b8f3f53038f2779f9f69bd64767b913bb8)
+# SEES: SEESAI/mavlink, the same mavlink as PX4 v1.17 (upstream 33af200d + sees.xml),
+# branch vilas/fix/33af200/sees_gps_input. Upstream's mavlink.patch applies unchanged.
+# See docs/sees/firmware_v1.17.md.
+set(MAVLINK_GIT_URL https://github.com/SEESAI/mavlink)
+set(MAVLINK_GIT_HASH edb8130bd40e7fe81930084ba02590593da7a991)
 
 if(IOS)
     ExternalProject_add(
         mavlink
-        GIT_REPOSITORY https://github.com/mavlink/mavlink
+        GIT_REPOSITORY ${MAVLINK_GIT_URL}
         GIT_TAG ${MAVLINK_GIT_HASH}
         PREFIX mavlink
         PATCH_COMMAND git checkout .
@@ -25,7 +29,7 @@ if(IOS)
 else()
     ExternalProject_add(
         mavlink
-        GIT_REPOSITORY https://github.com/mavlink/mavlink
+        GIT_REPOSITORY ${MAVLINK_GIT_URL}
         GIT_TAG ${MAVLINK_GIT_HASH}
         PREFIX mavlink
         PATCH_COMMAND git checkout . && git apply ${PROJECT_SOURCE_DIR}/mavlink.patch
