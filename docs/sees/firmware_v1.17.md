@@ -43,9 +43,22 @@ This fork is built against the mavlink PX4 v1.17 uses, SEESAI/mavlink (upstream 
 
 Upstream's `third_party/mavlink/mavlink.patch` applies unchanged: it was written against the same mavlink `CMakeLists.txt` that `33af200d` has.
 
-The mavlink settings only apply to superbuilds (`SUPERBUILD=ON`, the default). With `SUPERBUILD=OFF`, as in SeesInterface2's vcpkg port, the consumer must supply MAVLink headers generated the same way: `sees.xml` from the same SEESAI/mavlink commit.
+The mavlink settings only apply to superbuilds (`SUPERBUILD=ON`, the default). With `SUPERBUILD=OFF`, as in SeesInterface2's vcpkg port, MAVSDK uses `find_package(MAVLink)` and `find_package(libevents)`. SeesInterface2 supplies both as vcpkg ports:
 
-When `sees.xml` changes, update `MAVLINK_GIT_HASH` to the commit Firmware pins. A mavlink commit that doesn't change `sees.xml`, such as a doc change, needs no re-pin.
+- `mavlink-seesai`: `sees.xml` from the same SEESAI/mavlink commit, generated with the `sees` dialect;
+- `libevents`: at the commit `third_party/libevents/CMakeLists.txt` pins.
+
+When `sees.xml` changes, update `MAVLINK_GIT_HASH` here and the `mavlink-seesai` port's `REF` to the commit Firmware pins. A mavlink commit that doesn't change `sees.xml`, such as a doc change, needs no re-pin.
+
+### Fixes for non-superbuild installs
+
+SeesInterface2's vcpkg port builds this fork with `SUPERBUILD=OFF`, from a source archive (no `.git`), and links it statically. Upstream v3.7.0 needed three fixes for that (marked `SEES`):
+
+| File | Problem in upstream v3.7.0 | Fix |
+|---|---|---|
+| `src/MAVSDKConfig.cmake.in` | `find_dependency(LibEvents)`, but libevents installs `libeventsConfig.cmake` and MAVSDK's own build uses `find_package(libevents)`. On case-sensitive file systems, every consumer of a static MAVSDK failed to find it | `find_dependency(libevents)` |
+| `third_party/CMakeLists.txt` | Always fetched and built its own libevents, even when one is installed | Build it only if `find_package(libevents)` fails; superbuilds are unchanged |
+| `CMakeLists.txt` | Without `.git`, the version fell back to `0.0.0`, which the version regexes don't match, so the package version became `0.0.0.0.0.0.0.0.0` | Fall back to `v3.7.0`; update it when moving the fork |
 
 ### Source change
 
