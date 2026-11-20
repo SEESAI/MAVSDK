@@ -30,8 +30,12 @@ execute_process(
 )
 
 if (NOT GITVER EQUAL "0")
-    message(STATUS "No git version found. Falling back to empty version no")
-    set(VERSION_STR "0.0.0")
+    # SEES: builds from a source archive (e.g. the SeesInterface2 vcpkg port) have no
+    # .git. Upstream falls back to "0.0.0", which has no leading "v", so the version
+    # regexes below don't match and the package version becomes "0.0.0.0.0.0.0.0.0".
+    # Fall back to this fork's base release instead. Update it when moving the fork.
+    message(STATUS "No git version found. Falling back to v3.7.0")
+    set(VERSION_STR "v3.7.0")
 endif()
 
 message(STATUS "Version: ${VERSION_STR}")

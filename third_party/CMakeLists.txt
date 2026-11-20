@@ -54,7 +54,12 @@ if(SUPERBUILD)
 
 endif()
 
-build_target(libevents)
+# SEES: use an installed libevents if there is one (e.g. a vcpkg port), so a
+# non-superbuild doesn't fetch and build a second copy during the build.
+find_package(libevents QUIET)
+if(NOT libevents_FOUND)
+    build_target(libevents)
+endif()
 
 if(ENABLE_CPPTRACE)
     build_target(cpptrace)
