@@ -387,6 +387,54 @@ public:
      */
     friend std::ostream& operator<<(std::ostream& str, Telemetry::RawGps const& raw_gps);
 
+    // SEES: not generated from proto/. Hand-maintained Sees addition, ported from
+    // v1.4.11_dev (#15, #20). Filled from the Sees dialect's SEES_GPS_RAW message.
+    // See docs/sees/firmware_v1.17.md.
+    /**
+     * @brief GPS input type: raw GPS data from SEES_GPS_RAW, one per GPS instance.
+     */
+    struct GpsInput {
+        uint64_t timestamp_us{}; /**< @brief Timestamp in microseconds (UNIX Epoch time or time
+                                    since system boot, to be inferred) */
+        uint64_t timestamp_utc_us{}; /**< @brief UTC Timestamp in microseconds (UNIX Epoch time),
+                                        0 if unknown */
+        uint32_t id{}; /**< @brief GPS ID, for systems with multiple GPS */
+        FixType fix_type{}; /**< @brief Fix type */
+        double latitude_deg{}; /**< @brief Latitude in degrees (WGS84, EGM96 ellipsoid) */
+        double longitude_deg{}; /**< @brief Longitude in degrees (WGS84, EGM96 ellipsoid) */
+        float absolute_altitude_m{}; /**< @brief Altitude AMSL (above mean sea level) in metres */
+        float hdop{}; /**< @brief GPS HDOP horizontal dilution of position (unitless) */
+        float vdop{}; /**< @brief GPS VDOP vertical dilution of position (unitless) */
+        float
+            velocity_n_m_s{}; /**< @brief GPS Velocity along north direction in metres per second */
+        float
+            velocity_e_m_s{}; /**< @brief GPS Velocity along east direction in metres per second */
+        float
+            velocity_d_m_s{}; /**< @brief GPS Velocity along down direction in metres per second */
+        float horizontal_uncertainty_m{}; /**< @brief Position uncertainty in metres */
+        float vertical_uncertainty_m{}; /**< @brief Altitude uncertainty in metres */
+        float speed_uncertainty_m_s{}; /**< @brief Speed standard deviation in metres per second */
+        float course_uncertainty_rad{}; /**< @brief Course standard deviation in radians, NaN if
+                                           unknown */
+        float heading_uncertainty_rad{}; /**< @brief Heading standard deviation in radians, NaN if
+                                            unknown */
+        float yaw_deg{}; /**< @brief Yaw in earth frame from north, 0 if not available */
+    };
+
+    /**
+     * @brief Equal operator to compare two `Telemetry::GpsInput` objects.
+     *
+     * @return `true` if items are equal.
+     */
+    friend bool operator==(const Telemetry::GpsInput& lhs, const Telemetry::GpsInput& rhs);
+
+    /**
+     * @brief Stream operator to print information about a `Telemetry::GpsInput`.
+     *
+     * @return A reference to the stream.
+     */
+    friend std::ostream& operator<<(std::ostream& str, Telemetry::GpsInput const& gps_input);
+
     /**
      * @brief Battery type.
      */
@@ -1406,6 +1454,34 @@ public:
      * @return One RawGps update.
      */
     RawGps raw_gps() const;
+
+    // SEES: hand-maintained Sees addition, see GpsInput above.
+    /**
+     * @brief Callback type for subscribe_gps_input.
+     */
+    using GpsInputCallback = std::function<void(GpsInput)>;
+
+    /**
+     * @brief Handle type for subscribe_gps_input.
+     */
+    using GpsInputHandle = Handle<GpsInput>;
+
+    /**
+     * @brief Subscribe to 'GPS input' updates (SEES_GPS_RAW, one per GPS instance).
+     */
+    GpsInputHandle subscribe_gps_input(const GpsInputCallback& callback);
+
+    /**
+     * @brief Unsubscribe from subscribe_gps_input
+     */
+    void unsubscribe_gps_input(GpsInputHandle handle);
+
+    /**
+     * @brief Poll for 'GpsInput' (blocking).
+     *
+     * @return One GpsInput update.
+     */
+    GpsInput gps_input() const;
 
     /**
      * @brief Callback type for subscribe_battery.

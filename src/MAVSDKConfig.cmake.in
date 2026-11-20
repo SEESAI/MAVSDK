@@ -10,7 +10,10 @@ if(NOT @BUILD_SHARED_LIBS@)
     find_dependency(jsoncpp REQUIRED)
     find_dependency(tinyxml2 REQUIRED)
     find_dependency(LibLZMA REQUIRED)
-    find_dependency(LibEvents REQUIRED)
+    # SEES: libevents installs libeventsConfig.cmake, and MAVSDK itself uses
+    # find_package(libevents). "LibEvents" doesn't match that file name on
+    # case-sensitive file systems, so consumers of a static MAVSDK failed here.
+    find_dependency(libevents REQUIRED)
 
     if(@BUILD_MAVSDK_SERVER@)
         find_dependency(gRPC)

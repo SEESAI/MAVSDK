@@ -25,6 +25,7 @@ template class CallbackList<Telemetry::VelocityNed>;
 template class CallbackList<Telemetry::Imu>;
 template class CallbackList<Telemetry::GpsInfo>;
 template class CallbackList<Telemetry::RawGps>;
+template class CallbackList<Telemetry::GpsInput>; // SEES
 template class CallbackList<Telemetry::Battery>;
 template class CallbackList<Telemetry::FlightMode>;
 template class CallbackList<Telemetry::Health>;
@@ -87,6 +88,15 @@ void TelemetryImpl::init()
         MAVLINK_MSG_ID_GPS_RAW_INT,
         [this](const mavlink_message_t& message) { process_gps_raw_int(message); },
         this);
+
+    // SEES: SEES_GPS_RAW from the Sees dialect, which PX4 v1.17 builds. See
+    // docs/sees/firmware_v1.17.md.
+#ifdef MAVLINK_MSG_ID_SEES_GPS_RAW
+    _system_impl->register_mavlink_message_handler(
+        MAVLINK_MSG_ID_SEES_GPS_RAW,
+        [this](const mavlink_message_t& message) { process_sees_gps_raw(message); },
+        this);
+#endif
 
     _system_impl->register_mavlink_message_handler(
         MAVLINK_MSG_ID_EXTENDED_SYS_STATE,
@@ -984,6 +994,76 @@ void TelemetryImpl::process_gps_raw_int(const mavlink_message_t& message)
         _raw_gps_subscriptions.queue(
             raw_gps(), [this](const auto& func) { _system_impl->call_user_callback(func); });
     }
+}
+
+// SEES: ported from v1.4.11_dev process_gps_input() (#15, #20). SEES_GPS_RAW has the same
+// field names as the v1.13 patched GPS_INPUT it replaces, so the mapping is unchanged.
+void TelemetryImpl::process_sees_gps_raw(const mavlink_message_t& message)
+{
+#ifdef MAVLINK_MSG_ID_SEES_GPS_RAW
+    mavlink_sees_gps_raw_t input_gps;
+    mavlink_msg_sees_gps_raw_decode(&message, &input_gps);
+
+    Telemetry::FixType fix_type;
+    switch (input_gps.fix_type) {
+        case 0:
+            fix_type = Telemetry::FixType::NoGps;
+            break;
+        case 1:
+            fix_type = Telemetry::FixType::NoFix;
+            break;
+        case 2:
+            fix_type = Telemetry::FixType::Fix2D;
+            break;
+        case 3:
+            fix_type = Telemetry::FixType::Fix3D;
+            break;
+        case 4:
+            fix_type = Telemetry::FixType::FixDgps;
+            break;
+        case 5:
+            fix_type = Telemetry::FixType::RtkFloat;
+            break;
+        case 6:
+            fix_type = Telemetry::FixType::RtkFixed;
+            break;
+        default:
+            LogErr() << "Received unknown GPS input fix type!";
+            fix_type = Telemetry::FixType::NoGps;
+            break;
+    }
+
+    Telemetry::GpsInput new_gps_input;
+    new_gps_input.timestamp_us = input_gps.time_usec;
+    new_gps_input.timestamp_utc_us = input_gps.time_utc_usec;
+    new_gps_input.id = input_gps.gps_id;
+    new_gps_input.fix_type = fix_type;
+    new_gps_input.latitude_deg = input_gps.lat * 1e-7;
+    new_gps_input.longitude_deg = input_gps.lon * 1e-7;
+    new_gps_input.absolute_altitude_m = input_gps.alt;
+    new_gps_input.hdop = input_gps.hdop;
+    new_gps_input.vdop = input_gps.vdop;
+    new_gps_input.velocity_n_m_s = input_gps.vn;
+    new_gps_input.velocity_e_m_s = input_gps.ve;
+    new_gps_input.velocity_d_m_s = input_gps.vd;
+    new_gps_input.horizontal_uncertainty_m = input_gps.horiz_accuracy;
+    new_gps_input.vertical_uncertainty_m = input_gps.vert_accuracy;
+    new_gps_input.speed_uncertainty_m_s = input_gps.speed_accuracy;
+    new_gps_input.course_uncertainty_rad = input_gps.course_accuracy;
+    new_gps_input.heading_uncertainty_rad = input_gps.heading_accuracy;
+    new_gps_input.yaw_deg = static_cast<float>(input_gps.yaw) * 1e-2f;
+    set_gps_input(new_gps_input);
+
+    {
+        // Queue the decoded value itself: with two GPS instances, gps_input() may already
+        // hold the other instance's message by the time the callback is queued.
+        std::lock_guard<std::mutex> lock(_subscription_mutex);
+        _gps_input_subscriptions.queue(
+            new_gps_input, [this](const auto& func) { _system_impl->call_user_callback(func); });
+    }
+#else
+    UNUSED(message);
+#endif
 }
 
 void TelemetryImpl::process_ground_truth(const mavlink_message_t& message)
@@ -1955,6 +2035,19 @@ void TelemetryImpl::set_raw_gps(Telemetry::RawGps raw_gps)
     _raw_gps = raw_gps;
 }
 
+// SEES
+Telemetry::GpsInput TelemetryImpl::gps_input() const
+{
+    std::lock_guard<std::mutex> lock(_gps_input_mutex);
+    return _gps_input;
+}
+
+void TelemetryImpl::set_gps_input(Telemetry::GpsInput gps_input)
+{
+    std::lock_guard<std::mutex> lock(_gps_input_mutex);
+    _gps_input = gps_input;
+}
+
 Telemetry::Battery TelemetryImpl::battery() const
 {
     std::lock_guard<std::mutex> lock(_battery_mutex);
@@ -2368,6 +2461,20 @@ void TelemetryImpl::unsubscribe_raw_gps(Telemetry::RawGpsHandle handle)
 {
     std::lock_guard<std::mutex> lock(_subscription_mutex);
     _raw_gps_subscriptions.unsubscribe(handle);
+}
+
+// SEES
+Telemetry::GpsInputHandle
+TelemetryImpl::subscribe_gps_input(const Telemetry::GpsInputCallback& callback)
+{
+    std::lock_guard<std::mutex> lock(_subscription_mutex);
+    return _gps_input_subscriptions.subscribe(callback);
+}
+
+void TelemetryImpl::unsubscribe_gps_input(Telemetry::GpsInputHandle handle)
+{
+    std::lock_guard<std::mutex> lock(_subscription_mutex);
+    _gps_input_subscriptions.unsubscribe(handle);
 }
 
 Telemetry::BatteryHandle

@@ -16,6 +16,7 @@ using EulerAngle = Telemetry::EulerAngle;
 using AngularVelocityBody = Telemetry::AngularVelocityBody;
 using GpsInfo = Telemetry::GpsInfo;
 using RawGps = Telemetry::RawGps;
+using GpsInput = Telemetry::GpsInput; // SEES
 using Battery = Telemetry::Battery;
 using Health = Telemetry::Health;
 using RcStatus = Telemetry::RcStatus;
@@ -232,6 +233,22 @@ void Telemetry::unsubscribe_raw_gps(RawGpsHandle handle)
 Telemetry::RawGps Telemetry::raw_gps() const
 {
     return _impl->raw_gps();
+}
+
+// SEES: hand-maintained Sees addition, see Telemetry::GpsInput.
+Telemetry::GpsInputHandle Telemetry::subscribe_gps_input(const GpsInputCallback& callback)
+{
+    return _impl->subscribe_gps_input(callback);
+}
+
+void Telemetry::unsubscribe_gps_input(GpsInputHandle handle)
+{
+    _impl->unsubscribe_gps_input(handle);
+}
+
+Telemetry::GpsInput Telemetry::gps_input() const
+{
+    return _impl->gps_input();
 }
 
 Telemetry::BatteryHandle Telemetry::subscribe_battery(const BatteryCallback& callback)
@@ -976,6 +993,66 @@ std::ostream& operator<<(std::ostream& str, Telemetry::RawGps const& raw_gps)
     str << "    velocity_uncertainty_m_s: " << raw_gps.velocity_uncertainty_m_s << '\n';
     str << "    heading_uncertainty_deg: " << raw_gps.heading_uncertainty_deg << '\n';
     str << "    yaw_deg: " << raw_gps.yaw_deg << '\n';
+    str << '}';
+    return str;
+}
+
+// SEES: hand-maintained Sees addition, see Telemetry::GpsInput.
+bool operator==(const Telemetry::GpsInput& lhs, const Telemetry::GpsInput& rhs)
+{
+    return (rhs.timestamp_us == lhs.timestamp_us) &&
+           (rhs.timestamp_utc_us == lhs.timestamp_utc_us) && (rhs.id == lhs.id) &&
+           (rhs.fix_type == lhs.fix_type) &&
+           ((std::isnan(rhs.latitude_deg) && std::isnan(lhs.latitude_deg)) ||
+            rhs.latitude_deg == lhs.latitude_deg) &&
+           ((std::isnan(rhs.longitude_deg) && std::isnan(lhs.longitude_deg)) ||
+            rhs.longitude_deg == lhs.longitude_deg) &&
+           ((std::isnan(rhs.absolute_altitude_m) && std::isnan(lhs.absolute_altitude_m)) ||
+            rhs.absolute_altitude_m == lhs.absolute_altitude_m) &&
+           ((std::isnan(rhs.hdop) && std::isnan(lhs.hdop)) || rhs.hdop == lhs.hdop) &&
+           ((std::isnan(rhs.vdop) && std::isnan(lhs.vdop)) || rhs.vdop == lhs.vdop) &&
+           ((std::isnan(rhs.velocity_n_m_s) && std::isnan(lhs.velocity_n_m_s)) ||
+            rhs.velocity_n_m_s == lhs.velocity_n_m_s) &&
+           ((std::isnan(rhs.velocity_e_m_s) && std::isnan(lhs.velocity_e_m_s)) ||
+            rhs.velocity_e_m_s == lhs.velocity_e_m_s) &&
+           ((std::isnan(rhs.velocity_d_m_s) && std::isnan(lhs.velocity_d_m_s)) ||
+            rhs.velocity_d_m_s == lhs.velocity_d_m_s) &&
+           ((std::isnan(rhs.horizontal_uncertainty_m) &&
+             std::isnan(lhs.horizontal_uncertainty_m)) ||
+            rhs.horizontal_uncertainty_m == lhs.horizontal_uncertainty_m) &&
+           ((std::isnan(rhs.vertical_uncertainty_m) && std::isnan(lhs.vertical_uncertainty_m)) ||
+            rhs.vertical_uncertainty_m == lhs.vertical_uncertainty_m) &&
+           ((std::isnan(rhs.speed_uncertainty_m_s) && std::isnan(lhs.speed_uncertainty_m_s)) ||
+            rhs.speed_uncertainty_m_s == lhs.speed_uncertainty_m_s) &&
+           ((std::isnan(rhs.course_uncertainty_rad) && std::isnan(lhs.course_uncertainty_rad)) ||
+            rhs.course_uncertainty_rad == lhs.course_uncertainty_rad) &&
+           ((std::isnan(rhs.heading_uncertainty_rad) && std::isnan(lhs.heading_uncertainty_rad)) ||
+            rhs.heading_uncertainty_rad == lhs.heading_uncertainty_rad) &&
+           ((std::isnan(rhs.yaw_deg) && std::isnan(lhs.yaw_deg)) || rhs.yaw_deg == lhs.yaw_deg);
+}
+
+std::ostream& operator<<(std::ostream& str, Telemetry::GpsInput const& gps_input)
+{
+    str << std::setprecision(15);
+    str << "gps_input:" << '\n' << "{\n";
+    str << "    timestamp_us: " << gps_input.timestamp_us << '\n';
+    str << "    timestamp_utc_us: " << gps_input.timestamp_utc_us << '\n';
+    str << "    id: " << gps_input.id << '\n';
+    str << "    fix_type: " << gps_input.fix_type << '\n';
+    str << "    latitude_deg: " << gps_input.latitude_deg << '\n';
+    str << "    longitude_deg: " << gps_input.longitude_deg << '\n';
+    str << "    absolute_altitude_m: " << gps_input.absolute_altitude_m << '\n';
+    str << "    hdop: " << gps_input.hdop << '\n';
+    str << "    vdop: " << gps_input.vdop << '\n';
+    str << "    velocity_n_m_s: " << gps_input.velocity_n_m_s << '\n';
+    str << "    velocity_e_m_s: " << gps_input.velocity_e_m_s << '\n';
+    str << "    velocity_d_m_s: " << gps_input.velocity_d_m_s << '\n';
+    str << "    horizontal_uncertainty_m: " << gps_input.horizontal_uncertainty_m << '\n';
+    str << "    vertical_uncertainty_m: " << gps_input.vertical_uncertainty_m << '\n';
+    str << "    speed_uncertainty_m_s: " << gps_input.speed_uncertainty_m_s << '\n';
+    str << "    course_uncertainty_rad: " << gps_input.course_uncertainty_rad << '\n';
+    str << "    heading_uncertainty_rad: " << gps_input.heading_uncertainty_rad << '\n';
+    str << "    yaw_deg: " << gps_input.yaw_deg << '\n';
     str << '}';
     return str;
 }
