@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| **Status** | Builds against PX4 v1.17's mavlink with the `sees` dialect (2026-11-20). No Sees features ported yet; `SEES_GPS_RAW` isn't decoded yet (To do 3). |
+| **Status** | Builds against PX4 v1.17's mavlink with the `sees` dialect, and decodes `SEES_GPS_RAW` into `Telemetry::GpsInput`, checked against PX4 v1.17 SITL (2026-11-20). The other Sees commits aren't ported yet (To do 1–2). |
 | **Plan** | [`docs/sees/sees_gps_raw.md`](https://github.com/SEESAI/Firmware/blob/vilas/v1.17.0/mavlink/docs/sees/sees_gps_raw.md) in SEESAI/Firmware, section *Rollout across repos*. That doc is the source of truth; this note only records what is happening in this repo. |
 | **Paired branches** | Firmware `vilas/v1.17.0/mavlink`, mavlink `vilas/fix/33af200/sees_gps_input`, SeesInterface2 `vilas/feat/firmware_v1.17` |
 
@@ -55,13 +55,32 @@ When `sees.xml` changes, update `MAVLINK_GIT_HASH` to the commit Firmware pins. 
 
 Checked: a superbuild (`cmake -S . -B build -DBUILD_TESTING=OFF`) of this branch builds with no errors. GCC 16 reports one `-Warray-bounds` warning inside `std::mutex` while compiling `camera_server_impl.cpp`; it comes from the compiler's standard library, not from the change. Tests (`BUILD_TESTING=ON`) haven't been built against this setup yet.
 
+## `SEES_GPS_RAW`: `Telemetry::GpsInput`
+
+The telemetry plugin decodes `SEES_GPS_RAW` into `Telemetry::GpsInput`, ported from `v1.4.11_dev` (#15, #20), where it decoded the v1.13 patched `GPS_INPUT`. SeesInterface2 uses it unchanged:
+
+```cpp
+auto handle = telemetry.subscribe_gps_input([](Telemetry::GpsInput gps) { /* one per GPS instance */ });
+telemetry.unsubscribe_gps_input(handle);
+Telemetry::GpsInput latest = telemetry.gps_input();
+```
+
+- **Same struct, same mapping as v1.4.11.** `SEES_GPS_RAW` has the same field names as the v1.13 `GPS_INPUT`, so `TelemetryImpl::process_sees_gps_raw()` fills `GpsInput` exactly as v1.4.11's `process_gps_input()` did, including the fix-type mapping (0–6; others are logged and reported as `NoGps`).
+- **v3 API.** Subscriptions return a `GpsInputHandle` that must be kept for `unsubscribe_gps_input()`, like every v3 subscription. v1.4.11 had one callback per plugin, replaced on each `subscribe_gps_input()` call.
+- **One callback per message, per GPS instance.** Each callback gets the message just decoded (`id` = `gps_id`), not the latest stored value, so two GPS instances can't swap values between decoding and the callback.
+- **Unknown values.** `heading_uncertainty_rad` and `course_uncertainty_rad` are NaN when unknown (v1.13 sent 0), `timestamp_utc_us` is 0 until the receiver has UTC, and `yaw_deg` is 0 without a heading.
+- **Not generated.** `GpsInput` and its three functions are hand-maintained additions to the generated plugin files (`telemetry.h`, `telemetry.cpp`, `mocks/telemetry_mock.h`), marked `SEES`, as on `v1.4.11_dev`. They aren't in `proto/`, so re-running `tools/generate_from_protos.sh` removes them, and they aren't available through `mavsdk_server`. Re-apply them after regenerating.
+- If the build doesn't define `SEES_GPS_RAW` (a dialect other than `sees`), the handler isn't registered and `subscribe_gps_input()` never fires.
+
+Checked against PX4 v1.17 SITL (SIH), Onboard link on UDP 14540: `subscribe_gps_input()` received 39 messages in 5 s, at SIH's GPS rate. All fields decoded (`heading_uncertainty_rad` NaN and `timestamp_utc_us` 0, as SIH sends). Unsubscribing stopped the callbacks, and `gps_input()` returned the latest message.
+
 ## To do
 
 1. Audit the 20 Sees commits (`git log --no-merges v1.4.11..origin/v1.4.11_dev`). Decide **drop**, **SI2** (reimplement in SeesInterface2, e.g. with `MavlinkPassthrough`; v3.7.0 has no `MavlinkDirect`) or **port** for each. The Firmware doc has the table with the expected decision for each commit. `michael/v3.2.0-dev` shows how 15 of them were resolved against v3.2.0, which is close to v3.7.0.
    - Don't drop the `Telemetry::GpsRtcmData` part of the umbrella commit `c95c11ba3`. SeesInterface2 uses it to monitor RTCM arrival. Move it to SeesInterface2, or port it (Firmware doc, *RTCM monitoring*).
    - Check whether anything still uses the unmerged branch `ws_rtcm_length_update` (Rtk plugin changes, 2023).
 2. Port the commits marked "port" onto `vilas/feat/firmware_v1.17`, one commit each.
-3. Decode `SEES_GPS_RAW` here (Option B). Port the Sees `Telemetry::GpsInput` / `subscribe_gps_input()` additions (#15, #20), and decode `SEES_GPS_RAW` instead of `GPS_INPUT` in `process_gps_input()`: the field names are unchanged, so only the message ID, struct type and decode function change. The plugin's public header is generated from `proto/`, so decide whether `GpsInput` goes into the proto submodule (a SEESAI fork of MAVSDK-Proto) or stays a hand-maintained addition to the generated files.
+3. ~~Decode `SEES_GPS_RAW` here.~~ Done, see [`SEES_GPS_RAW`: `Telemetry::GpsInput`](#sees_gps_raw-telemetrygpsinput). With it, #15 (`c2bdd20c9`) and #20 (`a2923762d`) are ported.
 4. Update the status row above as work progresses.
 
 ## Notes
